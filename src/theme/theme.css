@@ -1,0 +1,180 @@
+@font-face {
+  font-family: "PetitaBold";
+  font-style: normal;
+  font-weight: 500;
+  src: local("PetitaBold"),
+    url("~@/assets/fonts/Petita/PetitaBold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "PetitaMedium";
+  font-style: normal;
+  font-weight: 400;
+  src: local("PetitaMedium"),
+    url("~@/assets/fonts/Petita/PetitaMedium.woff") format("woff");
+}
+
+:root {
+  /** primary **/
+  --color-primary: #9FC737;
+  --color-primary-contrast: #122200;
+  --color-primary-shade: #214B00;
+  --color-primary-tint: #86AE19;
+  --color-primary-category: #9ECD43;
+  /** secondary **/
+  --color-secondary: #0eb4edff;
+  --color-secondary-contrast: #001950;
+  --color-secondary-shade: #003B7A;
+  --color-secondary-tint: #008DD7;
+  --color-secondary-category: #287dae;
+  /** tertiary **/
+  --color-tertiary: #FF5C54;
+  --color-tertiary-contrast: #590000;
+  --color-tertiary-shade: #670000;
+  --color-tertiary-tint: #D83737;
+  --color-tertiary-category: #F65757;
+  /** success **/
+  --color-success: #2dd36f;
+  --color-success-rgb: 45, 211, 111;
+  --color-success-contrast: #ffffff;
+  --color-success-contrast-rgb: 255, 255, 255;
+  --color-success-shade: #28ba62;
+  --color-success-tint: #42d77d;
+  /** warning **/
+  --color-warning: #ffc409;
+  --color-warning-rgb: 255, 196, 9;
+  --color-warning-contrast: #000000;
+  --color-warning-contrast-rgb: 0, 0, 0;
+  --color-warning-shade: #e0ac08;
+  --color-warning-tint: #ffca22;
+  /** danger **/
+  --color-danger: #eb445a;
+  --color-danger-rgb: 235, 68, 90;
+  --color-danger-contrast: #ffffff;
+  --color-danger-contrast-rgb: 255, 255, 255;
+  --color-danger-shade: #cf3c4f;
+  --color-danger-tint: #ed576b;
+  /** dark **/
+  --color-dark: #222428;
+  --color-dark-rgb: 34, 36, 40;
+  --color-dark-contrast: #ffffff;
+  --color-dark-contrast-rgb: 255, 255, 255;
+  --color-dark-shade: #1e2023;
+  --color-dark-tint: #383a3e;
+  /** medium **/
+  --color-medium: #92949c;
+  --color-medium-rgb: 146, 148, 156;
+  --color-medium-contrast: #ffffff;
+  --color-medium-contrast-rgb: 255, 255, 255;
+  --color-medium-shade: #808289;
+  --color-medium-tint: #9d9fa6;
+  /** light **/
+  --color-light: #f4f5f8;
+  --color-light-rgb: 244, 245, 248;
+  --color-light-contrast: #000000;
+  --color-light-contrast-rgb: 0, 0, 0;
+  --color-light-shade: #d7d8da;
+  --color-medium-tint: #f5f6f9;
+
+  /** lightmode **/
+  --color-background-1: linear-gradient(to right top,
+      #9fc737ff,
+      #91c549ff,
+      #82c35bff,
+      #74c16eff,
+      #65bf80ff,
+      #57bd92ff,
+      #48bca4ff,
+      #3abab6ff,
+      #2bb8c8ff,
+      #1db6dbff,
+      #0eb4edff,
+      #00b2ffff);
+  --color-background-2: #eeeeee;
+  --color-mode-1: #eeeeee;
+  --color-mode-2: #f6f9fc;
+  --color-mode-3: #f4f5f8;
+  --color-mode-4: #ddd;
+  --color-mode-shadow-1: rgb(0 0 0 / 20%);
+  --color-mode-shadow-2: rgb(0 0 0 / 14%);
+  --color-mode-shadow-3: rgb(0 0 0 / 12%);
+  --color-mode-shadow-4: rgba(0, 0, 0, 0.66);
+  --color-mode-shadow-5: rgba(0, 0, 0, 0.18);
+  --color-mode-contrast-1: #2e3334;
+  --color-mode-contrast-2: rgb(0 0 0 / 20%);
+  --color-mode-contrast-3: rgb(0 0 0 / 50%);
+  --color-mode-contrast-4: rgb(0 0 0 / 60%);
+}
+
+#Home.dark {
+  /** darkmode **/
+  --color-background-1: linear-gradient(to right top,
+      #2F3136,
+      #2C3D47,
+      #294957,
+      #265568,
+      #236179,
+      #206D89,
+      #1D789A,
+      #1A84AA,
+      #1790BB,
+      #149CCC,
+      #11A8DC,
+      #0EB4ED);
+  --color-background-2: #27282b;
+  --color-mode-1: #27282b;
+  --color-mode-2: #2f3136;
+  --color-mode-3: #2e3334;
+  --color-mode-4: rgb(119, 119, 119);
+  --color-mode-shadow-1: rgb(255 255 255 / 20%);
+  --color-mode-shadow-2: rgb(255 255 255 / 14%);
+  --color-mode-shadow-3: rgb(255 255 255 / 12%);
+  --color-mode-shadow-4: rgba(255, 255, 255, 0.66);
+  --color-mode-shadow-5: rgba(255, 255, 255, 0.18);
+  --color-mode-contrast-1: #f4f5f8;
+  --color-mode-contrast-2: rgb(255 255 255 / 30%);
+  --color-mode-contrast-3: rgb(255 255 255 / 50%);
+  --color-mode-contrast-4: rgb(255 255 255 / 70%);
+}
+
+#Home.dark modal {
+  --background-color: var(--color-step-100);
+  --toolbar-background: var(--color-step-150);
+  --toolbar-border-color: var(--color-step-250);
+}
+
+/*
+     * Material Design Dark Theme
+     * -------------------------------------------
+     */
+
+.md #Home.dark {
+  --background-color: #121212;
+  --background-color-rgb: 18, 18, 18;
+  --text-color: #ffffff;
+  --text-color-rgb: 255, 255, 255;
+  --border-color: #222222;
+  --color-step-50: #1e1e1e;
+  --color-step-100: #2a2a2a;
+  --color-step-150: #363636;
+  --color-step-200: #414141;
+  --color-step-250: #4d4d4d;
+  --color-step-300: #595959;
+  --color-step-350: #656565;
+  --color-step-400: #717171;
+  --color-step-450: #7d7d7d;
+  --color-step-500: #898989;
+  --color-step-550: #949494;
+  --color-step-600: #a0a0a0;
+  --color-step-650: #acacac;
+  --color-step-700: #b8b8b8;
+  --color-step-750: #c4c4c4;
+  --color-step-800: #d0d0d0;
+  --color-step-850: #dbdbdb;
+  --color-step-900: #e7e7e7;
+  --color-step-950: #f3f3f3;
+  --item-background: #1e1e1e;
+  --toolbar-background: #1f1f1f;
+  --tab-bar-background: #1f1f1f;
+  --card-background: #1e1e1e;
+}
