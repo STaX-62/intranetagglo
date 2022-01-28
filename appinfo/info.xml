@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-    <id>simpleapp</id>
-    <name>Simple App</name>
-    <summary>Application hello world</summary>
-    <description><![CDATA[Application hello world]]></description>
-    <version>0.0.1</version>
+    <id>intranetagglo</id>
+    <name>Intranet Agglo</name>
+    <summary>Application Intranet de la CA2BM pour Nextcloud</summary>
+    <description><![CDATA[Application Intranet de la CA2BM pour Nextcloud]]></description>
+    <version>0.1.0</version>
     <licence>agpl</licence>
-    <author mail="mc.clement2000@gmail.com" >cmouronval</author>
-    <namespace>SimpleApp</namespace>
+    <author mail="clement.mouronval@gmail.com">cmouronval</author>
+    <namespace>IntranetAgglo</namespace>
     <category>tools</category>
     <bugs>https://localhost/nextcloud</bugs>
     <dependencies>
@@ -16,8 +16,8 @@
     </dependencies>
     <navigations>
         <navigation>
-            <name>Simple App</name>
-            <route>simpleapp.page.index</route>
+            <name>Intranet Agglo</name>
+            <route>intranetagglo.page.index</route>
         </navigation>
     </navigations>
 </info>

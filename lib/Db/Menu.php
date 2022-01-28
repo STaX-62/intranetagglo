@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\SimpleApp\Db;
+namespace OCA\IntranetAgglo\Db;
 
 use JsonSerializable;
 

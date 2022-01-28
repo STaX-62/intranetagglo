@@ -1,8 +1,8 @@
 <?php
 
-namespace OCA\SimpleApp\Controller;
+namespace OCA\IntranetAgglo\Controller;
 
-use OCA\SimpleApp\AppInfo\Application;
+use OCA\IntranetAgglo\AppInfo\Application;
 
 use OCP\IRequest;
 use OCP\AppFramework\Http;
@@ -10,7 +10,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Controller;
 
-use OCA\SimpleApp\Service\MenuService;
+use OCA\IntranetAgglo\Service\MenuService;
 
 class MenuController extends Controller
 {

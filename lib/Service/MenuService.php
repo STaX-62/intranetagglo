@@ -1,14 +1,14 @@
 <?php
 
-namespace OCA\SimpleApp\Service;
+namespace OCA\IntranetAgglo\Service;
 
 use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\SimpleApp\Db\Menu;
-use OCA\SimpleApp\Db\MenuMapper;
+use OCA\IntranetAgglo\Db\Menu;
+use OCA\IntranetAgglo\Db\MenuMapper;
 
 class MenuService
 {

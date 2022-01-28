@@ -1,11 +1,11 @@
 <?php
 
-namespace OCA\SimpleApp\Controller;
+namespace OCA\IntranetAgglo\Controller;
 
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
-use OCA\SimpleApp\AppInfo\Application;
+use OCA\IntranetAgglo\AppInfo\Application;
 use OCP\Util;
 
 class PageController extends Controller

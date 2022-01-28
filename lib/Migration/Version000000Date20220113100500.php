@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\SimpleApp\Migration;
+namespace OCA\IntranetAgglo\Migration;
 
 use Closure;
 use OCP\DB\ISchemaWrapper;
@@ -21,8 +21,8 @@ class Version000000Date20220113100500 extends SimpleMigrationStep
         /** @var ISchemaWrapper $schema */
         $schema = $schemaClosure();
 
-        if (!$schema->hasTable('simpleappnews')) {
-            $table = $schema->createTable('simpleappnews');
+        if (!$schema->hasTable('intranetagglonews')) {
+            $table = $schema->createTable('intranetagglonews');
             $table->addColumn('id', 'integer', [
                 'autoincrement' => true,
                 'notnull' => true,
@@ -55,8 +55,8 @@ class Version000000Date20220113100500 extends SimpleMigrationStep
             ]);
             $table->setPrimaryKey(['id']);
         }
-        if (!$schema->hasTable('simpleappmenu')) {
-            $table = $schema->createTable('simpleappmenu');
+        if (!$schema->hasTable('intranetagglomenu')) {
+            $table = $schema->createTable('intranetagglomenu');
             $table->addColumn('id', 'integer', [
                 'autoincrement' => true,
                 'notnull' => true,
@@ -81,8 +81,8 @@ class Version000000Date20220113100500 extends SimpleMigrationStep
             ]);
             $table->setPrimaryKey(['id']);
         }
-        if (!$schema->hasTable('simpleappapps')) {
-            $table = $schema->createTable('simpleappapps');
+        if (!$schema->hasTable('intranetaggloapps')) {
+            $table = $schema->createTable('intranetaggloapps');
             $table->addColumn('id', 'integer', [
                 'autoincrement' => true,
                 'notnull' => true,

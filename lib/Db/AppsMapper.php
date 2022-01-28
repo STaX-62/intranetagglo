@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\SimpleApp\Db;
+namespace OCA\IntranetAgglo\Db;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
@@ -13,7 +13,7 @@ class AppsMapper extends QBMapper
 
     public function __construct(IDBConnection $db)
     {
-        parent::__construct($db, 'simpleappapps', Apps::class);
+        parent::__construct($db, 'intranetaggloapps', Apps::class);
     }
 
     /**

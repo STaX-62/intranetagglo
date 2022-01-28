@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\SimpleApp\Db;
+namespace OCA\IntranetAgglo\Db;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
@@ -13,7 +13,7 @@ class MenuMapper extends QBMapper
 
     public function __construct(IDBConnection $db)
     {
-        parent::__construct($db, 'simpleappmenu', Menu::class);
+        parent::__construct($db, 'intranetagglomenu', Menu::class);
     }
 
     /**

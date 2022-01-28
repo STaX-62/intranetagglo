@@ -1,14 +1,14 @@
 <?php
 
-namespace OCA\SimpleApp\Service;
+namespace OCA\IntranetAgglo\Service;
 
 use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\SimpleApp\Db\Apps;
-use OCA\SimpleApp\Db\AppsMapper;
+use OCA\IntranetAgglo\Db\Apps;
+use OCA\IntranetAgglo\Db\AppsMapper;
 
 class AppsService
 {

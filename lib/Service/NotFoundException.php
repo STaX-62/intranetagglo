@@ -1,4 +1,4 @@
 <?php
-namespace OCA\SimpleApp\Service;
+namespace OCA\IntranetAgglo\Service;
 
 class NotFoundException extends ServiceException {}
