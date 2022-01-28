@@ -147,7 +147,7 @@ export default {
 
   },
   mounted() {
-    var url = `apps/simpleapp${'/menus'}`
+    var url = `apps/intranetagglo${'/menus'}`
     axios.get(generateUrl(url))
       .then(response => (this.menusInBDD = response.data))
   }

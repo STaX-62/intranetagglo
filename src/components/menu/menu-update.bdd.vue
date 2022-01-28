@@ -271,7 +271,7 @@ export default {
     async createMenu(menu) {
       this.updating = true
       try {
-        var url = `apps/simpleapp/menus`
+        var url = `apps/intranetagglo/menus`
         const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
         this.LastModifiedID = response.data.id
       } catch (e) {
@@ -282,7 +282,7 @@ export default {
     async updateMenu(menu) {
       this.updating = true
       try {
-        var url = `apps/simpleapp/menus/${menu.id}`
+        var url = `apps/intranetagglo/menus/${menu.id}`
         const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
         this.LastModifiedID = response.data.id
       } catch (e) {
@@ -293,7 +293,7 @@ export default {
     async deleteMenu(id) {
       this.updating = true
       try {
-        var url = `apps/simpleapp/menus/${id}`
+        var url = `apps/intranetagglo/menus/${id}`
         const response = await axios.delete(generateUrl(url, { id }))
         this.LastModifiedID = response.data.id
       } catch (e) {

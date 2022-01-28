@@ -1,13 +1,13 @@
 <?php
 
-namespace OCA\SimpleApp\Controller;
+namespace OCA\IntranetAgglo\Controller;
 
 use Closure;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 
-use OCA\SimpleApp\Service\NotFoundException;
+use OCA\IntranetAgglo\Service\NotFoundException;
 
 
 trait Errors {

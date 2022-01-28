@@ -138,7 +138,7 @@ export default {
     async createMenu(menu) {
       this.updating = true
       try {
-        var url = `apps/simpleapp/news`
+        var url = `apps/intranetagglo/news`
         const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
         this.LastModifiedID = response.data.id
       } catch (e) {

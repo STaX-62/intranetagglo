@@ -1,2 +1,7 @@
-# intranetagglo
- Application Intranet de la CA2BM pour Nextcloud
+# Intranet Agglo
+cette application est a installer dans le dossier **nextcloud/apps/**
+
+## Building the app
+
+*later*
+
