@@ -4,9 +4,7 @@
       <h2 class="apps-header">
         Applications
         <div id="apps-update-btn" v-if="userid.groups.includes('admin')">
-          <b-icon icon="pencil-square" v-if="!updating" @click="SetUpdating()"></b-icon>
-          <b-icon icon="x" v-if="updating" @click="Return()"></b-icon>
-          <b-icon icon="check2" v-if="updating" @click="Save()"></b-icon>
+          <AppsUpdate v-bind:appsarray.sync="appsarray" />
         </div>
       </h2>
       <a
@@ -23,13 +21,14 @@
         <a v-bind:id="'link'+index" v-bind:href="app.link" target="_blank"></a>
       </a>
     </div>
-    <AppsUpdate ref="apps-update-modal" v-bind:apptoupdate="apptoupdate" v-if="updating" />
   </div>
 </template>
 
 <script>
 import store from '@/store/index.js'
 import AppsUpdate from '@/components/apps/apps-update.bdd.vue'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
 export default {
   name: 'Apps',
   store: store,
@@ -37,20 +36,6 @@ export default {
     AppsUpdate
   },
   computed: {
-    // FixedAppArray() {
-    //   Object.filter = (obj, predicate) =>
-    //     Object.keys(obj)
-    //       .filter(key => predicate(obj[key]))
-    //       .reduce((res, key) => (res[key] = obj[key], res), {});
-    //   return Object.filter(this.appsarray, app => app.fixed);
-    // },
-    // NonFixedAppArray() {
-    //   Object.filter = (obj, predicate) =>
-    //     Object.keys(obj)
-    //       .filter(key => predicate(obj[key]))
-    //       .reduce((res, key) => (res[key] = obj[key], res), {});
-    //   return Object.filter(this.appsarray, app => !app.fixed);
-    // },
     appsoptions() {
       var News = this.$store.state.News
       var AppsArray = []
@@ -85,7 +70,7 @@ export default {
       if (!updating) document.getElementById('link' + index).click();
       else if (updating && this.userid.groups.includes('admin')) {
         this.apptoupdate[index] = app;
-        this.$refs['apps-update-modal'].show()
+        this.modal = true;
       }
     },
     AppsSet(value) {
@@ -94,12 +79,18 @@ export default {
       this.$store.commit('updateCategories', value)
     }
   },
+  mounted() {
+    var url = `apps/intranetagglo${'/apps'}`
+    axios.get(generateUrl(url))
+      .then(response => (this.appsarray = response.data))
+  },
   data: function () {
     return {
       droptext: '',
+      modal: false,
       userid: {
         name: 'Clément',
-        groups: ['', 'info']
+        groups: ['admin', 'info']
       },
       updating: false,
       oldapparray: {},
@@ -175,7 +166,15 @@ export default {
           'icon': 'journal',
           'fixed': false
         }
-      }
+      },
+      selected: null,
+      options: [
+        { value: null, text: 'Please select an option' },
+        { value: 'a', text: 'This is First option' },
+        { value: 'b', text: 'Selected Option' },
+        { value: { C: '3PO' }, text: 'This is an option with object value' },
+        { value: 'd', text: 'This one is disabled', disabled: true }
+      ]
     }
   }
 }

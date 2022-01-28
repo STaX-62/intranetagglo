@@ -22,6 +22,9 @@
 import NewsMedium from './news/news.comp'
 import Apps from './Apps'
 import NewsAdd from './news/news-add.bdd'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
+
 export default {
   name: 'News',
   props: {
@@ -43,38 +46,9 @@ export default {
         name: 'Clément',
         groups: ['admin', 'info']
       },
-      appsarray: {
-        0: {
-          'id': 1,
-          'title': 'DES CHOCOLATS POUR NOEL',
-          'description': 'En fait y aura pas de chocolat c\'est le covid les enfants',
-          'text': '<p class="article_content"></p><p>Chers tous,</p><p>L’année qui vient de se terminer aura évidemment été marquée par l’épidémie du Covid. Aussi mes pensées se tournent d’abord vers ceux qui ont été touchés par la perte de personnes chères ou par la maladie.</p><p>Nous sommes tous dans l’attente d’un retour à la normale, dans l’inquiétude pour nos proches et nous-mêmes, dans le doute quant aux restrictions en place ou potentielles. Tout ceci nous perturbe au quotidien et nous empêche parfois de penser sereinement à l’avenir. Pour autant nous sommes des agents territoriaux au service du public et c’est la raison pour laquelle nous avons le devoir, autant que faire se peut, d’ assumer la continuité du service public. Je compte une fois encore sur l’implication de tous, sur la force du collectif.</p><p>L’année 2022 sera consacrée à la solidification des projets en cours avec <strong>un développement et une maîtrise financière renforcés</strong>, de nos compétences et activités, notamment &nbsp;pour gagner en performance. Elle nous permettra également d’intégrer les ambitions de développement avec le projet de territoire en cours d’écriture et les différentes politiques contractuelles ( Contrat global de l’eau-PCAET-Pradet …),l’anticipation relative à la mise en œuvre des nouvelles consignes de tri des déchets ….Pour ce faire ,et compte tenu de quelques mouvements de personnel &nbsp;(mutation, départs en retraite…), l’organisation des services aura encore à connaître des adaptations. Je vous remercie par avance de votre collaboration pour la mise en œuvre de ces ajustements indispensables à la bonne gestion et à «&nbsp;la bonne santé&nbsp;» de notre intercommunalité.</p><p>J’ai la conviction que nous avons maintenant notre avenir entre nos mains, que les procédures inhérentes à l’agrégation de tous les établissements et budgets préexistants touchent enfin à leur terme . Il est de notre responsabilité de nous préparer aux nouveaux enjeux avec confiance.</p><p>Que 2022 nous apporte la sérénité dans nos projets et de la continuité dans nos succès.</p><p>Je vous souhaite une très bonne année, faite de belles rencontres et beaux moments. Qu’elle vous apporte, ainsi qu’à ceux qui vous sont chers, la santé et le bien être dans vos vies personnelle et professionnelle.</p><p>Prenez-soin de vous.</p><p><strong>Didier BÉE</strong></p>',
-          'photos': './img/photo-h-1.jpg',// require("../assets/photo-h-1.jpg"),
-          'category': 'Note de service',
-          'authgroup': 'info',
-          'visible': true
-        },
-        1: {
-          'id': 2,
-          'title': 'VOEUX DU DGS',
-          'description': '',
-          'text': '<p class="article_content"></p><p>Chers tous,</p><p>L’année qui vient de se terminer aura évidemment été marquée par l’épidémie du Covid. Aussi mes pensées se tournent d’abord vers ceux qui ont été touchés par la perte de personnes chères ou par la maladie.</p><p>Nous sommes tous dans l’attente d’un retour à la normale, dans l’inquiétude pour nos proches et nous-mêmes, dans le doute quant aux restrictions en place ou potentielles. Tout ceci nous perturbe au quotidien et nous empêche parfois de penser sereinement à l’avenir. Pour autant nous sommes des agents territoriaux au service du public et c’est la raison pour laquelle nous avons le devoir, autant que faire se peut, d’ assumer la continuité du service public. Je compte une fois encore sur l’implication de tous, sur la force du collectif.</p><p>L’année 2022 sera consacrée à la solidification des projets en cours avec <strong>un développement et une maîtrise financière renforcés</strong>, de nos compétences et activités, notamment &nbsp;pour gagner en performance. Elle nous permettra également d’intégrer les ambitions de développement avec le projet de territoire en cours d’écriture et les différentes politiques contractuelles ( Contrat global de l’eau-PCAET-Pradet …),l’anticipation relative à la mise en œuvre des nouvelles consignes de tri des déchets ….Pour ce faire ,et compte tenu de quelques mouvements de personnel &nbsp;(mutation, départs en retraite…), l’organisation des services aura encore à connaître des adaptations. Je vous remercie par avance de votre collaboration pour la mise en œuvre de ces ajustements indispensables à la bonne gestion et à «&nbsp;la bonne santé&nbsp;» de notre intercommunalité.</p><p>J’ai la conviction que nous avons maintenant notre avenir entre nos mains, que les procédures inhérentes à l’agrégation de tous les établissements et budgets préexistants touchent enfin à leur terme . Il est de notre responsabilité de nous préparer aux nouveaux enjeux avec confiance.</p><p>Que 2022 nous apporte la sérénité dans nos projets et de la continuité dans nos succès.</p><p>Je vous souhaite une très bonne année, faite de belles rencontres et beaux moments. Qu’elle vous apporte, ainsi qu’à ceux qui vous sont chers, la santé et le bien être dans vos vies personnelle et professionnelle.</p><p>Prenez-soin de vous.</p><p><strong>Didier BÉE</strong></p>',
-          'photos': '',
-          'category': 'Note de service',
-          'authgroup': 'info',
-          'visible': true
-        },
-        2: {
-          'id': 3,
-          'title': 'ORGANIGRAMME - SEPTEMBRE 2021',
-          'description': 'http://10.200.1.5/annuaire/',
-          'text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in enim vitae tellus dapibus fringilla sed ut orci. Cras placerat, justo ac vehicula vehicula, odio nulla aliquet ligula.',
-          'photos': './img/photo5.jpg', //require("../assets/photo5.jpg"),
-          'category': 'Note de service',
-          'authgroup': 'info',
-          'visible': true
-        },
-      }
+      appsarray: [],
+      currentPage: 1,
+      rows: 50,
     }
   },
   computed: {
@@ -160,8 +134,12 @@ export default {
       let newsrow = document.getElementById('news-row')
       newsrow.classList.toggle(this.actually)
     }
+
   },
   mounted() {
+    var url = `apps/intranetagglo/news/${0}`
+    axios.get(generateUrl(url))
+      .then(response => (this.appsarray = response.data))
     var news = document.getElementsByClassName('news');
     let newsrow = document.getElementById('news-row')
     news[0].addEventListener('click', () => {

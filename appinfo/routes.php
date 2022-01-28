@@ -23,12 +23,6 @@ return [
             'verb' => 'GET',
         ],
         [
-            'name' => 'menu#get',
-            'url' => '/menus/{id}',
-            'verb' => 'GET',
-            'requirements' => ['id' => '\d+'],
-        ],
-        [
             'name' => 'menu#create',
             'url' => '/menus',
             'verb' => 'POST',
@@ -49,19 +43,19 @@ return [
         //////////  N E W S  //////////
         [
             'name' => 'news#index',
-            'url' => '/news',
+            'url' => '/news/{id}',
+            'verb' => 'GET',
+            'requirements' => ['id' => '\d+'],
+        ],
+        [
+            'name' => 'news#search',
+            'url' => '/news/{id}/{search}',
             'verb' => 'GET',
         ],
         [
             'name' => 'news#dashboard',
             'url' => '/news/dashboard',
             'verb' => 'GET',
-        ],
-        [
-            'name' => 'news#get',
-            'url' => '/news/{id}',
-            'verb' => 'GET',
-            'requirements' => ['id' => '\d+'],
         ],
         [
             'name' => 'news#create',
@@ -91,12 +85,6 @@ return [
             'name' => 'apps#dashboard',
             'url' => '/apps/dashboard',
             'verb' => 'GET',
-        ],
-        [
-            'name' => 'apps#get',
-            'url' => '/apps/{id}',
-            'verb' => 'GET',
-            'requirements' => ['id' => '\d+'],
         ],
         [
             'name' => 'apps#create',

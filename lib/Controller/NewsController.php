@@ -28,9 +28,9 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function index(): DataResponse
+    public function index(int $firstresult): DataResponse
     {
-        return (new DataResponse($this->service->findAll()));
+        return (new DataResponse($this->service->getNews($firstresult)));
     }
 
     /**
@@ -41,6 +41,14 @@ class NewsController extends Controller
         return $this->handleNotFound(function () use ($id) {
             return $this->service->find($id);
         });
+    }
+
+    /**
+     * @NoAdminRequired
+     */
+    public function search(): DataResponse
+    {
+        return (new DataResponse($this->service->getNewsBySearch($this->request->getParam('id'), $this->request->getParam('search'))));
     }
 
 
