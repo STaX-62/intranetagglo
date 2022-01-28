@@ -31,9 +31,13 @@ class Version000000Date20220113100500 extends SimpleMigrationStep
                 'notnull' => true,
                 'length' => 200,
             ]);
-            $table->addColumn('title', 'string', [
+            $table->addColumn('title', 'text', [
                 'notnull' => true,
-                'length' => 200
+                'default' => ''
+            ]);
+            $table->addColumn('subtitle', 'text', [
+                'notnull' => true,
+                'default' => ''
             ]);
             $table->addColumn('text', 'text', [
                 'notnull' => true,
@@ -43,15 +47,13 @@ class Version000000Date20220113100500 extends SimpleMigrationStep
                 'notnull' => true,
                 'default' => ''
             ]);
-            $table->addColumn('category', 'integer', [
-                'notnull' => true
+            $table->addColumn('category', 'string', [
+                'notnull' => true,
+                'length' => 300,
             ]);
-            $table->addColumn('authgroup', 'text', [
+            $table->addColumn('groups', 'text', [
                 'notnull' => true,
                 'default' => ''
-            ]);
-            $table->addColumn('size', 'integer', [
-                'notnull' => true
             ]);
             $table->setPrimaryKey(['id']);
         }

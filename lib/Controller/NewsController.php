@@ -10,16 +10,16 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Controller;
 
-use OCA\IntranetAgglo\Service\AppsService;
+use OCA\IntranetAgglo\Service\NewsService;
 
-class AppsController extends Controller
+class NewsController extends Controller
 {
-    /** @var AppsService */
+    /** @var NewsService */
     private $service;
 
     use Errors;
 
-    public function __construct(IRequest $request, AppsService $service)
+    public function __construct(IRequest $request, NewsService $service)
     {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
@@ -47,18 +47,18 @@ class AppsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function create(string $title, string $icon, string $link, string $groups)
+    public function create(string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups)
     {
-        return $this->service->create($title, $icon, $link, $groups);
+        return $this->service->create($author, $title, $subtitle, $text, $photo, $category, $groups);
     }
 
     /**
      * @NoAdminRequired
      */
-    public function update(int $id, string $title, string $icon, string $link, string $groups)
+    public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups)
     {
-        return $this->handleNotFound(function () use ($id, $title, $icon, $link, $groups) {
-            return $this->service->update($id, $title, $icon, $link, $groups);
+        return $this->handleNotFound(function () use ($id, $author, $title, $subtitle, $text, $photo, $category, $groups) {
+            return $this->service->update($id, $author, $title, $subtitle, $text, $photo, $category, $groups);
         });
     }
 

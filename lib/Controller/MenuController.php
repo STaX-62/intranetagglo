@@ -30,7 +30,6 @@ class MenuController extends Controller
      */
     public function index(): DataResponse
     {
-        echo json_decode($this->service->findAll());
         return (new DataResponse($this->service->findAll()));
     }
 
