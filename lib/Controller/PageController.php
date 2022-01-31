@@ -34,7 +34,7 @@ class PageController extends Controller
 	 * @NoCSRFRequired
 	 */
 
-	public function getServerGroups()
+	public static function getServerGroups()
 	{
 		return new DataResponse(GroupInterface::getGroups());
 	}
