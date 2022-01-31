@@ -17,9 +17,11 @@ class PageController extends Controller
 {
 	private $db;
 
-	public function __construct(IRequest $request,IGroupManager $groupmanager,IUserSession $session)
+	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session)
 	{
-		parent::__construct(Application::APP_ID,$request,$groupmanager,$session);
+		parent::__construct(Application::APP_ID, $request);
+		$this->groupmanager = $groupmanager;
+		$this->session = $session;
 	}
 
 	/**
@@ -39,7 +41,7 @@ class PageController extends Controller
 	public function getUserInfo()
 	{
 		$user = $this->session->getUser();
-		$userinfo = [$this->user->getDisplayName(),$this->groupmanager->getUserGroupsIds($user)];
+		$userinfo = [$this->user->getDisplayName(), $this->groupmanager->getUserGroupsIds($user)];
 		return new DataResponse($userinfo);
 	}
 }
