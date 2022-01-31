@@ -27,7 +27,7 @@ class PageController extends Controller
 		parent::__construct(Application::APP_ID, $request);
 		$this->groupmanager = $groupmanager;
 		$this->session = $session;
-		$this->groupBackend = $groupBackend;
+		$this->groupBackend = $groupBackend::getGroups();
 	}
 
 	/**
@@ -37,7 +37,7 @@ class PageController extends Controller
 
 	public function getServerGroups()
 	{
-		return new DataResponse($this->groupBackend::getGroups());
+		return new DataResponse($this->groupBackend);
 	}
 
 	/**
