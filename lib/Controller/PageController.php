@@ -12,10 +12,12 @@ use OCP\AppFramework\Http\JSONResponse;
 use OCP\Util;
 use OCP\IGroupManager;
 use OCP\IUserSession;
+use OCP\IUser;
 
 class PageController extends Controller
 {
 	private $db;
+	private IUser $user;
 
 	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session)
 	{
@@ -41,7 +43,7 @@ class PageController extends Controller
 	public function getUserInfo()
 	{
 		$user = $this->session->getUser();
-		$userinfo = [$this->user->getDisplayName(), $this->groupmanager->getUserGroupsIds($user)];
+		$userinfo = [$user->getDisplayName(), $this->groupmanager->getUserGroupsIds($user)];
 		return new DataResponse($userinfo);
 	}
 }
