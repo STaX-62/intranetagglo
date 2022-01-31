@@ -6,7 +6,6 @@
       <b-table-simple>
         <b-thead>
           <b-tr>
-            <b-th>Ordre</b-th>
             <b-th>Titre</b-th>
             <b-th>Lien</b-th>
             <b-th>Icon</b-th>
@@ -16,8 +15,7 @@
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="(app,index) in apps" :key="index">
-            <b-th >{{app.order}}</b-th>
+          <b-tr v-for="(app,index) in UpdatedApps" :key="index">
             <b-th>{{app.title}}</b-th>
             <b-td>{{app.link}}</b-td>
             <b-td>{{app.icon}}</b-td>
@@ -28,7 +26,7 @@
               </button>
             </b-td>
             <b-td>
-              <button type="button" class="apps-del-button" @click="DeleteVerification(app)">
+              <button type="button" class="apps-del-button" @click="DeleteVerification(app,index)">
                 <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
               </button>
             </b-td>
@@ -36,30 +34,30 @@
         </b-tbody>
       </b-table-simple>
       <div style="width:100%;display:flex">
-        <button class="apps-add" @click="AddApps(apps)">+</button>
+        <button class="apps-add" @click="AddApps()">+</button>
       </div>
     </b-modal>
 
-    <b-modal size="xl" v-model="updateapp" hide-footer>
+    <b-modal size="xl" v-model="updateapp">
       <template #modal-title>Modification de l'application :</template>
       <div class="menu-form">
         <div>
           <label for="title">Titre</label>
-          <b-form-input name="title" type="text" v-model="apptoupdate.title" />
+          <b-form-input name="title" type="text" v-model="apptoupdate.title" required />
         </div>
         <div>
           <label for="link">Lien URL</label>
-          <b-form-input name="link" type="text" v-model="apptoupdate.link" />
+          <b-form-input name="link" type="text" v-model="apptoupdate.link" required />
         </div>
         <div>
-          <label for="icon">icon (only Section)</label>
-          <b-form-input name="icon" type="text" v-model="apptoupdate.icon" />
+          <label for="icon">icon</label>
+          <b-form-input name="icon" type="text" v-model="apptoupdate.icon" required />
         </div>
         <label for="groups">Groupes</label>
         <b-form-tags
           id="tags-component-select"
           name="groups"
-          v-model="groups"
+          v-model="apptoupdate.groups"
           size="lg"
           class="mb-2"
           add-on-change
@@ -101,10 +99,14 @@ import { generateUrl } from '@nextcloud/router'
 export default {
   name: 'AppsUpdate',
   props: {
+    updating: Boolean
   },
   computed: {
+    UpdatedApps() {
+      return this.apps;
+    },
     availableOptions() {
-      return this.options.filter(opt => this.groups.indexOf(opt) === -1)
+      return this.options.filter(opt => this.apptoupdate.groups.indexOf(opt) === -1)
     }
   },
   mounted() {
@@ -113,17 +115,26 @@ export default {
       .then(response => (this.apps = response.data))
   },
   methods: {
-    AddApps(apps) {
+    AddApps() {
       this.apps.push({
-        'order': apps.length + 1,
         'title': 'Nouvelle Section',
         'icon': 'exclamation-triangle',
         'link': '',
         'groups': ''
       })
     },
-    DeleteVerification(apps) {
-      this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${apps.title}`, {
+    Save(app) {
+      if (app.id == null) {
+        app.groups = this.app.groups.join(';')
+        this.createMenu(app)
+      }
+      else {
+        app.groups = this.app.groups.join(';')
+        this.updateMenu(app)
+      }
+    },
+    DeleteVerification(app, index) {
+      this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer cette application : ${app.title}`, {
         title: 'Confirmation',
         size: 'sm',
         buttonSize: 'sm',
@@ -136,12 +147,13 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.deleteMenu(apps.id)
+            this.apps.splice(index, 1)
+            this.deleteApps(app.id)
           }
         })
     },
     Modify(apps) {
-      this.apptoupdate.order = apps.order;
+      this.apptoupdate.id = apps.id;
       this.apptoupdate.title = apps.title;
       this.apptoupdate.link = apps.link;
       this.apptoupdate.icon = apps.icon;
@@ -149,20 +161,51 @@ export default {
 
       this.updateapp = !this.updateapp;
     },
+    async createApps(apps) {
+      try {
+        var url = `apps/intranetagglo/apps`
+        const response = await axios.post(generateUrl(url), apps, { type: 'application/json' })
+        this.LastModifiedID = response.data.id
+      } catch (e) {
+        console.error(e)
+      }
+      this.updating = true
+    },
+    async updateApps(apps) {
+      try {
+        var url = `apps/intranetagglo/apps/${apps.id}`
+        const response = await axios.post(generateUrl(url), apps, { type: 'application/json' })
+        this.LastModifiedID = response.data.id
+      } catch (e) {
+        console.error(e)
+      }
+      this.updating = true
+    },
+    async deleteApps(id) {
+      this.updating = true
+      try {
+        var url = `apps/intranetagglo/apps/${id}`
+        const response = await axios.delete(generateUrl(url, { id }))
+        this.LastModifiedID = response.data.id
+      } catch (e) {
+        console.error(e)
+      }
+      this.updating = true
+    },
   },
   data: function () {
     return {
+      LastModifiedID: null,
       appsmodal: false,
       updateapp: false,
       apps: [],
-      groups: [],
       options: ['admin', 'info', 'notme'],
       apptoupdate: {
-        order: null,
+        id: null,
         title: "",
         link: "",
         icon: "",
-        groups: ""
+        groups: []
       },
     }
   }

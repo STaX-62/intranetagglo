@@ -61,9 +61,7 @@ export default {
   data: function () {
     return {
       image: '/nextcloud/apps/intranetca/src/assets/LogoCA2BM.png',// require('../assets/LogoCA2BM.png'),//'/nextcloud/apps/intranetca/src/assets/LogoCA2BM.png'
-      userid: {
-        groups: ['admin', 'info']
-      },
+      user: [],
       lastOpenedContainer: null,
       menusInBDD: [
       ]
@@ -150,6 +148,9 @@ export default {
     var url = `apps/intranetagglo${'/menus'}`
     axios.get(generateUrl(url))
       .then(response => (this.menusInBDD = response.data))
+    var url2 = `apps/intranetagglo${'/user'}`
+    axios.get(generateUrl(url2))
+      .then(response => (this.user = response.data))
   }
 }
 </script>

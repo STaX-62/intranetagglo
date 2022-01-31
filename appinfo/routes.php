@@ -8,6 +8,11 @@ return [
     'routes' => [
         ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
         [
+            'name' => 'page#getUserInfo',
+            'url' => '/user',
+            'verb' => 'GET'
+        ],
+        [
             'name' => 'menu_api#preflighted_cors', 'url' => '/api/0.1/{path}',
             'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']
         ],
