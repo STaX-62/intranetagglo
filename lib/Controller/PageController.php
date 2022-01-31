@@ -37,7 +37,7 @@ class PageController extends Controller
 
 	public function getServerGroups()
 	{
-		return new DataResponse($this->group);
+		return new DataResponse("3");
 	}
 
 	/**
