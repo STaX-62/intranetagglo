@@ -28,6 +28,11 @@ class PageController extends Controller
 		$this->groups = $groups;
 	}
 
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+
 	public function getServerGroups()
 	{
 		return new DataResponse($this->groups->getGroups());
