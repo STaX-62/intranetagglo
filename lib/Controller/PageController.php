@@ -11,10 +11,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\Util;
 use OCP\IGroupManager;
-use OCP\IUserManager;
-use OCP\ISession;
 use OCP\IUserSession;
-use OCP\IUser;
 
 class PageController extends Controller
 {
