@@ -94,7 +94,7 @@
 
 <script>
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import { generateUrl, generateOcsUrl } from '@nextcloud/router'
 
 export default {
   name: 'AppsUpdate',
@@ -113,8 +113,7 @@ export default {
     var url = `apps/intranetagglo${'/apps'}`
     axios.get(generateUrl(url))
       .then(response => (this.apps = response.data))
-    var groupsurl = `apps/intranetagglo${'/apps'}`
-    axios.get(generateUrl(groupsurl))
+    axios.get(generateOcsUrl(`cloud/groups`, 2))
       .then(response => (this.options = response.data))
   },
   methods: {
@@ -214,6 +213,8 @@ export default {
   }
 }
 </script>
+
+
 <style scoped>
 .apps-add {
   font-size: 19px;

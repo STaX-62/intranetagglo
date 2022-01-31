@@ -13,7 +13,6 @@ use OCP\Util;
 use OCP\IGroupManager;
 use OCP\IUserSession;
 use OCP\IUser;
-use OCP\GroupInterface;
 
 class PageController extends Controller
 {
@@ -27,15 +26,6 @@ class PageController extends Controller
 		$this->session = $session;
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
-
-	public static function getServerGroups()
-	{
-		return new DataResponse(GroupInterface::getGroups());
-	}
 
 	/**
 	 * @NoAdminRequired
