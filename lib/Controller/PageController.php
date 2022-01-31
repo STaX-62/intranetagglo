@@ -36,7 +36,8 @@ class PageController extends Controller
 
 	public static function getServerGroups()
 	{
-		return new DataResponse(GroupInterface::getGroups());
+		$group = new GroupInterface;
+		return new DataResponse($group->getGroups());
 	}
 
 	/**
