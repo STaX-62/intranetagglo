@@ -20,14 +20,14 @@ class PageController extends Controller
 	private $db;
 	private IUser $user;
 	/** @var GroupInterface */
-	private $groupBackend;
+	private $test;
 
 	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session, GroupInterface $groupBackend)
 	{
 		parent::__construct(Application::APP_ID, $request);
 		$this->groupmanager = $groupmanager;
 		$this->session = $session;
-		$this->groupBackend = $groupBackend::getGroups();
+		$this->test = $groupBackend::getGroups();
 	}
 
 	/**
