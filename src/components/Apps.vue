@@ -3,13 +3,13 @@
     <div id="apps-container" class="apps-container">
       <h2 class="apps-header">
         Applications
-        <div id="apps-update-btn" v-if="userid.groups.includes('admin')">
+        <div id="apps-update-btn" v-if="user.groups.includes('admin')">
           <AppsUpdate v-bind:updating.sync="updating" />
         </div>
       </h2>
       <a
         class="apps-content-main"
-        v-for="(app,index) in appsarray"
+        v-for="(app,index) in appsToDisplay"
         :key="index"
         v-bind:href="app.link"
         target="_blank"
@@ -45,14 +45,10 @@ export default {
     },
   },
   computed: {
-    appsoptions() {
-      var News = this.$store.state.News
-      var AppsArray = []
-      for (var i = 0; i < News.length; i++) {
-        AppsArray.push(News[i].apps)
+    user: {
+      get() {
+        return this.$store.state.user
       }
-      const uniqueCaterogy = Array.from(new Set(AppsArray))
-      return uniqueCaterogy
     },
     search: {
       get() {
@@ -64,6 +60,21 @@ export default {
     }
   },
   methods: {
+    appsToDisplay() {
+      for (var y = 0; y < requiredGroups.length; y++) {
+        var requiredGroups = this.appsarray[y].groups.split(';')
+        var state = true
+        for (var i = 0; i < requiredGroups.length; i++) {
+          if (!this.user.groups.includes(requiredGroups[i])) {
+            state = false
+          }
+        }
+        if (!state) {
+          this.appsarray.splice(y, 1)
+        }
+      }
+      return this.appsarray
+    },
     AppsSet(value) {
       this.droptext = value
       console.log(this.droptext)
@@ -79,10 +90,6 @@ export default {
     return {
       droptext: '',
       modal: false,
-      userid: {
-        name: 'Clément',
-        groups: ['admin', 'info']
-      },
       updating: false,
       apptoupdate: {},
       appsarray: []

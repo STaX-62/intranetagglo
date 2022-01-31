@@ -21,7 +21,7 @@
             <b-td>{{app.icon}}</b-td>
             <b-td>{{app.groups}}</b-td>
             <b-td>
-              <button type="button" class="apps-update-button" @click="Modify(app)">
+              <button type="button" class="apps-update-button" @click="Modify(app,index)">
                 <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
               </button>
             </b-td>
@@ -38,7 +38,7 @@
       </div>
     </b-modal>
 
-    <b-modal size="xl" v-model="updateapp">
+    <b-modal size="xl" v-model="updateapp" @ok="Save(apptoupdate)">
       <template #modal-title>Modification de l'application :</template>
       <div class="menu-form">
         <div>
@@ -128,10 +128,18 @@ export default {
     Save(app) {
       if (app.id == null) {
         app.groups = this.app.groups.join(';')
+        this.apps[app.arrayindex].title = app.title;
+        this.apps[app.arrayindex].icon = app.icon;
+        this.apps[app.arrayindex].link = app.link;
+        this.apps[app.arrayindex].groups = app.groups;
         this.createMenu(app)
       }
       else {
         app.groups = this.app.groups.join(';')
+        this.apps[app.arrayindex].title = app.title;
+        this.apps[app.arrayindex].icon = app.icon;
+        this.apps[app.arrayindex].link = app.link;
+        this.apps[app.arrayindex].groups = app.groups;
         this.updateMenu(app)
       }
     },
@@ -154,7 +162,8 @@ export default {
           }
         })
     },
-    Modify(apps) {
+    Modify(apps, index) {
+      this.apptoupdate.arrayindex = index;
       this.apptoupdate.id = apps.id;
       this.apptoupdate.title = apps.title;
       this.apptoupdate.link = apps.link;
@@ -203,6 +212,7 @@ export default {
       apps: [],
       options: [],
       apptoupdate: {
+        arrayindex: null,
         id: null,
         title: "",
         link: "",

@@ -1,10 +1,10 @@
 <template>
   <div id="news-frame">
     <div id="news-container" class="news-container">
-      <div v-bind:class="IsAdmin() ? 'news-header admin-view' : 'news-header'">
+      <div v-bind:class="user.groups.includes('admin') ? 'news-header admin-view' : 'news-header'">
         <h2 class="news-header-title">Actualités</h2>
         <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
-        <NewsAdd v-if="IsAdmin()" />
+        <NewsAdd v-if="user.groups.includes('admin')" />
       </div>
       <div id="news-row" class="news-row">
         <NewsMedium id="news1" v-bind:news="appsarray[0]" />
@@ -42,10 +42,7 @@ export default {
       maxvisiblenews: 6,
       addNews: false,
       AddNewsModal: false,
-      userid: {
-        name: 'Clément',
-        groups: ['admin', 'info']
-      },
+
       appsarray: [],
       currentPage: 1,
       rows: 50,
@@ -60,6 +57,11 @@ export default {
       }
       const uniqueCaterogy = Array.from(new Set(CategoryArray))
       return uniqueCaterogy
+    },
+    user: {
+      get() {
+        return this.$store.state.user
+      }
     },
     search: {
       get() {
@@ -126,9 +128,6 @@ export default {
           el.classList.add('active')
         }
       })
-    },
-    IsAdmin() {
-      return this.userid.groups.includes('admin')
     },
     closeNews() {
       let newsrow = document.getElementById('news-row')
