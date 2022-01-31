@@ -19,7 +19,7 @@ class PageController extends Controller
 
 	public function __construct(IRequest $request,IGroupManager $groupmanager,IUserSession $session)
 	{
-		parent::__construct(Application::APP_ID,$groupmanager,$session, $request, $user);
+		parent::__construct(Application::APP_ID,$request,$groupmanager,$session);
 	}
 
 	/**
