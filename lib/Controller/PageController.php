@@ -13,19 +13,21 @@ use OCP\Util;
 use OCP\IGroupManager;
 use OCP\IUserSession;
 use OCP\IUser;
-use OCP\GroupInterface;
+use OCA\User_LDAP\Group_Proxy;
 
 class PageController extends Controller
 {
 	private $db;
 	private IUser $user;
-	private GroupInterface $groups;
+	/** @var Group_Proxy */
+	private $groupBackend;
 
-	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session)
+	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session, Group_Proxy $groupBackend)
 	{
 		parent::__construct(Application::APP_ID, $request);
 		$this->groupmanager = $groupmanager;
 		$this->session = $session;
+		$this->groupBackend = $groupBackend;
 	}
 
 	/**
@@ -35,7 +37,7 @@ class PageController extends Controller
 
 	public function getServerGroups()
 	{
-		return new DataResponse($this->groups->getGroups());
+		return new DataResponse($this->groupBackend->getGroups());
 	}
 
 	/**
