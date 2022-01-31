@@ -27,7 +27,7 @@ class PageController extends Controller
 		parent::__construct(Application::APP_ID, $request);
 		$this->groupmanager = $groupmanager;
 		$this->session = $session;
-		$this->group = $group::getGroups()
+		$this->group = $group::getGroups();
 	}
 
 	/**
