@@ -114,7 +114,7 @@ export default {
     axios.get(generateUrl(url))
       .then(response => (this.apps = response.data))
     axios.get(generateOcsUrl(`cloud/groups`, 2))
-      .then(response => (this.options = response.data))
+      .then(response => (this.options = response.data.ocs.data.groups))
   },
   methods: {
     AddApps() {
