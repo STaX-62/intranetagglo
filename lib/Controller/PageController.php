@@ -13,7 +13,7 @@ use OCP\Util;
 use OCP\IGroupManager;
 use OCP\IUserSession;
 use OCP\IUser;
-use OCP\GroupInterface;
+use OCP\IGroupBackend;
 
 class PageController extends Controller
 {
@@ -22,12 +22,12 @@ class PageController extends Controller
 	/** @var GroupInterface */
 	private $group;
 
-	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session, GroupInterface $group)
+	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session, IGroupBackend $group)
 	{
 		parent::__construct(Application::APP_ID, $request);
 		$this->groupmanager = $groupmanager;
 		$this->session = $session;
-		$this->group = $group::getGroups();
+		$this->group = $group;
 	}
 
 	/**
@@ -37,7 +37,7 @@ class PageController extends Controller
 
 	public function getServerGroups()
 	{
-		return new DataResponse($this->group);
+		return new DataResponse($this->group->getGroups());
 	}
 
 	/**
