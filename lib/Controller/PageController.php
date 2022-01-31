@@ -20,12 +20,11 @@ class PageController extends Controller
 	private $db;
 	private IUser $user;
 
-	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session, GroupInterface $group)
+	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session)
 	{
 		parent::__construct(Application::APP_ID, $request);
 		$this->groupmanager = $groupmanager;
 		$this->session = $session;
-		$this->group = $group;
 	}
 
 	/**
@@ -35,7 +34,7 @@ class PageController extends Controller
 
 	public static function getServerGroups()
 	{
-		return new DataResponse($this->group->getGroups());
+		return new DataResponse(GroupInterface::getGroups());
 	}
 
 	/**
