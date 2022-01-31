@@ -113,6 +113,9 @@ export default {
     var url = `apps/intranetagglo${'/apps'}`
     axios.get(generateUrl(url))
       .then(response => (this.apps = response.data))
+    var groupsurl = `apps/intranetagglo${'/apps'}`
+    axios.get(generateUrl(groupsurl))
+      .then(response => (this.options = response.data))
   },
   methods: {
     AddApps() {
@@ -199,7 +202,7 @@ export default {
       appsmodal: false,
       updateapp: false,
       apps: [],
-      options: ['admin', 'info', 'notme'],
+      options: [],
       apptoupdate: {
         id: null,
         title: "",

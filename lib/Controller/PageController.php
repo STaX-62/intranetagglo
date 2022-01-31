@@ -13,26 +13,24 @@ use OCP\Util;
 use OCP\IGroupManager;
 use OCP\IUserSession;
 use OCP\IUser;
+use OCP\GroupInterface;
 
 class PageController extends Controller
 {
 	private $db;
 	private IUser $user;
 
-	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session)
+	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session, GroupInterface $groups)
 	{
 		parent::__construct(Application::APP_ID, $request);
 		$this->groupmanager = $groupmanager;
 		$this->session = $session;
+		$this->groups = $groups;
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
-	public function index()
+	public function getServerGroups()
 	{
-		return new TemplateResponse(Application::APP_ID, 'index');  // templates/index.php
+		return new DataResponse($this->groups->getGroups());
 	}
 
 	/**
@@ -45,5 +43,14 @@ class PageController extends Controller
 		$user = $this->session->getUser();
 		$userinfo = [$user->getDisplayName(), $this->groupmanager->getUserGroupIds($user)];
 		return new DataResponse($userinfo);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function index()
+	{
+		return new TemplateResponse(Application::APP_ID, 'index');  // templates/index.php
 	}
 }

@@ -321,16 +321,19 @@ export default {
         groups: "",
         haschild: false
       },
-      options: ['admin', 'info', 'notme'],
+      options: [],
       LastModifiedID: null
     }
-  }
+  },
+  mounted() {
+    var groupsurl = `apps/intranetagglo${'/groups'}`
+    axios.get(generateUrl(groupsurl))
+      .then(response => (this.options = response.data))
+  },
 }
 </script>
 
 <style scoped>
-
-
 .admin-settings {
   display: flex;
   justify-content: center;
@@ -434,12 +437,12 @@ export default {
   display: block;
 }
 .menu-add {
-    font-size: 19px;
-    height: auto;
-    margin: 5px 50px 5px 5px;
-    border-radius: 5px;
+  font-size: 19px;
+  height: auto;
+  margin: 5px 50px 5px 5px;
+  border-radius: 5px;
 }
-.modal{
+.modal {
   z-index: 2001 !important;
 }
 </style>

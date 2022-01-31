@@ -4,8 +4,8 @@
       <img v-bind:src="image" />
     </div>
     <div class="sidenav-menu">
-      <div class="section-block" v-for="(section,index) in sectionArray" :key="'B'+index">
-        <button class="section" v-if="section.icon != ''">
+      <div class="section-block" v-for="(section,index) in sectionArray" :key="'B'+index" >
+        <button class="section">
           <div class="section-icon">
             <b-icon v-bind:icon="section.icon"></b-icon>
           </div>
@@ -148,9 +148,6 @@ export default {
     var url = `apps/intranetagglo${'/menus'}`
     axios.get(generateUrl(url))
       .then(response => (this.menusInBDD = response.data))
-    var url2 = `apps/intranetagglo${'/user'}`
-    axios.get(generateUrl(url2))
-      .then(response => (this.user = response.data))
   }
 }
 </script>
