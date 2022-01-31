@@ -43,7 +43,7 @@ class PageController extends Controller
 	public function getUserInfo()
 	{
 		$user = $this->session->getUser();
-		$userinfo = [$user->getDisplayName(), $this->groupmanager->getUserGroupsIds($user)];
+		$userinfo = [$user->getDisplayName(), $this->groupmanager->getUserGroupIds($user)];
 		return new DataResponse($userinfo);
 	}
 }
