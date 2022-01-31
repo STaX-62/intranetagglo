@@ -10,15 +10,17 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\Util;
-use OCP\IUser;
 use OCP\IGroupManager;
+use OCP\IUserManager;
+use OCP\ISession;
 use OCP\IUserSession;
+use OCP\IUser;
 
 class PageController extends Controller
 {
 	private $db;
 
-	public function __construct(IRequest $request,IUser $user,IGroupManager $groupmanager,IUserSession $session)
+	public function __construct(IRequest $request,IGroupManager $groupmanager,IUserSession $session)
 	{
 		parent::__construct(Application::APP_ID,$groupmanager,$session, $request, $user);
 	}
@@ -39,7 +41,8 @@ class PageController extends Controller
 
 	public function getUserInfo()
 	{
-		$userinfo = [$this->user->getDisplayName(),$this->groupmanager->getUserGroups($this->session->getUser())];
+		$user = $this->userSession->getUser();
+		$userinfo = [$this->user->getDisplayName(),$this->groupmanager->getUserGroups($user)];
 		return new DataResponse($userinfo);
 	}
 }
