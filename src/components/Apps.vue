@@ -9,7 +9,7 @@
       </h2>
       <a
         class="apps-content-main"
-        v-for="(app,index) in appsToDisplay"
+        v-for="(app,index) in appsToDisplay()"
         :key="index"
         v-bind:href="app.link"
         target="_blank"
@@ -58,14 +58,13 @@ export default {
       set(value) {
         this.$store.commit('updateSearch', value)
       }
-    }
-  },
-  methods: {
+    },
     appsToDisplay() {
-      for (var y = 0; y < this.appsarray.length; y++) {
-        var requiredGroups = this.appsarray[y].groups.split(';')
+      var DisplayableaApp = this.appsarray;
+      for (var y = 0; y < DisplayableaApp.length; y++) {
+        var requiredGroups = DisplayableaApp[y].groups.split(';')
         var state = true
-        console.log(this.appsarray)
+        console.log(DisplayableaApp)
         for (var i = 0; i < requiredGroups.length; i++) {
           if (!this.$store.state.user[1].includes(requiredGroups[i])) {
             state = false
@@ -73,12 +72,14 @@ export default {
           console.log(state)
         }
         if (!state) {
-          this.appsarray.splice(y, 1)
-          console.log(this.appsarray)
+          DisplayableaApp.splice(y, 1)
+          console.log(DisplayableaApp)
         }
       }
-      return this.appsarray
+      return DisplayableaApp
     },
+  },
+  methods: {
     AppsSet(value) {
       this.droptext = value
       console.log(this.droptext)
