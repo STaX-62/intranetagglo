@@ -164,3 +164,28 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+.searchbar {
+  flex: 0 0 62.333%;
+  border-radius: 10px !important;
+  border: 3px solid var(--color-mode-2) !important;
+  box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
+    7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%),
+    inset 0px 0px 4px rgb(255 255 255 / 0%),
+    inset 7px 7px 15px rgb(55 84 170 / 15%),
+    inset -7px -7px 20px rgb(255 255 255), 0px 0px 4px rgb(255 255 255 / 20%) !important;
+  background-color: var(--color-mode-2) !important;
+  padding: 5px 15px !important;
+  outline: none !important;
+  color: #535d74 !important;
+  height: auto !important;
+  margin: 0 !important;
+  font-size: 16px !important;
+}
+
+.admin-view .searchbar {
+  flex: 0 0 50%;
+}
+</style>

@@ -21,13 +21,13 @@
                 <b-table-simple>
                   <b-tbody>
                     <b-tr>
-                      <b-td>{{section.title}}</b-td>
-                      <b-td>
+                      <b-td style="width:50px">{{section.title}}</b-td>
+                      <b-td style="width:50px">
                         <button type="button" class="menu-update-button" @click="Modify(section)">
                           <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
                         </button>
                       </b-td>
-                      <b-td>
+                      <b-td style="width:50px">
                         <button
                           type="button"
                           class="menu-del-button"
@@ -54,8 +54,8 @@
                     <b-table-simple>
                       <b-tbody>
                         <b-tr>
-                          <b-td>{{menu.title}}</b-td>
-                          <b-td>
+                          <b-td style="width:50px">{{menu.title}}</b-td>
+                          <b-td style="width:50px">
                             <button type="button" class="menu-update-button" @click="Modify(menu)">
                               <b-icon
                                 class="sidebar-item-icon"
@@ -64,7 +64,7 @@
                               />
                             </button>
                           </b-td>
-                          <b-td>
+                          <b-td style="width:50px">
                             <button
                               type="button"
                               class="menu-del-button"
@@ -91,8 +91,8 @@
                         <b-table-simple>
                           <b-tbody>
                             <b-tr>
-                              <b-td>{{submenu.title}}</b-td>
-                              <b-td>
+                              <b-td style="width:50px">{{submenu.title}}</b-td>
+                              <b-td style="width:50px">
                                 <button
                                   type="button"
                                   class="menu-update-button"
@@ -105,7 +105,7 @@
                                   />
                                 </button>
                               </b-td>
-                              <b-td>
+                              <b-td style="width:50px">
                                 <button
                                   type="button"
                                   class="menu-del-button"
