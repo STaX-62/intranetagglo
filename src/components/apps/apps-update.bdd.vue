@@ -152,8 +152,13 @@ export default {
         })
     },
     Create() {
-      this.updateapp = !this.updateapp;
       this.arrayindex = this.apps.length;
+      this.apptoupdate.id = null;
+      this.apptoupdate.title = "";
+      this.apptoupdate.link = "";
+      this.apptoupdate.icon = "";
+      this.apptoupdate.groups = [];
+      this.updateapp = !this.updateapp;
     },
     Modify(apps, index) {
       this.arrayindex = index;

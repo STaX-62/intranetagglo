@@ -34,11 +34,13 @@ export default {
   },
   watch: {
     updating: function (val) {
+      console.log(val)
       if (val) {
         var url = `apps/intranetagglo${'/apps'}`
         axios.get(generateUrl(url))
           .then((response) => {
             this.appsarray = response.data;
+            console.log(response.data)
             this.updating = !val;
           })
       }
