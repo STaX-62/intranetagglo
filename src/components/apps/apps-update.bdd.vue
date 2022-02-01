@@ -122,6 +122,7 @@ export default {
         this.apptoupdate.groups = this.apptoupdate.groups.join(';')
         this.apps.push(this.apptoupdate)
         this.createApps(this.apps[this.arrayindex])
+        console.log(this.apps)
       }
       else {
         this.apptoupdate.groups = this.apptoupdate.groups.join(';')
