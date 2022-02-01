@@ -23,7 +23,10 @@ export default new Vuex.Store({
       state.categoryfilter = categoryfilter;
     },
     setUser(state, user){
-      state.user.push(user)
+      console.log(user)
+      state.user = user;
+      console.log(state.user)
+      // state.user.push(user)
     }
   },
   modules: {},
