@@ -10,6 +10,7 @@ export default new Vuex.Store({
     usergroups: [],
     categoryfilter: '',
     categoryUpdating: null,
+    appsupdating: false
   },
   getters: {
     News_length: state => {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.username = user[0]
       state.usergroups = user[1]
+    },
+    setAppsUpdating(state, updating){
+      state.appsupdating = updating
     }
   },
   modules: {},

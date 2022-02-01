@@ -4,7 +4,7 @@
       <h2 class="apps-header">
         Applications
         <div id="apps-update-btn" v-if="isAdmin">
-          <AppsUpdate v-bind:updating.sync="updating" />
+          <AppsUpdate />
         </div>
       </h2>
       <a
@@ -34,19 +34,20 @@ export default {
   },
   watch: {
     updating: function (val) {
-      console.log(val)
       if (val) {
         var url = `apps/intranetagglo${'/apps'}`
         axios.get(generateUrl(url))
           .then((response) => {
             this.appsarray = response.data;
-            console.log(response.data)
-            this.updating = !val;
+            this.$store.commit('setAppsUpdating', false)
           })
       }
     },
   },
   computed: {
+    updating() {
+      return this.$store.state.appsupdating
+    },
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
     },
@@ -90,7 +91,6 @@ export default {
     return {
       droptext: '',
       modal: false,
-      updating: false,
       apptoupdate: {},
       appsarray: []
     }

@@ -95,12 +95,11 @@
 <script>
 import axios from '@nextcloud/axios'
 import { generateUrl, generateOcsUrl } from '@nextcloud/router'
+import store from '@/store/index.js'
 
 export default {
   name: 'AppsUpdate',
-  props: {
-    updating: Boolean
-  },
+  store: store,
   computed: {
     UpdatedApps() {
       return this.apps;
@@ -179,7 +178,7 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.updating = true
+      this.$store.commit('setAppsUpdating', true)
     },
     async updateApps(apps) {
       try {
@@ -189,10 +188,10 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.updating = true
+      this.$store.commit('setAppsUpdating', false)
     },
     async deleteApps(id) {
-      this.updating = true
+      
       try {
         var url = `apps/intranetagglo/apps/${id}`
         const response = await axios.delete(generateUrl(url, { id }))
@@ -200,7 +199,7 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.updating = true
+      this.$store.commit('setAppsUpdating', false)
     },
   },
   data: function () {
