@@ -1,10 +1,10 @@
 <template>
   <div id="news-frame">
     <div id="news-container" class="news-container">
-      <div v-bind:class="user.groups.includes('admin') ? 'news-header admin-view' : 'news-header'">
+      <div v-bind:class="user[1].includes('admin') ? 'news-header admin-view' : 'news-header'">
         <h2 class="news-header-title">Actualités</h2>
         <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
-        <NewsAdd v-if="user.groups.includes('admin')" />
+        <NewsAdd v-if="user[1].includes('admin')" />
       </div>
       <div id="news-row" class="news-row">
         <NewsMedium id="news1" v-bind:news="appsarray[0]" />
@@ -71,46 +71,44 @@ export default {
         this.$store.commit('updateSearch', value)
       }
     },
-    droptextc() {
-      if (this.droptext == '') {
-        return 'Filtre'
-      }
-      return this.droptext;
-    },
-    categoryfilter() {
-      return this.$store.state.categoryfilter
-    },
-    filteredNews() {
-      function groupcheck(neededgroups, usergroups) {
-        var missinggroup = 0
-        for (var i = 0; i < neededgroups.length; i++) if (!usergroups.includes(neededgroups[i])) missinggroup++;
-        return missinggroup
-      }
-      function Searchedcheck(news, search) {
-        if (news.title.toLowerCase().includes(search.toLowerCase())) return true
-        else return false
-      }
-      function Categorycheck(category, categoryfilter) {
-        if (categoryfilter == category || categoryfilter == '') return true
-        else return false
-      }
+    // droptextc() {
+    //   if (this.droptext == '') {
+    //     return 'Filtre'
+    //   }
+    //   return this.droptext;
+    // },
+    // categoryfilter() {
+    //   return this.$store.state.categoryfilter
+    // },
+    // filteredNews() {
+    //   function groupcheck(neededgroups, usergroups) {
+    //     var missinggroup = 0
+    //     for (var i = 0; i < neededgroups.length; i++) if (!usergroups.includes(neededgroups[i])) missinggroup++;
+    //     return missinggroup
+    //   }
+    //   function Searchedcheck(news, search) {
+    //     if (news.title.toLowerCase().includes(search.toLowerCase())) return true
+    //     else return false
+    //   }
+    //   function Categorycheck(category, categoryfilter) {
+    //     if (categoryfilter == category || categoryfilter == '') return true
+    //     else return false
+    //   }
 
-      function filter(news, search, category, categoryfilter) {
-        if (Searchedcheck(news, search) && Categorycheck(category, categoryfilter)) return true
-        else return false
-      }
+    //   function filter(news, search, category, categoryfilter) {
+    //     if (Searchedcheck(news, search) && Categorycheck(category, categoryfilter)) return true
+    //     else return false
+    //   }
 
-      var categoryfilter = this.$store.state.categoryfilter
-      var News = this.$store.state.News
+    //   var categoryfilter = this.$store.state.categoryfilter
 
-
-      return News.filter(newsfilter => {
-        if (!groupcheck(newsfilter.authgroup, this.$store.state.user.groups)) {
-          return filter(newsfilter, this.search, newsfilter.category, categoryfilter)
-        }
-        else return false
-      }).slice(0, this.maxvisiblenews)
-    }
+    //   return News.filter(newsfilter => {
+    //     if (!groupcheck(newsfilter.authgroup, this.user.groups)) {
+    //       return filter(newsfilter, this.search, newsfilter.category, categoryfilter)
+    //     }
+    //     else return false
+    //   }).slice(0, this.maxvisiblenews)
+    // }
   },
   methods: {
     handleScroll() {
@@ -138,28 +136,29 @@ export default {
   mounted() {
     var url = `apps/intranetagglo/news/${0}`
     axios.get(generateUrl(url))
-      .then(response => (this.appsarray = response.data))
-    var news = document.getElementsByClassName('news');
-    let newsrow = document.getElementById('news-row')
-    news[0].addEventListener('click', () => {
-      if (!newsrow.classList.contains('left')) {
-        newsrow.classList.toggle('left')
-        this.actually = "left"
-      }
-
-    })
-    news[1].addEventListener('click', () => {
-      if (!newsrow.classList.contains('center')) {
-        newsrow.classList.toggle('center')
-        this.actually = "center"
-      }
-    })
-    news[2].addEventListener('click', () => {
-      if (!newsrow.classList.contains('right')) {
-        newsrow.classList.toggle('right')
-        this.actually = "right"
-      }
-    })
+      .then((response) => {
+        this.appsarray = response.data
+        var news = document.getElementsByClassName('news');
+        let newsrow = document.getElementById('news-row')
+        news[0].addEventListener('click', () => {
+          if (!newsrow.classList.contains('left')) {
+            newsrow.classList.toggle('left')
+            this.actually = "left"
+          }
+        })
+        news[1].addEventListener('click', () => {
+          if (!newsrow.classList.contains('center')) {
+            newsrow.classList.toggle('center')
+            this.actually = "center"
+          }
+        })
+        news[2].addEventListener('click', () => {
+          if (!newsrow.classList.contains('right')) {
+            newsrow.classList.toggle('right')
+            this.actually = "right"
+          }
+        })
+      })
   },
   destroyed() {
     var target = document.getElementById('news-container');
