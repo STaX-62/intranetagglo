@@ -53,6 +53,7 @@ export default {
       var user = this.$store.state.user
       console.log(this.$store.state.user)
       console.log(user)
+      console.log(user[1])
       return user[1].includes('admin')
     },
     categoryoptions() {
