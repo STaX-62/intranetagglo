@@ -64,10 +64,13 @@ export default {
       var requiredGroups = "";
       var state = true;
       for (var y = 0; y < DisplayableaApp.length; y++) {
+        console.log(DisplayableaApp[y].groups)
+        console.log(DisplayableaApp[y].groups.length)
         if (DisplayableaApp[y].groups.length > 0) {
           requiredGroups = DisplayableaApp[y].groups.split(';')
           state = true
           console.log(DisplayableaApp)
+          console.log(requiredGroups)
           for (var i = 0; i < requiredGroups.length; i++) {
             if (!this.$store.state.usergroups.includes(requiredGroups[i])) {
               state = false
