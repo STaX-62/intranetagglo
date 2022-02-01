@@ -66,7 +66,7 @@ export default {
         var state = true
         console.log(DisplayableaApp)
         for (var i = 0; i < requiredGroups.length; i++) {
-          if (!this.$store.state.user[1].includes(requiredGroups[i])) {
+          if (!this.$store.state.usergroups.includes(requiredGroups[i])) {
             state = false
           }
           console.log(state)
