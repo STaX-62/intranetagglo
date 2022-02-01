@@ -101,11 +101,9 @@
 <script>
 import axios from '@nextcloud/axios'
 import { generateUrl, generateOcsUrl } from '@nextcloud/router'
-import store from '@/store/index.js'
 
 export default {
   name: 'AppsUpdate',
-  store: store,
   computed: {
     UpdatedApps() {
       return this.apps;

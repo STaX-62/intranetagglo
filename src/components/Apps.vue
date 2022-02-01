@@ -22,13 +22,11 @@
 </template>
 
 <script>
-import store from '@/store/index.js'
 import AppsUpdate from '@/components/apps/apps-update.bdd.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 export default {
   name: 'Apps',
-  store: store,
   components: {
     AppsUpdate
   },
