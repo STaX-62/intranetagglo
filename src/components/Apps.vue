@@ -9,7 +9,7 @@
       </h2>
       <a
         class="apps-content-main"
-        v-for="(app,index) in appsToDisplay"
+        v-for="(app,index) in appsarray"
         :key="index"
         v-bind:href="app.link"
         target="_blank"
