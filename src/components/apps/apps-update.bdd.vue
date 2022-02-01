@@ -38,7 +38,7 @@
       </div>
     </b-modal>
 
-    <b-modal size="xl" v-model="updateapp" @ok="Save(apptoupdate)">
+    <b-modal size="xl" v-model="updateapp" @ok="Save">
       <template #modal-title>Modification de l'application :</template>
       <div class="menu-form">
         <div>
@@ -125,22 +125,19 @@ export default {
         'groups': ''
       })
     },
-    Save(app) {
-      if (app.id == null) {
-        app.groups = this.app.groups.join(';')
-        this.apps[app.arrayindex].title = app.title;
-        this.apps[app.arrayindex].icon = app.icon;
-        this.apps[app.arrayindex].link = app.link;
-        this.apps[app.arrayindex].groups = app.groups;
-        this.createMenu(app)
+    Save() {
+      if (this.apptoupdate.id == null) {
+        this.apptoupdate.groups = this.apptoupdate.groups.join(';')
+        this.apps.push(this.apptoupdate)
+        this.createMenu(this.apps[this.apptoupdate.arrayindex])
       }
       else {
-        app.groups = this.app.groups.join(';')
-        this.apps[app.arrayindex].title = app.title;
-        this.apps[app.arrayindex].icon = app.icon;
-        this.apps[app.arrayindex].link = app.link;
-        this.apps[app.arrayindex].groups = app.groups;
-        this.updateMenu(app)
+        this.apptoupdate.groups = this.apptoupdate.groups.join(';')
+        this.apps[this.apptoupdate.arrayindex].title = this.apptoupdate.title;
+        this.apps[this.apptoupdate.arrayindex].icon = this.apptoupdate.icon;
+        this.apps[this.apptoupdate.arrayindex].link = this.apptoupdate.link;
+        this.apps[this.apptoupdate.arrayindex].groups = this.apptoupdate.groups;
+        this.updateMenu(this.apps[this.apptoupdate.arrayindex])
       }
     },
     DeleteVerification(app, index) {
