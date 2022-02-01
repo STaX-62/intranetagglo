@@ -65,13 +65,16 @@ export default {
       for (var y = 0; y < this.appsarray.length; y++) {
         var requiredGroups = this.appsarray[y].groups.split(';')
         var state = true
+        console.log(this.appsarray)
         for (var i = 0; i < requiredGroups.length; i++) {
           if (!this.$store.state.user[1].includes(requiredGroups[i])) {
             state = false
           }
+          console.log(state)
         }
         if (!state) {
           this.appsarray.splice(y, 1)
+          console.log(this.appsarray)
         }
       }
       return this.appsarray
