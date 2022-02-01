@@ -49,6 +49,11 @@ export default {
       return this.$store.state.appsupdating
     },
     isAdmin() {
+      console.log("this.$store.state.usergroups")
+      console.log(this.$store.state.usergroups)
+      console.log("store")
+      console.log(this.$store)
+
       return this.$store.state.usergroups.includes('admin')
     },
     search: {
