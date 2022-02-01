@@ -53,11 +53,8 @@ export default {
       var user = this.$store.state.user
       console.log(this.$store.state.user)
       console.log(user)
-      console.log(user[1])
-      console.log(JSON.parse(JSON.stringify(user)))
-      var user2 = JSON.parse(JSON.stringify(user))
-      console.log(user2[1])
-      return user[1].includes('admin')
+      console.log(user.groups)
+      return user.groups.includes('admin')
     },
     categoryoptions() {
       var News = this.$store.state.News

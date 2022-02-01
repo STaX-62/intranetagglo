@@ -23,8 +23,8 @@ export default new Vuex.Store({
       state.categoryfilter = categoryfilter;
     },
     setUser(state, user){
-      state.user.push(user[0])
-      state.user.push(user[1])
+      Vue.set(state.user,"username",user[0])
+      Vue.set(state.user,"groups",user[1])
     }
   },
   modules: {},
