@@ -5,6 +5,7 @@
         <h2 class="news-header-title">Actualités</h2>
         <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
         <NewsAdd v-if="isAdmin" />
+        <NewsAdd />
       </div>
       <div id="news-row" class="news-row">
         <NewsMedium id="news1" v-bind:news="appsarray[0]" />
@@ -50,8 +51,7 @@ export default {
   },
   computed: {
     isAdmin() {
-      console.log(this.$store.state.username)
-      console.log(this.$store.state.usergroups)
+      console.log(this.$store.state.usergroups.includes('admin'))
       return this.$store.state.usergroups.includes('admin')
     },
     categoryoptions() {
