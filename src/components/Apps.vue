@@ -61,19 +61,23 @@ export default {
     },
     appsToDisplay() {
       var DisplayableaApp = this.appsarray;
+      var requiredGroups = "";
+      var state = true;
       for (var y = 0; y < DisplayableaApp.length; y++) {
-        var requiredGroups = DisplayableaApp[y].groups.split(';')
-        var state = true
-        console.log(DisplayableaApp)
-        for (var i = 0; i < requiredGroups.length; i++) {
-          if (!this.$store.state.usergroups.includes(requiredGroups[i])) {
-            state = false
-          }
-          console.log(state)
-        }
-        if (!state) {
-          DisplayableaApp.splice(y, 1)
+        if (DisplayableaApp[y].groups.length > 0) {
+          requiredGroups = DisplayableaApp[y].groups.split(';')
+          state = true
           console.log(DisplayableaApp)
+          for (var i = 0; i < requiredGroups.length; i++) {
+            if (!this.$store.state.usergroups.includes(requiredGroups[i])) {
+              state = false
+            }
+            console.log(state)
+          }
+          if (!state) {
+            DisplayableaApp.splice(y, 1)
+            console.log(DisplayableaApp)
+          }
         }
       }
       return DisplayableaApp
