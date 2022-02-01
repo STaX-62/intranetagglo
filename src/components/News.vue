@@ -133,7 +133,7 @@ export default {
   },
   mounted() {
     var url = `apps/intranetagglo/news/0`
-    axios.get(generateUrl(url))
+    axios.get(generateUrl(url), 0, { type: 'application/json' })
       .then((response) => {
         this.appsarray = response.data
         var news = document.getElementsByClassName('news');

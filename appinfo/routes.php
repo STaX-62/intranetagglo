@@ -49,8 +49,7 @@ return [
         [
             'name' => 'news#index',
             'url' => '/news/{id}',
-            'verb' => 'GET',
-            'requirements' => ['id' => '\d+'],
+            'verb' => 'GET'
         ],
         [
             'name' => 'news#search',

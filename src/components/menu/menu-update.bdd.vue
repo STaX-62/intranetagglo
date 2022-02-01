@@ -326,9 +326,6 @@ export default {
     }
   },
   mounted() {
-    var groupsurl = `apps/intranetagglo${'/groups'}`
-    axios.get(generateUrl(groupsurl))
-      .then(response => (this.options = response.data))
     axios.get(generateOcsUrl(`cloud/groups`, 2))
       .then(response => (this.options = response.data.ocs.data.groups))
   },
