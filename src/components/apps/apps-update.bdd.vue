@@ -34,7 +34,7 @@
         </b-tbody>
       </b-table-simple>
       <div style="width:100%;display:flex">
-        <button class="apps-add" @click="AddApps()">+</button>
+        <button class="apps-add" @click="Create()">+</button>
       </div>
     </b-modal>
 
@@ -117,27 +117,19 @@ export default {
       .then(response => (this.options = response.data.ocs.data.groups))
   },
   methods: {
-    AddApps() {
-      this.apps.push({
-        'title': 'Nouvelle Section',
-        'icon': 'exclamation-triangle',
-        'link': '',
-        'groups': ''
-      })
-    },
     Save() {
       if (this.apptoupdate.id == null) {
         this.apptoupdate.groups = this.apptoupdate.groups.join(';')
         this.apps.push(this.apptoupdate)
-        this.createMenu(this.apps[this.apptoupdate.arrayindex])
+        this.createApps(this.apps[this.arrayindex])
       }
       else {
         this.apptoupdate.groups = this.apptoupdate.groups.join(';')
-        this.apps[this.apptoupdate.arrayindex].title = this.apptoupdate.title;
-        this.apps[this.apptoupdate.arrayindex].icon = this.apptoupdate.icon;
-        this.apps[this.apptoupdate.arrayindex].link = this.apptoupdate.link;
-        this.apps[this.apptoupdate.arrayindex].groups = this.apptoupdate.groups;
-        this.updateMenu(this.apps[this.apptoupdate.arrayindex])
+        this.apps[this.arrayindex].title = this.apptoupdate.title;
+        this.apps[this.arrayindex].icon = this.apptoupdate.icon;
+        this.apps[this.arrayindex].link = this.apptoupdate.link;
+        this.apps[this.arrayindex].groups = this.apptoupdate.groups;
+        this.updateApps(this.apps[this.arrayindex])
       }
     },
     DeleteVerification(app, index) {
@@ -159,8 +151,12 @@ export default {
           }
         })
     },
+    Create() {
+      this.updateapp = !this.updateapp;
+      this.arrayindex = this.apps.length;
+    },
     Modify(apps, index) {
-      this.apptoupdate.arrayindex = index;
+      this.arrayindex = index;
       this.apptoupdate.id = apps.id;
       this.apptoupdate.title = apps.title;
       this.apptoupdate.link = apps.link;
@@ -208,8 +204,8 @@ export default {
       updateapp: false,
       apps: [],
       options: [],
+      arrayindex: null,
       apptoupdate: {
-        arrayindex: null,
         id: null,
         title: "",
         link: "",
