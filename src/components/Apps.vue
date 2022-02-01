@@ -72,7 +72,8 @@ export default {
           console.log(DisplayableaApp)
           console.log(requiredGroups)
           for (var i = 0; i < requiredGroups.length; i++) {
-            console.log(this.$store.state.usergroups + " includes " + requiredGroups[i])
+            console.log(this.$store.state.usergroups)
+            console.log(this.$store.state.usergroups.includes(requiredGroups[i]) + " with " + requiredGroups[i])
             if (!this.$store.state.usergroups.includes(requiredGroups[i])) {
               state = false
             }

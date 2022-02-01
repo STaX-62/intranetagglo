@@ -1,5 +1,5 @@
 <?php
-script('intranetagglo', ['app.5b10ca30','chunk-vendors.6b324a9e']);
+script('intranetagglo', ['app.61201f28','chunk-vendors.6b324a9e']);
 style('intranetagglo', ['app.0cbae4ff','chunk-vendors.61d5ee76']);
 ?>
 
