@@ -50,7 +50,10 @@ export default {
   },
   computed: {
     isAdmin() {
-      return this.$store.state.user[1].includes('admin')
+      var user = this.$store.state.user
+      console.log(this.$store.state.user)
+      console.log(user)
+      return user[1].includes('admin')
     },
     categoryoptions() {
       var News = this.$store.state.News
