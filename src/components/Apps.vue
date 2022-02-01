@@ -41,6 +41,11 @@ export default {
           })
       }
     },
+    usergroups: function (val){
+      console.log("val")
+      console.log(val)
+      this.usergroups = val
+    }
   },
   computed: {
     updating() {
@@ -75,9 +80,9 @@ export default {
           console.log(DisplayableaApp)
           console.log(requiredGroups)
           for (var i = 0; i < requiredGroups.length; i++) {
-            console.log(this.$store.state.usergroups)
-            console.log(this.$store.state.usergroups.includes(requiredGroups[i]) + " with " + requiredGroups[i])
-            if (!this.$store.state.usergroups.includes(requiredGroups[i])) {
+            console.log(this.usergroups)
+            console.log(this.usergroups.includes(requiredGroups[i]) + " with " + requiredGroups[i])
+            if (!this.usergroups.includes(requiredGroups[i])) {
               state = false
             }
             console.log(state)
@@ -108,7 +113,8 @@ export default {
       droptext: '',
       modal: false,
       apptoupdate: {},
-      appsarray: []
+      appsarray: [],
+      usergroups:[]
     }
   }
 }
