@@ -257,6 +257,7 @@ export default {
 
 .menu-title,
 .section-title {
+  color : var(--color-mode-2);
   padding-left: 10px;
   width: 200px;
   margin-top: auto;

@@ -9,7 +9,7 @@
       </h2>
       <a
         class="apps-content-main"
-        v-for="(app,index) in appsarray"
+        v-for="(app,index) in appsToDisplay"
         :key="index"
         v-bind:href="app.link"
         target="_blank"
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     appsToDisplay() {
-      for (var y = 0; y < requiredGroups.length; y++) {
+      for (var y = 0; y < this.appsarray.length; y++) {
         var requiredGroups = this.appsarray[y].groups.split(';')
         var state = true
         for (var i = 0; i < requiredGroups.length; i++) {
