@@ -5,7 +5,6 @@
         <h2 class="news-header-title">Actualités</h2>
         <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
         <NewsAdd v-if="isAdmin" />
-        <NewsAdd />
       </div>
       <div id="news-row" class="news-row">
         <NewsMedium id="news1" v-bind:news="appsarray[0]" />
@@ -54,15 +53,15 @@ export default {
       console.log(this.$store.state.usergroups.includes('admin'))
       return this.$store.state.usergroups.includes('admin')
     },
-    categoryoptions() {
-      var News = this.$store.state.News
-      var CategoryArray = []
-      for (var i = 0; i < News.length; i++) {
-        CategoryArray.push(News[i].category)
-      }
-      const uniqueCaterogy = Array.from(new Set(CategoryArray))
-      return uniqueCaterogy
-    },
+    // categoryoptions() {
+    //   var News = this.$store.state.News
+    //   var CategoryArray = []
+    //   for (var i = 0; i < News.length; i++) {
+    //     CategoryArray.push(News[i].category)
+    //   }
+    //   const uniqueCaterogy = Array.from(new Set(CategoryArray))
+    //   return uniqueCaterogy
+    // },
     search: {
       get() {
         return this.$store.state.search

@@ -121,15 +121,15 @@ export default {
     shortdesccount() {
       return (190 - this.shortdesc.length)
     },
-    categoryoptions() {
-      var News = this.$store.state.News
-      var CategoryArray = []
-      for (var i = 0; i < News.length; i++) {
-        CategoryArray.push(News[i].category)
-      }
-      const uniqueCaterogy = Array.from(new Set(CategoryArray))
-      return uniqueCaterogy
-    },
+    // categoryoptions() {
+    //   var News = this.$store.state.News
+    //   var CategoryArray = []
+    //   for (var i = 0; i < News.length; i++) {
+    //     CategoryArray.push(News[i].category)
+    //   }
+    //   const uniqueCaterogy = Array.from(new Set(CategoryArray))
+    //   return uniqueCaterogy
+    // },
   },
   methods: {
     AddNews() {
