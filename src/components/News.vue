@@ -50,11 +50,9 @@ export default {
   },
   computed: {
     isAdmin() {
-      var user = this.$store.state.user
-      console.log(this.$store.state.user)
-      console.log(user)
-      console.log(user.groups)
-      return user.groups.includes('admin')
+      console.log(this.$store.state.username)
+      console.log(this.$store.state.usergroups)
+      return this.$store.state.usergroups.includes('admin')
     },
     categoryoptions() {
       var News = this.$store.state.News

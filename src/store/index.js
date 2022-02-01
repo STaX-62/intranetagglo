@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     search: "",
-    user: [],
+    username: "",
+    usergroups: [],
     categoryfilter: '',
     categoryUpdating: null,
   },
@@ -22,9 +23,9 @@ export default new Vuex.Store({
     updateCategories(state, categoryfilter) {
       state.categoryfilter = categoryfilter;
     },
-    setUser(state, user){
-      Vue.set(state.user,"username",user[0])
-      Vue.set(state.user,"groups",user[1])
+    setUser(state, user) {
+      state.username = user[0]
+      state.usergroups = user[1]
     }
   },
   modules: {},
