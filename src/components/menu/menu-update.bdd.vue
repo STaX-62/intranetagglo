@@ -18,13 +18,27 @@
               v-bind:key="Sindex"
             >
               <div class="table-block" v-bind:position="Sindex+'-0-0'" type="text">
-                <div>{{section.title}}</div>
-                <button type="button" class="menu-update-button" @click="Modify(section)">
-                  <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
-                </button>
-                <button type="button" class="menu-del-button" @click="DeleteVerification(section)">
-                  <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
-                </button>
+                <b-table-simple>
+                  <b-tbody>
+                    <b-tr>
+                      <b-td>{{section.title}}</b-td>
+                      <b-td>
+                        <button type="button" class="menu-update-button" @click="Modify(section)">
+                          <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
+                        </button>
+                      </b-td>
+                      <b-td>
+                        <button
+                          type="button"
+                          class="menu-del-button"
+                          @click="DeleteVerification(section)"
+                        >
+                          <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
+                        </button>
+                      </b-td>
+                    </b-tr>
+                  </b-tbody>
+                </b-table-simple>
               </div>
               <div>
                 <div
@@ -37,13 +51,31 @@
                     v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
                     type="text"
                   >
-                    <div>{{menu.title}}</div>
-                    <button type="button" class="menu-update-button" @click="Modify(menu)">
-                      <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
-                    </button>
-                    <button type="button" class="menu-del-button" @click="DeleteVerification(menu)">
-                      <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
-                    </button>
+                    <b-table-simple>
+                      <b-tbody>
+                        <b-tr>
+                          <b-td>{{menu.title}}</b-td>
+                          <b-td>
+                            <button type="button" class="menu-update-button" @click="Modify(menu)">
+                              <b-icon
+                                class="sidebar-item-icon"
+                                variant="info"
+                                icon="pencil-square"
+                              />
+                            </button>
+                          </b-td>
+                          <b-td>
+                            <button
+                              type="button"
+                              class="menu-del-button"
+                              @click="DeleteVerification(menu)"
+                            >
+                              <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
+                            </button>
+                          </b-td>
+                        </b-tr>
+                      </b-tbody>
+                    </b-table-simple>
                   </div>
                   <div class="table-submenu">
                     <div
@@ -56,17 +88,35 @@
                         v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
                         type="text"
                       >
-                        <div>{{submenu.title}}</div>
-                        <button type="button" class="menu-update-button" @click="Modify(submenu)">
-                          <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
-                        </button>
-                        <button
-                          type="button"
-                          class="menu-del-button"
-                          @click="DeleteVerification(submenu)"
-                        >
-                          <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
-                        </button>
+                        <b-table-simple>
+                          <b-tbody>
+                            <b-tr>
+                              <b-td>{{submenu.title}}</b-td>
+                              <b-td>
+                                <button
+                                  type="button"
+                                  class="menu-update-button"
+                                  @click="Modify(submenu)"
+                                >
+                                  <b-icon
+                                    class="sidebar-item-icon"
+                                    variant="info"
+                                    icon="pencil-square"
+                                  />
+                                </button>
+                              </b-td>
+                              <b-td>
+                                <button
+                                  type="button"
+                                  class="menu-del-button"
+                                  @click="DeleteVerification(submenu)"
+                                >
+                                  <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
+                                </button>
+                              </b-td>
+                            </b-tr>
+                          </b-tbody>
+                        </b-table-simple>
                       </div>
                     </div>
                     <button
@@ -392,10 +442,6 @@ export default {
 }
 
 .table-block {
-  display: grid;
-  grid-template-columns: calc(100% - 64px) 32px 32px;
-  grid-auto-rows: auto;
-  grid-template-areas: ". . .";
   background-color: var(--color-mode-1);
   border-style: solid;
   border-color: var(--color-mode-shadow-1);
