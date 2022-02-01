@@ -58,14 +58,17 @@ export default {
       }
     }
   },
+  beforeMount() {
+    var url = `apps/intranetagglo${'/user'}`
+    axios.get(generateUrl(url))
+      .then(response => (this.$store.commit('setUser', response.data)))
+  },
   mounted: function () {
     document.getElementById('cog').addEventListener("click", () => {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')
     });
-    var url = `apps/intranetagglo${'/user'}`
-    axios.get(generateUrl(url))
-      .then(response => (this.$store.commit('setUser', response.data)))
+
 
   },
   created: function () {
