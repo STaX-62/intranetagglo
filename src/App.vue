@@ -29,9 +29,11 @@ import Settings from '@/components/Settings.vue'
 import News from '@/components/News.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import store from '@/store/index.js'
 
 export default {
   name: 'Home',
+  store: store,
   components: {
     Navigation,
     Settings,
@@ -66,7 +68,7 @@ export default {
     var url = `apps/intranetagglo${'/user'}`
     axios.get(generateUrl(url))
       .then(response => (this.$store.commit('setUser', response.data)))
-      
+
   },
   created: function () {
     var current_scheme = localStorage.getItem('color_scheme');
