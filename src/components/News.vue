@@ -50,7 +50,6 @@ export default {
   },
   computed: {
     isAdmin() {
-      console.log(this.$store.state.usergroups.includes('admin'))
       return this.$store.state.usergroups.includes('admin')
     },
     // categoryoptions() {

@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     isAdmin() {
-      return this.$store.state.user[1].includes('admin')
+      return this.$store.state.usergroups.includes('admin')
     },
     sectionArray() {
       var bddmenus = this.menusInBDD;

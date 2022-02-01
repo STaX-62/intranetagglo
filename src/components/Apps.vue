@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     isAdmin() {
-      return this.$store.state.user[1].includes('admin')
+      return this.$store.state.usergroups.includes('admin')
     },
     search: {
       get() {
