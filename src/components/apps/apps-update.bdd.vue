@@ -1,7 +1,13 @@
 <template>
   <div>
     <b-icon icon="pencil-square" @click="appsmodal = !appsmodal"></b-icon>
-    <b-modal size="xl" v-model="appsmodal" hide-footer style="justify-content:center">
+    <b-modal
+      id="appmodal1"
+      size="xl"
+      v-model="appsmodal"
+      hide-footer
+      style="justify-content:center"
+    >
       <template #modal-title>Modification des raccourcis d'application :</template>
       <b-table-simple>
         <b-thead>
@@ -38,7 +44,7 @@
       </div>
     </b-modal>
 
-    <b-modal size="xl" v-model="updateapp" @ok="Save">
+    <b-modal id="appmodal2" size="xl" v-model="updateapp" @ok="Save">
       <template #modal-title>Modification de l'application :</template>
       <div class="menu-form">
         <div>
@@ -191,7 +197,7 @@ export default {
       this.$store.commit('setAppsUpdating', false)
     },
     async deleteApps(id) {
-      
+
       try {
         var url = `apps/intranetagglo/apps/${id}`
         const response = await axios.delete(generateUrl(url, { id }))
@@ -245,4 +251,5 @@ export default {
   color: #343a40;
   border-color: #343a40;
 }
+
 </style>

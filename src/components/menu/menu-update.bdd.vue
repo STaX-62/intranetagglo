@@ -4,7 +4,7 @@
       <b-icon class="doc-icon" icon="gear"></b-icon>
       <div>Modifier le menu</div>
     </div>
-    <b-modal size="xl" v-model="global" ref="modal">
+    <b-modal id="menumodal1" size="xl" v-model="global" ref="modal">
       <template #modal-title>Modification du Menu de navigation</template>
       <div style="display:block;position:relative;height:fit-content">
         <div class="menu-table">
@@ -96,7 +96,7 @@
         </div>
       </div>
     </b-modal>
-    <b-modal size="xl" v-model="detailed" ref="modal" @ok="Save">
+    <b-modal id="menumodal2" size="xl" v-model="detailed" ref="modal" @ok="Save">
       <template #modal-title>Modification du Menu de navigation</template>
       <div class="menu-form">
         <div>
@@ -442,4 +442,6 @@ export default {
   margin: 5px 50px 5px 5px;
   border-radius: 5px;
 }
+
+
 </style>

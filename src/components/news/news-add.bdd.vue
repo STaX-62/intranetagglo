@@ -1,7 +1,7 @@
 <template>
   <div class="add-news-button" @click="modal = !modal">
     Ajouter une actualité
-    <b-modal size="xl" v-model="modal" ref="modal">
+    <b-modal  id="newsmodal1" size="xl" v-model="modal" ref="modal">
       <template #modal-title>
         Ajouter une
         <code style="font-size: 1.25rem;">Actualité</code>
