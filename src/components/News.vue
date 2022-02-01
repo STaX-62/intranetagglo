@@ -1,10 +1,10 @@
 <template>
   <div id="news-frame">
     <div id="news-container" class="news-container">
-      <div v-bind:class="user[1].includes('admin') ? 'news-header admin-view' : 'news-header'">
+      <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
         <h2 class="news-header-title">Actualités</h2>
         <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
-        <NewsAdd v-if="user[1].includes('admin')" />
+        <NewsAdd v-if="isAdmin" />
       </div>
       <div id="news-row" class="news-row">
         <NewsMedium id="news1" v-bind:news="appsarray[0]" />
@@ -49,6 +49,10 @@ export default {
     }
   },
   computed: {
+    isAdmin() {
+      console.log(this.user[1].includes('admin'))
+      return this.user[1].includes('admin')
+    },
     categoryoptions() {
       var News = this.$store.state.News
       var CategoryArray = []
@@ -134,7 +138,7 @@ export default {
 
   },
   mounted() {
-    var url = `apps/intranetagglo/news/${0}`
+    var url = `apps/intranetagglo/news/0`
     axios.get(generateUrl(url))
       .then((response) => {
         this.appsarray = response.data

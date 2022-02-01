@@ -3,7 +3,7 @@
     <div id="apps-container" class="apps-container">
       <h2 class="apps-header">
         Applications
-        <div id="apps-update-btn" v-if="user.groups.includes('admin')">
+        <div id="apps-update-btn" v-if="isAdmin">
           <AppsUpdate v-bind:updating.sync="updating" />
         </div>
       </h2>
@@ -45,6 +45,10 @@ export default {
     },
   },
   computed: {
+    isAdmin() {
+      console.log(this.user[1].includes('admin'))
+      return this.user[1].includes('admin')
+    },
     user: {
       get() {
         return this.$store.state.user
@@ -65,7 +69,7 @@ export default {
         var requiredGroups = this.appsarray[y].groups.split(';')
         var state = true
         for (var i = 0; i < requiredGroups.length; i++) {
-          if (!this.user.groups.includes(requiredGroups[i])) {
+          if (!this.user[1].includes(requiredGroups[i])) {
             state = false
           }
         }
