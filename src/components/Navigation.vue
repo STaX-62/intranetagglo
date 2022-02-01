@@ -4,7 +4,7 @@
       <img v-bind:src="image" />
     </div>
     <div class="sidenav-menu">
-      <div class="section-block" v-for="(section,index) in sectionArray" :key="'B'+index" >
+      <div class="section-block" v-for="(section,index) in sectionArray" :key="'B'+index">
         <button class="section">
           <div class="section-icon">
             <b-icon v-bind:icon="section.icon"></b-icon>
@@ -68,6 +68,9 @@ export default {
     }
   },
   computed: {
+    isAdmin() {
+      return this.$store.state.user[1].includes('admin')
+    },
     sectionArray() {
       var bddmenus = this.menusInBDD;
       var sections = []

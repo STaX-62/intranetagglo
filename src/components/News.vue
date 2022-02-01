@@ -50,9 +50,7 @@ export default {
   },
   computed: {
     isAdmin() {
-      console.log(this.$store.state.user)
-      console.log(this.user[1].includes('admin'))
-      return this.user[1].includes('admin')
+      return this.$store.state.user[1].includes('admin')
     },
     categoryoptions() {
       var News = this.$store.state.News
@@ -62,12 +60,6 @@ export default {
       }
       const uniqueCaterogy = Array.from(new Set(CategoryArray))
       return uniqueCaterogy
-    },
-    user: {
-      get() {
-        console.log(this.$store.state.user)
-        return this.$store.state.user
-      }
     },
     search: {
       get() {

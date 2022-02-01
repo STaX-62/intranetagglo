@@ -46,13 +46,7 @@ export default {
   },
   computed: {
     isAdmin() {
-      console.log(this.user[1].includes('admin'))
-      return this.user[1].includes('admin')
-    },
-    user: {
-      get() {
-        return this.$store.state.user
-      }
+      return this.$store.state.user[1].includes('admin')
     },
     search: {
       get() {
@@ -69,7 +63,7 @@ export default {
         var requiredGroups = this.appsarray[y].groups.split(';')
         var state = true
         for (var i = 0; i < requiredGroups.length; i++) {
-          if (!this.user[1].includes(requiredGroups[i])) {
+          if (!this.$store.state.user[1].includes(requiredGroups[i])) {
             state = false
           }
         }
