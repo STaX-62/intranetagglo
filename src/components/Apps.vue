@@ -41,23 +41,16 @@ export default {
           })
       }
     },
-    usergroups: function (val){
-      console.log("val")
-      console.log(val)
-      this.usergroups = val
-    }
   },
   computed: {
     updating() {
       return this.$store.state.appsupdating
     },
     isAdmin() {
-      console.log("this.$store.state.usergroups")
-      console.log(this.$store.state.usergroups)
-      console.log("store")
-      console.log(this.$store)
-
       return this.$store.state.usergroups.includes('admin')
+    },
+    UserGroups() {
+      return this.$store.state.usergroups
     },
     search: {
       get() {
@@ -80,9 +73,9 @@ export default {
           console.log(DisplayableaApp)
           console.log(requiredGroups)
           for (var i = 0; i < requiredGroups.length; i++) {
-            console.log(this.usergroups)
-            console.log(this.usergroups.includes(requiredGroups[i]) + " with " + requiredGroups[i])
-            if (!this.usergroups.includes(requiredGroups[i])) {
+            console.log(this.UserGroups)
+            console.log(this.UserGroups.includes(requiredGroups[i]) + " with " + requiredGroups[i])
+            if (!this.UserGroups.includes(requiredGroups[i])) {
               state = false
             }
             console.log(state)
@@ -113,8 +106,7 @@ export default {
       droptext: '',
       modal: false,
       apptoupdate: {},
-      appsarray: [],
-      usergroups:[]
+      appsarray: []
     }
   }
 }
