@@ -18,27 +18,17 @@
               v-bind:key="Sindex"
             >
               <div class="table-block" v-bind:position="Sindex+'-0-0'" type="text">
-                <b-table-simple>
-                  <b-tbody>
-                    <b-tr>
-                      <b-td style="width:50px">{{section.title}}</b-td>
-                      <b-td style="width:50px">
-                        <button type="button" class="menu-update-button" @click="Modify(section)">
-                          <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
-                        </button>
-                      </b-td>
-                      <b-td style="width:50px">
-                        <button
-                          type="button"
-                          class="menu-del-button"
-                          @click="DeleteVerification(section)"
-                        >
-                          <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
-                        </button>
-                      </b-td>
-                    </b-tr>
-                  </b-tbody>
-                </b-table-simple>
+                {{section.title}}
+                <button
+                  type="button"
+                  class="menu-update-button"
+                  @click="Modify(section)"
+                >
+                  <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
+                </button>
+                <button type="button" class="menu-del-button" @click="DeleteVerification(section)">
+                  <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
+                </button>
               </div>
               <div>
                 <div
@@ -51,31 +41,13 @@
                     v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
                     type="text"
                   >
-                    <b-table-simple>
-                      <b-tbody>
-                        <b-tr>
-                          <b-td style="width:50px">{{menu.title}}</b-td>
-                          <b-td style="width:50px">
-                            <button type="button" class="menu-update-button" @click="Modify(menu)">
-                              <b-icon
-                                class="sidebar-item-icon"
-                                variant="info"
-                                icon="pencil-square"
-                              />
-                            </button>
-                          </b-td>
-                          <b-td style="width:50px">
-                            <button
-                              type="button"
-                              class="menu-del-button"
-                              @click="DeleteVerification(menu)"
-                            >
-                              <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
-                            </button>
-                          </b-td>
-                        </b-tr>
-                      </b-tbody>
-                    </b-table-simple>
+                    <div>{{menu.title}}</div>
+                    <button type="button" class="menu-update-button" @click="Modify(menu)">
+                      <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
+                    </button>
+                    <button type="button" class="menu-del-button" @click="DeleteVerification(menu)">
+                      <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
+                    </button>
                   </div>
                   <div class="table-submenu">
                     <div
@@ -88,35 +60,17 @@
                         v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
                         type="text"
                       >
-                        <b-table-simple>
-                          <b-tbody>
-                            <b-tr>
-                              <b-td style="width:50px">{{submenu.title}}</b-td>
-                              <b-td style="width:50px">
-                                <button
-                                  type="button"
-                                  class="menu-update-button"
-                                  @click="Modify(submenu)"
-                                >
-                                  <b-icon
-                                    class="sidebar-item-icon"
-                                    variant="info"
-                                    icon="pencil-square"
-                                  />
-                                </button>
-                              </b-td>
-                              <b-td style="width:50px">
-                                <button
-                                  type="button"
-                                  class="menu-del-button"
-                                  @click="DeleteVerification(submenu)"
-                                >
-                                  <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
-                                </button>
-                              </b-td>
-                            </b-tr>
-                          </b-tbody>
-                        </b-table-simple>
+                        <div>{{submenu.title}}</div>
+                        <button type="button" class="menu-update-button" @click="Modify(submenu)">
+                          <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
+                        </button>
+                        <button
+                          type="button"
+                          class="menu-del-button"
+                          @click="DeleteVerification(submenu)"
+                        >
+                          <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
+                        </button>
                       </div>
                     </div>
                     <button
@@ -487,8 +441,5 @@ export default {
   height: auto;
   margin: 5px 50px 5px 5px;
   border-radius: 5px;
-}
-.modal {
-  z-index: 2001 !important;
 }
 </style>
