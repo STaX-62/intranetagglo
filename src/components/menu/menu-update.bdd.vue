@@ -314,7 +314,7 @@ export default {
       global: false,
       detailed: false,
       updating: false,
-      menuInBDD: [],
+      menusInBDD: [],
       modifying: {
         selected: null,
         title: "",
