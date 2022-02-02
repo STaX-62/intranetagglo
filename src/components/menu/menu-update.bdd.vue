@@ -331,6 +331,7 @@ export default {
         var url = `apps/intranetagglo/menus`
         const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
         this.LastModifiedID = response.data.id
+        this.menusInBDD.find(x => x.position === this.modifying.selected).id = response.data.id
       } catch (e) {
         console.error(e)
       }

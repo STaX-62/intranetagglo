@@ -181,8 +181,6 @@ export default {
         var url = `apps/intranetagglo/apps`
         const response = await axios.post(generateUrl(url), apps, { type: 'application/json' })
         this.LastModifiedID = response.data.id
-        console.log(this.apps.find(x => x.id === null).id)
-        console.log(response.data.id)
         this.apps.find(x => x.id === null).id = response.data.id
       } catch (e) {
         console.error(e)
