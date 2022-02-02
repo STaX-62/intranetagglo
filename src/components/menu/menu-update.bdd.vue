@@ -14,7 +14,7 @@
           <div class="table-content">
             <div
               class="table-section"
-              v-for="(section,Sindex) in UpdatedSectionArray"
+              v-for="(section,Sindex) in sectionArray"
               v-bind:key="Sindex"
             >
               <div class="table-block" v-bind:position="Sindex+'-0-0'" type="text">
@@ -33,7 +33,7 @@
               <div>
                 <div
                   class="table-menu"
-                  v-for="(menu,Mindex) in UpdatedMenuArray[Sindex]"
+                  v-for="(menu,Mindex) in menusArray[Sindex]"
                   v-bind:key="Mindex"
                 >
                   <div
@@ -52,7 +52,7 @@
                   <div class="table-submenu">
                     <div
                       class="table-submenu-content"
-                      v-for="(submenu,SMindex) in UpdatedSubMenuArray[Sindex][Mindex]"
+                      v-for="(submenu,SMindex) in submenusArray[Sindex][Mindex]"
                       v-bind:key="SMindex"
                     >
                       <div
@@ -75,21 +75,21 @@
                     </div>
                     <button
                       class="menu-add"
-                      @click="AddSubmenu(UpdatedSubMenuArray[Sindex][Mindex],Sindex,Mindex)"
+                      @click="AddSubmenu(submenusArray[Sindex][Mindex],Sindex,Mindex)"
                       style="width:calc(100% - 10px)"
                     >+</button>
                   </div>
                 </div>
                 <button
                   class="menu-add"
-                  @click="AddMenu(UpdatedMenuArray[Sindex],Sindex)"
+                  @click="AddMenu(menusArray[Sindex],Sindex)"
                   style="width:calc(50% - 10px)"
                 >+</button>
               </div>
             </div>
             <button
               class="menu-add"
-              @click="AddSection(UpdatedSectionArray)"
+              @click="AddSection(sectionArray)"
               style="width:calc(33% - 10px)"
             >+</button>
           </div>
@@ -159,7 +159,59 @@ export default {
   computed: {
     availableOptions() {
       return this.options.filter(opt => this.modifying.groups.indexOf(opt) === -1)
-    }
+    },
+    sectionArray() {
+      var bddmenus = this.menusInBDD;
+      var sections = []
+      for (var i = 0; i < bddmenus.length; i++) {
+        for (var y = 0; y < bddmenus.length; y++) {
+          if (bddmenus[i].position == y + '-0-0') {
+            sections.push(bddmenus[i])
+          }
+        }
+      }
+      return sections;
+    },
+    menusArray() {
+      var bddmenus = this.menusInBDD;
+      var menus = []
+      var tempmenus = []
+      for (var i = 0; i < this.sectionArray.length; i++) {
+        for (var z = 0; z < bddmenus.length; z++) {
+          for (var y = 0; y < bddmenus.length; y++) {
+            if (bddmenus[z].position == i + '-' + (y + 1) + '-0') {
+              tempmenus.push(bddmenus[z])
+            }
+          }
+        }
+        menus.push(tempmenus)
+        tempmenus = []
+      }
+
+      return menus;
+    },
+    submenusArray() {
+      var bddmenus = this.menusInBDD;
+      var menus = []
+      var tempmenus = []
+      var tempsubmenus = []
+      for (var i = 0; i < this.sectionArray.length; i++) {
+        for (var o = 0; o < this.menusArray[i].length; o++) {
+          for (var z = 0; z < bddmenus.length; z++) {
+            for (var y = 0; y < bddmenus.length; y++) {
+              if (bddmenus[z].position == i + '-' + (o + 1) + '-' + (y + 1)) {
+                tempsubmenus.push(bddmenus[z])
+              }
+            }
+          }
+          tempmenus.push(tempsubmenus)
+          tempsubmenus = []
+        }
+        menus.push(tempmenus)
+        tempmenus = []
+      }
+      return menus;
+    },
   },
   methods: {
     DeleteVerification(menu) {
@@ -304,11 +356,6 @@ export default {
       }
       this.$store.commit('setMenuUpdating', true)
     },
-  },
-  props: {
-    UpdatedSectionArray: Array,
-    UpdatedMenuArray: Array,
-    UpdatedSubMenuArray: Array
   },
   data: function () {
     return {

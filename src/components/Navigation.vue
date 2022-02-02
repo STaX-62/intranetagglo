@@ -36,11 +36,7 @@
       </div>
     </div>
     <div class="Raccourcis">
-      <MenuUpdate
-        v-bind:UpdatedSectionArray="sectionArray"
-        v-bind:UpdatedMenuArray="menusArray"
-        v-bind:UpdatedSubMenuArray="submenusArray"
-      />
+      <MenuUpdate />
       <a class="Files" href="https://cloud.ca2bm.fr/index.php/f/1183804">
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
