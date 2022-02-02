@@ -50,7 +50,8 @@ class MenuService
 				}
 			}
 		}
-		return $menus[4];
+		$sortedarray[] = $menus[4]
+		return $sortedarray ;
 	}
 
 	private function handleException(Exception $e): void
