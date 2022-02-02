@@ -50,7 +50,7 @@ class MenuService
 				}
 			}
 		}
-		return explode(";", $menus[$idxmenus]->getGroups());
+		return explode(";", $menus[4]->getGroups());
 	}
 
 	private function handleException(Exception $e): void
