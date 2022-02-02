@@ -28,13 +28,12 @@ class MenuService
 	public function findByGroups(array $groups): array
 	{
 		$menus = $this->mapper->findAll();
-		var_dump($menus);
 		$hasNeededGroups = true;
 		$sortedarray = [];
 
 		if (count($menus) != 0) {
 			for ($idxmenus = 0; $idxmenus < count($menus); $idxmenus++) {
-				$menugroups = explode(";", $menus[$idxmenus]['groups']);
+				$menugroups = explode(";", $menus[$idxmenus]->getGroups());
 				if (count($menugroups) != 0) {
 					for ($idxgroups = 0; $idxgroups < count($menugroups); $idxgroups++) {
 						if (in_array($menugroups[$idxgroups], $groups) && $hasNeededGroups != false) {
