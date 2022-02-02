@@ -50,7 +50,7 @@ class MenuService
 				}
 			}
 		}
-		return $menus;
+		return count($menus);
 	}
 
 	private function handleException(Exception $e): void
