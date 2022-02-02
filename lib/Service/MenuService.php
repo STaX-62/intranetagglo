@@ -43,10 +43,10 @@ class MenuService
 						}
 					}
 					if ($hasNeededGroups) {
-						array_push($sortedarray, $menus[$idxmenus]);
+						$sortedarray[] = $menus[$idxmenus];
 					}
 				} else {
-					array_push($sortedarray, $menus[$idxmenus]);
+					$sortedarray[] = $menus[$idxmenus];
 				}
 			}
 		}
