@@ -65,24 +65,16 @@ export default {
       var requiredGroups = "";
       var state = true;
       for (var y = 0; y < DisplayableaApp.length; y++) {
-        console.log(DisplayableaApp[y].groups)
-        console.log(DisplayableaApp[y].groups.length)
         if (DisplayableaApp[y].groups.length > 0) {
           requiredGroups = DisplayableaApp[y].groups.split(';')
           state = true
-          console.log(DisplayableaApp)
-          console.log(requiredGroups)
           for (var i = 0; i < requiredGroups.length; i++) {
-            console.log(this.UserGroups)
-            console.log(this.UserGroups.includes(requiredGroups[i]) + " with " + requiredGroups[i])
             if (!this.UserGroups.includes(requiredGroups[i])) {
               state = false
             }
-            console.log(state)
           }
           if (!state) {
             DisplayableaApp.splice(y, 1)
-            console.log(DisplayableaApp)
           }
         }
       }
@@ -92,7 +84,6 @@ export default {
   methods: {
     AppsSet(value) {
       this.droptext = value
-      console.log(this.droptext)
       this.$store.commit('updateCategories', value)
     }
   },

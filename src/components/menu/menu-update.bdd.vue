@@ -396,6 +396,10 @@ export default {
 }
 
 .table-block {
+  display: grid;
+  grid-template-columns: calc(100% - 100px) 50px 50px;
+  grid-auto-rows: auto;
+  grid-template-areas: ". . .";
   background-color: var(--color-mode-1);
   border-style: solid;
   border-color: var(--color-mode-shadow-1);
@@ -442,6 +446,4 @@ export default {
   margin: 5px 50px 5px 5px;
   border-radius: 5px;
 }
-
-
 </style>
