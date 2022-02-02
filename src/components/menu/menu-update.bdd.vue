@@ -165,7 +165,7 @@ export default {
     DeleteVerification(menu) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${menu.title}`, {
         title: 'Confirmation',
-        id:'menumodal3',
+        id: 'menumodal3',
         size: 'sm',
         buttonSize: 'sm',
         okVariant: 'danger',
@@ -274,7 +274,6 @@ export default {
       })
     },
     async createMenu(menu) {
-      this.updating = true
       try {
         var url = `apps/intranetagglo/menus`
         const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
@@ -282,10 +281,9 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.updating = false
+      this.$store.commit('setMenuUpdating', true)
     },
     async updateMenu(menu) {
-      this.updating = true
       try {
         var url = `apps/intranetagglo/menus/${menu.id}`
         const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
@@ -293,10 +291,9 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.updating = false
+      this.$store.commit('setMenuUpdating', true)
     },
     async deleteMenu(id) {
-      this.updating = true
       try {
         var url = `apps/intranetagglo/menus/${id}`
         const response = await axios.delete(generateUrl(url, { id }))
@@ -304,20 +301,20 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.updating = false
+      this.$store.commit('setMenuUpdating', true)
     },
   },
   props: {
     UpdatedSectionArray: Array,
     UpdatedMenuArray: Array,
-    UpdatedSubMenuArray: Array,
-    menusInBDD: Array,
+    UpdatedSubMenuArray: Array
   },
   data: function () {
     return {
       global: false,
       detailed: false,
       updating: false,
+      menuInBDD: [],
       modifying: {
         selected: null,
         title: "",
@@ -331,6 +328,9 @@ export default {
     }
   },
   mounted() {
+    var url = `apps/intranetagglo${'/menus'}`
+    axios.get(generateUrl(url))
+      .then(response => (this.menusInBDD = response.data))
     axios.get(generateOcsUrl(`cloud/groups`, 2))
       .then(response => (this.options = response.data.ocs.data.groups))
   },

@@ -40,7 +40,6 @@
         v-bind:UpdatedSectionArray="sectionArray"
         v-bind:UpdatedMenuArray="menusArray"
         v-bind:UpdatedSubMenuArray="submenusArray"
-        v-bind:menusInBDD.sync="menusInBDD"
       />
       <a class="Files" href="https://cloud.ca2bm.fr/index.php/f/1183804">
         <b-icon class="doc-icon" icon="folder"></b-icon>
@@ -67,7 +66,21 @@ export default {
       ]
     }
   },
+  watch: {
+    updating: function (val) {
+      if (val) {
+        axios.get(generateUrl(`apps/intranetagglo${'/menus'}`))
+          .then((response) => {
+            this.menusInBDD = response.data;
+            this.$store.commit('setMenuUpdating', false)
+          })
+      }
+    },
+  },
   computed: {
+    updating() {
+      return this.$store.state.appsupdating
+    },
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
     },
@@ -257,7 +270,7 @@ export default {
 
 .menu-title,
 .section-title {
-  color : var(--color-mode-2);
+  color: var(--color-mode-2);
   padding-left: 10px;
   width: 200px;
   margin-top: auto;

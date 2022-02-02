@@ -193,7 +193,7 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.$store.commit('setAppsUpdating', false)
+      this.$store.commit('setAppsUpdating', true)
     },
     async deleteApps(id) {
 
@@ -204,7 +204,7 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.$store.commit('setAppsUpdating', false)
+      this.$store.commit('setAppsUpdating', true)
     },
   },
   data: function () {
