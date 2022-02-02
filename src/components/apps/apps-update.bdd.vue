@@ -152,6 +152,7 @@ export default {
         .then(value => {
           if (value) {
             this.apps.splice(index, 1)
+            console.log(app.id)
             this.deleteApps(app.id)
           }
         })
@@ -180,6 +181,9 @@ export default {
         var url = `apps/intranetagglo/apps`
         const response = await axios.post(generateUrl(url), apps, { type: 'application/json' })
         this.LastModifiedID = response.data.id
+        console.log(this.apps.find(x => x.id === null).id)
+        console.log(response.data.id)
+        this.apps.find(x => x.id === null).id = response.data.id
       } catch (e) {
         console.error(e)
       }
