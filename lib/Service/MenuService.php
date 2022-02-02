@@ -44,15 +44,17 @@ class MenuService
 							$hasNeededGroups = false;
 						}
 					}
+					$test[] = $hasNeededGroups;
 					if ($hasNeededGroups) {
 						$sortedarray[] = $menus[$idxmenus];
 					}
 				} else {
+					$test[] = $menus[$idxmenus];
 					$sortedarray[] = $menus[$idxmenus];
 				}
 			}
 		}
-		return $sortedarray;
+		return $test;
 	}
 
 	private function handleException(Exception $e): void
