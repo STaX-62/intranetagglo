@@ -50,7 +50,7 @@ class MenuService
 				}
 			}
 		}
-		$sortedarray[] = $menus[4]
+		$sortedarray[] = $menus[4];
 		return $sortedarray ;
 	}
 
