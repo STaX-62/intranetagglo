@@ -313,8 +313,11 @@ body {
 
 #appmodal1___BV_modal_outer_,
 #appmodal2___BV_modal_outer_,
+#appmodal3___BV_modal_outer_,
 #menumodal1___BV_modal_outer_,
 #menumodal2___BV_modal_outer_,
+#menumodal3___BV_modal_outer_,
 #newsmodal1___BV_modal_outer_ {
     z-index: 2001 !important;
 }
+

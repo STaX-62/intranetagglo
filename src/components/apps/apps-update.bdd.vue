@@ -139,6 +139,7 @@ export default {
     DeleteVerification(app, index) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer cette application : ${app.title}`, {
         title: 'Confirmation',
+        id:'appmodal3',
         size: 'sm',
         buttonSize: 'sm',
         okVariant: 'danger',

@@ -165,6 +165,7 @@ export default {
     DeleteVerification(menu) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${menu.title}`, {
         title: 'Confirmation',
+        id:'menumodal3',
         size: 'sm',
         buttonSize: 'sm',
         okVariant: 'danger',
