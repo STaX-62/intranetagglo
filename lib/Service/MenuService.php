@@ -30,13 +30,15 @@ class MenuService
 		$menus = $this->mapper->findAll();
 		$hasNeededGroups = true;
 		$sortedarray = [];
+		$test = null;
 
 		if (count($menus) != 0) {
 			for ($idxmenus = 0; $idxmenus < count($menus); $idxmenus++) {
 				$menugroups = explode(";", $menus[$idxmenus]->getGroups());
 				if (count($menugroups) != 0) {
 					for ($idxgroups = 0; $idxgroups < count($menugroups); $idxgroups++) {
-						if (in_array($menugroups[$idxgroups], $groups) && $hasNeededGroups != false) {
+						$test = in_array($menugroups[$idxgroups], $groups);
+						if (in_array($menugroups[$idxgroups], $groups) && $hasNeededGroups) {
 							$hasNeededGroups = true;
 						} else {
 							$hasNeededGroups = false;
@@ -50,8 +52,7 @@ class MenuService
 				}
 			}
 		}
-		$sortedarray[] = $menus[4];
-		return $sortedarray ;
+		return $test;
 	}
 
 	private function handleException(Exception $e): void
