@@ -35,6 +35,8 @@ class MenuService
 		if (count($menus) != 0) {
 			for ($idxmenus = 0; $idxmenus < count($menus); $idxmenus++) {
 				$menugroups = explode(";", $menus[$idxmenus]->getGroups());
+				$test[] = $menugroups;
+				$test[] = count($menugroups);
 				if (count($menugroups) != 0) {
 					$hasNeededGroups = true;
 					for ($idxgroups = 0; $idxgroups < count($menugroups); $idxgroups++) {
@@ -44,12 +46,10 @@ class MenuService
 							$hasNeededGroups = false;
 						}
 					}
-					$test[] = $hasNeededGroups;
 					if ($hasNeededGroups) {
 						$sortedarray[] = $menus[$idxmenus];
 					}
 				} else {
-					$test[] = $menus[$idxmenus];
 					$sortedarray[] = $menus[$idxmenus];
 				}
 			}
