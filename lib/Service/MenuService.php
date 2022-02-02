@@ -28,6 +28,7 @@ class MenuService
 	public function findByGroups(array $groups): array
 	{
 		$menus = $this->mapper->findAll();
+		var_dump($menus);
 		$hasNeededGroups = true;
 		$sortedarray = [];
 
