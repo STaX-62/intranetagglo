@@ -38,7 +38,6 @@ class MenuService
 				if (count($menugroups) != 0) {
 					$hasNeededGroups = true;
 					for ($idxgroups = 0; $idxgroups < count($menugroups); $idxgroups++) {
-						$test[] = $hasNeededGroups;
 						if (in_array($menugroups[$idxgroups], $groups) && $hasNeededGroups) {
 							$hasNeededGroups = true;
 						} else {
@@ -53,7 +52,7 @@ class MenuService
 				}
 			}
 		}
-		return $test;
+		return $sortedarray;
 	}
 
 	private function handleException(Exception $e): void
