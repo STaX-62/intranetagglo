@@ -25,7 +25,7 @@ class MenuService
 		return $this->mapper->findAll();
 	}
 
-	public function findByGroups(array $groups): array
+	public function findByGroups(array $groups)
 	{
 		$menus = $this->mapper->findAll();
 		$hasNeededGroups = true;
