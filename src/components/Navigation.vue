@@ -65,7 +65,7 @@ export default {
   watch: {
     updating: function (val) {
       if (val) {
-        axios.get(generateUrl(`apps/intranetagglo${'/menus'}`))
+        axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
           .then((response) => {
             this.menusInBDD = response.data;
             this.$store.commit('setMenuUpdating', false)
@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     updating() {
-      return this.$store.state.appsupdating
+      return this.$store.state.menuupdating
     },
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
@@ -157,7 +157,7 @@ export default {
 
   },
   mounted() {
-    var url = `apps/intranetagglo${'/menus'}`
+    var url = `apps/intranetagglo${'/menusG'}`
     axios.get(generateUrl(url))
       .then(response => (this.menusInBDD = response.data))
   }

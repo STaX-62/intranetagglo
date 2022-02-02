@@ -25,6 +25,34 @@ class MenuService
 		return $this->mapper->findAll();
 	}
 
+	public function findByGroups(array $groups): array
+	{
+		$menus = $this->mapper->findAll();
+		$hasNeededGroups = true;
+		$sortedarray = [];
+
+		if (count($menus) != 0) {
+			for ($idxmenus = 0; $idxmenus < count($menus); $idxmenus++) {
+				$menugroups = explode(";", $menus[$idxmenus]['groups']);
+				if (count($menugroups) != 0) {
+					for ($idxgroups = 0; $idxgroups < count($menugroups); $idxgroups++) {
+						if (in_array($menugroups[$idxgroups], $groups) && $hasNeededGroups != false) {
+							$hasNeededGroups = true;
+						} else {
+							$hasNeededGroups = false;
+						}
+					}
+					if ($hasNeededGroups) {
+						array_push($sortedarray, $menus[$idxmenus]);
+					}
+				} else {
+					array_push($sortedarray, $menus[$idxmenus]);
+				}
+			}
+		}
+		return $sortedarray;
+	}
+
 	private function handleException(Exception $e): void
 	{
 		if (

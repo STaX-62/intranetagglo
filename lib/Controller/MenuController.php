@@ -9,6 +9,8 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Controller;
+use OCP\IGroupManager;
+use OCP\IUserSession;
 
 use OCA\IntranetAgglo\Service\MenuService;
 
@@ -19,10 +21,12 @@ class MenuController extends Controller
 
     use Errors;
 
-    public function __construct(IRequest $request, MenuService $service)
+    public function __construct(IRequest $request, MenuService $service, IGroupManager $groupmanager, IUserSession $session)
     {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
+        $this->groupmanager = $groupmanager;
+        $this->session = $session;
     }
 
     /**
@@ -36,11 +40,10 @@ class MenuController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function show(int $id): DataResponse
+    public function indexG(): DataResponse
     {
-        return $this->handleNotFound(function () use ($id) {
-            return $this->service->find($id);
-        });
+        $user = $this->session->getUser();
+        return (new DataResponse($this->service->findByGroups($this->groupmanager->getUserGroupIds($user))));
     }
 
 

@@ -23,6 +23,11 @@ return [
             'verb' => 'GET',
         ],
         [
+            'name' => 'menu#indexG',
+            'url' => '/menusG',
+            'verb' => 'GET',
+        ],
+        [
             'name' => 'menu#dashboard',
             'url' => '/menus/dashboard',
             'verb' => 'GET',
