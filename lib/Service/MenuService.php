@@ -36,6 +36,7 @@ class MenuService
 			for ($idxmenus = 0; $idxmenus < count($menus); $idxmenus++) {
 				$menugroups = explode(";", $menus[$idxmenus]->getGroups());
 				if (count($menugroups) != 0) {
+					$hasNeededGroups = true;
 					for ($idxgroups = 0; $idxgroups < count($menugroups); $idxgroups++) {
 						$test[] = $hasNeededGroups;
 						if (in_array($menugroups[$idxgroups], $groups) && $hasNeededGroups) {
