@@ -254,6 +254,7 @@ export default {
         'groups': '',
         'position': Sindex + '-' + (Mindex + 1) + '-' + (submenus.length + 1)
       })
+      console.log(this.menusInBDD)
     },
     AddMenu(menu, Sindex) {
       this.menusInBDD.push({
