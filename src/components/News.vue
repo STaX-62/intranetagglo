@@ -8,11 +8,11 @@
       </div>
       <div id="news-row" v-bind:class="'news-row' + focus">
         <NewsMedium
-          id="news1"
+          v-bind:id="'news'+index"
           v-for="(n,index) in getNews"
           :key="index"
           @click="OpenNews(index)"
-          v-bind:news="n[index]"
+          v-bind:news="news[index - 1]"
         />
         <b-icon
           class="news-return"
@@ -57,7 +57,7 @@ export default {
     }
   },
   computed: {
-    getNews(){
+    getNews() {
       return this.news
     },
     isAdmin() {
