@@ -1,7 +1,7 @@
 <template>
   <div class="add-news-button" @click="modal = !modal">
     Ajouter une actualité
-    <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal">
+    <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="AddNews">
       <template #modal-title>
         Ajouter une
         <code style="font-size: 1.25rem;">Actualité</code>
@@ -88,10 +88,10 @@
           <b-tfoot></b-tfoot>
         </b-table-simple>
       </form>
-      <template #modal-footer="{ AddNews, cancel }">
+      <template #modal-footer="{ ok, cancel }">
         <!-- Emulate built in modal footer ok and cancel button actions -->
         <b-button size="md" variant="danger" @click="cancel()">Annuler</b-button>
-        <b-button size="md" variant="success" @click="AddNews()">Ajouter</b-button>
+        <b-button size="md" variant="success" @click="ok()">Ajouter</b-button>
       </template>
     </b-modal>
   </div>
