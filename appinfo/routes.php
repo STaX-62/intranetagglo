@@ -54,7 +54,7 @@ return [
         [
             'name' => 'news#index',
             'url' => '/news/{id}',
-            'verb' => 'GET'
+            'verb' => 'POST'
         ],
         [
             'name' => 'news#search',

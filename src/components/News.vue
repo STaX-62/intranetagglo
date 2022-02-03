@@ -7,9 +7,9 @@
         <NewsAdd v-if="isAdmin" />
       </div>
       <div id="news-row" class="news-row">
-        <NewsMedium id="news1" v-bind:news="appsarray[0]" />
-        <NewsMedium id="news2" v-bind:news="appsarray[1]" />
-        <NewsMedium id="news3" v-bind:news="appsarray[2]" />
+        <NewsMedium id="news1" v-bind:news="news[0]" />
+        <NewsMedium id="news2" v-bind:news="news[1]" />
+        <NewsMedium id="news3" v-bind:news="news[2]" />
         <b-icon class="news-return" icon="arrow-return-left" @click="closeNews()"></b-icon>
       </div>
       <b-pagination class="news-pagination" v-model="currentPage" pills :total-rows="rows"></b-pagination>
@@ -43,7 +43,7 @@ export default {
       addNews: false,
       AddNewsModal: false,
 
-      appsarray: [],
+      news: [],
       currentPage: 1,
       rows: 50,
     }
@@ -133,9 +133,11 @@ export default {
   },
   mounted() {
     var url = `apps/intranetagglo/news/0`
-    axios.get(generateUrl(url), 0, { type: 'application/json' })
+    axios.post(generateUrl(url), 0, { type: 'application/json' })
       .then((response) => {
-        this.appsarray = response.data
+        this.news = response.data
+
+
         var news = document.getElementsByClassName('news');
         let newsrow = document.getElementById('news-row')
         news[0].addEventListener('click', () => {
