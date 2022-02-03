@@ -56,17 +56,16 @@ export default {
       })
         .then(value => {
           if (value) {
-            news.visible = !news.visible
             var updatednews = {
-              'id' : news.id,
-              'author' :news.author,
-              'title' :news.title,
-              'subtitle' :news.subtitle,
-              'text' :news.text,
-              'photo' :news.photo,
-              'category' :news.category,
-              'groups' :news.groups,
-              'visible' :news.visible
+              'id': news.id,
+              'author': news.author,
+              'title': news.title,
+              'subtitle': news.subtitle,
+              'text': news.text,
+              'photo': news.photo,
+              'category': news.category,
+              'groups': news.groups,
+              'visible': !news.visible
             }
             console.log(updatednews)
             console.log(news)
