@@ -131,6 +131,8 @@ export default {
   methods: {
     AddNews() {
       this.news.author = this.$store.state.username
+      console.log(this.$store.state.username)
+      console.log(this.news.author)
       this.news.groups = this.news.groups.join(';')
 
 
