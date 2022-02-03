@@ -7,9 +7,13 @@
         <NewsAdd v-if="isAdmin" />
       </div>
       <div id="news-row" v-bind:class="'news-row' + focus">
-        <NewsMedium id="news1" @click="focus = 'left'" v-bind:news="news[0]" />
-        <NewsMedium id="news2" @click="focus = 'center'" v-bind:news="news[1]" />
-        <NewsMedium id="news3" @click="focus = 'right'" v-bind:news="news[2]" />
+        <NewsMedium
+          id="news1"
+          @click="OpenNews(index)"
+          v-bind:news="n[index]"
+          v-for="(n,index) in news"
+          :key="index"
+        />
         <b-icon
           class="news-return"
           icon="arrow-return-left"
@@ -117,6 +121,11 @@ export default {
     // }
   },
   methods: {
+    OpenNews(index) {
+      if (index == 1) this.focus = 'left'
+      if (index == 2) this.focus = 'center'
+      if (index == 3) this.focus = 'right'
+    },
     handleScroll() {
       const els = document.querySelectorAll('.news')
       setInterval(function () {
