@@ -57,10 +57,12 @@ export default {
         .then(value => {
           if (value) {
             if (news.visible) {
-              this.changeVisNews(news.id, 0)
+              console.log(news.visible + " true")
+              this.changeVisNews(news.id, 1)
             }
             else {
-              this.changeVisNews(news.id, 1)
+              console.log(news.visible + " false")
+              this.changeVisNews(news.id, 0)
             }
 
           }
