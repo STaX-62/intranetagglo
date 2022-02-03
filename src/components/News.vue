@@ -42,7 +42,6 @@ export default {
       maxvisiblenews: 6,
       addNews: false,
       AddNewsModal: false,
-
       news: [],
       currentPage: 1,
       rows: 50,
@@ -137,6 +136,7 @@ export default {
       .then((response) => { this.news = response.data })
   },
   mounted() {
+    console.log(this.news)
     var news = document.getElementsByClassName('news');
     let newsrow = document.getElementById('news-row')
     news[0].addEventListener('click', () => {
