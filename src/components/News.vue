@@ -9,10 +9,10 @@
       <div id="news-row" v-bind:class="'news-row' + focus">
         <NewsMedium
           id="news1"
+          v-for="(n,index) in getNews"
+          :key="index"
           @click="OpenNews(index)"
           v-bind:news="n[index]"
-          v-for="(n,index) in news"
-          :key="index"
         />
         <b-icon
           class="news-return"
@@ -57,6 +57,9 @@ export default {
     }
   },
   computed: {
+    getNews(){
+      return this.news
+    },
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
     },

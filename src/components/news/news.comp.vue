@@ -40,6 +40,7 @@ export default {
   methods: {
   },
   mounted() {
+    console.log(this.news)
     let textboxblock = document.getElementById('news-textbox-block' + this.news.id)
     if (this.news.photos == "") textboxblock.setAttribute('noimg', 'true')
     else textboxblock.setAttribute('noimg', 'false')
