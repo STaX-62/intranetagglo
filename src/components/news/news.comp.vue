@@ -43,12 +43,12 @@ export default {
   methods: {
     ChangeVisibility(news) {
       this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
-        title: news.visible == 1 ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
+        title: news.visible == 0 ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
         id: 'newsmodal3',
         size: 'md',
         buttonSize: 'sm',
-        okVariant: news.visible == 1 ? 'success' : 'danger',
-        okTitle: news.visible == 1 ? 'Publier' : 'Rendre invisible',
+        okVariant: news.visible == 0 ? 'success' : 'danger',
+        okTitle: news.visible == 0 ? 'Publier' : 'Rendre invisible',
         cancelTitle: 'Retour',
         footerClass: 'p-2',
         hideHeaderClose: false,
