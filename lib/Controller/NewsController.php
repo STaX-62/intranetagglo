@@ -74,10 +74,9 @@ class NewsController extends Controller
      */
     public function publication(int $id, int $visible)
     {
-        return $visible;
-        // return $this->handleNotFound(function () use ($id, $visible) {
-        //     return $this->service->publication($id, $visible);
-        // });
+        return $this->handleNotFound(function () use ($id, $visible) {
+            return $this->service->publication($id, $visible);
+        });
     }
 
     /**
