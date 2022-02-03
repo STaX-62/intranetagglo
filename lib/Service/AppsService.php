@@ -66,7 +66,7 @@ class AppsService
 				}
 			}
 		}
-		return $sortedarray;
+		return explode(";", $apps[$idxapps]->getGroups());
 	}
 
 	public function find($id)
