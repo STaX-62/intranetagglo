@@ -166,7 +166,7 @@ export default {
     }
 
   },
-  created() {
+  mounted() {
     var url = `apps/intranetagglo/news/0`
     axios.post(generateUrl(url), 0, { type: 'application/json' })
       .then((response) => { this.news = response.data })
