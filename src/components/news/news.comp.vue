@@ -56,7 +56,6 @@ export default {
       })
         .then(value => {
           if (value) {
-            news.visible = !news.visible
             var updatednews = {
               'id': news.id,
               'author': news.author,
@@ -68,9 +67,7 @@ export default {
               'groups': news.groups,
               'visible': !news.visible
             }
-            console.log(updatednews)
-            console.log(news)
-            this.changeVisNews(news)
+            this.changeVisNews(updatednews)
           }
         })
     },
