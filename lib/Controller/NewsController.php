@@ -28,9 +28,9 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function index(int $firstresult): DataResponse
+    public function index(int $id): DataResponse
     {
-        return (new DataResponse($this->service->getNews($firstresult)));
+        return (new DataResponse($this->service->getNews($id)));
     }
 
     /**
