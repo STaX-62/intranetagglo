@@ -130,13 +130,11 @@ export default {
   },
   methods: {
     AddNews() {
-      
-      console.log(this.news.photo)
-      // this.news.author = this.$store.state.username
-      // this.news.groups = this.news.groups.join(';')
+      this.news.author = this.$store.state.username
+      this.news.groups = this.news.groups.join(';')
 
 
-      // this.createNews(this.news)
+      this.createNews(this.news)
     },
     async createNews(news) {
       try {
@@ -162,6 +160,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$store.state.groupsoptions)
     if (this.$store.state.groupsoptions == []) {
       axios.get(generateOcsUrl(`cloud/groups`, 2))
         .then((response) => {
@@ -170,6 +169,7 @@ export default {
         })
     }
     else {
+      console.log(this.$store.state.groupsoptions)
       this.groupsoptions = this.$store.state.groupsoptions;
     }
   },
@@ -181,7 +181,7 @@ export default {
         title: "",
         subtitle: "",
         text: "",
-        photo: null,
+        photo: "",
         category: "",
         groups: [],
         visible: false
