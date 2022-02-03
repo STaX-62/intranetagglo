@@ -9,6 +9,8 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Controller;
+use OCP\IGroupManager;
+use OCP\IUserSession;
 
 use OCA\IntranetAgglo\Service\AppsService;
 
@@ -19,10 +21,12 @@ class AppsController extends Controller
 
     use Errors;
 
-    public function __construct(IRequest $request, AppsService $service)
+    public function __construct(IRequest $request, AppsService $service, IGroupManager $groupmanager, IUserSession $session)
     {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
+        $this->groupmanager = $groupmanager;
+        $this->session = $session;
     }
 
     public function index(): DataResponse
