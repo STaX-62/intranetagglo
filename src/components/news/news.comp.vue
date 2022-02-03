@@ -13,7 +13,7 @@
       <div class="news-tagbox">
         <span class="news-tag">{{ news.category }}</span>
         <button type="button" class="news-visibility-button" @click="ChangeVisibility(news)">
-          <b-icon class="sidebar-item-icon" variant="dark" icon="eye" v-if="visible" />
+          <b-icon class="sidebar-item-icon" variant="dark" icon="eye" v-if="news.visible" />
           <b-icon class="sidebar-item-icon" variant="dark" icon="eye-slash" v-else />
         </button>
         <NewsUpdate />
@@ -57,12 +57,10 @@ export default {
         .then(value => {
           if (value) {
             if (news.visible) {
-              console.log(news.visible + " true")
-              this.changeVisNews(news.id, 1)
+              this.changeVisNews(news.id, 0)
             }
             else {
-              console.log(news.visible + " false")
-              this.changeVisNews(news.id, 0)
+              this.changeVisNews(news.id, 1)
             }
 
           }
