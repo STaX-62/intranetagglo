@@ -47,12 +47,6 @@
     cursor: pointer;
 }
 
-.news-row.left .news-return,
-.news-row.center .news-return,
-.news-row.right .news-return {
-    display: block !important;
-}
-
 .add-news-button::before {
     content: "+";
     position: absolute;

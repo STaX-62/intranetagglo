@@ -6,11 +6,11 @@
         <input type="text" class="searchbar" v-model="news2" placeholder="Rechercher.." />
         <NewsAdd v-if="isAdmin" />
       </div>
-      <div id="news-row" class="news-row">
-        <NewsMedium id="news1" v-bind:news="news[0]" />
-        <NewsMedium id="news2" v-bind:news="news[1]" />
-        <NewsMedium id="news3" v-bind:news="news[2]" />
-        <b-icon class="news-return" icon="arrow-return-left" @click="closeNews()"></b-icon>
+      <div id="news-row" v-bind:class="'news-row' + focus">
+        <NewsMedium id="news1" @click="focus = 'left'" v-bind:news="news[0]" />
+        <NewsMedium id="news2" @click="focus = 'center'" v-bind:news="news[1]" />
+        <NewsMedium id="news3" @click="focus = 'right'" v-bind:news="news[2]" />
+        <b-icon class="news-return" icon="arrow-return-left" @click="closeNews()" v-if="focus != ''"></b-icon>
       </div>
       <b-pagination class="news-pagination" v-model="currentPage" pills :total-rows="rows"></b-pagination>
     </div>
@@ -37,7 +37,6 @@ export default {
   },
   data: function () {
     return {
-      actually: "",
       categorysearch: '',
       maxvisiblenews: 6,
       addNews: false,
@@ -45,6 +44,7 @@ export default {
       news: [],
       currentPage: 1,
       rows: 50,
+      focus: ""
     }
   },
   computed: {
@@ -129,38 +129,14 @@ export default {
       })
     },
     closeNews() {
-      let newsrow = document.getElementById('news-row')
-      newsrow.classList.toggle(this.actually)
+      this.focus = ""
     }
 
   },
-  beforeMount() {
+  mounted() {
     var url = `apps/intranetagglo/news/0`
     axios.post(generateUrl(url), 0, { type: 'application/json' })
       .then((response) => { this.news = response.data })
-  },
-  mounted() {
-    console.log(this.news)
-    var news = document.getElementsByClassName('news');
-    let newsrow = document.getElementById('news-row')
-    news[0].addEventListener('click', () => {
-      if (!newsrow.classList.contains('left')) {
-        newsrow.classList.toggle('left')
-        this.actually = "left"
-      }
-    })
-    news[1].addEventListener('click', () => {
-      if (!newsrow.classList.contains('center')) {
-        newsrow.classList.toggle('center')
-        this.actually = "center"
-      }
-    })
-    news[2].addEventListener('click', () => {
-      if (!newsrow.classList.contains('right')) {
-        newsrow.classList.toggle('right')
-        this.actually = "right"
-      }
-    })
   },
   destroyed() {
     var target = document.getElementById('news-container');
