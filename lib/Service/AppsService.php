@@ -37,6 +37,38 @@ class AppsService
 		}
 	}
 
+
+	public function findByGroups(array $groups)
+	{
+		$apps = $this->mapper->findAll();
+		$hasNeededGroups = true;
+		$sortedarray = [];
+
+		if (count($apps) != 0) {
+			for ($idxapps = 0; $idxapps < count($apps); $idxapps++) {
+
+				$appsgroups = explode(";", $apps[$idxapps]->getGroups());
+
+				if (count($appsgroups) != 0 && $appsgroups[1] != "") {
+					$hasNeededGroups = true;
+					for ($idxgroups = 0; $idxgroups < count($appsgroups); $idxgroups++) {
+						if (in_array($appsgroups[$idxgroups], $groups) && $hasNeededGroups) {
+							$hasNeededGroups = true;
+						} else {
+							$hasNeededGroups = false;
+						}
+					}
+					if ($hasNeededGroups) {
+						$sortedarray[] = $apps[$idxapps];
+					}
+				} else {
+					$sortedarray[] = $apps[$idxapps];
+				}
+			}
+		}
+		return $sortedarray;
+	}
+
 	public function find($id)
 	{
 		try {

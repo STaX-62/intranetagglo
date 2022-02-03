@@ -9,7 +9,7 @@
       </h2>
       <a
         class="apps-content-main"
-        v-for="(app,index) in appsToDisplay"
+        v-for="(app,index) in apps"
         :key="index"
         v-bind:href="app.link"
         target="_blank"
@@ -36,7 +36,7 @@ export default {
         var url = `apps/intranetagglo${'/apps'}`
         axios.get(generateUrl(url))
           .then((response) => {
-            this.appsarray = response.data;
+            this.apps = response.data;
             this.$store.commit('setAppsUpdating', false)
           })
       }
@@ -60,26 +60,26 @@ export default {
         this.$store.commit('updateSearch', value)
       }
     },
-    appsToDisplay() {
-      var DisplayableaApp = this.appsarray;
-      var requiredGroups = "";
-      var state = true;
-      for (var y = 0; y < DisplayableaApp.length; y++) {
-        if (DisplayableaApp[y].groups.length > 0) {
-          requiredGroups = DisplayableaApp[y].groups.split(';')
-          state = true
-          for (var i = 0; i < requiredGroups.length; i++) {
-            if (!this.UserGroups.includes(requiredGroups[i])) {
-              state = false
-            }
-          }
-          if (!state) {
-            DisplayableaApp.splice(y, 1)
-          }
-        }
-      }
-      return DisplayableaApp
-    },
+    // appsToDisplay() {
+    //   var DisplayableaApp = this.appsarray;
+    //   var requiredGroups = "";
+    //   var state = true;
+    //   for (var y = 0; y < DisplayableaApp.length; y++) {
+    //     if (DisplayableaApp[y].groups.length > 0) {
+    //       requiredGroups = DisplayableaApp[y].groups.split(';')
+    //       state = true
+    //       for (var i = 0; i < requiredGroups.length; i++) {
+    //         if (!this.UserGroups.includes(requiredGroups[i])) {
+    //           state = false
+    //         }
+    //       }
+    //       if (!state) {
+    //         DisplayableaApp.splice(y, 1)
+    //       }
+    //     }
+    //   }
+    //   return DisplayableaApp
+    // },
   },
   methods: {
     AppsSet(value) {
@@ -88,16 +88,15 @@ export default {
     }
   },
   mounted() {
-    var url = `apps/intranetagglo${'/apps'}`
-    axios.get(generateUrl(url))
-      .then(response => (this.appsarray = response.data))
+    axios.get(generateUrl(`apps/intranetagglo${'/appsG'}`))
+      .then(response => (this.apps = response.data))
   },
   data: function () {
     return {
       droptext: '',
       modal: false,
       apptoupdate: {},
-      appsarray: []
+      apps: []
     }
   }
 }

@@ -91,6 +91,11 @@ return [
             'verb' => 'GET',
         ],
         [
+            'name' => 'apps#indexG',
+            'url' => '/appsG',
+            'verb' => 'GET',
+        ],
+        [
             'name' => 'apps#dashboard',
             'url' => '/apps/dashboard',
             'verb' => 'GET',

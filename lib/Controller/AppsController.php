@@ -25,9 +25,6 @@ class AppsController extends Controller
         $this->service = $service;
     }
 
-    /**
-     * @NoAdminRequired
-     */
     public function index(): DataResponse
     {
         return (new DataResponse($this->service->findAll()));
@@ -36,11 +33,10 @@ class AppsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function show(int $id): DataResponse
+    public function indexG(): DataResponse
     {
-        return $this->handleNotFound(function () use ($id) {
-            return $this->service->find($id);
-        });
+        $user = $this->session->getUser();
+        return (new DataResponse($this->service->findByGroups($this->groupmanager->getUserGroupIds($user))));
     }
 
 
