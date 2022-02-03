@@ -186,7 +186,7 @@ export default {
         photo: "",
         category: "",
         groups: [],
-        visible: false
+        visible: 0
       },
       groupsoptions: [],
       categoryoptions: []
