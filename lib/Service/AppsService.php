@@ -52,7 +52,7 @@ class AppsService
 
 				$appsgroups = explode(";", $apps[$idxapps]->getGroups());
 				$test[] = $appsgroups;
-				if (count($appsgroups) != 0 && $appsgroups[1] != "") {
+				if (count($appsgroups) != 0 && $appsgroups[0] != "") {
 					$hasNeededGroups = true;
 					for ($idxgroups = 0; $idxgroups < count($appsgroups); $idxgroups++) {
 						if (in_array($appsgroups[$idxgroups], $groups) && $hasNeededGroups) {
