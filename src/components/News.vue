@@ -3,7 +3,7 @@
     <div id="news-container" class="news-container">
       <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
         <h2 class="news-header-title">Actualités</h2>
-        <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
+        <input type="text" class="searchbar" v-model="news2" placeholder="Rechercher.." />
         <NewsAdd v-if="isAdmin" />
       </div>
       <div id="news-row" class="news-row">
@@ -50,6 +50,10 @@ export default {
   computed: {
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
+    },
+    news2() {
+      console.log(this.news)
+      return this.news
     },
     // categoryoptions() {
     //   var News = this.$store.state.News
