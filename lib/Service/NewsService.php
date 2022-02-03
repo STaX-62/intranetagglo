@@ -82,9 +82,18 @@ class NewsService
 			$this->handleException($e);
 		}
 	}
-	/**
-	 * @NoAdminRequired
-	 */
+
+	public function publication($id, $visible)
+	{
+		try {
+			$news = $this->mapper->find($id);
+			$news->setVisible($visible);
+			return $this->mapper->update($news);
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
 	public function delete($id)
 	{
 		try {

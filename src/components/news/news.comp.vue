@@ -56,18 +56,13 @@ export default {
       })
         .then(value => {
           if (value) {
-            var updatednews = {
-              'id': news.id,
-              'author': news.author,
-              'title': news.title,
-              'subtitle': news.subtitle,
-              'text': news.text,
-              'photo': news.photo,
-              'category': news.category,
-              'groups': news.groups,
-              'visible': !news.visible
+            if (news.visible) {
+              this.changeVisNews(news.id, 0)
             }
-            this.changeVisNews(updatednews)
+            else {
+              this.changeVisNews(news.id, 1)
+            }
+
           }
         })
     },
@@ -90,10 +85,10 @@ export default {
           }
         })
     },
-    async changeVisNews(news) {
+    async changeVisNews(id, visible) {
       try {
-        var url = `apps/intranetagglo/news/pub/${news.id}`
-        const response = await axios.post(generateUrl(url), news, { type: 'application/json' })
+        var url = `apps/intranetagglo/news/pub/${id}`
+        const response = await axios.post(generateUrl(url), { 'id': id, 'visible': visible }, { type: 'application/json' })
         this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)

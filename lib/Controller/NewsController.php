@@ -69,6 +69,15 @@ class NewsController extends Controller
             return $this->service->update($id, $author, $title, $subtitle, $text, $photo, $category, $groups, $visible);
         });
     }
+    /**
+     * @NoAdminRequired
+     */
+    public function publication(int $id, int $visible)
+    {
+        return $this->handleNotFound(function () use ($id, $visible) {
+            return $this->service->publication($id, $visible);
+        });
+    }
 
     /**
      * @NoAdminRequired
