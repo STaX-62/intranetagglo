@@ -11,7 +11,7 @@
           v-bind:id="'news'+index"
           v-for="(n,index) in getNews"
           :key="index"
-          @click="OpenNews(index)"
+          v-on:click="OpenNews(index)"
           v-bind:news="news[index]"
         />
         <b-icon
@@ -44,6 +44,18 @@ export default {
     Apps,
     NewsAdd
   },
+  watch: {
+    updating: function (val) {
+      if (val) {
+        var url = `apps/intranetagglo/news/${this.currentPage - 1}`
+        axios.post(generateUrl(url), this.currentPage - 1, { type: 'application/json' })
+          .then((response) => {
+            this.news = response.data;
+            this.$store.commit('setNewsUpdating', false)
+          })
+      }
+    },
+  },
   data: function () {
     return {
       categorysearch: '',
@@ -57,6 +69,9 @@ export default {
     }
   },
   computed: {
+    updating() {
+      return this.$store.state.newsupdating
+    },
     getNews() {
       return this.news
     },

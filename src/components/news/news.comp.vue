@@ -12,25 +12,28 @@
       </div>
       <div class="news-tagbox">
         <span class="news-tag">{{ news.category }}</span>
-        <NewsVisibility v-bind:visibility="news.visibility" />
+        <button type="button" class="news-visibility-button" @click="ChangeVisibility(news)">
+          <b-icon class="sidebar-item-icon" variant="dark" icon="eye" v-if="visibility" />
+          <b-icon class="sidebar-item-icon" variant="dark" icon="eye-slash" v-else />
+        </button>
         <NewsUpdate />
-        <NewsDelete />
+        <button type="button" class="news-del-button" @click="DeleteVerification(news)">
+          <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import NewsVisibility from './news-visibility.bdd'
 import NewsUpdate from './news-update.bdd'
-import NewsDelete from './news-del.bdd'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
   name: 'NewsMedium',
   components: {
-    NewsUpdate,
-    NewsVisibility,
-    NewsDelete
+    NewsUpdate
   },
   props: {
     news: Object,
@@ -38,6 +41,64 @@ export default {
   computed: {
   },
   methods: {
+    ChangeVisibility(news) {
+      this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
+        title: news.visibility ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
+        id: 'newsmodal3',
+        size: 'sm',
+        buttonSize: 'sm',
+        okVariant: 'danger',
+        okTitle: news.visibility ? 'Publier' : 'Rendre invisible',
+        cancelTitle: 'Retour',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.changeVisNews(news)
+          }
+        })
+    },
+    DeleteVerification(news) {
+      this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer cette actualité : ${news.title}`, {
+        title: 'Cette action est irréversible',
+        id: 'menumodal3',
+        size: 'sm',
+        buttonSize: 'sm',
+        okVariant: 'danger',
+        okTitle: 'Supprimer',
+        cancelTitle: 'Retour',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.deleteNews(news.id)
+          }
+        })
+    },
+    async changeVisNews(news) {
+      try {
+        var url = `apps/intranetagglo/menus/${news.id}`
+        const response = await axios.post(generateUrl(url), news, { type: 'application/json' })
+        this.LastModifiedID = response.data.id
+      } catch (e) {
+        console.error(e)
+      }
+      this.$store.commit('setNewsUpdating', true)
+    },
+    async deleteNews(id) {
+      try {
+        var url = `apps/intranetagglo/menus/${id}`
+        const response = await axios.delete(generateUrl(url, { id }))
+        this.LastModifiedID = response.data.id
+      } catch (e) {
+        console.error(e)
+      }
+      this.$store.commit('setNewsUpdating', true)
+    },
   },
   mounted() {
     console.log(this.news)
