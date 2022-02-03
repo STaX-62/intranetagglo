@@ -12,11 +12,7 @@
           <div class="table-header">Menu</div>
           <div class="table-header">Sous-Menu</div>
           <div class="table-content">
-            <div
-              class="table-section"
-              v-for="(section,Sindex) in sectionArray"
-              v-bind:key="Sindex"
-            >
+            <div class="table-section" v-for="(section,Sindex) in sectionArray" v-bind:key="Sindex">
               <div class="table-block" v-bind:position="Sindex+'-0-0'" type="text">
                 {{section.title}}
                 <button
@@ -229,7 +225,14 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.deleteMenu(menu.id)
+            var index = this.menusInBDD.findIndex(x => x.title === menu.title)
+            if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
+              this.apps.splice(index, 1)
+            }
+            else {
+              this.apps.splice(index, 1)
+              this.deleteMenu(menu.id)
+            }
           }
         })
         .catch(err => {
