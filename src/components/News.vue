@@ -3,7 +3,7 @@
     <div id="news-container" class="news-container">
       <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
         <h2 class="news-header-title">Actualités</h2>
-        <input type="text" class="searchbar" v-model="news2" placeholder="Rechercher.." />
+        <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
         <NewsAdd v-if="isAdmin" />
       </div>
       <div id="news-row" v-bind:class="'news-row' + focus">
@@ -12,7 +12,7 @@
           v-for="(n,index) in getNews"
           :key="index"
           @click="OpenNews(index)"
-          v-bind:news="news[index - 1]"
+          v-bind:news="news[index]"
         />
         <b-icon
           class="news-return"
@@ -64,7 +64,9 @@ export default {
       return this.$store.state.usergroups.includes('admin')
     },
     news2() {
-      console.log(this.news)
+      console.log(this.news[0])
+      console.log(this.news[1])
+      console.log(this.news[2])
       return this.news
     },
     // categoryoptions() {
