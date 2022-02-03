@@ -131,34 +131,32 @@ export default {
     }
 
   },
-  mounted() {
+  beforeMount() {
     var url = `apps/intranetagglo/news/0`
     axios.post(generateUrl(url), 0, { type: 'application/json' })
-      .then((response) => {
-        this.news = response.data
-
-
-        var news = document.getElementsByClassName('news');
-        let newsrow = document.getElementById('news-row')
-        news[0].addEventListener('click', () => {
-          if (!newsrow.classList.contains('left')) {
-            newsrow.classList.toggle('left')
-            this.actually = "left"
-          }
-        })
-        news[1].addEventListener('click', () => {
-          if (!newsrow.classList.contains('center')) {
-            newsrow.classList.toggle('center')
-            this.actually = "center"
-          }
-        })
-        news[2].addEventListener('click', () => {
-          if (!newsrow.classList.contains('right')) {
-            newsrow.classList.toggle('right')
-            this.actually = "right"
-          }
-        })
-      })
+      .then((response) => { this.news = response.data })
+  },
+  mounted() {
+    var news = document.getElementsByClassName('news');
+    let newsrow = document.getElementById('news-row')
+    news[0].addEventListener('click', () => {
+      if (!newsrow.classList.contains('left')) {
+        newsrow.classList.toggle('left')
+        this.actually = "left"
+      }
+    })
+    news[1].addEventListener('click', () => {
+      if (!newsrow.classList.contains('center')) {
+        newsrow.classList.toggle('center')
+        this.actually = "center"
+      }
+    })
+    news[2].addEventListener('click', () => {
+      if (!newsrow.classList.contains('right')) {
+        newsrow.classList.toggle('right')
+        this.actually = "right"
+      }
+    })
   },
   destroyed() {
     var target = document.getElementById('news-container');

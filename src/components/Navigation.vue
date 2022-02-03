@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="Raccourcis">
-      <MenuUpdate />
+      <MenuUpdate v-if="isAdmin"/>
       <a class="Files" href="https://cloud.ca2bm.fr/index.php/f/1183804">
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
