@@ -109,15 +109,23 @@ export default {
       return this.apps;
     },
     availableOptions() {
-      return this.options.filter(opt => this.apptoupdate.groups.indexOf(opt) === -1)
+      return this.groupsoptions.filter(opt => this.apptoupdate.groups.indexOf(opt) === -1)
     }
   },
   mounted() {
     var url = `apps/intranetagglo${'/apps'}`
     axios.get(generateUrl(url))
       .then(response => (this.apps = response.data))
-    axios.get(generateOcsUrl(`cloud/groups`, 2))
-      .then(response => (this.options = response.data.ocs.data.groups))
+    if (this.$store.state.groupsoptions == []) {
+      axios.get(generateOcsUrl(`cloud/groups`, 2))
+        .then((response) => {
+          this.groupsoptions = response.data.ocs.data.groups
+          this.$store.commit('setGroupsOptions', response.data.ocs.data.groups)
+        })
+    }
+    else {
+      this.groupsoptions = this.$store.state.groupsoptions;
+    }
   },
   methods: {
     Save() {
@@ -139,7 +147,7 @@ export default {
     DeleteVerification(app, index) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer cette application : ${app.title}`, {
         title: 'Confirmation',
-        id:'appmodal3',
+        id: 'appmodal3',
         size: 'sm',
         buttonSize: 'sm',
         okVariant: 'danger',
@@ -215,7 +223,7 @@ export default {
       appsmodal: false,
       updateapp: false,
       apps: [],
-      options: [],
+      groupsoptions: [],
       arrayindex: null,
       apptoupdate: {
         id: null,
@@ -252,5 +260,4 @@ export default {
   color: #343a40;
   border-color: #343a40;
 }
-
 </style>

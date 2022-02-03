@@ -55,6 +55,10 @@ class Version000000Date20220113100600 extends SimpleMigrationStep
                 'notnull' => true,
                 'default' => ''
             ]);
+            $table->addColumn('visible', 'boolean', [
+                'notnull' => true,
+                'default' => false
+            ]);
             $table->setPrimaryKey(['id']);
         }
         if (!$schema->hasTable('intranetagglomenu')) {

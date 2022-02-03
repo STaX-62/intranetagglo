@@ -8,10 +8,11 @@ export default new Vuex.Store({
     search: "",
     username: "",
     usergroups: [],
+    groupsoptions: [],
     categoryfilter: '',
-    categoryUpdating: null,
     appsupdating: false,
-    menuupdating: false
+    menuupdating: false,
+    newsupdating: false
   },
   getters: {
     News_length: state => {
@@ -29,11 +30,17 @@ export default new Vuex.Store({
       state.username = user[0]
       state.usergroups = user[1]
     },
+    setGroupsOptions(state, groups) {
+      state.groupsoptions = groups
+    },
     setAppsUpdating(state, updating) {
       state.appsupdating = updating
     },
     setMenuUpdating(state, updating) {
       state.menuupdating = updating
+    },
+    setNewsUpdating(state, updating) {
+      state.newsupdating = updating
     }
   },
   modules: {},

@@ -158,7 +158,7 @@ export default {
   name: 'NewsUpdate',
   computed: {
     availableOptions() {
-      return this.options.filter(opt => this.modifying.groups.indexOf(opt) === -1)
+      return this.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
     sectionArray() {
       var bddmenus = this.menusInBDD;
@@ -306,7 +306,6 @@ export default {
         'groups': '',
         'position': Sindex + '-' + (Mindex + 1) + '-' + (submenus.length + 1)
       })
-      console.log(this.menusInBDD)
     },
     AddMenu(menu, Sindex) {
       this.menusInBDD.push({
@@ -372,7 +371,7 @@ export default {
         groups: "",
         haschild: false
       },
-      options: [],
+      groupsoptions: [],
       LastModifiedID: null
     }
   },
@@ -380,8 +379,16 @@ export default {
     var url = `apps/intranetagglo${'/menus'}`
     axios.get(generateUrl(url))
       .then(response => (this.menusInBDD = response.data))
-    axios.get(generateOcsUrl(`cloud/groups`, 2))
-      .then(response => (this.options = response.data.ocs.data.groups))
+    if (this.$store.state.groupsoptions == []) {
+      axios.get(generateOcsUrl(`cloud/groups`, 2))
+        .then((response) => {
+          this.groupsoptions = response.data.ocs.data.groups
+          this.$store.commit('setGroupsOptions', response.data.ocs.data.groups)
+        })
+    }
+    else {
+      this.groupsoptions = this.$store.state.groupsoptions;
+    }
   },
 
 }

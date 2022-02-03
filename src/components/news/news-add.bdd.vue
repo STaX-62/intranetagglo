@@ -1,103 +1,97 @@
 <template>
   <div class="add-news-button" @click="modal = !modal">
     Ajouter une actualité
-    <b-modal  id="newsmodal1" size="xl" v-model="modal" ref="modal">
+    <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal">
       <template #modal-title>
         Ajouter une
         <code style="font-size: 1.25rem;">Actualité</code>
       </template>
       <form ref="form" @submit.stop.prevent="handleSubmit">
-        <b-table-simple hover small caption-top stacked>
+        <b-table-simple small caption-top stacked>
           <caption>sont obligatoires : Titre, Le contenu de l'actualité</caption>
           <b-tbody>
             <b-tr>
               <b-th>
-                <b-form-group
-                  label="Titre"
-                  label-for="titre-input"
-                  invalid-feedback="Name is required"
-                >
-                  <b-form-input id="titre-input" required></b-form-input>
-                </b-form-group>
+                <b-form-input id="titre-input" v-model="news.title" required></b-form-input>
               </b-th>
               <b-th>
-                <b-form-group
-                  label="Groupes Nécessaires"
-                  label-for="name-input"
-                  invalid-feedback="Name is required"
-                >
-                  <b-form-input id="name-input" required></b-form-input>
-                </b-form-group>
+                <b-form-input id="subtitle-input" v-model="news.subtite" required></b-form-input>
               </b-th>
               <b-th>
-                <b-form-group
-                  label="Categorie"
-                  label-for="category-input"
-                  invalid-feedback="Une categorie est necessaire"
-                >
-                  <b-form-select
-                    id="category-input"
-                    v-model="categoryselected"
-                    :options="categoryoptions"
-                    required
-                  ></b-form-select>
-                </b-form-group>
+                <b-form-select
+                  id="category-input"
+                  v-model="news.category"
+                  :options="categoryoptions"
+                  required
+                ></b-form-select>
               </b-th>
             </b-tr>
             <b-tr>
               <b-th>
-                <b-form-group
-                  v-bind:label="'Sous-titre ( caractères restant:' + shortdesccount +' )'"
-                  label-for="short-description-input"
-                  invalid-feedback="Name is required"
+                <b-form-tags
+                  id="tags-component-select"
+                  name="groups"
+                  v-model="news.groups"
+                  size="lg"
+                  class="mb-2"
+                  add-on-change
+                  no-outer-focus
                 >
-                  <b-form-textarea
-                    id="short-description-input"
-                    v-model="shortdesc"
-                    placeholder="Entrer ici la courte description qui s'affichera dans la case de l'actualité (Max 190 caractères)..."
-                    rows="3"
-                    max-rows="3"
-                    :formatter="formatdesc"
-                  ></b-form-textarea>
-                </b-form-group>
+                  <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
+                    <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+                      <li v-for="tag in tags" :key="tag" class="list-inline-item">
+                        <b-form-tag
+                          @remove="removeTag(tag)"
+                          :title="tag"
+                          :disabled="disabled"
+                          variant="info"
+                        >{{ tag }}</b-form-tag>
+                      </li>
+                    </ul>
+                    <b-form-select
+                      v-bind="inputAttrs"
+                      v-on="inputHandlers"
+                      :disabled="disabled || availableOptions.length === 0"
+                      :options="availableOptions"
+                    >
+                      <template #first>
+                        <!-- This is required to prevent bugs with Safari -->
+                        <option disabled value>Choose a tag...</option>
+                      </template>
+                    </b-form-select>
+                  </template>
+                </b-form-tags>
               </b-th>
             </b-tr>
             <b-tr>
               <b-th colspan="4">
-                <b-form-group
-                  label="Contenu"
-                  label-for="description-input"
-                  invalid-feedback="Name is required"
-                >
-                  <VueTrix
-                    inputId="editor1"
-                    v-model="editorContent"
-                    placeholder="Contenu de l'actualité une fois étendue..."
-                  />
-                </b-form-group>
+                <VueTrix
+                  inputId="editor1"
+                  v-model="news.text"
+                  placeholder="Contenu de l'actualité une fois étendue..."
+                />
               </b-th>
             </b-tr>
             <b-tr>
               <b-th>
-                <b-form-group label="Photos" label-size="xl">
-                  <b-form-file
-                    id="photo-input"
-                    size="sm"
-                    placeholder="Choisir le fichier (.jpg/.jpeg/.png)..."
-                    drop-placeholder="Placer l'image ici ..."
-                    multiple
-                  ></b-form-file>
-                </b-form-group>
+                <b-form-file
+                  id="photo-input"
+                  size="sm"
+                  accept="image/*"
+                  placeholder="Choisir le fichier (.jpg/.jpeg/.png)..."
+                  drop-placeholder="Placer l'image ici ..."
+                  v-model="news.photo"
+                ></b-form-file>
               </b-th>
             </b-tr>
           </b-tbody>
           <b-tfoot></b-tfoot>
         </b-table-simple>
       </form>
-      <template #modal-footer="{ ok, cancel }">
+      <template #modal-footer="{ AddNews, cancel }">
         <!-- Emulate built in modal footer ok and cancel button actions -->
         <b-button size="md" variant="danger" @click="cancel()">Annuler</b-button>
-        <b-button size="md" variant="success" @click="ok()">Ajouter</b-button>
+        <b-button size="md" variant="success" @click="AddNews()">Ajouter</b-button>
       </template>
     </b-modal>
   </div>
@@ -118,6 +112,9 @@ export default {
     VueTrix
   },
   computed: {
+    availableOptions() {
+      return this.groupsoptions.filter(opt => this.news.groups.indexOf(opt) === -1)
+    },
     shortdesccount() {
       return (190 - this.shortdesc.length)
     },
@@ -132,29 +129,27 @@ export default {
     // },
   },
   methods: {
-    AddNews() {
-
+    cancel(){
+      console.log(this.news.photo)
     },
-    async createMenu(menu) {
-      this.updating = true
+    AddNews() {
+      this.news.author = this.$store.state.username
+      this.news.groups = this.news.groups.join(';')
+
+
+      this.createNews(this.news)
+    },
+    async createNews(news) {
       try {
         var url = `apps/intranetagglo/news`
-        const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
+        const response = await axios.post(generateUrl(url), news, { type: 'application/json' })
         this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)
       }
-      this.updating = false
-    },
-    showModal() {
-      this.$refs['my-modal'].show()
-    },
-    hideModal() {
-      this.$refs['my-modal'].hide()
+      this.$store.commit('setNewsUpdating', true)
     },
     toggleModal() {
-      // We pass the ID of the button that we want to return focus to
-      // when the modal has hidden
       this.$refs['modal'].toggle('#toggle-btn')
     },
     formatdesc(value) {
@@ -167,15 +162,33 @@ export default {
       return tpdf.push(null)
     }
   },
+  mounted() {
+    if (this.$store.state.groupsoptions == []) {
+      axios.get(generateOcsUrl(`cloud/groups`, 2))
+        .then((response) => {
+          this.groupsoptions = response.data.ocs.data.groups
+          this.$store.commit('setGroupsOptions', response.data.ocs.data.groups)
+        })
+    }
+    else {
+      this.groupsoptions = this.$store.state.groupsoptions;
+    }
+  },
   data: function () {
     return {
       modal: false,
-      newsaddhover: false,
-      shortdesc: '',
-      photos: [],
-      tpdf: [],
-      editorContent: '',
-      categoryselected: ''
+      news: {
+        author: "",
+        title: "",
+        subtitle: "",
+        text: "",
+        photo: null,
+        category: "",
+        groups: [],
+        visible: false
+      },
+      groupsoptions: [],
+      categoryoptions: []
     }
   }
 }
