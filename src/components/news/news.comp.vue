@@ -13,7 +13,7 @@
       <div class="news-tagbox">
         <span class="news-tag">{{ news.category }}</span>
         <button type="button" class="news-visibility-button" @click="ChangeVisibility(news)">
-          <b-icon class="sidebar-item-icon" variant="dark" icon="eye" v-if="visibility" />
+          <b-icon class="sidebar-item-icon" variant="dark" icon="eye" v-if="visible" />
           <b-icon class="sidebar-item-icon" variant="dark" icon="eye-slash" v-else />
         </button>
         <NewsUpdate />
@@ -43,12 +43,12 @@ export default {
   methods: {
     ChangeVisibility(news) {
       this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
-        title: news.visibility ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
+        title: news.visible ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
         id: 'newsmodal3',
         size: 'sm',
         buttonSize: 'sm',
         okVariant: 'danger',
-        okTitle: news.visibility ? 'Publier' : 'Rendre invisible',
+        okTitle: news.visible ? 'Publier' : 'Rendre invisible',
         cancelTitle: 'Retour',
         footerClass: 'p-2',
         hideHeaderClose: false,
@@ -56,7 +56,7 @@ export default {
       })
         .then(value => {
           if (value) {
-            news.visibility = !news.visibility
+            news.visible = !news.visible
             console.log(news)
             this.changeVisNews(news)
           }

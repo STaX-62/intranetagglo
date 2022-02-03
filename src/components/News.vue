@@ -59,7 +59,6 @@ export default {
   data: function () {
     return {
       categorysearch: '',
-      maxvisiblenews: 6,
       addNews: false,
       AddNewsModal: false,
       news: [],
