@@ -129,15 +129,14 @@ export default {
     // },
   },
   methods: {
-    cancel(){
-      console.log(this.news.photo)
-    },
     AddNews() {
-      this.news.author = this.$store.state.username
-      this.news.groups = this.news.groups.join(';')
+      
+      console.log(this.news.photo)
+      // this.news.author = this.$store.state.username
+      // this.news.groups = this.news.groups.join(';')
 
 
-      this.createNews(this.news)
+      // this.createNews(this.news)
     },
     async createNews(news) {
       try {
