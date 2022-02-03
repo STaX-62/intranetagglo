@@ -43,15 +43,12 @@ class AppsService
 		$apps = $this->mapper->findAll();
 		$hasNeededGroups = true;
 		$sortedarray = [];
-		$test = [];
-		$test[] = $groups;
-		$test[] = $apps;
 
 		if (count($apps) != 0) {
 			for ($idxapps = 0; $idxapps < count($apps); $idxapps++) {
 
 				$appsgroups = explode(";", $apps[$idxapps]->getGroups());
-				$test[] = $appsgroups;
+
 				if (count($appsgroups) != 0 && $appsgroups[0] != "") {
 					$hasNeededGroups = true;
 					for ($idxgroups = 0; $idxgroups < count($appsgroups); $idxgroups++) {
@@ -61,7 +58,6 @@ class AppsService
 							$hasNeededGroups = false;
 						}
 					}
-					$test[] = $hasNeededGroups;
 					if ($hasNeededGroups) {
 						$sortedarray[] = $apps[$idxapps];
 					}
@@ -70,7 +66,7 @@ class AppsService
 				}
 			}
 		}
-		return $test;
+		return $sortedarray;
 	}
 
 	public function find($id)
