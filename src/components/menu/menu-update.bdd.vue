@@ -246,12 +246,12 @@ export default {
 
       if (positions[1] == 0) {
         this.modifying.icon = menu.icon;
-        if (this.UpdatedMenuArray[0].length == 0) this.modifying.haschild = false;
+        if (this.menusArray[0].length == 0) this.modifying.haschild = false;
         else this.modifying.haschild = true;
       }
       else {
         if (positions[2] == 0) {
-          if (this.UpdatedSubMenuArray[positions[0]][positions[1] - 1].length == 0) this.modifying.haschild = false;
+          if (this.submenusArray[positions[0]][positions[1] - 1].length == 0) this.modifying.haschild = false;
           else this.modifying.haschild = true;
         }
         else {

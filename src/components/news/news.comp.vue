@@ -55,7 +55,7 @@ export default {
 <style scoped>
 .news {
   position: relative;
-  max-width: 30%;
+  width: 30%;
   max-height: 100%;
   border-radius: 10px;
   background-color: #fff;
