@@ -45,9 +45,9 @@ export default {
       this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
         title: news.visible ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
         id: 'newsmodal3',
-        size: 'sm',
+        size: 'md',
         buttonSize: 'sm',
-        okVariant: 'danger',
+        okVariant: news.visible ? 'success' : 'danger',
         okTitle: news.visible ? 'Publier' : 'Rendre invisible',
         cancelTitle: 'Retour',
         footerClass: 'p-2',
@@ -57,8 +57,19 @@ export default {
         .then(value => {
           if (value) {
             news.visible = !news.visible
-            console.log(news)
-            this.changeVisNews(news)
+            var updatednews = [
+              news.id,
+              news.author,
+              news.title,
+              news.subtitle,
+              news.text,
+              news.photo,
+              news.category,
+              news.groups,
+              news.visible
+            ]
+            console.log(updatednews)
+            this.changeVisNews(updatednews)
           }
         })
     },
