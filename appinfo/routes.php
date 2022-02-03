@@ -73,7 +73,7 @@ return [
         ],
         [
             'name' => 'news#update',
-            'url' => '/news/{id}',
+            'url' => '/news/pub/{id}',
             'verb' => 'POST',
             'requirements' => ['id' => '\d+'],
         ],
