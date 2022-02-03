@@ -55,18 +55,18 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function create(string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups)
+    public function create(string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, string $visible)
     {
-        return $this->service->create($author, $title, $subtitle, $text, $photo, $category, $groups);
+        return $this->service->create($author, $title, $subtitle, $text, $photo, $category, $groups, $visible);
     }
 
     /**
      * @NoAdminRequired
      */
-    public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups)
+    public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, string $visible)
     {
-        return $this->handleNotFound(function () use ($id, $author, $title, $subtitle, $text, $photo, $category, $groups) {
-            return $this->service->update($id, $author, $title, $subtitle, $text, $photo, $category, $groups);
+        return $this->handleNotFound(function () use ($id, $author, $title, $subtitle, $text, $photo, $category, $groups, $visible) {
+            return $this->service->update($id, $author, $title, $subtitle, $text, $photo, $category, $groups, $visible);
         });
     }
 
