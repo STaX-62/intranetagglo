@@ -63,7 +63,7 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function update(int $id, string $author, $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $visible)
+    public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $visible)
     {
         return $this->handleNotFound(function () use ($id, $author, $title, $subtitle, $text, $photo, $category, $groups, $visible) {
             return $this->service->update($id, $author, $title, $subtitle, $text, $photo, $category, $groups, $visible);

@@ -56,6 +56,7 @@ export default {
       })
         .then(value => {
           if (value) {
+            news.visible = !news.visible
             var updatednews = {
               'id': news.id,
               'author': news.author,
@@ -69,7 +70,7 @@ export default {
             }
             console.log(updatednews)
             console.log(news)
-            this.changeVisNews(updatednews)
+            this.changeVisNews(news)
           }
         })
     },
@@ -94,7 +95,7 @@ export default {
     },
     async changeVisNews(news) {
       try {
-        var url = `apps/intranetagglo/menus/${news.id}`
+        var url = `apps/intranetagglo/news/${news.id}`
         const response = await axios.post(generateUrl(url), news, { type: 'application/json' })
         this.LastModifiedID = response.data.id
       } catch (e) {
@@ -104,7 +105,7 @@ export default {
     },
     async deleteNews(id) {
       try {
-        var url = `apps/intranetagglo/menus/${id}`
+        var url = `apps/intranetagglo/news/${id}`
         const response = await axios.delete(generateUrl(url, { id }))
         this.LastModifiedID = response.data.id
       } catch (e) {
