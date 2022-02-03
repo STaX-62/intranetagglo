@@ -56,6 +56,7 @@ export default {
       })
         .then(value => {
           if (value) {
+            news.visibility = !news.visibility
             this.changeVisNews(news)
           }
         })
