@@ -42,14 +42,13 @@ export default {
   },
   methods: {
     ChangeVisibility(news) {
-      console.log(news)
       this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
-        title: news.visible ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
+        title: news.visible == 1 ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
         id: 'newsmodal3',
         size: 'md',
         buttonSize: 'sm',
-        okVariant: news.visible ? 'success' : 'danger',
-        okTitle: news.visible ? 'Publier' : 'Rendre invisible',
+        okVariant: news.visible == 1 ? 'success' : 'danger',
+        okTitle: news.visible == 1 ? 'Publier' : 'Rendre invisible',
         cancelTitle: 'Retour',
         footerClass: 'p-2',
         hideHeaderClose: false,
@@ -57,13 +56,10 @@ export default {
       })
         .then(value => {
           if (value) {
-            console.log(news.visible)
             if (news.visible == 1) {
-              console.log("here")
               this.changeVisNews(news.id, 0)
             }
             else {
-              console.log("not here")
               this.changeVisNews(news.id, 1)
             }
 
