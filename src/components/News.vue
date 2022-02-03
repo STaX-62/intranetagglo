@@ -10,7 +10,12 @@
         <NewsMedium id="news1" @click="focus = 'left'" v-bind:news="news[0]" />
         <NewsMedium id="news2" @click="focus = 'center'" v-bind:news="news[1]" />
         <NewsMedium id="news3" @click="focus = 'right'" v-bind:news="news[2]" />
-        <b-icon class="news-return" icon="arrow-return-left" @click="closeNews()" v-if="focus != ''"></b-icon>
+        <b-icon
+          class="news-return"
+          icon="arrow-return-left"
+          @click="closeNews()"
+          v-if="focus != ''"
+        ></b-icon>
       </div>
       <b-pagination class="news-pagination" v-model="currentPage" pills :total-rows="rows"></b-pagination>
     </div>
@@ -133,7 +138,7 @@ export default {
     }
 
   },
-  mounted() {
+  created() {
     var url = `apps/intranetagglo/news/0`
     axios.post(generateUrl(url), 0, { type: 'application/json' })
       .then((response) => { this.news = response.data })

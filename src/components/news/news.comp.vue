@@ -12,7 +12,7 @@
       </div>
       <div class="news-tagbox">
         <span class="news-tag">{{ news.category }}</span>
-        <NewsVisibility v-bind:visibility="true" />
+        <NewsVisibility v-bind:visibility="news.visibility" />
         <NewsUpdate />
         <NewsDelete />
       </div>
