@@ -73,7 +73,7 @@ class NewsMapper extends QBMapper
             ->orWhere('q.text LIKE :word')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
-            ->andWhere('i.visible = 1')
+            ->andWhere('q.visible = 1')
             ->setParameter('groups', $groups)
             ->setParameter('word', '%' . $search . '%')
             ->setFirstResult($firstresult)
