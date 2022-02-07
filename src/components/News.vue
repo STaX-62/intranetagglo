@@ -66,7 +66,7 @@ export default {
         else {
           url += `newsG/${this.currentPage - 1}`
         }
-        axios.post(generateUrl(url), { 'id': this.currentPage - 1, 'search': this.search }, { type: 'application/json' })
+        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
