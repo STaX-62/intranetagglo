@@ -7,7 +7,7 @@
         <code style="font-size: 1.25rem;">Actualité</code>
       </template>
       <form ref="form" @submit.stop.prevent="handleSubmit">
-        <b-table-simple small caption-top stacked>
+        <b-table-simple id="news-table" small caption-top stacked>
           <caption>sont obligatoires : Titre, Le contenu de l'actualité</caption>
           <b-tbody>
             <b-tr>
