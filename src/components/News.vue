@@ -186,7 +186,8 @@ export default {
     else {
       url += `newsG/0`
     }
-    axios.post(generateUrl(url), [0, ""], { type: 'application/json' })
+    console.log(this.$store.state.usergroups)
+    axios.post(generateUrl(url), { 'id': 0, 'search': "" }, { type: 'application/json' })
       .then((response) => {
         this.news = response.data;
         this.$store.commit('setNewsUpdating', false)

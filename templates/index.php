@@ -1,6 +1,6 @@
 <?php
-script('intranetagglo', ['app.eb049c30','chunk-vendors.756499e2']);
-style('intranetagglo', ['app.f16ce315','chunk-vendors.61d5ee76']);
+script('intranetagglo', ['app.0fe5a902','chunk-vendors.756499e2']);
+style('intranetagglo', ['app.5cf569de','chunk-vendors.61d5ee76']);
 ?>
 
 <div id="app">
