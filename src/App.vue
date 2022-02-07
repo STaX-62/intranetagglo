@@ -58,7 +58,7 @@ export default {
       }
     }
   },
-  beforeCreate() {
+  beforeMount() {
     var url = `apps/intranetagglo${'/user'}`
     axios.get(generateUrl(url))
       .then(response => (this.$store.commit('setUser', response.data)))
