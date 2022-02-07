@@ -44,7 +44,7 @@ class NewsMapper extends QBMapper
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
-            ->from($this->getTableName(),'q')
+            ->from($this->getTableName(), 'q')
             ->where('q.title LIKE :word')
             ->orWhere('q.subtitle LIKE :word')
             ->orWhere('q.text LIKE :word')
@@ -66,7 +66,7 @@ class NewsMapper extends QBMapper
 
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
-        $qb->select('*')
+        $qb->select('*,COUNT(*)')
             ->from($this->getTableName(), 'q')
             ->where('q.title LIKE :word')
             ->orWhere('q.subtitle LIKE :word')

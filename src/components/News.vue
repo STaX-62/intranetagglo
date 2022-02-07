@@ -81,7 +81,7 @@ export default {
       AddNewsModal: false,
       news: [],
       currentPage: 1,
-      rows: 50,
+      rows: 0,
       focus: "",
       timer: undefined
     }
