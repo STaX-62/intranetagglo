@@ -186,6 +186,7 @@ export default {
     else {
       url += `newsG/0`
     }
+    console.log(this.$store.state.username)
     console.log(this.$store.state.usergroups)
     axios.post(generateUrl(url), { 'id': 0, 'search': "" }, { type: 'application/json' })
       .then((response) => {
