@@ -82,19 +82,34 @@ class NewsMapper extends QBMapper
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
-            ->addSelect('count(q.id)')
             ->from($this->getTableName(), 'q')
             ->where('q.title LIKE :word')
             ->orWhere('q.subtitle LIKE :word')
             ->orWhere('q.text LIKE :word')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
-            ->andWhere('q.visible = 1')
             ->setParameter('groups', $groups)
             ->setParameter('word', '%' . $search . '%')
             ->setFirstResult($firstresult)
             ->setMaxResults(3);
 
-        return $this->findEntities($qb);
+
+        $qb2 = $this->db->getQueryBuilder();
+
+        $qb2->selectAlias($qb2->createFunction('COUNT(*)'), 'count')
+            ->from($this->getTableName(), 'q')
+            ->where('q.title LIKE :word')
+            ->orWhere('q.subtitle LIKE :word')
+            ->orWhere('q.text LIKE :word')
+            ->andWhere("q.groups = ''")
+            ->orWhere("q.groups LIKE :groups")
+            ->setParameter('groups', $groups)
+            ->setParameter('word', '%' . $search . '%');
+
+        $cursor = $qb2->execute();
+        $row = $cursor->fetch();
+        $cursor->closeCursor();
+
+        return [$this->findEntities($qb), $row['count']];
     }
 }
