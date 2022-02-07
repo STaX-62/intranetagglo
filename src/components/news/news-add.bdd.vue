@@ -12,14 +12,17 @@
           <b-tbody>
             <b-tr>
               <b-th>
-                <b-form-input id="titre-input" v-model="news.title" required></b-form-input>
+                <label for="titre">Titre</label>
+                <b-form-input name="titre" v-model="news.title" required></b-form-input>
               </b-th>
               <b-th>
-                <b-form-input id="subtitle-input" v-model="news.subtite" required></b-form-input>
+                <label for="subtitle">Sous-titre</label>
+                <b-form-input name="subtitle" v-model="news.subtite" required></b-form-input>
               </b-th>
               <b-th>
+                <label for="category">Catégorie</label>
                 <b-form-select
-                  id="category-input"
+                  name="category"
                   v-model="news.category"
                   :options="categoryoptions"
                   required
@@ -28,9 +31,9 @@
             </b-tr>
             <b-tr>
               <b-th>
+                <label for="groups-component-select">Restrictions de Groupes d'utilisateurs</label>
                 <b-form-tags
-                  id="tags-component-select"
-                  name="groups"
+                  name="groups-component-select"
                   v-model="news.groups"
                   size="lg"
                   class="mb-2"
@@ -65,7 +68,9 @@
             </b-tr>
             <b-tr>
               <b-th colspan="4">
+                <label for="text">Contenu de l'actualité</label>
                 <VueTrix
+                  name="text"
                   inputId="editor1"
                   v-model="news.text"
                   placeholder="Contenu de l'actualité une fois étendue..."
@@ -74,8 +79,9 @@
             </b-tr>
             <b-tr>
               <b-th>
+                <label for="photo">Image d'illustration / Photo</label>
                 <b-form-file
-                  id="photo-input"
+                  name="photo"
                   size="sm"
                   accept="image/*"
                   placeholder="Choisir le fichier (.jpg/.jpeg/.png)..."
