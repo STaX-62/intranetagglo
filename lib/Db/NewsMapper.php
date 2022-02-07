@@ -51,14 +51,22 @@ class NewsMapper extends QBMapper
             ->setParameter('word', '%' . $search . '%')
             ->setFirstResult($firstresult)
             ->setMaxResults(3);
+
+
         $qb2 = $this->db->getQueryBuilder();
-        $qb2->select('COUNT(*)')
+
+        $qb2->selectAlias($qb2->createFunction('COUNT(*)'), 'count')
             ->from($this->getTableName(), 'q')
             ->where('q.title LIKE :word')
             ->orWhere('q.subtitle LIKE :word')
             ->orWhere('q.text LIKE :word')
             ->setParameter('word', '%' . $search . '%');
-        return [$this->findEntities($qb), $qb2->execute()];
+
+        $cursor = $qb2->execute();
+        $row = $cursor->fetch();
+        $cursor->closeCursor();
+
+        return [$this->findEntities($qb), $row['count']];
     }
 
     /**
