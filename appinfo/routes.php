@@ -57,9 +57,9 @@ return [
             'verb' => 'POST'
         ],
         [
-            'name' => 'news#search',
-            'url' => '/news/{id}/{search}',
-            'verb' => 'GET',
+            'name' => 'news#indexG',
+            'url' => '/newsG/{id}',
+            'verb' => 'POST'
         ],
         [
             'name' => 'news#dashboard',

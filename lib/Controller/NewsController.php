@@ -29,27 +29,18 @@ class NewsController extends Controller
         $this->session = $session;
     }
 
-    public function index(int $id): DataResponse
+    public function index(int $id, string $search): DataResponse
     {
-        return (new DataResponse($this->service->findAll($id)));
+        return (new DataResponse($this->service->findAll($id, $search)));
     }
 
     /**
      * @NoAdminRequired
      */
-    public function indexG(int $id): DataResponse
+    public function indexG(int $id, string $search): DataResponse
     {
         $user = $this->session->getUser();
-        return (new DataResponse($this->service->getNews($id, $this->groupmanager->getUserGroupIds($user))));
-    }
-
-    /**
-     * @NoAdminRequired
-     */
-    public function search(): DataResponse
-    {
-        $user = $this->session->getUser();
-        return (new DataResponse($this->service->getNewsBySearch($this->request->getParam('id'), $this->groupmanager->getUserGroupIds($user), $this->request->getParam('search'))));
+        return (new DataResponse($this->service->getNews($id, $this->groupmanager->getUserGroupIds($user), $search)));
     }
 
     public function create(string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $visible)

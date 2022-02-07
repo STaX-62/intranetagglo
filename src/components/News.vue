@@ -21,7 +21,13 @@
           v-if="focus != ''"
         ></b-icon>
       </div>
-      <b-pagination class="news-pagination" v-model="currentPage" pills :total-rows="rows" :per-page="3"></b-pagination>
+      <b-pagination
+        class="news-pagination"
+        v-model="currentPage"
+        pills
+        :total-rows="rows"
+        :per-page="3"
+      ></b-pagination>
     </div>
     <Apps class="Apps" />
   </div>
@@ -47,8 +53,14 @@ export default {
   watch: {
     updating: function (val) {
       if (val) {
-        var url = `apps/intranetagglo/news/${this.currentPage - 1}`
-        axios.post(generateUrl(url), this.currentPage - 1, { type: 'application/json' })
+        var url = 'apps/intranetagglo/'
+        if (this.$store.state.usergroups.includes('admin')) {
+          url += `news/${this.currentPage - 1}`
+        }
+        else {
+          url += `newsG/${this.currentPage - 1}`
+        }
+        axios.post(generateUrl(url), [this.currentPage - 1, this.search], { type: 'application/json' })
           .then((response) => {
             this.news = response.data;
             this.$store.commit('setNewsUpdating', false)
@@ -167,9 +179,18 @@ export default {
 
   },
   mounted() {
-    var url = `apps/intranetagglo/news/0`
-    axios.post(generateUrl(url), 0, { type: 'application/json' })
-      .then((response) => { this.news = response.data })
+    var url = 'apps/intranetagglo/'
+    if (this.$store.state.usergroups.includes('admin')) {
+      url += `news/0`
+    }
+    else {
+      url += `newsG/0`
+    }
+    axios.post(generateUrl(url), [0, this.search], { type: 'application/json' })
+      .then((response) => {
+        this.news = response.data;
+        this.$store.commit('setNewsUpdating', false)
+      })
   },
   destroyed() {
     var target = document.getElementById('news-container');

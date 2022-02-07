@@ -20,14 +20,9 @@ class NewsService
 		$this->mapper = $mapper;
 	}
 
-	public function getNews(int $firstresult, array $groups): array
+	public function getNews(int $firstresult, array $groups, string $search): array
 	{
-		return $this->mapper->getNews($firstresult, $groups);
-	}
-
-	public function getNewsBySearch(int $firstresult, string $search): array
-	{
-		return $this->mapper->getNewsBySearch($firstresult, $search);
+		return $this->mapper->getNews($firstresult, $groups, $search);
 	}
 
 	private function handleException(Exception $e): void
@@ -50,10 +45,10 @@ class NewsService
 			$this->handleException($e);
 		}
 	}
-	
-	public function findAll($firstresult): array
+
+	public function findAll($firstresult, $search): array
 	{
-		return $this->mapper->findAll($firstresult);
+		return $this->mapper->findAll($firstresult, $search);
 	}
 
 	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $visible)
