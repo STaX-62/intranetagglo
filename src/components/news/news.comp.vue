@@ -12,12 +12,22 @@
       </div>
       <div class="news-tagbox">
         <span class="news-tag">{{ news.category }}</span>
-        <button type="button" class="news-visibility-button" @click="ChangeVisibility(news)">
+        <button
+          type="button"
+          class="news-visibility-button"
+          @click="ChangeVisibility(news)"
+          v-if="isAdmin"
+        >
           <b-icon class="sidebar-item-icon" variant="dark" icon="eye" v-if="news.visible == 1" />
           <b-icon class="sidebar-item-icon" variant="dark" icon="eye-slash" v-else />
         </button>
-        <NewsUpdate />
-        <button type="button" class="news-del-button" @click="DeleteVerification(news)">
+        <NewsUpdate v-if="isAdmin" />
+        <button
+          type="button"
+          class="news-del-button"
+          @click="DeleteVerification(news)"
+          v-if="isAdmin"
+        >
           <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
         </button>
       </div>
@@ -39,6 +49,9 @@ export default {
     news: Object,
   },
   computed: {
+    isAdmin() {
+      return this.$store.state.usergroups.includes('admin')
+    },
   },
   methods: {
     ChangeVisibility(news) {

@@ -118,6 +118,11 @@ export default {
     shortdesccount() {
       return (190 - this.shortdesc.length)
     },
+    groupsoptions: {
+      get() {
+        return this.$store.state.groupsoptions
+      },
+    },
     // categoryoptions() {
     //   var News = this.$store.state.News
     //   var CategoryArray = []
@@ -159,20 +164,19 @@ export default {
     },
     addpdf(tpdf) {
       return tpdf.push(null)
-    }
-  },
-  mounted() {
-    console.log(this.$store.state.groupsoptions)
-    if (this.$store.state.groupsoptions == []) {
-      axios.get(generateOcsUrl(`cloud/groups`, 2))
-        .then((response) => {
-          this.groupsoptions = response.data.ocs.data.groups
-          this.$store.commit('setGroupsOptions', response.data.ocs.data.groups)
-        })
-    }
-    else {
-      console.log(this.$store.state.groupsoptions)
-      this.groupsoptions = this.$store.state.groupsoptions;
+    },
+    GetGroupsOptions() {
+      if (this.groupsoptions == []) {
+        axios.get(generateOcsUrl(`cloud/groups`, 2))
+          .then((response) => {
+            this.groupsoptions = response.data.ocs.data.groups
+            this.$store.commit('setGroupsOptions', response.data.ocs.data.groups)
+          })
+      }
+      else {
+        console.log(this.$store.state.groupsoptions)
+        this.groupsoptions = this.$store.state.groupsoptions;
+      }
     }
   },
   data: function () {
