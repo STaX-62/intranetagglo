@@ -58,7 +58,7 @@ class NewsMapper extends QBMapper
             ->orWhere('q.subtitle LIKE :word')
             ->orWhere('q.text LIKE :word')
             ->setParameter('word', '%' . $search . '%');
-        return [$this->findEntities($qb), $this->findEntities($qb2)];
+        return [$this->findEntities($qb), $qb2->getQuery()->getSingleScalarResult()];
     }
 
     /**
