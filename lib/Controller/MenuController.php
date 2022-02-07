@@ -29,9 +29,6 @@ class MenuController extends Controller
         $this->session = $session;
     }
 
-    /**
-     * @NoAdminRequired
-     */
     public function index(): DataResponse
     {
         return (new DataResponse($this->service->findAll()));
@@ -46,18 +43,11 @@ class MenuController extends Controller
         return (new DataResponse($this->service->findByGroups($this->groupmanager->getUserGroupIds($user))));
     }
 
-
-    /**
-     * @NoAdminRequired
-     */
     public function create(string $title, string $icon, string $link, string $groups, string $position)
     {
         return $this->service->create($title, $icon, $link, $groups, $position);
     }
 
-    /**
-     * @NoAdminRequired
-     */
     public function update(int $id, string $title, string $icon, string $link, string $groups, string $position)
     {
         return $this->handleNotFound(function () use ($id, $title, $icon, $link, $groups, $position) {
@@ -65,9 +55,6 @@ class MenuController extends Controller
         });
     }
 
-    /**
-     * @NoAdminRequired
-     */
     public function destroy(int $id)
     {
         return $this->handleNotFound(function () use ($id) {

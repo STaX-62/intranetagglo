@@ -29,7 +29,6 @@ class PageController extends Controller
 
 	/**
 	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 */
 
 	public function getUserInfo()

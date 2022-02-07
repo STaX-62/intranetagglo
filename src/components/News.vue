@@ -21,7 +21,7 @@
           v-if="focus != ''"
         ></b-icon>
       </div>
-      <b-pagination class="news-pagination" v-model="currentPage" pills :total-rows="rows"></b-pagination>
+      <b-pagination class="news-pagination" v-model="currentPage" pills :total-rows="rows" :per-page="3"></b-pagination>
     </div>
     <Apps class="Apps" />
   </div>

@@ -60,26 +60,6 @@ export default {
         this.$store.commit('updateSearch', value)
       }
     },
-    // appsToDisplay() {
-    //   var DisplayableaApp = this.appsarray;
-    //   var requiredGroups = "";
-    //   var state = true;
-    //   for (var y = 0; y < DisplayableaApp.length; y++) {
-    //     if (DisplayableaApp[y].groups.length > 0) {
-    //       requiredGroups = DisplayableaApp[y].groups.split(';')
-    //       state = true
-    //       for (var i = 0; i < requiredGroups.length; i++) {
-    //         if (!this.UserGroups.includes(requiredGroups[i])) {
-    //           state = false
-    //         }
-    //       }
-    //       if (!state) {
-    //         DisplayableaApp.splice(y, 1)
-    //       }
-    //     }
-    //   }
-    //   return DisplayableaApp
-    // },
   },
   methods: {
     AppsSet(value) {

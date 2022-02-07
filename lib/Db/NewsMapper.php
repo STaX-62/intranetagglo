@@ -39,7 +39,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function getNews(int $firstresult): array
+    public function findAll($firstresult): array
     {
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
@@ -54,8 +54,50 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function getNewsBySearch(int $firstresult, string $search): array
+    public function getNews(int $firstresult, array $groupsArray): array
     {
+        $groups = '%';
+        foreach ($groupsArray as $group) {
+            $groups += $group . '%';
+        }
+
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('*')
+            ->from($this->getTableName(), 'q')
+            ->setFirstResult($firstresult)
+            ->setMaxResults(3)
+            ->where("q.groups = ''")
+            ->orWhere("q.groups LIKE :groups")
+            ->setParameter('groups', $groups);
+
+        return $this->findEntities($qb);
+    }
+
+    /**
+     * @return array
+     */
+    public function getNumberOfNews(): int
+    {
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+        $qb->select($qb->createFunction('COUNT(*)'))
+            ->from($this->getTableName(), 'i')
+            ->where('i.visible = 1');
+
+        return $this->findEntities($qb);
+    }
+
+    /**
+     * @return array
+     */
+    public function getNewsBySearch(int $firstresult, array $groupsArray, string $search): array
+    {
+        $groups = '%';
+        foreach ($groupsArray as $group) {
+            $groups += $group . '%';
+        }
+
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
@@ -63,6 +105,9 @@ class NewsMapper extends QBMapper
             ->where('q.title LIKE :word')
             ->orWhere('q.subtitle LIKE :word')
             ->orWhere('q.text LIKE :word')
+            ->andWhere("q.groups = ''")
+            ->orWhere("q.groups LIKE :groups")
+            ->setParameter('groups', $groups)
             ->setParameter('word', '%' . $search . '%')
             ->setFirstResult($firstresult)
             ->setMaxResults(3);
