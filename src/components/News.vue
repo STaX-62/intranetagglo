@@ -3,11 +3,17 @@
     <div id="news-container" class="news-container">
       <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
         <h2 class="news-header-title">Actualités</h2>
-        <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
+        <input
+          type="text"
+          class="searchbar"
+          v-model="search"
+          placeholder="Rechercher.."
+          @keyup="textSearch()"
+        />
         <NewsAdd v-if="isAdmin" />
       </div>
       <div id="news-row" v-bind:class="'news-row' + focus">
-        <NewsMedium
+        <NewsComp
           v-bind:id="'news'+index"
           v-for="(n,index) in getNews"
           :key="index"
@@ -34,7 +40,7 @@
 </template>
 
 <script>
-import NewsMedium from './news/news.comp'
+import NewsComp from './news/news.comp'
 import Apps from './Apps'
 import NewsAdd from './news/news-add.bdd'
 import axios from '@nextcloud/axios'
@@ -46,7 +52,7 @@ export default {
     msg: String
   },
   components: {
-    NewsMedium,
+    NewsComp,
     Apps,
     NewsAdd
   },
@@ -60,7 +66,7 @@ export default {
         else {
           url += `newsG/${this.currentPage - 1}`
         }
-        axios.post(generateUrl(url), [this.currentPage - 1, this.search], { type: 'application/json' })
+        axios.post(generateUrl(url), { 'id': this.currentPage - 1, 'search': this.search }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data;
             this.$store.commit('setNewsUpdating', false)
@@ -76,7 +82,8 @@ export default {
       news: [],
       currentPage: 1,
       rows: 50,
-      focus: ""
+      focus: "",
+      timer: undefined
     }
   },
   computed: {
@@ -152,6 +159,13 @@ export default {
     // }
   },
   methods: {
+    textSearch() {
+      clearTimeout(this.timer)
+
+      this.timer = setTimeout(() => {
+        this.$store.commit('setNewsUpdating', true)
+      }, 1000)
+    },
     OpenNews(index) {
       if (index == 1) this.focus = 'left'
       if (index == 2) this.focus = 'center'
