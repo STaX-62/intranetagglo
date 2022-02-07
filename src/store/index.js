@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from '@nextcloud/axios'
-import { generateUrl, generateOcsUrl } from '@nextcloud/router'
+import { generateOcsUrl } from '@nextcloud/router'
 
 Vue.use(Vuex);
 
@@ -51,7 +51,7 @@ export default new Vuex.Store({
     getGroupsOptions({ commit }) {
       axios.get(generateOcsUrl(`cloud/groups`, 2))
         .then(res => {
-          commit('setGroupsOptions', res.data)
+          commit('setGroupsOptions', res.data.ocs.data.groups)
         })
     }
   },

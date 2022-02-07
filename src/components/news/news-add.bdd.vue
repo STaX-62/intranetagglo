@@ -113,7 +113,6 @@ export default {
   },
   computed: {
     availableOptions() {
-      console.log(this.$store.state.groupsoptions)
       return this.$store.state.groupsoptions.filter(opt => this.news.groups.indexOf(opt) === -1)
     },
     shortdesccount() {
