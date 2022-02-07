@@ -39,7 +39,7 @@ export default {
     return {
       darkmodestring: null,
       darkmode: null,
-      patterns: '2',
+      patterns: '6',
       backgroundcolor: '2'
     }
   },
@@ -61,8 +61,6 @@ export default {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')
     });
-
-
   },
   created: function () {
     var current_scheme = localStorage.getItem('color_scheme');

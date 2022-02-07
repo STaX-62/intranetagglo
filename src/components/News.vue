@@ -185,6 +185,7 @@ export default {
         var url = 'apps/intranetagglo/'
         if (response.data[1].includes('admin')) {
           url += `news/0`
+          this.$store.dispatch("getGroupsOptions");
         }
         else {
           url += `newsG/0`

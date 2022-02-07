@@ -156,6 +156,9 @@ export default {
     availableOptions() {
       return this.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
+    groupsoptions() {
+      return this.$store.state.groupsoptions
+    },
     sectionArray() {
       var bddmenus = this.menusInBDD;
       var sections = []
@@ -208,6 +211,7 @@ export default {
       }
       return menus;
     },
+
   },
   methods: {
     DeleteVerification(menu) {
@@ -374,7 +378,6 @@ export default {
         groups: "",
         haschild: false
       },
-      groupsoptions: [],
       LastModifiedID: null
     }
   },
@@ -382,16 +385,6 @@ export default {
     var url = `apps/intranetagglo${'/menus'}`
     axios.get(generateUrl(url))
       .then(response => (this.menusInBDD = response.data))
-    if (this.$store.state.groupsoptions == []) {
-      axios.get(generateOcsUrl(`cloud/groups`, 2))
-        .then((response) => {
-          this.groupsoptions = response.data.ocs.data.groups
-          this.$store.commit('setGroupsOptions', response.data.ocs.data.groups)
-        })
-    }
-    else {
-      this.groupsoptions = this.$store.state.groupsoptions;
-    }
   },
 
 }

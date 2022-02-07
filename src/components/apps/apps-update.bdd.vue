@@ -100,7 +100,7 @@
 
 <script>
 import axios from '@nextcloud/axios'
-import { generateUrl, generateOcsUrl } from '@nextcloud/router'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
   name: 'AppsUpdate',
@@ -110,22 +110,15 @@ export default {
     },
     availableOptions() {
       return this.groupsoptions.filter(opt => this.apptoupdate.groups.indexOf(opt) === -1)
-    }
+    },
+    groupsoptions() {
+      return this.$store.state.groupsoptions
+    },
   },
   mounted() {
     var url = `apps/intranetagglo${'/apps'}`
     axios.get(generateUrl(url))
       .then(response => (this.apps = response.data))
-    if (this.$store.state.groupsoptions == []) {
-      axios.get(generateOcsUrl(`cloud/groups`, 2))
-        .then((response) => {
-          this.groupsoptions = response.data.ocs.data.groups
-          this.$store.commit('setGroupsOptions', response.data.ocs.data.groups)
-        })
-    }
-    else {
-      this.groupsoptions = this.$store.state.groupsoptions;
-    }
   },
   methods: {
     Save() {
@@ -223,7 +216,6 @@ export default {
       appsmodal: false,
       updateapp: false,
       apps: [],
-      groupsoptions: [],
       arrayindex: null,
       apptoupdate: {
         id: null,
