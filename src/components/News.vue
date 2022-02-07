@@ -186,7 +186,7 @@ export default {
     else {
       url += `newsG/0`
     }
-    axios.post(generateUrl(url), [0, this.search], { type: 'application/json' })
+    axios.post(generateUrl(url), [0, ""], { type: 'application/json' })
       .then((response) => {
         this.news = response.data;
         this.$store.commit('setNewsUpdating', false)
