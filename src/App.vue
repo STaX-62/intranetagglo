@@ -27,8 +27,6 @@
 import Navigation from '@/components/Navigation.vue'
 import Settings from '@/components/Settings.vue'
 import News from '@/components/News.vue'
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
 
 export default {
   name: 'Home',
@@ -57,14 +55,6 @@ export default {
         this.darkmodestring = ''
       }
     }
-  },
-  beforeCreate() {
-    var url = `apps/intranetagglo${'/user'}`
-    axios.get(generateUrl(url))
-      .then(response => {
-        this.$store.commit('setUser', response.data)
-        console.log(response.data)
-      })
   },
   mounted: function () {
     document.getElementById('cog').addEventListener("click", () => {

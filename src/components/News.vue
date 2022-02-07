@@ -179,20 +179,23 @@ export default {
 
   },
   mounted() {
-    var url = 'apps/intranetagglo/'
-    if (this.$store.state.usergroups.includes('admin')) {
-      url += `news/0`
-    }
-    else {
-      url += `newsG/0`
-    }
-    console.log(this.$store.state.username)
-    console.log(this.$store.state.usergroups)
-    axios.post(generateUrl(url), { 'id': 0, 'search': "" }, { type: 'application/json' })
-      .then((response) => {
-        this.news = response.data;
-        this.$store.commit('setNewsUpdating', false)
+    axios.get(generateUrl(`apps/intranetagglo/user`))
+      .then(response => {
+        this.$store.commit('setUser', response.data)
+        var url = 'apps/intranetagglo/'
+        if (response.data[1].includes('admin')) {
+          url += `news/0`
+        }
+        else {
+          url += `newsG/0`
+        }
+        axios.post(generateUrl(url), { 'id': 0, 'search': "" }, { type: 'application/json' })
+          .then((response) => {
+            this.news = response.data;
+            this.$store.commit('setNewsUpdating', false)
+          })
       })
+
   },
   destroyed() {
     var target = document.getElementById('news-container');
