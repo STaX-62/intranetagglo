@@ -113,13 +113,10 @@ export default {
   },
   computed: {
     availableOptions() {
-      return this.groupsoptions.filter(opt => this.news.groups.indexOf(opt) === -1)
+      return this.$store.state.groupsoptions.filter(opt => this.news.groups.indexOf(opt) === -1)
     },
     shortdesccount() {
       return (190 - this.shortdesc.length)
-    },
-    groupsoptions() {
-      return this.$store.state.groupsoptions
     },
     // categoryoptions() {
     //   var News = this.$store.state.News

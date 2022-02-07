@@ -154,10 +154,7 @@ export default {
   name: 'NewsUpdate',
   computed: {
     availableOptions() {
-      return this.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
-    },
-    groupsoptions() {
-      return this.$store.state.groupsoptions
+      return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
     sectionArray() {
       var bddmenus = this.menusInBDD;

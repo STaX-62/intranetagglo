@@ -109,10 +109,7 @@ export default {
       return this.apps;
     },
     availableOptions() {
-      return this.groupsoptions.filter(opt => this.apptoupdate.groups.indexOf(opt) === -1)
-    },
-    groupsoptions() {
-      return this.$store.state.groupsoptions
+      return this.$store.state.groupsoptions.filter(opt => this.apptoupdate.groups.indexOf(opt) === -1)
     },
   },
   mounted() {
