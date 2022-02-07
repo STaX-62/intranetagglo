@@ -206,7 +206,8 @@ export default {
         }
         axios.post(generateUrl(url), { 'id': 0, 'search': "" }, { type: 'application/json' })
           .then((response) => {
-            this.news = response.data;
+            this.news = response.data[0];
+            this.rows = response.data[1];
             this.$store.commit('setNewsUpdating', false)
           })
       })
