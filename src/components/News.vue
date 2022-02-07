@@ -81,13 +81,14 @@ export default {
       addNews: false,
       AddNewsModal: false,
       news: [],
-      currentPage: 1,
+      page: 1,
       rows: 0,
       focus: "",
       timer: undefined
     }
   },
   computed: {
+
     updating() {
       return this.$store.state.newsupdating
     },
@@ -118,6 +119,15 @@ export default {
       },
       set(value) {
         this.$store.commit('updateSearch', value)
+      }
+    },
+    currentPage: {
+      get() {
+        return this.page
+      },
+      set(value) {
+        this.page = value
+        this.$store.commit('setNewsUpdating', true)
       }
     },
     // droptextc() {
@@ -162,7 +172,6 @@ export default {
   methods: {
     textSearch() {
       clearTimeout(this.timer)
-
       this.timer = setTimeout(() => {
         this.$store.commit('setNewsUpdating', true)
       }, 1000)
@@ -207,10 +216,8 @@ export default {
         }
         axios.post(generateUrl(url), { 'id': 0, 'search': "" }, { type: 'application/json' })
           .then((response) => {
-            console.log(response.data[0] + "data[0]")
             this.news = response.data[0];
-            console.log(response.data[1] + "math.ceil " + Math.ceil(response.data[1] / 3))
-            this.rows = Math.ceil(response.data[1] / 3);
+            this.rows = response.data[1];
             this.$store.commit('setNewsUpdating', false)
           })
       })
