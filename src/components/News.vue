@@ -207,7 +207,9 @@ export default {
         }
         axios.post(generateUrl(url), { 'id': 0, 'search': "" }, { type: 'application/json' })
           .then((response) => {
+            console.log(response.data[0] + "data[0]")
             this.news = response.data[0];
+            console.log(response.data[1] + "math.ceil " + Math.ceil(response.data[1] / 3))
             this.rows = Math.ceil(response.data[1] / 3);
             this.$store.commit('setNewsUpdating', false)
           })
