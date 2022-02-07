@@ -27,8 +27,10 @@ export default new Vuex.Store({
       state.categoryfilter = categoryfilter;
     },
     setUser(state, user) {
+      console.log(user)
       state.username = user[0]
       state.usergroups = user[1]
+      console.log(state.username,state.usergroups)
     },
     setGroupsOptions(state, groups) {
       state.groupsoptions = groups
