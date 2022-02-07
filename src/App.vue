@@ -61,7 +61,10 @@ export default {
   beforeMount() {
     var url = `apps/intranetagglo${'/user'}`
     axios.get(generateUrl(url))
-      .then(response => (this.$store.commit('setUser', response.data)))
+      .then(response => {
+        this.$store.commit('setUser', response.data)
+        console.log(response.data)
+      })
   },
   mounted: function () {
     document.getElementById('cog').addEventListener("click", () => {
