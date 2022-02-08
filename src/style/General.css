@@ -324,3 +324,7 @@ body {
 #newsmodal1___BV_modal_outer_ {
     z-index: 2001 !important;
 }
+
+input[type="checkbox"].checkbox + label::before {
+    display: none !important;
+}

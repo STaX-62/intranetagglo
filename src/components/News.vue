@@ -88,7 +88,6 @@ export default {
     }
   },
   computed: {
-
     updating() {
       return this.$store.state.newsupdating
     },
@@ -104,15 +103,6 @@ export default {
       console.log(this.news[2])
       return this.news
     },
-    // categoryoptions() {
-    //   var News = this.$store.state.News
-    //   var CategoryArray = []
-    //   for (var i = 0; i < News.length; i++) {
-    //     CategoryArray.push(News[i].category)
-    //   }
-    //   const uniqueCaterogy = Array.from(new Set(CategoryArray))
-    //   return uniqueCaterogy
-    // },
     search: {
       get() {
         return this.$store.state.search
@@ -130,44 +120,6 @@ export default {
         this.$store.commit('setNewsUpdating', true)
       }
     },
-    // droptextc() {
-    //   if (this.droptext == '') {
-    //     return 'Filtre'
-    //   }
-    //   return this.droptext;
-    // },
-    // categoryfilter() {
-    //   return this.$store.state.categoryfilter
-    // },
-    // filteredNews() {
-    //   function groupcheck(neededgroups, usergroups) {
-    //     var missinggroup = 0
-    //     for (var i = 0; i < neededgroups.length; i++) if (!usergroups.includes(neededgroups[i])) missinggroup++;
-    //     return missinggroup
-    //   }
-    //   function Searchedcheck(news, search) {
-    //     if (news.title.toLowerCase().includes(search.toLowerCase())) return true
-    //     else return false
-    //   }
-    //   function Categorycheck(category, categoryfilter) {
-    //     if (categoryfilter == category || categoryfilter == '') return true
-    //     else return false
-    //   }
-
-    //   function filter(news, search, category, categoryfilter) {
-    //     if (Searchedcheck(news, search) && Categorycheck(category, categoryfilter)) return true
-    //     else return false
-    //   }
-
-    //   var categoryfilter = this.$store.state.categoryfilter
-
-    //   return News.filter(newsfilter => {
-    //     if (!groupcheck(newsfilter.authgroup, this.user.groups)) {
-    //       return filter(newsfilter, this.search, newsfilter.category, categoryfilter)
-    //     }
-    //     else return false
-    //   }).slice(0, this.maxvisiblenews)
-    // }
   },
   methods: {
     textSearch() {
