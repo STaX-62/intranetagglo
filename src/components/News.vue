@@ -132,6 +132,7 @@ export default {
       if (index == 1) this.focus = 'left'
       if (index == 2) this.focus = 'center'
       if (index == 3) this.focus = 'right'
+      console.log(this.focus)
     },
     handleScroll() {
       const els = document.querySelectorAll('.news')

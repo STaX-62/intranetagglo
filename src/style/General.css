@@ -209,7 +209,7 @@ body {
     right: 20px;
     top: 130px;
     width: 280px;
-    height: 500px;
+    height: auto;
     border-radius: 15px;
     background: url("../patterns/brilliant.png"),
         var(--color-mode-2);
