@@ -17,7 +17,7 @@
           v-bind:id="'news'+index"
           v-for="(n,index) in getNews"
           :key="index"
-          v-on:click="OpenNews(index)"
+          @click="OpenNews(index)"
           v-bind:news="news[index]"
         />
         <b-icon
