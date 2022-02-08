@@ -25,11 +25,13 @@
 import AppsUpdate from '@/components/apps/apps-update.bdd.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+
 export default {
   name: 'Apps',
   components: {
     AppsUpdate
   },
+  
   watch: {
     updating: function (val) {
       if (val) {

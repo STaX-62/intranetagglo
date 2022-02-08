@@ -203,10 +203,11 @@ body {
 }
 
 .Settings {
+    display: block;
     position: absolute;
     width: auto;
     right: 20px;
-    top: 120px;
+    top: 130px;
     width: 280px;
     height: 500px;
     border-radius: 15px;
