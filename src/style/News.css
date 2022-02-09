@@ -1,31 +1,31 @@
-.news-row.right #news1,
-.news-row.right #news2 {
+.news-row[focus='right'] #news1,
+.news-row[focus='right'] #news2 {
     display: none;
 }
 
-.news-row.right #news3 {
+.news-row[focus='right'] #news3 {
     max-width: 100%;
     width: 95%;
     flex: none;
 }
 
-.news-row.center #news1,
-.news-row.center #news3 {
+.news-row[focus='center'] #news1,
+.news-row[focus='center'] #news3 {
     display: none;
 }
 
-.news-row.center #news2 {
+.news-row[focus='center'] #news2 {
     max-width: 100%;
     width: 95%;
     flex: none;
 }
 
-.news-row.left #news2,
-.news-row.left #news3 {
+.news-row[focus='left'] #news2,
+.news-row[focus='left'] #news3 {
     display: none;
 }
 
-.news-row.left #news1 {
+.news-row[focus='left'] #news1 {
     max-width: 100%;
     width: 95%;
     flex: none;

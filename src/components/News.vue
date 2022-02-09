@@ -12,13 +12,14 @@
         />
         <NewsAdd v-if="isAdmin" />
       </div>
-      <div id="news-row" v-bind:class="'news-row' + focus">
+      <div id="news-row" class="news-row" :focus="focus">
         <NewsComp
-          v-bind:id="'news'+index"
+          :id="'news'+index"
           v-for="(n,index) in getNews"
           :key="index"
-          @click="OpenNews(index)"
-          v-bind:news="news[index]"
+          :arrayid="index"
+          :focus.sync="focus"
+          :news="news[index]"
         />
         <b-icon
           class="news-return"
@@ -97,12 +98,6 @@ export default {
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
     },
-    news2() {
-      console.log(this.news[0])
-      console.log(this.news[1])
-      console.log(this.news[2])
-      return this.news
-    },
     search: {
       get() {
         return this.$store.state.search
@@ -127,12 +122,6 @@ export default {
       this.timer = setTimeout(() => {
         this.$store.commit('setNewsUpdating', true)
       }, 1000)
-    },
-    OpenNews(index) {
-      if (index == 1) this.focus = 'left'
-      if (index == 2) this.focus = 'center'
-      if (index == 3) this.focus = 'right'
-      console.log(this.focus)
     },
     handleScroll() {
       const els = document.querySelectorAll('.news')

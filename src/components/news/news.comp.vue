@@ -1,5 +1,5 @@
 <template>
-  <div class="news news-customcolor" v-bind:style="'--news-color: ' + newscolor">
+  <div class="news news-customcolor" v-bind:style="'--news-color: ' + newscolor" @click="OpenNews">
     <div class="news-textbox">
       <div v-bind:id="'news-textbox-block' + news.id" class="news-textbox-block">
         <div class="news-title">{{ news.title }}</div>
@@ -47,6 +47,8 @@ export default {
   },
   props: {
     news: Object,
+    arrayid: Number,
+    focus: String
   },
   computed: {
     isAdmin() {
@@ -54,6 +56,12 @@ export default {
     },
   },
   methods: {
+    OpenNews() {
+      if (this.arrayid == 1) this.focus = 'left'
+      if (this.arrayid == 2) this.focus = 'center'
+      if (this.arrayid == 3) this.focus = 'right'
+      console.log(this.focus)
+    },
     ChangeVisibility(news) {
       this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
         title: news.visible == 0 ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
