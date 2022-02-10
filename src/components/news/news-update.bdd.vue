@@ -121,7 +121,7 @@ export default {
   },
   computed: {
     availableOptions() {
-      return this.$store.state.groupsoptions.filter(opt => this.news.groups.indexOf(opt) === -1)
+      return this.$store.state.groupsoptions.filter(opt => this.autocomplete.groups.indexOf(opt) === -1)
     },
     shortdesccount() {
       return (190 - this.shortdesc.length)
@@ -137,6 +137,7 @@ export default {
   methods: {
     addCategory() {
       this.categoryoptions.push({value:this.categoryadd,text:this.categoryadd})
+      console.log(this.categoryoptions)
     },
     UpdNews() {
       this.news.author = this.$store.state.username
@@ -169,7 +170,6 @@ export default {
   data: function () {
     return {
       modal: false,
-      groupsoptions: [],
       newcategory: "",
       test: ""
     }
