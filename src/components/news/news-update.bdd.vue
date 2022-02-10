@@ -136,7 +136,7 @@ export default {
   },
   methods: {
     addCategory() {
-      this.categoryoptions.push({value:this.categoryadd,text:this.categoryadd})
+      this.categoryoptions.push({value:this.newcategory,text:this.newcategory})
       console.log(this.categoryoptions)
     },
     UpdNews() {
