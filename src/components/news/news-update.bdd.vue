@@ -1,6 +1,8 @@
 <template>
-  <div class="add-news-button" @click="modal = !modal">
-    Ajouter une actualité
+  <div>
+    <button type="button" class="news-update-button" @click="modal = !modal">
+      <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
+    </button>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="UpdNews">
       <template #modal-title>
         Ajouter une
@@ -22,12 +24,7 @@
               <b-th>
                 <label for="category">Catégorie</label>
                 {{test}}
-                <b-form-select
-                  name="category"
-                  v-model="test"
-                  :options="categoryoptions"
-                  required
-                ></b-form-select>
+                <b-form-select name="category" v-model="test" :options="categoryoptions" required></b-form-select>
               </b-th>
             </b-tr>
             <b-tr>
@@ -166,7 +163,7 @@ export default {
       modal: false,
       groupsoptions: [],
       categoryoptions: [],
-      test:""
+      test: ""
     }
   }
 }

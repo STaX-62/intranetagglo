@@ -78,7 +78,7 @@ return [
             'requirements' => ['id' => '\d+'],
         ],
         [
-            'name' => 'news#category',
+            'name' => 'news#getCategory',
             'url' => '/news/category',
             'verb' => 'GET',
         ],
