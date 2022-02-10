@@ -96,7 +96,7 @@
       <template #modal-footer="{ ok, cancel }">
         <!-- Emulate built in modal footer ok and cancel button actions -->
         <b-button size="md" variant="danger" @click="cancel()">Annuler</b-button>
-        <b-button size="md" variant="success" @click="ok()">Ajouter</b-button>
+        <b-button size="md" variant="success" @click="ok()">Modifier</b-button>
       </template>
     </b-modal>
   </div>
@@ -132,9 +132,9 @@ export default {
       this.categoryoptions.push({ value: this.newcategory, text: this.newcategory })
     },
     UpdNews() {
-      this.news.author = this.$store.state.username
-      this.news.groups = this.news.groups.join(';')
-      this.updateNews(this.news)
+      this.autocomplete.author = this.$store.state.username
+      this.autocomplete.groups = this.news.groups.join(';')
+      this.updateNews(this.autocomplete)
     },
     async updateNews(news) {
       try {
