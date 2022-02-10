@@ -126,18 +126,10 @@ export default {
     shortdesccount() {
       return (190 - this.shortdesc.length)
     },
-    categoryoptions() {
-      var categoryArray = []
-      this.$store.state.categoryoptions.forEach(category => {
-        categoryArray.push({value:category,text:category})
-      });
-      return categoryArray
-    },
   },
   methods: {
     addCategory() {
-      this.categoryoptions.push({value:this.newcategory,text:this.newcategory})
-      console.log(this.categoryoptions)
+      this.categoryoptions.push({ value: this.newcategory, text: this.newcategory })
     },
     UpdNews() {
       this.news.author = this.$store.state.username
@@ -167,10 +159,16 @@ export default {
       return tpdf.push(null)
     },
   },
+  mounted() {
+    this.$store.state.categoryoptions.forEach(category => {
+      this.categoryoptions.push({ value: category, text: category })
+    });
+  },
   data: function () {
     return {
       modal: false,
       newcategory: "",
+      categoryoptions: [],
       test: ""
     }
   }
