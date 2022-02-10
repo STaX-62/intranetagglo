@@ -22,9 +22,11 @@
                 <b-form-input name="subtitle" v-model="autocomplete.subtite" required></b-form-input>
               </b-th>
               <b-th>
-                <label for="category">Catégorie</label>
-                {{test}}
+
+                <label for="category">Catégorie : {{test}}</label>
                 <b-form-select name="category" v-model="test" :options="categoryoptions" required></b-form-select>
+                <b-form-input name="subtitle" v-model="newcategory"></b-form-input>
+                <b-button @click="addCategory">+</b-button>
               </b-th>
             </b-tr>
             <b-tr>
@@ -130,6 +132,9 @@ export default {
     },
   },
   methods: {
+    addCategory(){
+      this.categoryoptions.push(this.categoryadd)
+    },
     UpdNews() {
       this.news.author = this.$store.state.username
       this.news.groups = this.news.groups.join(';')
@@ -163,7 +168,8 @@ export default {
       modal: false,
       groupsoptions: [],
       categoryoptions: [],
-      test: ""
+      newcategory: "",
+      test:""
     }
   }
 }
