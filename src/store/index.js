@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from '@nextcloud/axios'
-import { generateOcsUrl } from '@nextcloud/router'
+import { generateUrl, generateOcsUrl } from '@nextcloud/router'
 
 Vue.use(Vuex);
 
@@ -11,6 +11,7 @@ export default new Vuex.Store({
     username: "",
     usergroups: [],
     groupsoptions: [],
+    categoryoptions: [],
     categoryfilter: '',
     appsupdating: false,
     menuupdating: false,
@@ -37,6 +38,9 @@ export default new Vuex.Store({
     setGroupsOptions(state, groups) {
       state.groupsoptions = groups
     },
+    setCategoryOptions(state, category) {
+      state.categoryoptions = category
+    },
     setAppsUpdating(state, updating) {
       state.appsupdating = updating
     },
@@ -48,10 +52,16 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getGroupsOptions({ commit }) {
+    getCategoryOptions({ commit }) {
       axios.get(generateOcsUrl(`cloud/groups`, 2))
         .then(res => {
           commit('setGroupsOptions', res.data.ocs.data.groups)
+        })
+    },
+    getGroupsOptions({ commit }) {
+      axios.get(generateUrl('apps/intranetagglo/news/category'))
+        .then(res => {
+          commit('setGroupsOptions', res.data)
         })
     }
   },

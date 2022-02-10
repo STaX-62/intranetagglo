@@ -78,6 +78,11 @@ return [
             'requirements' => ['id' => '\d+'],
         ],
         [
+            'name' => 'news#category',
+            'url' => '/news/category',
+            'verb' => 'GET',
+        ],
+        [
             'name' => 'news#destroy',
             'url' => '/news/{id}',
             'verb' => 'DELETE',

@@ -94,6 +94,15 @@ class NewsService
 		}
 	}
 
+	public function category()
+	{
+		try {
+			return $this->mapper->categoryArray();
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
 	public function delete($id)
 	{
 		try {

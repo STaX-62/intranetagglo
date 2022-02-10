@@ -21,7 +21,7 @@
           <b-icon class="sidebar-item-icon" variant="dark" icon="eye" v-if="news.visible == 1" />
           <b-icon class="sidebar-item-icon" variant="dark" icon="eye-slash" v-else />
         </button>
-        <NewsUpdate v-if="isAdmin" />
+        <NewsUpdate v-if="isAdmin" :autocomplete="news" />
         <button
           type="button"
           class="news-del-button"

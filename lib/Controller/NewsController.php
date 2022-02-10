@@ -62,6 +62,11 @@ class NewsController extends Controller
         });
     }
 
+    public function getCategory()
+    {
+        return $this->service->category();
+    }
+
     public function destroy(int $id)
     {
         return $this->handleNotFound(function () use ($id) {
