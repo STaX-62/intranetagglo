@@ -41,8 +41,8 @@ class NewsMapper extends QBMapper
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
 
-        $qb->selectDistinct('q.category')
-            ->from($this->getTableName(),'q');
+        $qb->selectDistinct('category')
+            ->from($this->getTableName());
 
         return $this->findEntity($qb);
     }
