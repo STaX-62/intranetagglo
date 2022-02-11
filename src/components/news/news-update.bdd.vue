@@ -23,7 +23,11 @@
               </b-th>
               <b-th>
                 <label for="category">Catégorie</label>
-                <b-form-input name="catecogry" list="categoryoptions" v-model="autocomplete.category"></b-form-input>
+                <b-form-input
+                  name="catecogry"
+                  list="categoryoptions"
+                  v-model="autocomplete.category"
+                ></b-form-input>
                 <datalist id="categoryoptions">
                   <option>Manual Option</option>
                   <option
@@ -131,7 +135,7 @@ export default {
     shortdesccount() {
       return (190 - this.shortdesc.length)
     },
-    categoryoptions(){
+    categoryoptions() {
       this.$store.state.categoryoptions
     }
   },
@@ -139,6 +143,7 @@ export default {
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
       this.autocomplete.groups = this.news.groups.join(';')
+      console.log(this.autocomplete)
       this.updateNews(this.autocomplete)
     },
     async updateNews(news) {
