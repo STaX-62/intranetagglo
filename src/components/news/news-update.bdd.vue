@@ -21,10 +21,11 @@
                 <label for="subtitle">Sous-titre</label>
                 <b-form-input name="subtitle" v-model="autocomplete.subtite" required></b-form-input>
               </b-th>
-              <b-th>
-                <label for="category">Catégorie : {{test}}</label>
-                <b-form-select name="category" v-model="test" :options="categoryoptions" required></b-form-select>
-                <b-form-input name="subtitle" v-model="newcategory"></b-form-input>
+              <b-th class="thcategory">
+                <label for="category">Catégorie : {{autocomplete.category}}</label>
+                <b-form-select name="category" v-model="autocomplete.category" :options="categoryoptions" required></b-form-select>
+                <label for="addcategory">Nouvelle Catégorie</label>
+                <b-form-input name="addcategory" v-model="newcategory"></b-form-input>
                 <b-button @click="addCategory">+</b-button>
               </b-th>
             </b-tr>
@@ -130,6 +131,7 @@ export default {
   methods: {
     addCategory() {
       this.categoryoptions.push({ value: this.newcategory, text: this.newcategory })
+      this.autocomplete.category = this.newcategory
     },
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
