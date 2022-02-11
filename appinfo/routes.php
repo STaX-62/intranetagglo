@@ -72,6 +72,12 @@ return [
             'verb' => 'POST',
         ],
         [
+            'name' => 'news#update',
+            'url' => '/news/{id}',
+            'verb' => 'POST',
+            'requirements' => ['id' => '\d+'],
+        ],
+        [
             'name' => 'news#publication',
             'url' => '/news/pub/{id}',
             'verb' => 'POST',
