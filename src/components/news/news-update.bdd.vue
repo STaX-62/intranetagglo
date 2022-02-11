@@ -142,7 +142,7 @@ export default {
   methods: {
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
-      this.autocomplete.groups = this.news.groups.join(';')
+      this.autocomplete.groups = this.autocomplete.groups.join(';')
       console.log(this.autocomplete)
       this.updateNews(this.autocomplete)
     },
