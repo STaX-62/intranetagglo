@@ -148,7 +148,7 @@ export default {
     },
     async updateNews(news) {
       try {
-        var url = `apps/intranetagglo/news/${news.id}`
+        var url = `apps/intranetagglo/news/update/${news.id}`
         const response = await axios.post(generateUrl(url), news, { type: 'application/json' })
         this.LastModifiedID = response.data.id
       } catch (e) {
