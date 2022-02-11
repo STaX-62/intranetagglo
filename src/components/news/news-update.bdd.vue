@@ -21,12 +21,16 @@
                 <label for="subtitle">Sous-titre</label>
                 <b-form-input name="subtitle" v-model="autocomplete.subtite" required></b-form-input>
               </b-th>
-              <b-th class="thcategory">
-                <label for="category">Catégorie : {{autocomplete.category}}</label>
-                <b-form-select name="category" v-model="autocomplete.category" :options="categoryoptions" required></b-form-select>
-                <label for="addcategory">Nouvelle Catégorie</label>
-                <b-form-input name="addcategory" v-model="newcategory"></b-form-input>
-                <b-button @click="addCategory">+</b-button>
+              <b-th>
+                <label for="category">Catégorie</label>
+                <b-form-input name="catecogry" list="categoryoptions" v-model="autocomplete.category"></b-form-input>
+                <datalist id="categoryoptions">
+                  <option>Manual Option</option>
+                  <option
+                    v-for="(categoryoption,index) in categoryoptions"
+                    :key="index"
+                  >{{ categoryoption }}</option>
+                </datalist>
               </b-th>
             </b-tr>
             <b-tr>
@@ -127,12 +131,11 @@ export default {
     shortdesccount() {
       return (190 - this.shortdesc.length)
     },
+    categoryoptions(){
+      this.$store.state.categoryoptions
+    }
   },
   methods: {
-    addCategory() {
-      this.categoryoptions.push({ value: this.newcategory, text: this.newcategory })
-      this.autocomplete.category = this.newcategory
-    },
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
       this.autocomplete.groups = this.news.groups.join(';')
@@ -162,9 +165,6 @@ export default {
     },
   },
   mounted() {
-    this.$store.state.categoryoptions.forEach(category => {
-      this.categoryoptions.push({ value: category, text: category })
-    });
   },
   data: function () {
     return {

@@ -268,7 +268,3 @@
 .news-del-button:focus {
     outline: none !important;
 }
-
-.thcategory {
-    display: flex;
-}
