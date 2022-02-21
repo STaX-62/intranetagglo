@@ -128,5 +128,12 @@ return [
             'verb' => 'DELETE',
             'requirements' => ['id' => '\d+'],
         ],
+        
+        //////////  A P I  //////////
+        [
+            'name' => 'api#searchGroups',
+            'url' => '/api/groups',
+            'verb' => 'GET',
+        ],
     ],
 ];

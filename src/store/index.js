@@ -53,11 +53,14 @@ export default new Vuex.Store({
   },
   actions: {
     getCategoryOptions({ commit }) {
-      axios.get(generateOcsUrl(`cloud/groups`, 2))
-        .then(res => {
-          commit('setGroupsOptions', res.data.ocs.data.groups)
-          console.log(res)
-        })
+      axios.get(generateOcsUrl('apps/intranetagglo/api/groups'), {
+        params: {
+          search: '',
+        },
+      }).then(res => {
+        console.log(res)
+        commit('setGroupsOptions', res)
+      })
     },
     getGroupsOptions({ commit }) {
       axios.get(generateUrl('apps/intranetagglo/news/category'))
