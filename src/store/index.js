@@ -56,6 +56,7 @@ export default new Vuex.Store({
       axios.get(generateOcsUrl(`cloud/groups`, 2))
         .then(res => {
           commit('setGroupsOptions', res.data.ocs.data.groups)
+          console.log(res)
         })
     },
     getGroupsOptions({ commit }) {

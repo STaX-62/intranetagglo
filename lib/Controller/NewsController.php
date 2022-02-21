@@ -104,9 +104,6 @@ class NewsController extends Controller
 
                     $users = $group->getUsers();
                     foreach ($users as $user) {
-                        if (!$this->enabledForGuestsUsers && $user->getBackend() instanceof UserBackend) {
-                            continue;
-                        }
 
                         $uid = $user->getUID();
                         if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
