@@ -30,13 +30,6 @@ class APIController extends Controller
 
     public function searchGroups(string $search): DataResponse
     {
-        if (!$this->manager->checkIsAdmin()) {
-            return new DataResponse(
-                ['message' => 'Logged in user must be an admin'],
-                Http::STATUS_FORBIDDEN
-            );
-        }
-
         $groups = $this->groupmanager->search($search, 25);
         $results = [];
         foreach ($groups as $group) {
