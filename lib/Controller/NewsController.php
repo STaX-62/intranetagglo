@@ -17,6 +17,7 @@ use OCP\IUserSession;
 use OCP\Notification\IManager;
 use OCA\IntranetAgglo\Service\NewsService;
 use OCP\IURLGenerator;
+use OCP\Notification\INotification;
 
 class NewsController extends Controller
 {
