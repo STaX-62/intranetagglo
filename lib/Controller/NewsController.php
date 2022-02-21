@@ -85,7 +85,7 @@ class NewsController extends Controller
                 ->setDateTime(new \DateTime())
                 ->setObject('news', (string)$rq->getId())
                 ->setSubject('news', [$rq->getAuthor()]);
-
+            $notificationbis = $notification;
             $groups = explode(";", $rq->getGroups());
             // modifier les groupes et les enregistrer via gid
             if ($groups[0] != "") {
