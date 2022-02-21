@@ -151,10 +151,10 @@ class NewsController extends Controller
     protected function createNotificationEveryone(string $authorId, INotification $notification): void
     {
         $this->userManager->callForSeenUsers(function (IUser $user) use ($authorId, $notification) {
-            if ($authorId !== $user->getUID()) {
+            // if ($authorId !== $user->getUID()) {
                 $notification->setUser($user->getUID());
                 $this->NotificationManager->notify($notification);
-            }
+            // }
         });
     }
 
