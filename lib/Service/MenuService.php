@@ -25,9 +25,9 @@ class MenuService
 		return $this->mapper->findAll($search);
 	}
 
-	public function findByGroups(array $groups, string $search): array
+	public function findByGroups(array $groups): array
 	{
-		return $this->mapper->findByGroups($groups, $search);
+		return $this->mapper->findByGroups($groups);
 	}
 
 	private function handleException(Exception $e): void
