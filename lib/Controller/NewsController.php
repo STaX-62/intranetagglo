@@ -94,20 +94,21 @@ class NewsController extends Controller
             $notification->setApp(Application::APP_ID)
                 ->setDateTime(new \DateTime())
                 ->setObject('news', (string)$rq->getId())
+                ->setSubject('newsbis', [$rq->getAuthor()])
                 ->setMessage('une nouvelle actualité est disponible dans l\'intranet');
 
-            $notification->addParsedAction($gotoAction)
-                ->setRichSubject(
-                    'Une nouvelle actualité est disponible : {news}',
-                    [
-                        'news' => [
-                            'type' => 'news',
-                            'id' => $rq->getId(),
-                            'name' => $rq->getTitle(),
-                        ],
-                    ]
-                )
-                ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
+            // $notification->addParsedAction($gotoAction)
+            //     ->setRichSubject(
+            //         'Une nouvelle actualité est disponible : {news}',
+            //         [
+            //             'news' => [
+            //                 'type' => 'news',
+            //                 'id' => $rq->getId(),
+            //                 'name' => $rq->getTitle(),
+            //             ],
+            //         ]
+            //     )
+            //     ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
 
 
             $groups = explode(";", $rq->getGroups());
