@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from '@nextcloud/axios'
-import { generateUrl, generateOcsUrl } from '@nextcloud/router'
+import { generateUrl } from '@nextcloud/router'
 
 Vue.use(Vuex);
 
@@ -53,7 +53,7 @@ export default new Vuex.Store({
   },
   actions: {
     getCategoryOptions({ commit }) {
-      axios.get(generateOcsUrl('apps/intranetagglo/api/groups'), {
+      axios.get(generateUrl('apps/intranetagglo/api/groups'), {
         params: {
           search: '',
         },
