@@ -113,12 +113,7 @@ class NewsController extends Controller
 
             // modifier les groupes et les enregistrer via gid
             // if ($groups[0] != "") {
-                $this->userManager->callForSeenUsers(function (IUser $user,$notification) use ($uid) {
-                    if ($uid !== $user->getUID()) {
-                        $notification->setUser($user->getUID());
-                        $this->NotificationManager->notify($notification);
-                    }
-                });
+            $this->createNotificationEveryone($uid,$notification);
             // } else {
             //     foreach ($groups as $gid) {
             //         $group = $this->groupManager->get($gid);
@@ -144,6 +139,20 @@ class NewsController extends Controller
             //     }
             // }
             return [$rq, $groups];
+        });
+    }
+
+    /**
+     * @param string $authorId
+     * @param INotification $notification
+     */
+    protected function createNotificationEveryone(string $authorId, INotification $notification): void
+    {
+        $this->userManager->callForSeenUsers(function (IUser $user) use ($authorId, $notification) {
+            if ($authorId !== $user->getUID()) {
+                $notification->setUser($user->getUID());
+                $this->NotificationManager->notify($notification);
+            }
         });
     }
 
