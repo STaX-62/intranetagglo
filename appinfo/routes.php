@@ -25,7 +25,7 @@ return [
         [
             'name' => 'menu#indexG',
             'url' => '/menusG',
-            'verb' => 'POST',
+            'verb' => 'GET',
         ],
         [
             'name' => 'menu#dashboard',
