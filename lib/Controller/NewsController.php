@@ -84,7 +84,9 @@ class NewsController extends Controller
             $notification->setApp(Application::APP_ID)
                 ->setDateTime(new \DateTime())
                 ->setObject('news', (string)$rq->getId())
-                ->setSubject('news', [$rq->getAuthor()]);
+                ->setSubject('news', [$rq->getAuthor()])
+                ->setMessage('une nouvelle actualité est disponible dans l\'intranet');
+                
             $groups = explode(";", $rq->getGroups());
             // modifier les groupes et les enregistrer via gid
             if ($groups[0] != "") {
