@@ -17,12 +17,9 @@ class Notifier implements INotifier
 {
     /** @var IURLGenerator */
     private $urlGenerator;
-    /** @var NewsService */
-    private $service;
 
-    public function __construct(IURLGenerator $urlGenerator, NewsService $service)
+    public function __construct(IURLGenerator $urlGenerator)
     {
-        $this->container = $container;
         $this->urlGenerator = $urlGenerator;
     }
 
