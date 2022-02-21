@@ -19,7 +19,8 @@ class Application extends App
 
 	public function register(IRegistrationContext $context): void
 	{
+		$manager = \OC::$server->get(\OCP\Notification\IManager::class);
+		$manager->registerNotifierService(\OCA\IntranetAgglo\Notification\Notifier::class);
 		// $context->registerDashboardWidget(Widget::class);
-		$context->registerNotifierService(Notifier::class);
 	}
 }

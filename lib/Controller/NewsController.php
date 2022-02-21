@@ -115,7 +115,8 @@ class NewsController extends Controller
 
             // modifier les groupes et les enregistrer via gid
             // if ($groups[0] != "") {
-            $this->createNotificationEveryone($uid,$notification);
+            $this->createNotificationEveryone($uid, $notification);
+            $this->NotificationManager->flush();
             // } else {
             //     foreach ($groups as $gid) {
             //         $group = $this->groupManager->get($gid);
@@ -152,8 +153,8 @@ class NewsController extends Controller
     {
         $this->userManager->callForSeenUsers(function (IUser $user) use ($authorId, $notification) {
             // if ($authorId !== $user->getUID()) {
-                $notification->setUser($user->getUID());
-                $this->NotificationManager->notify($notification);
+            $notification->setUser($user->getUID());
+            $this->NotificationManager->notify($notification);
             // }
         });
     }
