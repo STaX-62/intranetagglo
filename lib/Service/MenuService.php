@@ -20,9 +20,9 @@ class MenuService
 		$this->mapper = $mapper;
 	}
 
-	public function findAll(string $search): array
+	public function findAll(): array
 	{
-		return $this->mapper->findAll($search);
+		return $this->mapper->findAll();
 	}
 
 	public function findByGroups(array $groups): array
