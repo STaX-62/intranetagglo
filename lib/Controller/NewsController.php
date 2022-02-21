@@ -119,7 +119,7 @@ class NewsController extends Controller
                     }
                 }
             }
-            return [$rq,$notification,$groups];
+            return [$rq,$notificationbis,$groups];
         });
     }
 
