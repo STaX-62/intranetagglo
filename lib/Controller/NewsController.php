@@ -109,7 +109,7 @@ class NewsController extends Controller
                         if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
                             continue;
                         }
-
+                        
                         if ($uid !== $uid) {
                             $notification->setUser($uid);
                             $this->notificationManager->notify($notification);
@@ -119,8 +119,6 @@ class NewsController extends Controller
                     }
                 }
             }
-
-            $this->NotificationManager->notify($notification);
             return $rq;
         });
     }
