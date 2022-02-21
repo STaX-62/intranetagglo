@@ -29,6 +29,7 @@ class News extends Entity implements JsonSerializable
             'photo' => $this->photo,
             'category' => $this->category,
             'groups' => $this->groups,
+            // 'time' => $this->time,
             'visible' => $this->visible
         ];
     }

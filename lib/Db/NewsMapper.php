@@ -63,6 +63,7 @@ class NewsMapper extends QBMapper
             ->orWhere('q.subtitle LIKE :word')
             ->orWhere('q.text LIKE :word')
             ->setParameter('word', '%' . $search . '%')
+            ->orderBy('q.id', 'DESC')
             ->setFirstResult($firstresult)
             ->setMaxResults(3);
 
@@ -104,6 +105,7 @@ class NewsMapper extends QBMapper
             ->orWhere("q.groups LIKE :groups")
             ->setParameter('groups', $groups)
             ->setParameter('word', '%' . $search . '%')
+            ->orderBy('q.id', 'DESC')
             ->setFirstResult($firstresult)
             ->setMaxResults(3);
 
