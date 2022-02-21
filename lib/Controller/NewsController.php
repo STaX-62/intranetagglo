@@ -94,21 +94,21 @@ class NewsController extends Controller
             $notification->setApp(Application::APP_ID)
                 ->setDateTime(new \DateTime())
                 ->setObject('news', (string)$rq->getId())
-                ->setSubject('newsbis', [$rq->getAuthor()])
-                ->setMessage('une nouvelle actualité est disponible dans l\'intranet');
+                ->setSubject('published', [$rq->getAuthor()]);
+            // ->setMessage('une nouvelle actualité est disponible dans l\'intranet');
 
-            $notification->addParsedAction($gotoAction)
-                ->setRichSubject(
-                    'Une nouvelle actualité est disponible : {news}',
-                    [
-                        'news' => [
-                            'type' => 'news',
-                            'id' => $rq->getId(),
-                            'name' => $rq->getTitle(),
-                        ],
-                    ]
-                )
-                ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
+            // $notification->addParsedAction($gotoAction)
+            //     ->setRichSubject(
+            //         'Une nouvelle actualité est disponible : {news}',
+            //         [
+            //             'news' => [
+            //                 'type' => 'news',
+            //                 'id' => $rq->getId(),
+            //                 'name' => $rq->getTitle(),
+            //             ],
+            //         ]
+            //     )
+            //     ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
 
 
             $groups = explode(";", $rq->getGroups());
@@ -116,7 +116,7 @@ class NewsController extends Controller
             // modifier les groupes et les enregistrer via gid
             // if ($groups[0] != "") {
             $this->createNotificationEveryone($uid, $notification);
-            $this->NotificationManager->flush();
+            // $this->NotificationManager->flush();
             // } else {
             //     foreach ($groups as $gid) {
             //         $group = $this->groupManager->get($gid);
@@ -141,7 +141,7 @@ class NewsController extends Controller
             //         }
             //     }
             // }
-            return [$rq, $groups];
+            return $rq;
         });
     }
 
