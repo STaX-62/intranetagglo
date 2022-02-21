@@ -20,10 +20,9 @@ class APIController extends Controller
 
     use Errors;
 
-    public function __construct(IRequest $request, MenuService $service, IGroupManager $groupmanager, IUserSession $session, IUserManager $manager)
+    public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session, IUserManager $manager)
     {
         parent::__construct(Application::APP_ID, $request);
-        $this->service = $service;
         $this->groupmanager = $groupmanager;
         $this->session = $session;
         $this->manager = $manager;
