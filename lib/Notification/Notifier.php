@@ -54,7 +54,7 @@ class Notifier implements INotifier
 
         $gotoAction = $notification->createAction();
         $gotoAction->setParsedLabel('Ouvrir')
-            ->setLink($this->url->linkToRouteAbsolute('intranetagglo.page.index'), 'GET');
+            ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index'), 'GET');
 
         // $link = $this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index', [
         //     'news' => $notification->getObjectId(),

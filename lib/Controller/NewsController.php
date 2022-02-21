@@ -87,7 +87,7 @@ class NewsController extends Controller
             $notification = $this->NotificationManager->createNotification();
             $gotoAction = $notification->createAction();
             $gotoAction->setParsedLabel('Ouvrir')
-                ->setLink($this->url->linkToRouteAbsolute('intranetagglo.page.index'), 'GET');
+                ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index'), 'GET');
 
 
             $notification->setApp(Application::APP_ID)
