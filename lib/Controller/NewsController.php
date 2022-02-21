@@ -80,14 +80,34 @@ class NewsController extends Controller
             $uid = $user->getUID();
             $rq = $this->service->publication($id, $visible);
 
+
             $notification = $this->NotificationManager->createNotification();
+            $gotoAction = $notification->createAction();
+            $gotoAction->setParsedLabel('Ouvrir')
+                ->setLink($this->url->linkToRouteAbsolute('intranetagglo.page.index'), 'GET');
+
+
             $notification->setApp(Application::APP_ID)
                 ->setDateTime(new \DateTime())
                 ->setObject('news', (string)$rq->getId())
-                ->setSubject('news', [$rq->getAuthor()])
                 ->setMessage('une nouvelle actualité est disponible dans l\'intranet');
-                
+
+            $notification->addParsedAction($gotoAction)
+                ->setRichSubject(
+                    'Une nouvelle actualité est disponible : {news}',
+                    [
+                        'news' => [
+                            'type' => 'news',
+                            'id' => $rq->getId(),
+                            'name' => $rq->getTitle(),
+                        ],
+                    ]
+                )
+                ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
+
+
             $groups = explode(";", $rq->getGroups());
+
             // modifier les groupes et les enregistrer via gid
             if ($groups[0] != "") {
                 $this->userManager->callForSeenUsers(function (IUser $user) use ($uid, $notification) {
@@ -110,7 +130,7 @@ class NewsController extends Controller
                         if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
                             continue;
                         }
-                        
+
                         if ($uid !== $uid) {
                             $notification->setUser($uid);
                             $this->notificationManager->notify($notification);
@@ -120,7 +140,7 @@ class NewsController extends Controller
                     }
                 }
             }
-            return [$rq,$notification->getApp(),$notification->getUser(),$groups];
+            return [$rq, $groups];
         });
     }
 
