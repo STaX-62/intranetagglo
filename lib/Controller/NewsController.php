@@ -113,7 +113,7 @@ class NewsController extends Controller
 
             // modifier les groupes et les enregistrer via gid
             // if ($groups[0] != "") {
-                $this->userManager->callForSeenUsers(function (IUser $user) use ($uid, $notification) {
+                $this->userManager->callForSeenUsers(function (IUser $user,$notification) use ($uid) {
                     if ($uid !== $user->getUID()) {
                         $notification->setUser($user->getUID());
                         $this->NotificationManager->notify($notification);
