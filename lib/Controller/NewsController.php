@@ -16,6 +16,7 @@ use OCP\IUserManager;
 use OCP\IUserSession;
 use OCP\Notification\IManager;
 use OCA\IntranetAgglo\Service\NewsService;
+use OCP\IURLGenerator;
 
 class NewsController extends Controller
 {
@@ -36,7 +37,8 @@ class NewsController extends Controller
         IGroupManager $groupmanager,
         IUserSession $session,
         IManager $NotificationManager,
-        IUsermanager $userManager
+        IUsermanager $userManager,
+        IURLGenerator $urlGenerator
     ) {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
@@ -44,6 +46,7 @@ class NewsController extends Controller
         $this->groupmanager = $groupmanager;
         $this->session = $session;
         $this->NotificationManager = $NotificationManager;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function index(int $id, string $search): DataResponse
