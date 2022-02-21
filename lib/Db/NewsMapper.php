@@ -86,7 +86,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function getNews(int $firstresult, array $groupsArray, string $search): array
+    public function findByGroups(int $firstresult, array $groupsArray, string $search): array
     {
         $groups = '%';
         foreach ($groupsArray as $group) {

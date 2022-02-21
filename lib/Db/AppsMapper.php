@@ -43,8 +43,30 @@ class AppsMapper extends QBMapper
     {
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
+
         $qb->select('*')
             ->from($this->getTableName());
+
+        return $this->findEntities($qb);
+    }
+
+    /**
+     * @return array
+     */
+    public function findByGroups(array $groupsArray): array
+    {
+        $groups = '%';
+        foreach ($groupsArray as $group) {
+            $groups .= $group . '%';
+        }
+
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('*')
+            ->from($this->getTableName(), 'q')
+            ->andWhere("q.groups = ''")
+            ->orWhere("q.groups LIKE :groups")
+            ->setParameter('groups', $groups);
 
         return $this->findEntities($qb);
     }

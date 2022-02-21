@@ -61,6 +61,7 @@ export default {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')
     });
+    console.log(window.baseUrl)
   },
   created: function () {
     var current_scheme = localStorage.getItem('color_scheme');
