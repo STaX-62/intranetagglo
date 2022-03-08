@@ -6,7 +6,7 @@ namespace OCA\IntranetAgglo\Dashboard;
 
 use OCA\IntranetAgglo\AppInfo\Application;
 use OCA\IntranetAgglo\Service\NewsService;
-use OCA\IntranetAgglo\Model\NewsModel;
+use OCA\IntranetAgglo\Db\News;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\Dashboard\IWidget;
 use OCP\IURLGenerator;
@@ -94,24 +94,17 @@ class Widget implements IWidget
             $news = $this->service->findByGroups(0, $this->groupmanager->getUserGroupIds($user), '');
             return array_map([$this, 'renderNews'], $news);
         });
-        // Util::addStyle(Application::APP_ID, 'dashboard');
+        Util::addStyle(Application::APP_ID, 'dashboard');
         Util::addScript(Application::APP_ID, Application::APP_ID . '-dashboard');
     }
 
-    protected function renderNews(NewsModel $news): array
+    protected function renderNews(News $news): array
     {
-        $displayName = $news->getAuthor();
-        $user = $this->userManager->get($news->getAuthor());
-        if ($user instanceof IUser) {
-            $displayName = $user->getDisplayName();
-        }
-
         $result = [
             'id' => $news->getId(),
-            'author_id' => $news->getAuthor(),
-            'author' => $displayName,
-            // 'time' => $news->getTime(),
-            'subject' => $news->getParsedSubject(),
+            'author' => $news->getAuthor(),
+            'title' => $news->getTitle(),
+            // 'time' => $news->getTime(),,
         ];
         return $result;
     }

@@ -1,6 +1,6 @@
 <?php
-script('intranetagglo', 'main.umd.min');
-style('intranetagglo', 'main');
+script('intranetagglo', 'index');
+style('intranetagglo', 'index');
 ?>
 
 <div id="app">
