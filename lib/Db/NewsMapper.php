@@ -128,4 +128,28 @@ class NewsMapper extends QBMapper
 
         return [$this->findEntities($qb), $row['count']];
     }
+
+
+    /**
+     * @return array
+     */
+    public function dashboard(array $groupsArray): array
+    {
+        $groups = '%';
+        foreach ($groupsArray as $group) {
+            $groups .= $group . '%';
+        }
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('*')
+            ->from($this->getTableName(), 'q')
+            ->andWhere("q.groups = ''")
+            ->orWhere("q.groups LIKE :groups")
+            ->setParameter('groups', $groups)
+            ->orderBy('q.id', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(7);
+
+        return $this->findEntities($qb);
+    }
 }

@@ -91,8 +91,8 @@ class Widget implements IWidget
     {
         $this->initialState->provideLazyInitialState(Application::APP_ID . '_dashboard', function () {
             $user = $this->session->getUser();
-            $news = $this->service->findByGroups(0, $this->groupmanager->getUserGroupIds($user), '');
-            return array_map([$this, 'renderNews'], $news[0]);
+            $news = $this->service->dashboard($this->groupmanager->getUserGroupIds($user));
+            return array_map([$this, 'renderNews'], $news);
         });
         // Util::addStyle(Application::APP_ID, 'index');
         Util::addScript(Application::APP_ID, 'intranetagglo-dashboard');

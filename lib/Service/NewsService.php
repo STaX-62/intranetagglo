@@ -25,6 +25,11 @@ class NewsService
 		return $this->mapper->findByGroups($firstresult, $groups, $search);
 	}
 
+	public function dashboard(array $groups): array
+	{
+		return $this->mapper->dashboard($groups);
+	}
+
 	private function handleException(Exception $e): void
 	{
 		if (
