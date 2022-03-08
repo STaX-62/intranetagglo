@@ -8,7 +8,7 @@
   />
 </template>
 
-<script>icon-announcementcenter-dark
+<script>
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl, imagePath } from '@nextcloud/router'
@@ -29,6 +29,7 @@ export default {
       return this.news.map((item) => {
         return {
           mainText: item.title,
+          avatarUrl: imagePath('intranetagglo', 'LogoCA2BM.png'),
           avatarUsername: item.author,
           targetUrl: generateUrl('/apps/intranetagglo') + '?news=' + item.id,
           overlayIconUrl: imagePath('intranetagglo', 'empty.svg'),
