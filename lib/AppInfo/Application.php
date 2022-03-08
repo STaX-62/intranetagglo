@@ -10,6 +10,7 @@ use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
 
 class Application extends App
 {
@@ -24,6 +25,10 @@ class Application extends App
 	{
 		$context->registerDashboardWidget(Widget::class);
 		$context->registerNotifierService(Notifier::class);
+		$context->registerEventListener(
+			BeforeTemplateRenderedEvent::class,
+			BeforeTemplateRenderedListener::class
+		);
 	}
 
 	public function boot(IBootContext $context)
