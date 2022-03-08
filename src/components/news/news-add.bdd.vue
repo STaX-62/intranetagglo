@@ -117,7 +117,9 @@ export default {
   },
   computed: {
     availableOptions() {
-      return this.$store.state.groupsoptions.filter(opt => this.news.groups.indexOf(opt) === -1)
+      return this.$store.state.groupsoptions.forEach(element => {
+        element = element.split('/')[1]
+      }).filter(opt => this.news.groups.indexOf(opt.split('/')[1]) === -1)
     },
     shortdesccount() {
       return (190 - this.shortdesc.length)
@@ -126,7 +128,7 @@ export default {
   methods: {
     AddNews() {
       this.news.author = this.$store.state.username
-      this.news.groups = this.news.groups.id.join(';')
+      this.news.groups = this.news.groups.join(';')
       this.createNews(this.news)
     },
     async createNews(news) {
