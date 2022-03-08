@@ -65,7 +65,7 @@ class Widget implements IWidget
      */
     public function getOrder(): int
     {
-        return 1;
+        return 62170;
     }
 
     /**
@@ -73,7 +73,7 @@ class Widget implements IWidget
      */
     public function getIconClass(): string
     {
-        return 'app';
+        return 'icon-welcome';
     }
 
     /**
@@ -94,7 +94,7 @@ class Widget implements IWidget
             $news = $this->service->findByGroups(0, $this->groupmanager->getUserGroupIds($user), '');
             return array_map([$this, 'renderNews'], $news);
         });
-        Util::addStyle(Application::APP_ID, 'index');
+        // Util::addStyle(Application::APP_ID, 'index');
         Util::addScript(Application::APP_ID, 'intranetagglo-dashboard');
     }
 
