@@ -3,7 +3,7 @@
     id="intranetagglo_panel"
     :items="items"
     :loading="loading"
-    empty-content-icon="icon-intranetagglo-app"
+    empty-content-icon="icon-app"
     :empty-content-message="'Pas d\'actualités'"
   />
 </template>

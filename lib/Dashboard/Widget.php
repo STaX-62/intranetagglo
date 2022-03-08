@@ -73,7 +73,7 @@ class Widget implements IWidget
      */
     public function getIconClass(): string
     {
-        return 'icon-intranetagglo-app';
+        return 'icon-app';
     }
 
     /**
