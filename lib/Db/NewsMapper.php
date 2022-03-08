@@ -103,6 +103,7 @@ class NewsMapper extends QBMapper
             ->orWhere('q.text LIKE :word')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
+            ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
             ->setParameter('word', '%' . $search . '%')
             ->orderBy('q.id', 'DESC')
@@ -119,6 +120,7 @@ class NewsMapper extends QBMapper
             ->orWhere('q.text LIKE :word')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
+            ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
             ->setParameter('word', '%' . $search . '%');
 
@@ -145,6 +147,7 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
+            ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
             ->orderBy('q.id', 'DESC')
             ->setFirstResult(0)
