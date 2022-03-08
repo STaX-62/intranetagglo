@@ -4,6 +4,7 @@ import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import { getRequestToken } from '@nextcloud/auth'
 
 
 import './style/Apps.css';
