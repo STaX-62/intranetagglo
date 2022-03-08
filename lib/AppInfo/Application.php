@@ -11,7 +11,7 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 
-class Application extends App 
+class Application extends App implements IBootstrap
 {
 	public const APP_ID = 'intranetagglo';
 
@@ -22,11 +22,11 @@ class Application extends App
 
 	public function register(IRegistrationContext $context): void
 	{
-		// $context->registerDashboardWidget(Widget::class);
+		$context->registerDashboardWidget(Widget::class);
 		// $context->registerNotifierService(Notifier::class);
 	}
 
-	public function boot(IBootContext $context)
+	public function boot(IBootContext $context): void
 	{
 	}
 }
