@@ -98,12 +98,12 @@ class Widget implements IWidget
         Util::addScript(Application::APP_ID, 'intranetagglo-dashboard');
     }
 
-    protected function renderNews(News $news): array
+    protected function renderNews(array $news): array
     {
         $result = [
-            'id' => $news->getId(),
-            'author' => $news->getAuthor(),
-            'title' => $news->getTitle(),
+            'id' => $news['id'],
+            'author' => $news['author'],
+            'title' => $news['title'],
             // 'time' => $news->getTime(),,
         ];
         return $result;
