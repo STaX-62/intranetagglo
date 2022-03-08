@@ -110,7 +110,7 @@ class Notifier implements INotifier
         $notification->setParsedSubject(str_replace(
             $placeholders,
             $replacements,
-            'announced “{news}”'
+            'Une nouvelle actualité est disponible : “{news}”'
         ));
 
         return $notification;

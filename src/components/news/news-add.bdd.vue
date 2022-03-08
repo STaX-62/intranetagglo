@@ -34,7 +34,7 @@
                 <label for="groups-component-select">Restrictions de Groupes d'utilisateurs</label>
                 <b-form-tags
                   name="groups-component-select"
-                  v-model="news.groups"
+                  v-model="news.groups.label"
                   size="lg"
                   class="mb-2"
                   add-on-change
@@ -128,8 +128,7 @@ export default {
   methods: {
     AddNews() {
       this.news.author = this.$store.state.username
-      this.news.groups = this.news.groups.join(';')
-
+      this.news.groups = this.news.groups.id.join(';')
       this.createNews(this.news)
     },
     async createNews(news) {
@@ -168,7 +167,6 @@ export default {
         groups: [],
         visible: 0
       },
-      groupsoptions: [],
       categoryoptions: []
     }
   }
