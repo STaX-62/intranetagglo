@@ -63,10 +63,13 @@ export default new Vuex.Store({
       })
     },
     getGroupsOptions({ commit }) {
-      axios.get(generateUrl('apps/intranetagglo/api/groups'))
-        .then(res => {
-          commit('setGroupsOptions', res.data)
-        })
+      axios.get(generateUrl('apps/intranetagglo/api/groups'), {
+        params: {
+          search: '',
+        },
+      }).then(res => {
+        commit('setGroupsOptions', res.data)
+      })
     }
   },
   modules: {},
