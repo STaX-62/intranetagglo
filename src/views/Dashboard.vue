@@ -3,12 +3,12 @@
     id="intranetagglo_panel"
     :items="items"
     :loading="loading"
-    empty-content-icon="app"
+    empty-content-icon="icon-intranetagglo-app"
     :empty-content-message="'Pas d\'actualités'"
   />
 </template>
 
-<script>
+<script>icon-announcementcenter-dark
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl, imagePath } from '@nextcloud/router'
@@ -30,7 +30,7 @@ export default {
         return {
           mainText: item.title,
           avatarUsername: item.author,
-          targetUrl: generateUrl('/apps/intranetagglo') + '?announcement=' + item.id,
+          targetUrl: generateUrl('/apps/intranetagglo') + '?news=' + item.id,
           overlayIconUrl: imagePath('intranetagglo', 'empty.svg'),
           subText: `${item.author}` //${moment(item.time, 'X').fromNow()}
         }
