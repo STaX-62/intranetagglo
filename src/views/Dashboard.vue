@@ -12,7 +12,8 @@
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl, imagePath } from '@nextcloud/router'
-// import moment from '@nextcloud/moment'
+import moment from '@nextcloud/moment'
+
 export default {
   name: 'Dashboard',
   components: {
@@ -33,7 +34,7 @@ export default {
           avatarUsername: item.author,
           targetUrl: generateUrl('/apps/intranetagglo/') + item.id,
           overlayIconUrl: imagePath('intranetagglo', 'empty.svg'),
-          subText: `${item.author}` //${moment(item.time, 'X').fromNow()}
+          subText: `${item.author}, ${moment(item.time, 'X').fromNow()}` 
         }
       })
     }

@@ -34,7 +34,7 @@
                 <label for="groups-component-select">Restrictions de Groupes d'utilisateurs</label>
                 <b-form-tags
                   name="groups-component-select"
-                  v-model="news.groups.label"
+                  v-model="news.groups"
                   size="lg"
                   class="mb-2"
                   add-on-change
@@ -119,6 +119,7 @@ export default {
   },
   computed: {
     availableOptions() {
+      console.log(this.$store.state.groupsoption)
       return this.$store.state.groupsoptions.filter(opt => this.news.groups.indexOf(opt) === -1)
     },
     shortdesccount() {
@@ -165,6 +166,7 @@ export default {
         photo: "",
         category: "",
         groups: [],
+        time: null,
         visible: 0
       },
       categoryoptions: []

@@ -104,7 +104,7 @@ class Widget implements IWidget
             'id' => $news->getId(),
             'author' => $news->getAuthor(),
             'title' => $news->getTitle(),
-            // 'time' => $news->getTime(),,
+            'time' => $news->getTime()
         ];
         return $result;
     }
