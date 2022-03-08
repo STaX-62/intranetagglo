@@ -22,7 +22,7 @@ class Application extends App implements IBootstrap
 
 	public function register(IRegistrationContext $context): void
 	{
-		$context->registerDashboardWidget(Widget::class);
+		// $context->registerDashboardWidget(Widget::class);
 		// $context->registerNotifierService(Notifier::class);
 	}
 
