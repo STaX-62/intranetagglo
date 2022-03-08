@@ -94,8 +94,8 @@ class Widget implements IWidget
             $news = $this->service->findByGroups(0, $this->groupmanager->getUserGroupIds($user), '');
             return array_map([$this, 'renderNews'], $news);
         });
-        Util::addStyle(Application::APP_ID, 'dashboard');
-        Util::addScript(Application::APP_ID, Application::APP_ID . '-dashboard');
+        Util::addStyle(Application::APP_ID, 'index');
+        Util::addScript(Application::APP_ID, 'intranetagglo-dashboard');
     }
 
     protected function renderNews(News $news): array
