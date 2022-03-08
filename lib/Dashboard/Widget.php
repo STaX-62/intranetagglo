@@ -65,7 +65,7 @@ class Widget implements IWidget
      */
     public function getOrder(): int
     {
-        return 62170;
+        return 0;
     }
 
     /**
