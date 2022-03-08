@@ -21,12 +21,10 @@
               </b-th>
               <b-th>
                 <label for="category">Catégorie</label>
-                <b-form-select
-                  name="category"
-                  v-model="news.category"
-                  :options="categoryoptions"
-                  required
-                ></b-form-select>
+                <b-form-input name="category" list="category-id"  v-model="news.category" required></b-form-input>
+                <datalist id="category-id">
+                  <option v-for="(category,index) in categoryoptions" :key="index">{{ category }}</option>
+                </datalist>
               </b-th>
             </b-tr>
             <b-tr>
@@ -120,7 +118,7 @@ export default {
   computed: {
     availableOptions() {
       console.log(this.$store.state.groupsoptions)
-      return this.$store.state.groupsoptions.label.filter(opt => this.news.groups.label.indexOf(opt) === -1)
+      return this.$store.state.groupsoptions.filter(opt => this.news.groups.label.indexOf(opt.split('/')[1]) === -1)
     },
     shortdesccount() {
       return (190 - this.shortdesc.length)

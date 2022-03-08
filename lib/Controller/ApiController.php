@@ -35,15 +35,12 @@ class APIController extends Controller
     public function searchGroups(string $search): DataResponse
     {
         $groups = $this->groupmanager->search($search, 25);
-        $results = [];
+        $gid = [];
         foreach ($groups as $group) {
-            $results[] = [
-                'id' => $group->getGID(),
-                'label' => $group->getDisplayName(),
-            ];
+            $gid[] = $group->getGID() . '/' . $group->getDisplayName();
         }
 
-        return new DataResponse($results);
+        return new DataResponse($gid);
     }
 
     /**
