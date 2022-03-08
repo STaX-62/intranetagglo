@@ -9,6 +9,7 @@ use OCP\IRequest;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\AppFramework\Controller;
 use OCP\IGroupManager;
 use OCP\IUser;
@@ -27,6 +28,9 @@ class NewsController extends Controller
     /** @var IUserManager */
     private $userManager;
 
+    /** @var ITimeFactory */
+    protected $timeFactory;
+
     /** @var IManager */
     private $NotificationManager;
 
@@ -39,7 +43,8 @@ class NewsController extends Controller
         IUserSession $session,
         IManager $NotificationManager,
         IUsermanager $userManager,
-        IURLGenerator $urlGenerator
+        IURLGenerator $urlGenerator,
+        ITimeFactory $timeFactory
     ) {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
@@ -48,6 +53,7 @@ class NewsController extends Controller
         $this->session = $session;
         $this->NotificationManager = $NotificationManager;
         $this->urlGenerator = $urlGenerator;
+        $this->timeFactory = $timeFactory;
     }
 
     public function index(int $id, string $search): DataResponse
@@ -67,13 +73,13 @@ class NewsController extends Controller
     public function create(string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $visible)
     {
         $user = $this->session->getUser();
-        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $visible);
+        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $this->timeFactory->getTime(), $visible);
     }
 
-    public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $visible)
+    public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $time, int $visible)
     {
-        return $this->handleNotFound(function () use ($id, $author, $title, $subtitle, $text, $photo, $category, $groups, $visible) {
-            return $this->service->update($id, $author, $title, $subtitle, $text, $photo, $category, $groups, $visible);
+        return $this->handleNotFound(function () use ($id, $author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible) {
+            return $this->service->update($id, $author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible);
         });
     }
 
