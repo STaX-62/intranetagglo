@@ -15,6 +15,12 @@ import './theme/theme.css';
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.config.productionTip = false
+// eslint-disable-next-line
+__webpack_nonce__ = btoa(getRequestToken())
+// eslint-disable-next-line
+console.log(window.OC)
+// eslint-disable-next-line
+console.log(OC)
 
 new Vue({
   store,
