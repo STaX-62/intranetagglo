@@ -92,18 +92,18 @@ class Widget implements IWidget
         $this->initialState->provideLazyInitialState(Application::APP_ID . '_dashboard', function () {
             $user = $this->session->getUser();
             $news = $this->service->findByGroups(0, $this->groupmanager->getUserGroupIds($user), '');
-            return array_map([$this, 'renderNews'], $news);
+            return array_map([$this, 'renderNews'], $news[0]);
         });
         // Util::addStyle(Application::APP_ID, 'index');
         Util::addScript(Application::APP_ID, 'intranetagglo-dashboard');
     }
 
-    protected function renderNews(array $news): array
+    protected function renderNews(News $news): array
     {
         $result = [
-            'id' => $news['id'],
-            'author' => $news['author'],
-            'title' => $news['title'],
+            'id' => $news->getId(),
+            'author' => $news->getAuthor(),
+            'title' => $news->getTitle(),
             // 'time' => $news->getTime(),,
         ];
         return $result;
