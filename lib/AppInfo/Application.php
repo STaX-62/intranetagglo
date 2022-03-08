@@ -23,16 +23,10 @@ class Application extends App
 	public function register(IRegistrationContext $context): void
 	{
 		$context->registerDashboardWidget(Widget::class);
+		$context->registerNotifierService(Notifier::class);
 	}
 
 	public function boot(IBootContext $context)
 	{
-		$this->registerNotifier();
-	}
-
-	public function registerNotifier(): void
-	{
-		$manager = \OC::$server->get(\OCP\Notification\IManager::class);
-		$manager->registerNotifierService(Notifier::class);
 	}
 }
