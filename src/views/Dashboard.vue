@@ -1,10 +1,10 @@
 <template>
   <DashboardWidget
-    id="announcementcenter_panel"
+    id="intranetagglo_panel"
     :items="items"
     :loading="loading"
-    empty-content-icon="icon-announcementcenter-dark"
-    :empty-content-message="t('announcementcenter', 'No news')"
+    empty-content-icon="app"
+    :empty-content-message="'Pas d\'actualités'"
   />
 </template>
 
