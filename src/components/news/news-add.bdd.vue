@@ -119,7 +119,8 @@ export default {
   },
   computed: {
     availableOptions() {
-      return this.$store.state.groupsoptions.filter(opt => this.news.groups.label.indexOf(opt.label) === -1)
+      console.log(this.$store.state.groupsoptions)
+      return this.$store.state.groupsoptions.label.filter(opt => this.news.groups.label.indexOf(opt) === -1)
     },
     shortdesccount() {
       return (190 - this.shortdesc.length)
