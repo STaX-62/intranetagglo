@@ -24,11 +24,11 @@ class Application extends App implements IBootstrap
 	public function register(IRegistrationContext $context): void
 	{
 		$context->registerDashboardWidget(Widget::class);
-		$manager = $context->getAppContainer()->query(IManager::class);
-		$manager->registerNotifierService(Notifier::class);
 	}
 
 	public function boot(IBootContext $context): void
 	{
+		$manager = $context->getAppContainer()->query(IManager::class);
+		$manager->registerNotifierService(Notifier::class);
 	}
 }
