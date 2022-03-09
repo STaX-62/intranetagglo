@@ -117,9 +117,7 @@ export default {
   },
   computed: {
     availableOptions() {
-      return this.$store.state.groupsoptions.forEach(element => {
-        element = element.split('/')[1]
-      }).filter(opt => this.news.groups.indexOf(opt.split('/')[1]) === -1)
+      return this.$store.state.groupsoptions.filter(opt => this.news.groups.indexOf(opt) === -1)
     },
     shortdesccount() {
       return (190 - this.shortdesc.length)

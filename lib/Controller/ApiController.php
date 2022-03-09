@@ -37,9 +37,8 @@ class APIController extends Controller
         $groups = $this->groupmanager->search($search, 25);
         $gid = [];
         foreach ($groups as $group) {
-            $gid[] = $group->getGID() . '/' . $group->getDisplayName();
+            $gid[] = $group->getGID();
         }
-
         return new DataResponse($gid);
     }
 
