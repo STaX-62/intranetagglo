@@ -103,50 +103,49 @@ class NewsController extends Controller
                 ->setSubject('published', [$rq->getAuthor()]);
             // ->setMessage('une nouvelle actualité est disponible dans l\'intranet');
 
-            // $notification->addParsedAction($gotoAction)
-            //     ->setRichSubject(
-            //         'Une nouvelle actualité est disponible : {news}',
-            //         [
-            //             'news' => [
-            //                 'type' => 'news',
-            //                 'id' => $rq->getId(),
-            //                 'name' => $rq->getTitle(),
-            //             ],
-            //         ]
-            //     )
-            //     ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
+            $notification->addParsedAction($gotoAction)
+                ->setRichSubject(
+                    'Une nouvelle actualité est disponible : {news}',
+                    [
+                        'news' => [
+                            'type' => 'news',
+                            'id' => $rq->getId(),
+                            'name' => $rq->getTitle(),
+                        ],
+                    ]
+                )
+                ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
 
 
             $groups = explode(";", $rq->getGroups());
 
-            // modifier les groupes et les enregistrer via gid
-            // if ($groups[0] != "") {
-            $this->createNotificationEveryone($uid, $notification);
-            // $this->NotificationManager->flush();
-            // } else {
-            //     foreach ($groups as $gid) {
-            //         $group = $this->groupManager->get($gid);
-            //         if (!($group instanceof IGroup)) {
-            //             continue;
-            //         }
+            if ($groups[0] != "") {
+                $this->createNotificationEveryone($uid, $notification);
+                $this->NotificationManager->flush();
+            } else {
+                foreach ($groups as $gid) {
+                    $group = $this->groupManager->get($gid);
+                    if (!($group instanceof IGroup)) {
+                        continue;
+                    }
 
-            //         $users = $group->getUsers();
-            //         foreach ($users as $user) {
+                    $users = $group->getUsers();
+                    foreach ($users as $user) {
 
-            //             $uid = $user->getUID();
-            //             if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
-            //                 continue;
-            //             }
+                        $uid = $user->getUID();
+                        if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
+                            continue;
+                        }
 
-            //             if ($uid !== $uid) {
-            //                 $notification->setUser($uid);
-            //                 $this->notificationManager->notify($notification);
-            //             }
+                        if ($uid !== $uid) {
+                            $notification->setUser($uid);
+                            $this->notificationManager->notify($notification);
+                        }
 
-            //             $this->notifiedUsers[$uid] = true;
-            //         }
-            //     }
-            // }
+                        $this->notifiedUsers[$uid] = true;
+                    }
+                }
+            }
             return $rq;
         });
     }
@@ -158,10 +157,10 @@ class NewsController extends Controller
     protected function createNotificationEveryone(string $authorId, INotification $notification): void
     {
         $this->userManager->callForSeenUsers(function (IUser $user) use ($authorId, $notification) {
-            // if ($authorId !== $user->getUID()) {
-            $notification->setUser($user->getUID());
-            $this->NotificationManager->notify($notification);
-            // }
+            if ($authorId !== $user->getUID()) {
+                $notification->setUser($user->getUID());
+                $this->NotificationManager->notify($notification);
+            }
         });
     }
 
