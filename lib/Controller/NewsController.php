@@ -142,7 +142,7 @@ class NewsController extends Controller
 
                 $gotoAction = $notification->createAction();
                 $gotoAction->setParsedLabel('ouvrir')
-                    ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index'), 'POST');
+                    ->setLink('intranetagglo', 'POST');
 
 
                 $notification->setApp(Application::APP_ID)
