@@ -21,7 +21,7 @@
               </b-th>
               <b-th>
                 <label for="category">Catégorie</label>
-                <b-form-input name="category" list="category-id"  v-model="news.category" required></b-form-input>
+                <b-form-input name="category" list="category-id" v-model="news.category" required></b-form-input>
                 <datalist id="category-id">
                   <option v-for="(category,index) in categoryoptions" :key="index">{{ category }}</option>
                 </datalist>
