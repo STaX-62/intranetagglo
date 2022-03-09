@@ -22,7 +22,7 @@ class Notifier implements INotifier
     /** @var IURLGenerator */
     private $urlGenerator;
 
-    public function __construct(IURLGenerator $urlGenerator,  INotificationManager $notificationManager, /*NewsService $service,*/ IUserManager $userManager)
+    public function __construct(IURLGenerator $urlGenerator,  INotificationManager $notificationManager, NewsService $service, IUserManager $userManager)
     {
         $this->urlGenerator = $urlGenerator;
         $this->notificationManager = $notificationManager;
