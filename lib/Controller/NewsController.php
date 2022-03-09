@@ -71,7 +71,7 @@ class NewsController extends Controller
     public function indexG(int $id, string $search): DataResponse
     {
         $user = $this->session->getUser();
-        return (new DataResponse($this->service->findByGroups($id, $this->groupmanager->getUserGroupIds($user), $search)));
+        return (new DataResponse($this->service->findByGroups($id, $this->groupManager->getUserGroupIds($user), $search)));
     }
 
     public function create(string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $visible)
