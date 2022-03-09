@@ -3,7 +3,7 @@
 namespace OCA\IntranetAgglo\AppInfo;
 
 
-use OCA\IntranetAgglo\Notifications\Notifier;
+use OCA\IntranetAgglo\Notification\Notifier;
 use OCA\IntranetAgglo\Dashboard\Widget;
 
 use OCP\Notification\IManager;
