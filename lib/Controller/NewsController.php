@@ -222,7 +222,6 @@ class NewsController extends Controller
         $uid = $user->getUID();
         $notification = $this->NotificationManager->createNotification();
         $notification->setApp(Application::APP_ID)
-            ->setObject('news', 1)
             ->setUser($uid);
         $this->NotificationManager->markProcessed($notification);
     }
