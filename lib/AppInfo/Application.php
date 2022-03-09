@@ -3,9 +3,10 @@
 namespace OCA\IntranetAgglo\AppInfo;
 
 
-use OCA\IntranetAgglo\Notification\Notifier;
+use OCA\IntranetAgglo\Notifications\Notifier;
 use OCA\IntranetAgglo\Dashboard\Widget;
 
+use OCP\Notification\IManager;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -23,10 +24,11 @@ class Application extends App implements IBootstrap
 	public function register(IRegistrationContext $context): void
 	{
 		$context->registerDashboardWidget(Widget::class);
-		// $context->registerNotifierService(Notifier::class);
 	}
 
 	public function boot(IBootContext $context): void
 	{
+		$manager = $context->getAppContainer()->query(IManager::class);
+		$manager->registerNotifierService(Notifier::class);
 	}
 }
