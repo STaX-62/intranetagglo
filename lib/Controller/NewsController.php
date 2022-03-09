@@ -137,28 +137,27 @@ class NewsController extends Controller
             // }
             // $result['groups'] = $groups;
 
+            if ($visible == 1) {
+                $notification = $this->NotificationManager->createNotification();
 
-            $notification = $this->NotificationManager->createNotification();
-
-            $gotoAction = $notification->createAction();
-            $gotoAction->setParsedLabel('ouvrir')
-                ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index'), 'POST');
-
-
-            $notification->setApp(Application::APP_ID)
-                ->setUser('cmouronval')
-                ->setDateTime(new \DateTime())
-                ->setObject('news', (string)$rq->getId())
-                ->setSubject('published', [
-                    'author' =>  $rq->getAuthor()
-                ])
-                ->setMessage('une nouvelle actualité est disponible dans l\'intranet :' . $rq->getTitle())
-                ->setParsedMessage($rq->getTitle())
-                ->addAction($gotoAction);
-
-            $this->NotificationManager->notify($notification);
+                $gotoAction = $notification->createAction();
+                $gotoAction->setParsedLabel('ouvrir')
+                    ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index'), 'POST');
 
 
+                $notification->setApp(Application::APP_ID)
+                    ->setUser('cmouronval')
+                    ->setDateTime(new \DateTime())
+                    ->setObject('news', (string)$rq->getId())
+                    ->setSubject('published', [
+                        'author' =>  $rq->getAuthor()
+                    ])
+                    ->setMessage('une nouvelle actualité est disponible dans l\'intranet :' . $rq->getTitle())
+                    ->setParsedMessage($rq->getTitle())
+                    ->addAction($gotoAction);
+
+                $this->NotificationManager->notify($notification);
+            }
 
             // $notification->addParsedAction($gotoAction)
             //     ->setRichSubject(
