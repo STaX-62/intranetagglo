@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OCA\IntranetAgglo\Notification;
 
 use OCA\IntranetAgglo\AppInfo\Application;
-// use OCA\IntranetAgglo\Service\NewsService;
+use OCA\IntranetAgglo\Service\NewsService;
 
 use InvalidArgumentException;
 use OCP\IURLGenerator;
@@ -26,7 +26,7 @@ class Notifier implements INotifier
     {
         $this->urlGenerator = $urlGenerator;
         $this->notificationManager = $notificationManager;
-        // $this->service = $service;
+        $this->service = $service;
         $this->userManager = $userManager;
     }
 
@@ -64,7 +64,7 @@ class Notifier implements INotifier
             throw new \InvalidArgumentException('Unknown subject');
         }
 
-        // $news = $this->service->find((int)$notification->getObjectId());
+        $news = $this->service->find((int)$notification->getObjectId());
 
         $p = $notification->getSubjectParameters();
 
