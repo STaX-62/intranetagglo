@@ -128,11 +128,7 @@ class NewsController extends Controller
                 $this->NotificationManager->flush();
             } else {
                 foreach ($groups as $gid) {
-                    try {
-                        $group = $this->groupManager->get($gid);
-                    } catch (Exception $e) {
-                        throw $e;
-                    }
+                    $group = $this->groupManager->get($gid);
                     if (!($group instanceof IGroup)) {
                         continue;
                     }
