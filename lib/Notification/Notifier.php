@@ -71,7 +71,7 @@ class Notifier implements INotifier
         // Deal with the actions for a known subject
         foreach ($notification->getActions() as $action) {
             switch ($action->getLabel()) {
-                case 'Ouvrir':
+                case 'ouvrir':
                     $action->setParsedLabel('Ouvrir')
                         ->setLink($this->url->linkToRouteAbsolute('intranetagglo.page.index', ['id' => $notification->getObjectId()]), 'GET');
                     break;
