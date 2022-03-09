@@ -140,11 +140,6 @@ class NewsController extends Controller
             if ($visible == 1) {
                 $notification = $this->NotificationManager->createNotification();
 
-                $gotoAction = $notification->createAction();
-                $gotoAction->setParsedLabel('ouvrir')
-                    ->setLink('intranetagglo', 'POST');
-
-
                 $notification->setApp(Application::APP_ID)
                     ->setUser('cmouronval')
                     ->setDateTime(new \DateTime())
@@ -153,8 +148,7 @@ class NewsController extends Controller
                         'author' =>  $rq->getAuthor()
                     ])
                     ->setMessage('une nouvelle actualité est disponible dans l\'intranet :' . $rq->getTitle())
-                    ->setParsedMessage($rq->getTitle())
-                    ->addAction($gotoAction);
+                    ->setParsedMessage($rq->getTitle());
 
                 $this->NotificationManager->notify($notification);
             }
