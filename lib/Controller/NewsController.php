@@ -220,10 +220,10 @@ class NewsController extends Controller
     {
         $user = $this->session->getUser();
         $uid = $user->getUID();
-        $notification = $this->notificationManager->createNotification();
+        $notification = $this->NotificationManager->createNotification();
         $notification->setApp(Application::APP_ID)
             ->setUser($uid);
-        $this->notificationManager->markProcessed($notification);
+        $this->NotificationManager->markProcessed($notification);
     }
 
     public function getCategory()
