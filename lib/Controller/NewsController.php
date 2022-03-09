@@ -32,6 +32,9 @@ class NewsController extends Controller
     /** @var ITimeFactory */
     protected $timeFactory;
 
+    /** @var IGroupManager */
+    private $groupManager;
+
     /** @var IManager */
     private $NotificationManager;
 
@@ -40,7 +43,7 @@ class NewsController extends Controller
     public function __construct(
         IRequest $request,
         NewsService $service,
-        IGroupManager $groupmanager,
+        IGroupManager $groupManager,
         IUserSession $session,
         IManager $NotificationManager,
         IUsermanager $userManager,
@@ -50,7 +53,7 @@ class NewsController extends Controller
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
         $this->userManager = $userManager;
-        $this->groupmanager = $groupmanager;
+        $this->groupManager = $groupManager;
         $this->session = $session;
         $this->NotificationManager = $NotificationManager;
         $this->urlGenerator = $urlGenerator;
@@ -126,7 +129,7 @@ class NewsController extends Controller
             } else {
                 foreach ($groups as $gid) {
                     try {
-                        $group = $this->groupmanager->get($gid);
+                        $group = $this->groupManager->get($gid);
                     } catch (Exception $e) {
                         throw $e;
                     }
