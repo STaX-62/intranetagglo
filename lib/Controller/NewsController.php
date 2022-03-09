@@ -145,8 +145,7 @@ class NewsController extends Controller
                     ->setSubject('published', [
                         'author' =>  $rq->getAuthor()
                     ])
-                    ->setMessage('une nouvelle actualité est disponible dans l\'intranet :' . $rq->getTitle())
-                    ->setParsedMessage($rq->getTitle());
+                    ->setMessage('une nouvelle actualité est disponible dans l\'intranet :' . $rq->getTitle());
 
                 $this->NotificationManager->notify($notification);
             }

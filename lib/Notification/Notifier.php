@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace OCA\IntranetAgglo\Notification;
 
 use OCA\IntranetAgglo\AppInfo\Application;
-use OCA\IntranetAgglo\Service\NewsService;
 
 use InvalidArgumentException;
 use OCP\IURLGenerator;
@@ -22,11 +21,10 @@ class Notifier implements INotifier
     /** @var IURLGenerator */
     private $urlGenerator;
 
-    public function __construct(IURLGenerator $urlGenerator,  INotificationManager $notificationManager, NewsService $service, IUserManager $userManager)
+    public function __construct(IURLGenerator $urlGenerator,  INotificationManager $notificationManager, IUserManager $userManager)
     {
         $this->urlGenerator = $urlGenerator;
         $this->notificationManager = $notificationManager;
-        $this->service = $service;
         $this->userManager = $userManager;
     }
 
@@ -57,13 +55,12 @@ class Notifier implements INotifier
             throw new \InvalidArgumentException();
         }
 
-        $i = $notification->getSubject();
-
-        if ($i !== 'published') {
+        if ($notification->getSubject() !== 'published') {
             throw new InvalidArgumentException('Unknown subject');
         }
 
-        $news = $this->service->find((int)$notification->getObjectId());
+        $notification->setParsedSubject($notification->getSubject());
+        $notification->setParsedMessage($notification->getMessage());
 
         $notification->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')))
             ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index', ['id' => $notification->getObjectId()]));
