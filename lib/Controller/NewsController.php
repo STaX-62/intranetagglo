@@ -15,6 +15,7 @@ use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\AppFramework\Controller;
 use OCP\IGroupManager;
 use OCP\IUser;
+use OCP\IGroup;
 use OCP\IUserManager;
 use OCP\IUserSession;
 use OCP\Notification\IManager;
@@ -97,7 +98,7 @@ class NewsController extends Controller
 
             if ($visible == 1) {
                 $notification = $this->NotificationManager->createNotification();
-                
+
                 $notification->setApp(Application::APP_ID)
                     ->setDateTime(new \DateTime())
                     ->setObject('news', (string)$rq->getId())
@@ -107,29 +108,27 @@ class NewsController extends Controller
                     ])
                     ->setMessage($rq->getTitle() . ' - ' . $rq->getSubtitle());
 
-                // $this->NotificationManager->notify($notification);
-            }
-
-            if ($groups[0] == "") {
-                $this->createNotificationEveryone($rq->getAuthor(), $notification);
-            } else {
-                foreach ($groups as $gid) {
-                    $group = $this->groupManager->get($gid);
-                    if (!($group instanceof IGroup)) {
-                        continue;
-                    }
-
-                    $users = $group->getUsers();
-                    foreach ($users as $user) {
-
-                        $uid = $user->getUID();
-                        if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
+                if ($groups[0] == "") {
+                    $this->createNotificationEveryone($rq->getAuthor(), $notification);
+                } else {
+                    foreach ($groups as $gid) {
+                        $group = $this->groupManager->get($gid);
+                        if (!($group instanceof IGroup)) {
                             continue;
                         }
 
-                        if ($uid !== $uid) {
-                            $notification->setUser($uid);
-                            $this->NotificationManager->notify($notification);
+                        $users = $group->getUsers();
+                        foreach ($users as $user) {
+
+                            $uid = $user->getUID();
+                            if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
+                                continue;
+                            }
+
+                            if ($uid !== $uid) {
+                                $notification->setUser($uid);
+                                $this->NotificationManager->notify($notification);
+                            }
                         }
                     }
                 }
