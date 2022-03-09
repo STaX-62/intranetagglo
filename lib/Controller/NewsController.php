@@ -150,7 +150,7 @@ class NewsController extends Controller
                     }
                 }
             }
-            return $rq;
+            return $groups;
         });
     }
 
