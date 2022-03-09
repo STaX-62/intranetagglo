@@ -55,7 +55,7 @@ class Notifier implements INotifier
             throw new \InvalidArgumentException();
         }
 
-        if ($notification->getSubject() !== 'published') {
+        if ($notification->getSubject() !== 'une nouvelle actualité est disponible dans l\'intranet') {
             throw new InvalidArgumentException('Unknown subject');
         }
 

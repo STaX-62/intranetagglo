@@ -142,10 +142,10 @@ class NewsController extends Controller
                     ->setUser('cmouronval')
                     ->setDateTime(new \DateTime())
                     ->setObject('news', (string)$rq->getId())
-                    ->setSubject('published', [
+                    ->setSubject('une nouvelle actualité est disponible dans l\'intranet', [
                         'author' =>  $rq->getAuthor()
                     ])
-                    ->setMessage('une nouvelle actualité est disponible dans l\'intranet :' . $rq->getTitle());
+                    ->setMessage($rq->getTitle() . '\n' . $rq->getSubtitle());
 
                 $this->NotificationManager->notify($notification);
             }
