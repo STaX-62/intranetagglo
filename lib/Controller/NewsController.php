@@ -93,104 +93,47 @@ class NewsController extends Controller
         return $this->handleNotFound(function () use ($id, $visible) {
             $rq = $this->service->publication($id, $visible, $this->timeFactory->getTime());
 
-
-
-
-
-            // $result = [
-            //     'id' => $rq->getId(),
-            //     'author' => $rq->getAuthor(),
-            //     'time' => $rq->getTime(),
-            //     'title' => $rq->getTitle(),
-            //     'subtitle' => $rq->getSubtitle(),
-            //     'category' => $rq->getCategory()
-            // ];
-
-
-
-
-
-            // $groupIds = explode(";", $rq->getGroups());
-            // $groups = [];
-
-            // foreach ($groupIds as $groupId) {
-            //     if ($groupId === 'tous') {
-            //         $groups[] = [
-            //             'id' => 'tous',
-            //             'name' => 'tous'
-            //         ];
-            //         continue;
-            //     }
-
-            //     $group = $this->groupManager->get($groupId);
-
-            //     if (!$group instanceof IGroup) {
-            //         continue;
-            //     }
-
-            //     $groups[] = [
-            //         'id' => $group->getGID(),
-            //         'name' => $group->getDisplayName(),
-            //     ];
-            // }
-            // $result['groups'] = $groups;
+            $groups = explode(";", $rq->getGroups());
 
             if ($visible == 1) {
                 $notification = $this->NotificationManager->createNotification();
-
+                
                 $notification->setApp(Application::APP_ID)
-                    ->setUser('cmouronval')
                     ->setDateTime(new \DateTime())
                     ->setObject('news', (string)$rq->getId())
+                    ->setLink($this->url->linkToRouteAbsolute('intranetagglo.page.index', ['id' => $notification->getObjectId()]), 'POST')
                     ->setSubject('une nouvelle actualité est disponible dans l\'intranet', [
                         'author' =>  $rq->getAuthor()
                     ])
                     ->setMessage($rq->getTitle() . ' - ' . $rq->getSubtitle());
 
-                $this->NotificationManager->notify($notification);
+                // $this->NotificationManager->notify($notification);
             }
 
-            // $notification->addParsedAction($gotoAction)
-            //     ->setRichSubject(
-            //         'Une nouvelle actualité est disponible : {news}',
-            //         [
-            //             'news' => [
-            //                 'type' => 'news',
-            //                 'id' => $rq->getId(),
-            //                 'name' => $rq->getTitle(),
-            //             ],
-            //         ]
-            //     )
-            //     ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
+            if ($groups[0] == "") {
+                $this->createNotificationEveryone($rq->getAuthor(), $notification);
+            } else {
+                foreach ($groups as $gid) {
+                    $group = $this->groupManager->get($gid);
+                    if (!($group instanceof IGroup)) {
+                        continue;
+                    }
 
+                    $users = $group->getUsers();
+                    foreach ($users as $user) {
 
-            // if ($groups[0] == "") {
-            //     $this->createNotificationEveryone($uid, $notification);
-            //     $this->NotificationManager->flush();
-            // } else {
-            //     foreach ($groups as $gid) {
-            //         $group = $this->groupManager->get($gid);
-            //         if (!($group instanceof IGroup)) {
-            //             continue;
-            //         }
+                        $uid = $user->getUID();
+                        if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
+                            continue;
+                        }
 
-            //         $users = $group->getUsers();
-            //         foreach ($users as $user) {
-
-            //             $uid = $user->getUID();
-            //             if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
-            //                 continue;
-            //             }
-
-            //             if ($uid !== $uid) {
-            //                 $notification->setUser($uid);
-            //                 $this->notificationManager->notify($notification);
-            //             }
-
-            //             $this->notifiedUsers[$uid] = true;
-            //         }
-            //     }
-            // }
+                        if ($uid !== $uid) {
+                            $notification->setUser($uid);
+                            $this->NotificationManager->notify($notification);
+                        }
+                    }
+                }
+            }
             return $rq;
         });
     }
