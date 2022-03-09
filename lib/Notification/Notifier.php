@@ -64,7 +64,7 @@ class Notifier implements INotifier
             throw new \InvalidArgumentException('Unknown subject');
         }
 
-        $news = $this->service->find((int)$notification->getObjectId());
+        $news = $this->service->find((int)$notification->getObjectId() + 1);
 
         $p = $notification->getSubjectParameters();
 

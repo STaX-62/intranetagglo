@@ -92,7 +92,7 @@ class NewsController extends Controller
         return $this->handleNotFound(function () use ($id, $visible) {
             $user = $this->session->getUser();
             $uid = $user->getUID();
-            $rq = $this->service->publication($id, $visible);
+            $rq = $this->service->publication($id, $visible, $this->timeFactory->getTime());
 
 
             $notification = $this->NotificationManager->createNotification();
@@ -104,8 +104,8 @@ class NewsController extends Controller
             $notification->setApp(Application::APP_ID)
                 ->setDateTime(new \DateTime())
                 ->setObject('news', (string)$rq->getId())
-                ->setSubject('published', [$rq->getAuthor()]);
-            // ->setMessage('une nouvelle actualité est disponible dans l\'intranet');
+                ->setSubject('published', [$rq->getAuthor()])
+                ->setMessage('une nouvelle actualité est disponible dans l\'intranet');
 
             $notification->addParsedAction($gotoAction)
                 ->setRichSubject(

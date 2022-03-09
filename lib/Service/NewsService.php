@@ -90,11 +90,12 @@ class NewsService
 		}
 	}
 
-	public function publication($id, $visible)
+	public function publication($id, $visible, $time)
 	{
 		try {
 			$news = $this->mapper->find($id);
 			$news->setVisible($visible);
+			$news->setTime($time);
 			return $this->mapper->update($news);
 		} catch (Exception $e) {
 			$this->handleException($e);
