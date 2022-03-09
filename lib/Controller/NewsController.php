@@ -91,8 +91,6 @@ class NewsController extends Controller
     public function publication(int $id, int $visible)
     {
         return $this->handleNotFound(function () use ($id, $visible) {
-            $user = $this->session->getUser();
-            $uid = $user->getUID();
             $rq = $this->service->publication($id, $visible, $this->timeFactory->getTime());
 
 
@@ -218,14 +216,14 @@ class NewsController extends Controller
      * @param int $id
      * @return DataResponse
      */
-    public function removeNotifications(int $id): DataResponse
+    public function removeNotifications(): void
     {
+        $user = $this->session->getUser();
+        $uid = $user->getUID();
         $notification = $this->notificationManager->createNotification();
         $notification->setApp(Application::APP_ID)
-            ->setObject('news', (string)$id);
+            ->setUser($uid);
         $this->notificationManager->markProcessed($notification);
-
-        return new DataResponse();
     }
 
     public function getCategory()
