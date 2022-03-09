@@ -40,6 +40,9 @@ class NewsController extends Controller
     /** @var IManager */
     private $NotificationManager;
 
+    /** @var array */
+    protected $notifiedUsers = [];
+
     use Errors;
 
     public function __construct(
@@ -125,10 +128,12 @@ class NewsController extends Controller
                                 continue;
                             }
 
-                            if ($uid !== $uid) {
+                            if ($uid !== $rq->getAuthor()) {
                                 $notification->setUser($uid);
                                 $this->NotificationManager->notify($notification);
                             }
+
+                            $this->notifiedUsers[$uid] = true;
                         }
                     }
                 }
