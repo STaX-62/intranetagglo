@@ -54,7 +54,7 @@ class Notifier implements INotifier
     public function prepare(INotification $notification, string $languageCode): INotification
     {
         if ($notification->getApp() !== Application::APP_ID) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException('mauvaise app');
         }
 
         $i = $notification->getSubject();

@@ -36,7 +36,7 @@ class NewsService
 			$e instanceof DoesNotExistException ||
 			$e instanceof MultipleObjectsReturnedException
 		) {
-			throw new newsNotFound($e->getMessage());
+			throw $e;
 		} else {
 			throw $e;
 		}
