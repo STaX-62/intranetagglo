@@ -123,7 +123,7 @@ class NewsController extends Controller
 
             $groups = explode(";", $rq->getGroups());
 
-            if ($groups[0] != "") {
+            if ($groups[0] == "") {
                 $this->createNotificationEveryone($uid, $notification);
                 $this->NotificationManager->flush();
             } else {
