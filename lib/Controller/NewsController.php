@@ -216,12 +216,13 @@ class NewsController extends Controller
      * @param int $id
      * @return DataResponse
      */
-    public function removeNotifications(): void
+    public function removeNotifications()
     {
         $user = $this->session->getUser();
         $uid = $user->getUID();
         $notification = $this->NotificationManager->createNotification();
         $notification->setApp(Application::APP_ID)
+            ->setObject('news', 1)
             ->setUser($uid);
         $this->NotificationManager->markProcessed($notification);
     }
