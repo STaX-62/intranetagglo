@@ -32,7 +32,7 @@ export default {
           mainText: item.title,
           avatarUrl: imagePath('intranetagglo', 'LogoCA2BM.png'),
           avatarUsername: item.author,
-          targetUrl: generateUrl('/apps/intranetagglo/') + item.id,
+          targetUrl: generateUrl('/apps/intranetagglo/'),
           overlayIconUrl: imagePath('intranetagglo', 'empty.svg'),
           subText: `${item.author}, ${moment(item.time, 'X').fromNow()}` 
         }

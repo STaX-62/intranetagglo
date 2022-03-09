@@ -2,15 +2,10 @@
 
 namespace OCA\IntranetAgglo\Controller;
 
-use Exception;
-use InvalidArgumentException;
 use OCA\IntranetAgglo\AppInfo\Application;
-use OCA\IntranetAgglo\Notification\Notifier;
 
 use OCP\IRequest;
-use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\AppFramework\Controller;
 use OCP\IGroupManager;

@@ -5,9 +5,7 @@ namespace OCA\IntranetAgglo\Controller;
 use OCA\IntranetAgglo\AppInfo\Application;
 
 use OCP\IRequest;
-use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Controller;
 use OCP\IGroupManager;
 use OCP\IUserSession;

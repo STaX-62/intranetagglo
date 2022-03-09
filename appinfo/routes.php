@@ -131,7 +131,7 @@ return [
         
         //////////  A P I  //////////
         [
-            'name' => 'api#searchGroups',
+            'name' => 'page#searchGroups',
             'url' => '/api/groups',
             'verb' => 'GET',
         ],
