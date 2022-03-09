@@ -170,6 +170,7 @@ export default {
     },
   },
   mounted() {
+    this.autocomplete.groups = this.autocomplete.groups.split(';')
   },
   data: function () {
     return {
