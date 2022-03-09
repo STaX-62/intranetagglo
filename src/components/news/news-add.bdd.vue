@@ -17,7 +17,7 @@
               </b-th>
               <b-th>
                 <label for="subtitle">Sous-titre</label>
-                <b-form-input name="subtitle" v-model="news.subtite" required></b-form-input>
+                <b-form-input name="subtitle" v-model="news.subtitle" required></b-form-input>
               </b-th>
               <b-th>
                 <label for="category">Catégorie</label>
