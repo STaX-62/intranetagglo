@@ -54,64 +54,30 @@ class Notifier implements INotifier
     public function prepare(INotification $notification, string $languageCode): INotification
     {
         if ($notification->getApp() !== Application::APP_ID) {
-            throw new InvalidArgumentException('mauvaise app');
+            throw new \InvalidArgumentException();
         }
 
         $i = $notification->getSubject();
 
         if ($i !== 'published') {
-            // Unknown subject => Unknown notification => throw
-            throw new \InvalidArgumentException('Unknown subject');
+            throw new InvalidArgumentException('Unknown subject');
         }
 
-        $news = $this->service->find((int)$notification->getObjectId() + 1);
+        $news = $this->service->find((int)$notification->getObjectId());
 
-        $p = $notification->getSubjectParameters();
+        $notification->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')))
+            ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index', ['id' => $notification->getObjectId()]));
 
-        $user = $this->userManager->get($p[0]);
-
-        if ($user instanceof IUser) {
-            $displayName = $user->getDisplayName();
-        } else {
-            $displayName = $p[0];
+        // Deal with the actions for a known subject
+        foreach ($notification->getActions() as $action) {
+            switch ($action->getLabel()) {
+                case 'Ouvrir':
+                    $action->setParsedLabel('Ouvrir')
+                        ->setLink($this->url->linkToRouteAbsolute('intranetagglo.page.index', ['id' => $notification->getObjectId()]), 'GET');
+                    break;
+            }
+            $notification->addParsedAction($action);
         }
-
-        $gotoAction = $notification->createAction();
-        $gotoAction->setParsedLabel('Ouvrir')
-            ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index'), 'GET');
-
-        $link = $this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index');
-
-        if ($news->getTitle() !== '') {
-            $notification->setParsedMessage($news->getTitle());
-        }
-
-        $notification->setRichSubject(
-            'Une nouvelle actualité est disponible : {news}',
-            [
-                'news' => [
-                    'type' => 'news',
-                    'id' => $notification->getObjectId(),
-                    'name' => $news->getTitle(),
-                    'link' => $link,
-                ],
-            ]
-        )
-            ->setLink($link)
-            ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
-
-        $placeholders = $replacements = [];
-
-        foreach ($notification->getRichSubjectParameters() as $placeholder => $parameter) {
-            $placeholders[] = '{' . $placeholder . '}';
-            $replacements[] = $parameter['name'];
-        }
-
-        $notification->setParsedSubject(str_replace(
-            $placeholders,
-            $replacements,
-            'Une nouvelle actualité est disponible : “{news}”'
-        ));
 
         return $notification;
     }

@@ -37,6 +37,7 @@
                   class="mb-2"
                   add-on-change
                   no-outer-focus
+                  placeholder="tous"
                 >
                   <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
                     <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
@@ -126,7 +127,13 @@ export default {
   methods: {
     AddNews() {
       this.news.author = this.$store.state.username
-      this.news.groups = this.news.groups.join(';')
+      if (this.news.groups.length > 0) {
+        this.news.groups = this.news.groups.join(';')
+      }
+      else {
+        this.news.groups.push('tous')
+      }
+
       this.createNews(this.news)
     },
     async createNews(news) {

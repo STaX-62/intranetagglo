@@ -3,6 +3,7 @@
 namespace OCA\IntranetAgglo\Controller;
 
 use Exception;
+use InvalidArgumentException;
 use OCA\IntranetAgglo\AppInfo\Application;
 use OCA\IntranetAgglo\Notification\Notifier;
 
@@ -95,62 +96,112 @@ class NewsController extends Controller
             $rq = $this->service->publication($id, $visible, $this->timeFactory->getTime());
 
 
+
+
+
+            // $result = [
+            //     'id' => $rq->getId(),
+            //     'author' => $rq->getAuthor(),
+            //     'time' => $rq->getTime(),
+            //     'title' => $rq->getTitle(),
+            //     'subtitle' => $rq->getSubtitle(),
+            //     'category' => $rq->getCategory()
+            // ];
+
+
+
+
+
+            // $groupIds = explode(";", $rq->getGroups());
+            // $groups = [];
+
+            // foreach ($groupIds as $groupId) {
+            //     if ($groupId === 'tous') {
+            //         $groups[] = [
+            //             'id' => 'tous',
+            //             'name' => 'tous'
+            //         ];
+            //         continue;
+            //     }
+
+            //     $group = $this->groupManager->get($groupId);
+
+            //     if (!$group instanceof IGroup) {
+            //         continue;
+            //     }
+
+            //     $groups[] = [
+            //         'id' => $group->getGID(),
+            //         'name' => $group->getDisplayName(),
+            //     ];
+            // }
+            // $result['groups'] = $groups;
+
+
             $notification = $this->NotificationManager->createNotification();
+
             $gotoAction = $notification->createAction();
             $gotoAction->setParsedLabel('Ouvrir')
                 ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index'), 'GET');
 
 
             $notification->setApp(Application::APP_ID)
+                ->setUser('cmouronval')
                 ->setDateTime(new \DateTime())
                 ->setObject('news', (string)$rq->getId())
-                ->setSubject('published', [$rq->getAuthor()])
-                ->setMessage('une nouvelle actualité est disponible dans l\'intranet');
+                ->setSubject('published', [
+                    'author' =>  $rq->getAuthor()
+                ])
+                ->setMessage('une nouvelle actualité est disponible dans l\'intranet :' . $rq->getTitle())
+                ->setParsedMessage($rq->getTitle())
+                ->addAction($gotoAction);
 
-            $notification->addParsedAction($gotoAction)
-                ->setRichSubject(
-                    'Une nouvelle actualité est disponible : {news}',
-                    [
-                        'news' => [
-                            'type' => 'news',
-                            'id' => $rq->getId(),
-                            'name' => $rq->getTitle(),
-                        ],
-                    ]
-                )
-                ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
+            $this->NotificationManager->notify($notification);
 
 
-            $groups = explode(";", $rq->getGroups());
 
-            if ($groups[0] == "") {
-                $this->createNotificationEveryone($uid, $notification);
-                $this->NotificationManager->flush();
-            } else {
-                foreach ($groups as $gid) {
-                    $group = $this->groupManager->get($gid);
-                    if (!($group instanceof IGroup)) {
-                        continue;
-                    }
+            // $notification->addParsedAction($gotoAction)
+            //     ->setRichSubject(
+            //         'Une nouvelle actualité est disponible : {news}',
+            //         [
+            //             'news' => [
+            //                 'type' => 'news',
+            //                 'id' => $rq->getId(),
+            //                 'name' => $rq->getTitle(),
+            //             ],
+            //         ]
+            //     )
+            //     ->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'app.svg')));
 
-                    $users = $group->getUsers();
-                    foreach ($users as $user) {
 
-                        $uid = $user->getUID();
-                        if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
-                            continue;
-                        }
+            // if ($groups[0] == "") {
+            //     $this->createNotificationEveryone($uid, $notification);
+            //     $this->NotificationManager->flush();
+            // } else {
+            //     foreach ($groups as $gid) {
+            //         $group = $this->groupManager->get($gid);
+            //         if (!($group instanceof IGroup)) {
+            //             continue;
+            //         }
 
-                        if ($uid !== $uid) {
-                            $notification->setUser($uid);
-                            $this->notificationManager->notify($notification);
-                        }
+            //         $users = $group->getUsers();
+            //         foreach ($users as $user) {
 
-                        $this->notifiedUsers[$uid] = true;
-                    }
-                }
-            }
-            return $groups;
+            //             $uid = $user->getUID();
+            //             if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
+            //                 continue;
+            //             }
+
+            //             if ($uid !== $uid) {
+            //                 $notification->setUser($uid);
+            //                 $this->notificationManager->notify($notification);
+            //             }
+
+            //             $this->notifiedUsers[$uid] = true;
+            //         }
+            //     }
+            // }
+            return $rq;
         });
     }
 
@@ -166,6 +217,22 @@ class NewsController extends Controller
                 $this->NotificationManager->notify($notification);
             }
         });
+    }
+
+    /**
+     * @NoAdminRequired
+     *
+     * @param int $id
+     * @return DataResponse
+     */
+    public function removeNotifications(int $id): DataResponse
+    {
+        $notification = $this->notificationManager->createNotification();
+        $notification->setApp(Application::APP_ID)
+            ->setObject('news', (string)$id);
+        $this->notificationManager->markProcessed($notification);
+
+        return new DataResponse();
     }
 
     public function getCategory()

@@ -41,20 +41,4 @@ class APIController extends Controller
         }
         return new DataResponse($gid);
     }
-
-    /**
-     * @NoAdminRequired
-     *
-     * @param int $id
-     * @return DataResponse
-     */
-    public function removeNotifications(int $id): DataResponse
-    {
-        $notification = $this->notificationManager->createNotification();
-        $notification->setApp(Application::APP_ID)
-            ->setObject('news', (string)$id);
-        $this->notificationManager->markProcessed($notification);
-
-        return new DataResponse();
-    }
 }
