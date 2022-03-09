@@ -2,6 +2,7 @@
 
 namespace OCA\IntranetAgglo\Controller;
 
+use Exception;
 use OCA\IntranetAgglo\AppInfo\Application;
 use OCA\IntranetAgglo\Notification\Notifier;
 
@@ -124,7 +125,11 @@ class NewsController extends Controller
                 $this->NotificationManager->flush();
             } else {
                 foreach ($groups as $gid) {
-                    $group = $this->groupmanager->get($gid);
+                    try {
+                        $group = $this->groupmanager->get($gid);
+                    } catch (Exception $e) {
+                        throw $e;
+                    }
                     if (!($group instanceof IGroup)) {
                         continue;
                     }
