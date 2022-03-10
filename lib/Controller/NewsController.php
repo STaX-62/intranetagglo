@@ -87,12 +87,12 @@ class NewsController extends Controller
 
         if ($_FILES['photo']['error'] == 0) {
             $fileInfos = pathinfo($_FILES['photo']['name']);
-            $photo =  $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+            $photo = '/var/www/nexcloud/apps/intranetagglo/img/upload/' . $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
-            move_uploaded_file($_FILES['photo']['tmp_name'], $photo);
+            $error = move_uploaded_file($_FILES['photo']['tmp_name'], $photo);
         }
 
-        return [$this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $this->timeFactory->getTime(), 0), $this->tempmanager->getTempBaseDir(), $this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')];
+        return [$this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $this->timeFactory->getTime(), 0), $error];
     }
 
     public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $time, int $visible)
