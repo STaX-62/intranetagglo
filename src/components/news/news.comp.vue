@@ -8,7 +8,7 @@
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
-        <img class="news-img" v-bind:src="news.photo" v-if="news.photo" />
+        <img class="news-img" v-bind:src="news.photo" v-if="news.photo != ''" />
       </div>
       <div class="news-tagbox">
         <span class="news-tag">{{ news.category }}</span>
@@ -229,15 +229,15 @@ export default {
 }
 .news-img {
   position: sticky !important;
-  max-height: 100%;
-  max-width: 100%;
-  transition: transform 0.2s ease;
-  overflow: hidden;
-  padding-right: 12px;
-  z-index: 2;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  transition: transform 0.2s ease !important;
+  overflow: hidden !important;
+  padding-right: 12px !important;
+  z-index: 2 !important;
 }
 .news:hover .news-img {
-  transform: scale(1.05) rotate(1deg);
+  transform: scale(1.05) rotate(1deg) !important;
 }
 .news:hover .news-bar {
   width: 40%;
@@ -268,8 +268,8 @@ export default {
 .news-row.right .news-img-container,
 .news-row.left .news-img-container,
 .news-row.center .news-img-container {
-  grid-area: Img;
-  margin: auto;
+  grid-area: Img !important;
+  margin: auto !important;
 }
 
 .news-textbox * {
