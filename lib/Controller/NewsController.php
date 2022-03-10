@@ -87,7 +87,7 @@ class NewsController extends Controller
 
         if ($_FILES['photo']['error'] == 0) {
             $fileInfos = pathinfo($_FILES['photo']['name']);
-            $photo = '/apps/intranetagglo/img/' . $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+            $photo = 'apps/intranetagglo/img/' . $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
             $error = move_uploaded_file($_FILES['photo']['tmp_name'], $photo);
         }
