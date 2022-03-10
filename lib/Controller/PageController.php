@@ -33,7 +33,7 @@ class PageController extends Controller
 
 	public function searchGroups(string $search): DataResponse
 	{
-		$groups = $this->groupManager->search($search, 25);
+		$groups = $this->groupmanager->search($search, 25);
 		$gid = [];
 		foreach ($groups as $group) {
 			$gid[] = $group->getGID();

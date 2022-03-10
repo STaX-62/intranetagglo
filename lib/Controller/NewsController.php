@@ -17,7 +17,6 @@ use OCP\Notification\IManager;
 use OCA\IntranetAgglo\Service\NewsService;
 use OCP\IURLGenerator;
 use OCP\Notification\INotification;
-use OCP\ITempManager;
 
 class NewsController extends Controller
 {
@@ -59,7 +58,6 @@ class NewsController extends Controller
         $this->NotificationManager = $NotificationManager;
         $this->urlGenerator = $urlGenerator;
         $this->timeFactory = $timeFactory;
-        $this->tempmanager = $tempmanager;
     }
 
     public function index(int $id, string $search): DataResponse
