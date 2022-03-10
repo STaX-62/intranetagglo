@@ -74,9 +74,10 @@ class NewsController extends Controller
         return (new DataResponse($this->service->findByGroups($id, $this->groupManager->getUserGroupIds($user), $search)));
     }
 
-    public function create(string $author, string $title, string $subtitle, string $text, $photo,  string $category,  string $groups, int $visible)
+    public function create(string $title, string $subtitle, string $text, $photo,  string $category,  string $groups)
     {
-        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, '', $category, $groups, $this->timeFactory->getTime(), $visible);
+        $user = $this->session->getUser();
+        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, '', $category, $groups, $this->timeFactory->getTime(), 0);
     }
 
     public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $time, int $visible)

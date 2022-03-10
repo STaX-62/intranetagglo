@@ -110,6 +110,7 @@
 import VueTrix from "vue-trix";
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import FormData from 'form-data'
 
 export default {
   name: 'NewsAdd',
@@ -137,11 +138,19 @@ export default {
     },
     async createNews(news) {
       try {
-        const response = await axios({
-          method: "post",
-          url: generateUrl(`apps/intranetagglo/news`),
-          data: news,
-          headers: { "Content-Type": "multipart/form-data" }
+        let data = new FormData();
+        data.append('title', news.title);
+        data.append('subtitle', news.subtitle);
+        data.append('text', news.text);
+        data.append('photo', news.photo, news.photo.name);
+        data.append('category', news.category);
+        data.append('groups', news.groups);
+
+        axios.post(generateUrl(`apps/intranetagglo/news`), data, {
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+          }
         })
         this.LastModifiedID = response.data.id
       } catch (e) {
@@ -166,15 +175,12 @@ export default {
     return {
       modal: false,
       news: {
-        author: "",
         title: "",
         subtitle: "",
         text: "",
         photo: {},
         category: "",
-        groups: [],
-        time: null,
-        visible: 0
+        groups: []
       },
       categoryoptions: []
     }
