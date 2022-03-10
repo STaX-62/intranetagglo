@@ -33,9 +33,6 @@ class NewsController extends Controller
     /** @var IGroupManager */
     private $groupManager;
 
-    /** @var ITempManager */
-    private $tempmanager;
-
     /** @var IManager */
     private $NotificationManager;
 
@@ -52,8 +49,7 @@ class NewsController extends Controller
         IManager $NotificationManager,
         IUsermanager $userManager,
         IURLGenerator $urlGenerator,
-        ITimeFactory $timeFactory,
-        ITempManager $tempmanager
+        ITimeFactory $timeFactory
     ) {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
@@ -87,12 +83,13 @@ class NewsController extends Controller
 
         if ($_FILES['photo']['error'] == 0) {
             $fileInfos = pathinfo($_FILES['photo']['name']);
-            $photo = 'apps/intranetagglo/img/' . $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+            $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
-            $error = move_uploaded_file($_FILES['photo']['tmp_name'], $photo);
+            move_uploaded_file($_FILES['photo']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
+
         }
 
-        return [$this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $this->timeFactory->getTime(), 0), $error];
+        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $this->urlGenerator->imagePath('intranetagglo', 'uploads/'. $photo), $category, $groups, $this->timeFactory->getTime(), 0);
     }
 
     public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $time, int $visible)
