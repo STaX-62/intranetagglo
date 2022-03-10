@@ -87,7 +87,7 @@ class NewsController extends Controller
 
         if ($_FILES['photo']['error'] == 0) {
             $fileInfos = pathinfo($_FILES['photo']['name']);
-            $photo = 'nextcloud/apps/intranetagglo/img/' . $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+            $photo =  $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
             move_uploaded_file($_FILES['photo']['tmp_name'], $photo);
         }
