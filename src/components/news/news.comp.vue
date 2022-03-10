@@ -3,7 +3,7 @@
     <div class="news-textbox">
       <div v-bind:id="'news-textbox-block' + news.id" class="news-textbox-block">
         <div class="news-title">{{ news.title }}</div>
-        <div class="news-subtitle" :class="{'active': isActive}">{{ news.description }}</div>
+        <div class="news-subtitle" :class="{'active': isActive}">{{ news.subtitle }}</div>
         <div class="news-bar"></div>
         <div class="news-description" v-html="news.text"></div>
       </div>
