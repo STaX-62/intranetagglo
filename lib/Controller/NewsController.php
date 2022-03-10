@@ -86,7 +86,7 @@ class NewsController extends Controller
             move_uploaded_file($_FILES['photo']['tmp_name'], $photo);
         }
 
-        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $this->timeFactory->getTime(), 0);
+        return [$this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $this->timeFactory->getTime(), 0), $this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')), $this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')];
     }
 
     public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $time, int $visible)
