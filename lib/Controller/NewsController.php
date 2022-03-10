@@ -77,7 +77,16 @@ class NewsController extends Controller
     public function create(string $title, string $subtitle, string $text, $photo,  string $category,  string $groups)
     {
         $user = $this->session->getUser();
-        return [$this->service->create($user->getDisplayName(), $title, $subtitle, $text, '', $category, $groups, $this->timeFactory->getTime(), 0), $_FILES['photo']];
+
+
+        if ($_FILES['image']['error'] == 0) {
+            $fileInfos = pathinfo($_FILES['image']['name']);
+            $photo = 'img/' . $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+
+            move_uploaded_file($_FILES['image']['tmp_name'], $photo);
+        }
+
+        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $this->timeFactory->getTime(), 0);
     }
 
     public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $time, int $visible)
