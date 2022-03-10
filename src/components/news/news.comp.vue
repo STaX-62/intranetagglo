@@ -8,7 +8,7 @@
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
-        <img class="news-img" v-bind:src="news.photos" v-if="news.photos" />
+        <img class="news-img" v-bind:src="news.photo" v-if="news.photo" />
       </div>
       <div class="news-tagbox">
         <span class="news-tag">{{ news.category }}</span>
