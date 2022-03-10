@@ -17,6 +17,7 @@ use OCP\Notification\IManager;
 use OCA\IntranetAgglo\Service\NewsService;
 use OCP\IURLGenerator;
 use OCP\Notification\INotification;
+use OCP\ITempManager;
 
 class NewsController extends Controller
 {
@@ -31,6 +32,9 @@ class NewsController extends Controller
 
     /** @var IGroupManager */
     private $groupManager;
+
+    /** @var ITempManager */
+    private $tempmanager;
 
     /** @var IManager */
     private $NotificationManager;
@@ -48,7 +52,8 @@ class NewsController extends Controller
         IManager $NotificationManager,
         IUsermanager $userManager,
         IURLGenerator $urlGenerator,
-        ITimeFactory $timeFactory
+        ITimeFactory $timeFactory,
+        ITempManager $tempmanager
     ) {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
@@ -58,6 +63,7 @@ class NewsController extends Controller
         $this->NotificationManager = $NotificationManager;
         $this->urlGenerator = $urlGenerator;
         $this->timeFactory = $timeFactory;
+        $this->tempmanager = $tempmanager;
     }
 
     public function index(int $id, string $search): DataResponse
@@ -81,12 +87,12 @@ class NewsController extends Controller
 
         if ($_FILES['photo']['error'] == 0) {
             $fileInfos = pathinfo($_FILES['photo']['name']);
-            $photo = '/nextcloud/apps/intranetagglo/img/' . $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+            $photo = 'nextcloud/apps/intranetagglo/img/' . $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
             move_uploaded_file($_FILES['photo']['tmp_name'], $photo);
         }
 
-        return [$this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $this->timeFactory->getTime(), 0), $this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')), $this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')];
+        return [$this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $this->timeFactory->getTime(), 0), $this->tempmanager->getTempBaseDir(), $this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')];
     }
 
     public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $time, int $visible)
