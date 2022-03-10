@@ -79,7 +79,7 @@ class NewsController extends Controller
         $user = $this->session->getUser();
 
 
-        if ($_FILES['image']['error'] == 0) {
+        if ($_FILES['photo']['error'] == 0) {
             $fileInfos = pathinfo($_FILES['photo']['name']);
             $photo = 'img/' . $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
