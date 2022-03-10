@@ -77,7 +77,7 @@ class NewsController extends Controller
     public function create(string $title, string $subtitle, string $text, $photo,  string $category,  string $groups)
     {
         $user = $this->session->getUser();
-        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, '', $category, $groups, $this->timeFactory->getTime(), 0);
+        return [$this->service->create($user->getDisplayName(), $title, $subtitle, $text, '', $category, $groups, $this->timeFactory->getTime(), 0), $photo];
     }
 
     public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photo,  string $category,  string $groups, int $time, int $visible)

@@ -37,7 +37,6 @@
                   class="mb-2"
                   add-on-change
                   no-outer-focus
-                  placeholder="tous"
                 >
                   <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
                     <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
