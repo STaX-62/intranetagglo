@@ -83,7 +83,7 @@ class NewsController extends Controller
             $fileInfos = pathinfo($_FILES['photo']['name']);
             $photo = 'img/' . $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
-            move_uploaded_file($_FILES['image']['tmp_name'], $photo);
+            move_uploaded_file($_FILES['photo']['tmp_name'], $photo);
         }
 
         return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photo, $category, $groups, $this->timeFactory->getTime(), 0);
