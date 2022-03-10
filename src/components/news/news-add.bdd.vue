@@ -133,13 +133,16 @@ export default {
       else {
         this.news.groups.push('tous')
       }
-
       this.createNews(this.news)
     },
     async createNews(news) {
       try {
-        var url = `apps/intranetagglo/news`
-        const response = await axios.post(generateUrl(url), news, { type: 'application/json' })
+        const response = await axios({
+          method: "post",
+          url: generateUrl(`apps/intranetagglo/news`),
+          data: news,
+          headers: { "Content-Type": "multipart/form-data" }
+        })
         this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)
@@ -167,7 +170,7 @@ export default {
         title: "",
         subtitle: "",
         text: "",
-        photo: "",
+        photo: {},
         category: "",
         groups: [],
         time: null,
