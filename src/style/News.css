@@ -1,31 +1,31 @@
-.news-row[focus='right'] #news1,
+.news-row[focus='right'] #news0,
+.news-row[focus='right'] #news1 {
+    display: none;
+}
+
 .news-row[focus='right'] #news2 {
-    display: none;
-}
-
-.news-row[focus='right'] #news3 {
     max-width: 100%;
     width: 95%;
     flex: none;
 }
 
-.news-row[focus='center'] #news1,
-.news-row[focus='center'] #news3 {
-    display: none;
-}
-
+.news-row[focus='center'] #news0,
 .news-row[focus='center'] #news2 {
+    display: none;
+}
+
+.news-row[focus='center'] #news1 {
     max-width: 100%;
     width: 95%;
     flex: none;
 }
 
-.news-row[focus='left'] #news2,
-.news-row[focus='left'] #news3 {
+.news-row[focus='left'] #news1,
+.news-row[focus='left'] #news2 {
     display: none;
 }
 
-.news-row[focus='left'] #news1 {
+.news-row[focus='left'] #news0 {
     max-width: 100%;
     width: 95%;
     flex: none;

@@ -89,6 +89,10 @@ export default {
     }
   },
   computed: {
+    newfocus() {
+      console.log('focus change : ' + this.focus)
+      return this.focus
+    },
     updating() {
       return this.$store.state.newsupdating
     },
