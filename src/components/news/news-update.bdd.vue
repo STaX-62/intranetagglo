@@ -94,7 +94,7 @@
                   accept="image/*"
                   placeholder="Choisir le fichier (.jpg/.jpeg/.png)..."
                   drop-placeholder="Placer l'image ici ..."
-                  v-model="autocomplete.photo"
+                  v-model="newimage"
                 ></b-form-file>
               </b-th>
             </b-tr>
@@ -119,6 +119,7 @@
 import VueTrix from "vue-trix";
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import FormData from 'form-data'
 
 export default {
   name: 'NewsAdd',
@@ -143,13 +144,25 @@ export default {
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
       this.autocomplete.groups = this.autocomplete.groups.join(';')
-      console.log(this.autocomplete)
-      this.updateNews(this.autocomplete)
+      this.updateNews(this.autocomplete, newimage)
     },
-    async updateNews(news) {
+    async updateNews(news, newimage) {
       try {
-        var url = `apps/intranetagglo/news/update/${news.id}`
-        const response = await axios.post(generateUrl(url), news, { type: 'application/json' })
+        let data = new FormData();
+        data.append('title', news.title);
+        data.append('subtitle', news.subtitle);
+        data.append('text', news.text);
+        data.append('photo', newimage, newimage.name);
+        data.append('photourl', news.photo);
+        data.append('category', news.category);
+        data.append('groups', news.groups);
+
+        axios.post(generateUrl(`apps/intranetagglo/news/${news.id}`), data, {
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+          }
+        })
         this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)
@@ -177,7 +190,8 @@ export default {
       modal: false,
       newcategory: "",
       categoryoptions: [],
-      test: ""
+      test: "",
+      newimage: {}
     }
   }
 }

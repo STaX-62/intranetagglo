@@ -60,7 +60,6 @@ export default {
       if (this.arrayid == 1) this.focus = 'left'
       if (this.arrayid == 2) this.focus = 'center'
       if (this.arrayid == 3) this.focus = 'right'
-      console.log(this.focus)
     },
     ChangeVisibility(news) {
       this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {

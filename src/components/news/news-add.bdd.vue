@@ -127,12 +127,7 @@ export default {
   methods: {
     AddNews() {
       this.news.author = this.$store.state.username
-      if (this.news.groups.length > 0) {
-        this.news.groups = this.news.groups.join(';')
-      }
-      else {
-        this.news.groups.push('tous')
-      }
+      this.news.groups = this.news.groups.join(';')
       this.createNews(this.news)
     },
     async createNews(news) {

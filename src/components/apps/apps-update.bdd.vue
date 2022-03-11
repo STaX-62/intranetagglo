@@ -123,7 +123,6 @@ export default {
         this.apptoupdate.groups = this.apptoupdate.groups.join(';')
         this.apps.push(this.apptoupdate)
         this.createApps(this.apps[this.arrayindex])
-        console.log(this.apps)
       }
       else {
         this.apptoupdate.groups = this.apptoupdate.groups.join(';')
@@ -150,7 +149,6 @@ export default {
         .then(value => {
           if (value) {
             this.apps.splice(index, 1)
-            console.log(app.id)
             this.deleteApps(app.id)
           }
         })
