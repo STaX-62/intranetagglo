@@ -61,7 +61,9 @@ export default {
   },
   methods: {
     OpenNews() {
-      this.$store.commit('updateNewsFocus', this.focus)
+      if (this.$store.newsfocus == '') {
+        this.$store.commit('updateNewsFocus', this.arrayid)
+      }
     },
     ChangeVisibility(news) {
       this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
@@ -243,7 +245,7 @@ export default {
   overflow: hidden !important;
   padding-right: 12px !important;
   z-index: 2 !important;
-  width: 100%;
+  width: auto;
 }
 .news:hover .news-img {
   transform: scale(1.05) rotate(0.5deg) !important;
