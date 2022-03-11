@@ -18,7 +18,6 @@
           v-for="(n,index) in getNews"
           :key="index"
           :arrayid="index"
-          v-bind:focus.sync="focus"
           :news="news[index]"
         />
         <b-icon
@@ -90,8 +89,8 @@ export default {
   },
   computed: {
     newfocus() {
-      console.log('focus change : ' + this.focus)
-      return this.focus
+      console.log('focus change : ' + this.$store.state.newsfocus)
+      return this.$store.state.newsfocus;
     },
     updating() {
       return this.$store.state.newsupdating

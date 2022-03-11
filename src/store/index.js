@@ -15,7 +15,8 @@ export default new Vuex.Store({
     categoryfilter: '',
     appsupdating: false,
     menuupdating: false,
-    newsupdating: false
+    newsupdating: false,
+    newsfocus: ""
   },
   getters: {
     News_length: state => {
@@ -23,6 +24,11 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    updateNewsFocus(state, value) {
+      if (value == 0) state.newsfocus = 'left';
+      if (value == 1) state.newsfocus = 'center';
+      if (value == 2) state.newsfocus = 'right';
+    },
     updateSearch(state, search) {
       state.search = search;
     },

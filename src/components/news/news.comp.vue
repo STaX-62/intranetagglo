@@ -52,8 +52,7 @@ export default {
   },
   props: {
     news: Object,
-    arrayid: Number,
-    focus: String
+    arrayid: Number
   },
   computed: {
     isAdmin() {
@@ -62,10 +61,7 @@ export default {
   },
   methods: {
     OpenNews() {
-      if (this.arrayid == 0) this.focus = 'left';
-      if (this.arrayid == 1) this.focus = 'center';
-      if (this.arrayid == 2) this.focus = 'right';
-      console.log(this.focus)
+      this.$store.commit('updateNewsFocus', this.focus)
     },
     ChangeVisibility(news) {
       this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
@@ -139,7 +135,8 @@ export default {
   },
   data: function () {
     return {
-      newscolor: '#00B2FF'
+      newscolor: '#00B2FF',
+      focus: ''
     }
   }
 }
