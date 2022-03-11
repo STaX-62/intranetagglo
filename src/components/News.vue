@@ -178,7 +178,7 @@ export default {
 .searchbar {
   flex: 0 0 62.333%;
   border-radius: 10px !important;
-  border: 3px solid var(--color-mode-2) !important;
+  border: 2px solid rgba(221, 221, 221, 0.185) !important;
   box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
     7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%),
     inset 0px 0px 4px rgb(255 255 255 / 0%),

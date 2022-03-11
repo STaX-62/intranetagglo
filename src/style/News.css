@@ -50,6 +50,7 @@
 .add-news-button::before {
     content: "+";
     position: absolute;
+    border: 2px solid rgba(221, 221, 221, 0.185) !important;
     display: inline;
     justify-content: center;
     align-items: center;
@@ -113,6 +114,7 @@
     align-items: center;
     flex: 0 0 30%;
     color: var(--color-mode-contrast-1);
+    border: 2px solid rgba(221, 221, 221, 0.185) !important;
     justify-content: center;
     display: flex;
     text-align: center;

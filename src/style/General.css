@@ -170,7 +170,7 @@ body {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     padding-right: 15px;
-    transform: translateX(-85px);
+    transform: translateX(-90px);
 }
 
 .Content {
@@ -326,6 +326,6 @@ body {
     z-index: 2001 !important;
 }
 
-input[type="checkbox"].checkbox + label::before {
+input[type="checkbox"].checkbox+label::before {
     display: none !important;
 }
