@@ -97,11 +97,11 @@ class NewsController extends Controller
 
             if (file_exists($_FILES['photo_upd']['tmp_name']) && $_FILES['photo_upd']['error'] == 0) {
 
-                unlink(substr($photourl,11));
+                unlink(substr($photourl, 11));
 
                 $fileInfos = pathinfo($_FILES['photo_upd']['name']);
                 $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
-                
+
                 move_uploaded_file($_FILES['photo_upd']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
                 $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
             }
@@ -155,6 +155,11 @@ class NewsController extends Controller
                         }
                     }
                 }
+            } else {
+                $notification = $this->NotificationManager->createNotification();
+                $notification->setApp(Application::APP_ID)
+                    ->setObject('news', $rq->getId());
+                $this->NotificationManager->markProcessed($notification);
             }
             return $rq;
         });
@@ -199,7 +204,7 @@ class NewsController extends Controller
     {
         return $this->handleNotFound(function () use ($id) {
             $rq = $this->service->find($id);
-            unlink(substr($rq->getPhoto(),11));
+            unlink(substr($rq->getPhoto(), 11));
             return $this->service->delete($id);
         });
     }
