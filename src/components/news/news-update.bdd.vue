@@ -149,6 +149,7 @@ export default {
     async updateNews(news, newimage) {
       try {
         let data = new FormData();
+        data.append('id', news.id);
         data.append('title', news.title);
         data.append('subtitle', news.subtitle);
         data.append('text', news.text);
