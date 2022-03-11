@@ -153,7 +153,7 @@ export default {
         data.append('subtitle', news.subtitle);
         data.append('text', news.text);
         data.append('photo', newimage, newimage.name);
-        data.append('photourl', news.photo);
+        data.append('photolink', news.photo);
         data.append('category', news.category);
         data.append('groups', news.groups);
 
