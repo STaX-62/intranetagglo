@@ -5,6 +5,7 @@
         <div class="news-title">{{ news.title }}</div>
         <div class="news-subtitle" :class="{'active': isActive}">{{ news.subtitle }}</div>
         <div class="news-bar"></div>
+        <img class="news-img" v-bind:src="news.photo" v-if="news.photo != ''" />
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
@@ -164,8 +165,9 @@ export default {
   height: 100%;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: max-content max-content max-content auto;
+  grid-template-rows: max-content auto max-content max-content auto;
   grid-template-areas:
+    "."
     "."
     "."
     "."
@@ -184,6 +186,12 @@ export default {
 .news-row.left .news-textbox-block,
 .news-row.center .news-textbox-block {
   padding: 12px 12px 40px 12px;
+}
+
+.news-row.right .news-textbox-block .news-img,
+.news-row.left .news-textbox-block .news-img,
+.news-row.center .news-textbox-block .news-img {
+  display: none;
 }
 
 .news-row:not(.left):not(.right):not(.center) .news-textbox-block:after {
@@ -268,6 +276,9 @@ export default {
 .news-row.center .news-img-container {
   grid-area: Img !important;
   margin: auto !important;
+}
+.news-row:not(.left):not(.right):not(.center) .news-img-container {
+  display: none;
 }
 
 .news-textbox * {
@@ -362,7 +373,7 @@ export default {
   padding: 0 20px;
   display: flex;
   align-items: center;
-  width: calc(100% - 40px);
+  height: 40px;
   bottom: 0;
   font-size: 14px;
   cursor: default;
