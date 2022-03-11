@@ -12,20 +12,20 @@
         />
         <NewsAdd v-if="isAdmin" />
       </div>
-      <div id="news-row" class="news-row" :focus="focus">
+      <div id="news-row" class="news-row" :focus="newfocus">
         <NewsComp
           :id="'news'+index"
           v-for="(n,index) in getNews"
           :key="index"
           :arrayid="index"
-          :focus.sync="focus"
+          v-bind:focus.sync="focus"
           :news="news[index]"
         />
         <b-icon
           class="news-return"
           icon="arrow-return-left"
           @click="closeNews()"
-          v-if="focus != ''"
+          v-if="newfocus != ''"
         ></b-icon>
       </div>
       <b-pagination

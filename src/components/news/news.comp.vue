@@ -35,7 +35,6 @@
         >
           <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
         </button>
-        <button type="button" @click="OpenNews()">Voir plus</button>
       </div>
     </div>
   </div>
@@ -63,9 +62,9 @@ export default {
   },
   methods: {
     OpenNews() {
-      if (this.arrayid == 1) this.focus = 'left';
-      if (this.arrayid == 2) this.focus = 'center';
-      if (this.arrayid == 3) this.focus = 'right';
+      if (this.arrayid == 0) this.focus = 'left';
+      if (this.arrayid == 1) this.focus = 'center';
+      if (this.arrayid == 2) this.focus = 'right';
       console.log(this.focus)
     },
     ChangeVisibility(news) {
