@@ -1,5 +1,5 @@
 <template>
-  <div class="news news-customcolor" v-bind:style="'--news-color: ' + newscolor" @click="OpenNews">
+  <div class="news news-customcolor" v-bind:style="'--news-color: ' + newscolor">
     <div class="news-textbox">
       <div v-bind:id="'news-textbox-block' + news.id" class="news-textbox-block">
         <div class="news-title">{{ news.title }}</div>
@@ -31,6 +31,12 @@
         >
           <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
         </button>
+        <button
+          type="button"
+          class="news-visibility-button"
+          @click="OpenNews"
+          v-if="isAdmin"
+        >Voir plus</button>
       </div>
     </div>
   </div>
@@ -241,9 +247,10 @@ export default {
   overflow: hidden !important;
   padding-right: 12px !important;
   z-index: 2 !important;
+  width: 100%;
 }
 .news:hover .news-img {
-  transform: scale(1.05) rotate(1deg) !important;
+  transform: scale(1.05) rotate(0.5deg) !important;
 }
 .news:hover .news-bar {
   width: 40%;
@@ -379,6 +386,7 @@ export default {
   cursor: default;
   user-select: none;
   background: #fff;
+  width: 100%;
 }
 .news-tag {
   display: inline-block;
