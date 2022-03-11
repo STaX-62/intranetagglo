@@ -5,7 +5,6 @@ module.exports = {
         intranetagglo2: {
             // entry for the page
             entry: 'src/main.js',
-            title: 'Index Page',
         },
         // when using the entry-only string format,
         // template is inferred to be `public/subpage.html`
