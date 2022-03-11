@@ -1,5 +1,9 @@
 <template>
-  <div class="news news-customcolor" v-bind:style="'--news-color: ' + newscolor">
+  <div
+    class="news news-customcolor"
+    v-bind:style="'--news-color: ' + newscolor"
+    @click="OpenNews()"
+  >
     <div class="news-textbox">
       <div v-bind:id="'news-textbox-block' + news.id" class="news-textbox-block">
         <div class="news-title">{{ news.title }}</div>
@@ -31,12 +35,6 @@
         >
           <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
         </button>
-        <button
-          type="button"
-          class="news-visibility-button"
-          @click="OpenNews"
-          v-if="isAdmin"
-        >Voir plus</button>
       </div>
     </div>
   </div>
@@ -160,9 +158,9 @@ export default {
   box-shadow: 0 4px 21px -12px var(--color-mode-shadow-4);
   transition: box-shadow 0.2s ease, transform 0.2s ease, height 1s ease;
 }
-.news-row.right .news,
-.news-row.left .news,
-.news-row.center .news {
+.news-row[focus='right'] .news,
+.news-row[focus='left'] .news,
+.news-row[focus='center'] .news {
   cursor: default;
 }
 
@@ -183,24 +181,24 @@ export default {
   flex: 0 0 100%;
   height: 100%;
 }
-.news-row.right .news-description,
-.news-row.left .news-description,
-.news-row.center .news-description {
+.news-row[focus='right'] .news-description,
+.news-row[focus='left'] .news-description,
+.news-row[focus='center'] .news-description {
   overflow: auto !important;
 }
-.news-row.right .news-textbox-block,
-.news-row.left .news-textbox-block,
-.news-row.center .news-textbox-block {
+.news-row[focus='right'] .news-textbox-block,
+.news-row[focus='left'] .news-textbox-block,
+.news-row[focus='center'] .news-textbox-block {
   padding: 12px 12px 40px 12px;
 }
 
-.news-row.right .news-textbox-block .news-img,
-.news-row.left .news-textbox-block .news-img,
-.news-row.center .news-textbox-block .news-img {
+.news-row[focus='right'] .news-textbox-block .news-img,
+.news-row[focus='left'] .news-textbox-block .news-img,
+.news-row[focus='center'] .news-textbox-block .news-img {
   display: none;
 }
 
-.news-row:not(.left):not(.right):not(.center) .news-textbox-block:after {
+.news-row[focus=''] .news-textbox-block:after {
   content: "";
   position: absolute;
   z-index: 1;
@@ -215,23 +213,23 @@ export default {
   width: 100%;
   height: 4em;
 }
-.news-row.right .news:hover,
-.news-row.left .news:hover,
-.news-row.center .news:hover,
-.news-row.left .news:hover .news-img,
-.news-row.center .news:hover .news-img,
-.news-row.right .news:hover .news-img {
+.news-row[focus='right'] .news:hover,
+.news-row[focus='left'] .news:hover,
+.news-row[focus='center'] .news:hover,
+.news-row[focus='left'] .news:hover .news-img,
+.news-row[focus='center'] .news:hover .news-img,
+.news-row[focus='right'] .news:hover .news-img {
   transform: none !important;
 }
-.news-row.right .news-bar,
-.news-row.left .news-bar,
-.news-row.center .news-bar {
+.news-row[focus='right'] .news-bar,
+.news-row[focus='left'] .news-bar,
+.news-row[focus='center'] .news-bar {
   width: 128px;
   transition: none;
 }
-.news-row.right:hover .news-bar,
-.news-row.left:hover .news-bar,
-.news-row.center:hover .news-bar {
+.news-row[focus='right']:hover .news-bar,
+.news-row[focus='left']:hover .news-bar,
+.news-row[focus='center']:hover .news-bar {
   width: 128px;
 }
 
@@ -255,36 +253,36 @@ export default {
 .news:hover .news-bar {
   width: 40%;
 }
-.news-row:not(.left):not(.right):not(.center) .news-textbox {
+.news-row[focus=''] .news-textbox {
   position: relative;
   padding: 12px 12px 40px 12px;
   width: 100%;
   height: 100%;
   font-size: 17px;
 }
-.news-row.right .news-textbox,
-.news-row.left .news-textbox,
-.news-row.center .news-textbox {
+.news-row[focus='right'] .news-textbox,
+.news-row[focus='left'] .news-textbox,
+.news-row[focus='center'] .news-textbox {
   width: auto;
   display: flex;
   width: 100%;
   height: 100%;
 }
 
-.news-row:not(.left):not(.right):not(.center) .news-textbox {
+.news-row[focus=''] .news-textbox {
   height: 100%;
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: minmax(0, 100%) max-content;
   overflow: hidden;
 }
-.news-row.right .news-img-container,
-.news-row.left .news-img-container,
-.news-row.center .news-img-container {
+.news-row[focus='right'] .news-img-container,
+.news-row[focus='left'] .news-img-container,
+.news-row[focus='center'] .news-img-container {
   grid-area: Img !important;
   margin: auto !important;
 }
-.news-row:not(.left):not(.right):not(.center) .news-img-container {
+.news-row[focus=''] .news-img-container {
   display: none;
 }
 
