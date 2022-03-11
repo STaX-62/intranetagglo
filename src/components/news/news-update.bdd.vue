@@ -158,7 +158,7 @@ export default {
         data.append('category', news.category);
         data.append('groups', news.groups);
 
-        axios.post(generateUrl(`apps/intranetagglo/news/${news.id}`), data, {
+        axios.post(generateUrl(`apps/intranetagglo/news/update/${news.id}`), data, {
           headers: {
             'accept': 'application/json',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
