@@ -9,7 +9,7 @@
         <div class="news-title">{{ news.title }}</div>
         <div class="news-subtitle" :class="{'active': isActive}">{{ news.subtitle }}</div>
         <div class="news-bar"></div>
-        <img class="news-img" v-bind:src="news.photo" v-if="news.photo != ''" />
+        <img class="news-img-preview" v-bind:src="news.photo" v-if="news.photo != ''" />
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     OpenNews() {
-      if (this.$store.newsfocus == '') {
+      if (this.$store.state.newsfocus == '') {
         this.$store.commit('updateNewsFocus', this.arrayid)
       }
     },
@@ -167,7 +167,7 @@ export default {
 .news-textbox-block[noimg="false"] {
   flex: 0 0 calc(30% - 20px);
   height: 100%;
-  display: grid;
+  /* display: grid;
   grid-template-columns: 100%;
   grid-template-rows: max-content auto max-content max-content auto;
   grid-template-areas:
@@ -175,7 +175,7 @@ export default {
     "."
     "."
     "."
-    ".";
+    "."; */
 }
 .news-textbox-block[noimg="true"] {
   flex: 0 0 100%;
@@ -238,14 +238,29 @@ export default {
   transform: translate(0px, -3px);
 }
 .news-img {
-  position: sticky !important;
+  display: flex;
   max-height: 100% !important;
   max-width: 100% !important;
   transition: transform 0.2s ease !important;
   overflow: hidden !important;
   padding-right: 12px !important;
   z-index: 2 !important;
-  width: auto;
+  height: 100%;
+  margin: auto;
+  align-content: center;
+  align-items: center;
+}
+.news-img-preview {
+  display: flex;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  transition: transform 0.2s ease !important;
+  overflow: hidden !important;
+  padding-right: 12px !important;
+  z-index: 2 !important;
+  margin: auto;
+  align-content: center;
+  align-items: center;
 }
 .news:hover .news-img {
   transform: scale(1.05) rotate(0.5deg) !important;
