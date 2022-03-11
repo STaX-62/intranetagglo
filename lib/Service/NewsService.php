@@ -71,19 +71,16 @@ class NewsService
 		return $this->mapper->insert($news);
 	}
 
-	public function update($id, $author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible)
+	public function update($id, $title, $subtitle, $text, $photo, $category, $groups)
 	{
 		try {
 			$news = $this->mapper->find($id);
-			$news->setAuthor($author);
 			$news->setTitle($title);
 			$news->setSubtitle($subtitle);
 			$news->setText($text);
 			$news->setPhoto($photo);
 			$news->setCategory($category);
 			$news->setGroups($groups);
-			$news->setTime($time);
-			$news->setVisible($visible);
 			return $this->mapper->update($news);
 		} catch (Exception $e) {
 			$this->handleException($e);

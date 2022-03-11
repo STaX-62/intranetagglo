@@ -90,9 +90,9 @@ class NewsController extends Controller
         return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $this->timeFactory->getTime(), 0);
     }
 
-    public function update(int $id, string $author, string $title, string $subtitle, string $text,  string $photolink,  string $category,  string $groups, int $time, int $visible)
+    public function update(int $id, string $title, string $subtitle, string $text,  string $photolink,  string $category,  string $groups, int $visible)
     {
-        return $this->handleNotFound(function () use ($id, $author, $title, $subtitle, $text, $photolink, $category, $groups, $time, $visible) {
+        return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups, $visible) {
             $photourl = $photolink;
 
             if (file_exists($_FILES['photo_upd']['tmp_name']) && $_FILES['photo_upd']['error'] == 0) {
@@ -106,7 +106,7 @@ class NewsController extends Controller
                 $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
             }
 
-            return $this->service->update($id, $author, $title, $subtitle, $text, $photourl, $category, $groups, $time, $visible);
+            return $this->service->update($id, $title, $subtitle, $text, $photourl, $category, $groups, $visible);
         });
     }
 
