@@ -143,7 +143,7 @@ export default {
       })
     },
     closeNews() {
-      this.focus = ""
+      this.$store.commit('updateNewsFocus', '')
     }
 
   },

@@ -55,7 +55,7 @@ export default {
   },
   data: function () {
     return {
-      image: '/nextcloud/apps/intranetagglo/img/LogoCA2BM.png',// require('../assets/LogoCA2BM.png'),//'/nextcloud/apps/intranetca/src/assets/LogoCA2BM.png'
+      image: '/nextcloud/apps/intranetagglo/img/LogoCA2BM.png', // require('../assets/LogoCA2BM.png'),//'/nextcloud/apps/intranetca/src/assets/LogoCA2BM.png'
       user: [],
       lastOpenedContainer: null,
       menusInBDD: [

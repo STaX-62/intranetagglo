@@ -32,7 +32,6 @@
 }
 
 .news-return {
-    display: none !important;
     position: absolute;
     right: 2.5%;
     top: 10px;
@@ -45,6 +44,7 @@
     background: var(--color-mode-2);
     border: 2px solid var(--color-mode-4);
     cursor: pointer;
+    z-index: 30;
 }
 
 .add-news-button::before {
