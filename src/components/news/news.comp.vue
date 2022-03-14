@@ -275,7 +275,7 @@ export default {
   margin: auto;
   align-content: center;
   align-items: center;
-  flex-basis: 100%;
+  flex-shrink: 0;
 }
 .news:hover .news-img {
   transform: scale(1.05) rotate(0.5deg) !important;
