@@ -4,6 +4,7 @@
       <div
         v-bind:id="'news-textbox-block' + news.id"
         class="news-textbox-block"
+        :noimg="HasImage"
         @click="OpenNews()"
       >
         <div class="news-title">{{ news.title }}</div>
@@ -65,6 +66,12 @@ export default {
     newfocus() {
       return this.$store.state.newsfocus;
     },
+    HasImage() {
+      if (this.news.photo != '') {
+        return false
+      }
+      else return true
+    }
   },
   methods: {
     OpenNews() {
