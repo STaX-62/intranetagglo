@@ -18,8 +18,11 @@
           :key="'B'+subindex"
           @click="ExtendSubMenu(index,subindex)"
         >
-          <div class="submenu-title" @click="OpenLink(menu.link)">
-            <div class="caret" v-if="isEmpty(submenusArray[index][subindex])">▷</div>
+          <div
+            class="submenu-title"
+            @click="OpenLink(menu.link, isEmpty(submenusArray[index][subindex]))"
+          >
+            <div class="caret" v-if="!isEmpty(submenusArray[index][subindex])">▷</div>
             {{ menu.title }}
           </div>
           <div v-bind:id="'container-'+ index + '-'+ subindex" class="menu-container">
@@ -136,12 +139,12 @@ export default {
   methods: {
     isEmpty(array) {
       if (array.length > 0) {
-        return true
+        return false
       }
-      else return false
+      else return true
     },
-    OpenLink(link) {
-      if (link != '') {
+    OpenLink(link,isEmpty) {
+      if (link != '' && isEmpty) {
         window.open(link, '_blank');
       }
     },

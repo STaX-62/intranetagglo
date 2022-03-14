@@ -197,7 +197,7 @@ class NewsController extends Controller
 
     public function getCategory()
     {
-        return $this->service->category();
+        return new DataResponse($this->service->category());
     }
 
     public function destroy(int $id)
