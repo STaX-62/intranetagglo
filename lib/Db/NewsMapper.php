@@ -45,7 +45,7 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName());
 
         $cursor = $qb->execute();
-        $row = $cursor->fetchAll();
+        $row = $cursor->fetchAll(\PDO::FETCH_COLUMN);
         return $row;
     }
 
