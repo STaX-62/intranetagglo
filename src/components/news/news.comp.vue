@@ -9,7 +9,11 @@
         <div class="news-title">{{ news.title }}</div>
         <div class="news-subtitle" :class="{'active': isActive}">{{ news.subtitle }}</div>
         <div class="news-bar"></div>
-        <img class="news-img-preview" v-bind:src="news.photo" v-if="news.photo != ''" />
+        <img
+          class="news-img-preview"
+          v-bind:src="news.photo"
+          v-if="news.photo != '' && newfocus != ''"
+        />
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
@@ -57,6 +61,9 @@ export default {
   computed: {
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
+    },
+    newfocus() {
+      return this.$store.state.newsfocus;
     },
   },
   methods: {
@@ -295,7 +302,7 @@ export default {
 .news-row[focus="left"] .news-img-container,
 .news-row[focus="center"] .news-img-container {
   grid-area: Img !important;
-  margin: auto !important;
+
 }
 .news-row[focus=""] .news-img-container {
   display: none;

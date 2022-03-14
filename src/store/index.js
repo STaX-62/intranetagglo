@@ -28,6 +28,7 @@ export default new Vuex.Store({
       if (value == 0) state.newsfocus = 'left';
       if (value == 1) state.newsfocus = 'center';
       if (value == 2) state.newsfocus = 'right';
+      if (value == 3) state.newsfocus = '';
     },
     updateSearch(state, search) {
       state.search = search;

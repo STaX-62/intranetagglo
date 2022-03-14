@@ -153,7 +153,9 @@ export default {
         data.append('title', news.title);
         data.append('subtitle', news.subtitle);
         data.append('text', news.text);
-        data.append('photo_upd', newimage, newimage.name);
+        if (news.photo == null) {
+          data.append('photo_upd', newimage, newimage.name);
+        }
         data.append('photolink', news.photo);
         data.append('category', news.category);
         data.append('groups', news.groups);
@@ -192,7 +194,7 @@ export default {
       newcategory: "",
       categoryoptions: [],
       test: "",
-      newimage: {}
+      newimage: null
     }
   }
 }

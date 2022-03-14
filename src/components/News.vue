@@ -143,9 +143,8 @@ export default {
       })
     },
     closeNews() {
-      this.$store.commit('updateNewsFocus', '')
+      this.$store.commit('updateNewsFocus', 3)
     }
-
   },
   mounted() {
     axios.get(generateUrl(`apps/intranetagglo/user`))

@@ -136,7 +136,9 @@ export default {
         data.append('title', news.title);
         data.append('subtitle', news.subtitle);
         data.append('text', news.text);
-        data.append('photo', news.photo, news.photo.name);
+        if (news.photo == null) {
+          data.append('photo', news.photo, news.photo.name);
+        }
         data.append('category', news.category);
         data.append('groups', news.groups);
 
@@ -172,7 +174,7 @@ export default {
         title: "",
         subtitle: "",
         text: "",
-        photo: {},
+        photo: null,
         category: "",
         groups: []
       },
