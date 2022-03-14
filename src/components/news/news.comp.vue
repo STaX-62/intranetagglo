@@ -260,7 +260,6 @@ export default {
   overflow: hidden !important;
   padding-right: 12px !important;
   z-index: 2 !important;
-  height: 100%;
   margin: auto;
   align-content: center;
   align-items: center;
