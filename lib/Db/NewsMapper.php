@@ -53,17 +53,19 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAll($firstresult, $search): array
+    public function findAll($firstresult, string $search, string $category): array
     {
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
-            ->where('q.title LIKE :word')
-            ->orWhere('q.subtitle LIKE :word')
-            ->orWhere('q.text LIKE :word')
-            ->setParameter('word', '%' . $search . '%')
-            ->orderBy('q.id', 'DESC')
+            ->where('q.title LIKE :search')
+            ->orWhere('q.subtitle LIKE :search')
+            ->orWhere('q.text LIKE :search')
+            ->orWhere('q.category = :category')
+            ->setParameter('search', '%' . $search . '%')
+            ->setParameter('category', $category)
+            ->orderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
             ->setMaxResults(3);
 
@@ -72,10 +74,12 @@ class NewsMapper extends QBMapper
 
         $qb2->selectAlias($qb2->createFunction('COUNT(*)'), 'count')
             ->from($this->getTableName(), 'q')
-            ->where('q.title LIKE :word')
-            ->orWhere('q.subtitle LIKE :word')
-            ->orWhere('q.text LIKE :word')
-            ->setParameter('word', '%' . $search . '%');
+            ->where('q.title LIKE :search')
+            ->orWhere('q.subtitle LIKE :search')
+            ->orWhere('q.text LIKE :search')
+            ->orWhere('q.category = :category')
+            ->setParameter('search', '%' . $search . '%')
+            ->setParameter('category', $category);
 
         $cursor = $qb2->execute();
         $row = $cursor->fetch();
@@ -87,7 +91,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findByGroups(int $firstresult, array $groupsArray, string $search): array
+    public function findByGroups(int $firstresult, array $groupsArray, string $search, string $category): array
     {
         $groups = '%';
         foreach ($groupsArray as $group) {
@@ -98,15 +102,17 @@ class NewsMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
-            ->where('q.title LIKE :word')
-            ->orWhere('q.subtitle LIKE :word')
-            ->orWhere('q.text LIKE :word')
+            ->where('q.title LIKE :search')
+            ->orWhere('q.subtitle LIKE :search')
+            ->orWhere('q.text LIKE :search')
+            ->orWhere('q.category = :category')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
-            ->setParameter('word', '%' . $search . '%')
-            ->orderBy('q.id', 'DESC')
+            ->setParameter('search', '%' . $search . '%')
+            ->setParameter('category', $category)
+            ->orderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
             ->setMaxResults(3);
 
@@ -115,14 +121,16 @@ class NewsMapper extends QBMapper
 
         $qb2->selectAlias($qb2->createFunction('COUNT(*)'), 'count')
             ->from($this->getTableName(), 'q')
-            ->where('q.title LIKE :word')
-            ->orWhere('q.subtitle LIKE :word')
-            ->orWhere('q.text LIKE :word')
+            ->where('q.title LIKE :search')
+            ->orWhere('q.subtitle LIKE :search')
+            ->orWhere('q.text LIKE :search')
+            ->orWhere('q.category = :category')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
-            ->setParameter('word', '%' . $search . '%');
+            ->setParameter('search', '%' . $search . '%')
+            ->setParameter('category', $category);
 
         $cursor = $qb2->execute();
         $row = $cursor->fetch();
@@ -149,7 +157,7 @@ class NewsMapper extends QBMapper
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
-            ->orderBy('q.id', 'DESC')
+            ->orderBy('q.time', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(7);
 

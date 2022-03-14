@@ -20,10 +20,7 @@ class NewsService
 		$this->mapper = $mapper;
 	}
 
-	public function findByGroups(int $firstresult, array $groups, string $search): array
-	{
-		return $this->mapper->findByGroups($firstresult, $groups, $search);
-	}
+
 
 	public function dashboard(array $groups): array
 	{
@@ -53,7 +50,27 @@ class NewsService
 
 	public function findAll($firstresult, $search): array
 	{
-		return $this->mapper->findAll($firstresult, $search);
+		$search = trim($search, " \n\r\t\v");
+
+		if (str_starts_with($search, '#')) {
+			$category =  substr($search, 1);
+		} else {
+			$category = '';
+		}
+		return $this->mapper->findAll($firstresult, $search, $category);
+	}
+
+	public function findByGroups(int $firstresult, array $groups, string $search): array
+	{
+		$search = trim($search, " \n\r\t\v");
+
+		if (str_starts_with($search, '#')) {
+			$category =  substr($search, 1);
+		} else {
+			$category = '';
+		}
+
+		return $this->mapper->findByGroups($firstresult, $groups, $search, $category);
 	}
 
 	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible)
