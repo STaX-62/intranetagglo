@@ -21,7 +21,7 @@
         <img class="news-img" v-bind:src="news.photo" v-if="news.photo != ''" />
       </div>
       <div class="news-tagbox">
-        <span class="news-tag" @click="search = news.category">{{ news.category }}</span>
+        <span class="news-tag" @click="search = '#' + news.category">{{ news.category }}</span>
         <button
           type="button"
           class="news-visibility-button"
@@ -65,6 +65,10 @@ export default {
         return this.$store.state.search
       },
       set(value) {
+        clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.$store.commit('setNewsUpdating', true)
+        }, 250)
         this.$store.commit('updateSearch', value)
       }
     },
@@ -154,7 +158,8 @@ export default {
   data: function () {
     return {
       newscolor: '#00B2FF',
-      focus: ''
+      focus: '',
+      timer: undefined
     }
   }
 }
@@ -268,7 +273,6 @@ export default {
   transition: transform 0.2s ease !important;
   overflow: hidden !important;
   padding-right: 12px !important;
-  z-index: 2 !important;
   margin: auto;
   align-content: center;
   align-items: center;

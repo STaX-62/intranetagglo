@@ -106,6 +106,10 @@ export default {
         return this.$store.state.search
       },
       set(value) {
+        clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.$store.commit('setNewsUpdating', true)
+        }, 250)
         this.$store.commit('updateSearch', value)
       }
     },
@@ -120,12 +124,6 @@ export default {
     },
   },
   methods: {
-    textSearch() {
-      clearTimeout(this.timer)
-      this.timer = setTimeout(() => {
-        this.$store.commit('setNewsUpdating', true)
-      }, 1000)
-    },
     handleScroll() {
       const els = document.querySelectorAll('.news')
       setInterval(function () {
