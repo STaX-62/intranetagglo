@@ -166,7 +166,6 @@ export default {
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
           }
         })
-        this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)
       }

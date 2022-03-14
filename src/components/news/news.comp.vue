@@ -172,7 +172,7 @@ export default {
 }
 
 .news-textbox-block[noimg="false"] {
-  flex: 0 0 calc(30% - 20px);
+  flex: 0 0 calc(40% - 20px);
   height: 100%;
   /* display: grid;
   grid-template-columns: 100%;
@@ -184,6 +184,11 @@ export default {
     "."
     "."; */
 }
+.news-textbox-block {
+  display: flex;
+  flex-direction: column;
+}
+
 .news-row[focus=""] .news-textbox-block * {
   cursor: pointer;
 }
@@ -271,6 +276,7 @@ export default {
   margin: auto;
   align-content: center;
   align-items: center;
+  flex-basis: 100%;
 }
 .news:hover .news-img {
   transform: scale(1.05) rotate(0.5deg) !important;
@@ -306,7 +312,6 @@ export default {
 .news-row[focus="center"] .news-img-container {
   grid-area: Img !important;
   flex-grow: 1;
-  flex-shrink: 0;
   display: flex;
   height: 100%;
   width: 100%;
