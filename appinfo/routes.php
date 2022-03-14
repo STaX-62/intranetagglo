@@ -8,6 +8,11 @@ return [
     'routes' => [
         ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
         [
+            'name' => 'page#getUserInfo',
+            'url' => '/user',
+            'verb' => 'GET'
+        ],
+        [
             'name' => 'menu_api#preflighted_cors', 'url' => '/api/0.1/{path}',
             'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']
         ],
@@ -18,15 +23,14 @@ return [
             'verb' => 'GET',
         ],
         [
-            'name' => 'menu#dashboard',
-            'url' => '/menus/dashboard',
+            'name' => 'menu#indexG',
+            'url' => '/menusG',
             'verb' => 'GET',
         ],
         [
-            'name' => 'menu#get',
-            'url' => '/menus/{id}',
+            'name' => 'menu#dashboard',
+            'url' => '/menus/dashboard',
             'verb' => 'GET',
-            'requirements' => ['id' => '\d+'],
         ],
         [
             'name' => 'menu#create',
@@ -49,19 +53,18 @@ return [
         //////////  N E W S  //////////
         [
             'name' => 'news#index',
-            'url' => '/news',
-            'verb' => 'GET',
+            'url' => '/news/{id}',
+            'verb' => 'POST'
+        ],
+        [
+            'name' => 'news#indexG',
+            'url' => '/newsG/{id}',
+            'verb' => 'POST'
         ],
         [
             'name' => 'news#dashboard',
             'url' => '/news/dashboard',
             'verb' => 'GET',
-        ],
-        [
-            'name' => 'news#get',
-            'url' => '/news/{id}',
-            'verb' => 'GET',
-            'requirements' => ['id' => '\d+'],
         ],
         [
             'name' => 'news#create',
@@ -70,9 +73,20 @@ return [
         ],
         [
             'name' => 'news#update',
-            'url' => '/news/{id}',
+            'url' => '/news/update/{id}',
             'verb' => 'POST',
             'requirements' => ['id' => '\d+'],
+        ],
+        [
+            'name' => 'news#publication',
+            'url' => '/news/pub/{id}',
+            'verb' => 'POST',
+            'requirements' => ['id' => '\d+'],
+        ],
+        [
+            'name' => 'news#getCategory',
+            'url' => '/news/category',
+            'verb' => 'GET',
         ],
         [
             'name' => 'news#destroy',
@@ -88,15 +102,14 @@ return [
             'verb' => 'GET',
         ],
         [
-            'name' => 'apps#dashboard',
-            'url' => '/apps/dashboard',
+            'name' => 'apps#indexG',
+            'url' => '/appsG',
             'verb' => 'GET',
         ],
         [
-            'name' => 'apps#get',
-            'url' => '/apps/{id}',
+            'name' => 'apps#dashboard',
+            'url' => '/apps/dashboard',
             'verb' => 'GET',
-            'requirements' => ['id' => '\d+'],
         ],
         [
             'name' => 'apps#create',
@@ -114,6 +127,13 @@ return [
             'url' => '/apps/{id}',
             'verb' => 'DELETE',
             'requirements' => ['id' => '\d+'],
+        ],
+        
+        //////////  A P I  //////////
+        [
+            'name' => 'page#searchGroups',
+            'url' => '/api/groups',
+            'verb' => 'GET',
         ],
     ],
 ];

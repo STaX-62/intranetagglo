@@ -5,7 +5,7 @@
     </div>
     <div class="sidenav-menu">
       <div class="section-block" v-for="(section,index) in sectionArray" :key="'B'+index">
-        <button class="section" v-if="section.icon != ''">
+        <button class="section">
           <div class="section-icon">
             <b-icon v-bind:icon="section.icon"></b-icon>
           </div>
@@ -18,8 +18,11 @@
           :key="'B'+subindex"
           @click="ExtendSubMenu(index,subindex)"
         >
-          <div class="submenu-title">
-            <div class="caret" v-if="isEmpty(submenusArray[index][subindex])">▷</div>
+          <div
+            class="submenu-title"
+            @click="OpenLink(menu.link, isEmpty(submenusArray[index][subindex]))"
+          >
+            <div class="caret" v-if="!isEmpty(submenusArray[index][subindex])">▷</div>
             {{ menu.title }}
           </div>
           <div v-bind:id="'container-'+ index + '-'+ subindex" class="menu-container">
@@ -36,12 +39,7 @@
       </div>
     </div>
     <div class="Raccourcis">
-      <MenuUpdate
-        v-bind:UpdatedSectionArray="sectionArray"
-        v-bind:UpdatedMenuArray="menusArray"
-        v-bind:UpdatedSubMenuArray="submenusArray"
-        v-bind:menusInBDD.sync="menusInBDD"
-      />
+      <MenuUpdate v-if="isAdmin" />
       <a class="Files" href="https://cloud.ca2bm.fr/index.php/f/1183804">
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
@@ -60,16 +58,31 @@ export default {
   },
   data: function () {
     return {
-      image: '/nextcloud/apps/intranetca/src/assets/LogoCA2BM.png',// require('../assets/LogoCA2BM.png'),//'/nextcloud/apps/intranetca/src/assets/LogoCA2BM.png'
-      userid: {
-        groups: ['admin', 'info']
-      },
+      image: '/nextcloud/apps/intranetagglo/img/LogoCA2BM.png', // require('../assets/LogoCA2BM.png'),//'/nextcloud/apps/intranetca/src/assets/LogoCA2BM.png'
+      user: [],
       lastOpenedContainer: null,
       menusInBDD: [
       ]
     }
   },
+  watch: {
+    updating: function (val) {
+      if (val) {
+        axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
+          .then((response) => {
+            this.menusInBDD = response.data;
+            this.$store.commit('setMenuUpdating', false)
+          })
+      }
+    },
+  },
   computed: {
+    updating() {
+      return this.$store.state.menuupdating
+    },
+    isAdmin() {
+      return this.$store.state.usergroups.includes('admin')
+    },
     sectionArray() {
       var bddmenus = this.menusInBDD;
       var sections = []
@@ -126,9 +139,14 @@ export default {
   methods: {
     isEmpty(array) {
       if (array.length > 0) {
-        return true
+        return false
       }
-      else return false
+      else return true
+    },
+    OpenLink(link,isEmpty) {
+      if (link != '' && isEmpty) {
+        window.open(link, '_blank');
+      }
     },
     CategorySet(value) {
       this.droptext = value
@@ -147,7 +165,7 @@ export default {
 
   },
   mounted() {
-    var url = `apps/intranetagglo${'/menus'}`
+    var url = `apps/intranetagglo${'/menusG'}`
     axios.get(generateUrl(url))
       .then(response => (this.menusInBDD = response.data))
   }
@@ -256,10 +274,15 @@ export default {
 
 .menu-title,
 .section-title {
+  color: var(--color-mode-2);
   padding-left: 10px;
   width: 200px;
   margin-top: auto;
   margin-bottom: auto;
+  -moz-user-select: none; /* Firefox */
+  -webkit-user-select: none; /* Chrome, Safari, Opéra depuis la version 15 */
+  -ms-user-select: none; /* Internet explorer depuis la version 10 et Edge */
+  user-select: none; /* Propriété standard */
 }
 
 .menu {
@@ -290,6 +313,10 @@ export default {
   font-family: PetitaBold;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -moz-user-select: none; /* Firefox */
+  -webkit-user-select: none; /* Chrome, Safari, Opéra depuis la version 15 */
+  -ms-user-select: none; /* Internet explorer depuis la version 10 et Edge */
+  user-select: none; /* Propriété standard */
 }
 
 .submenu-title:hover {

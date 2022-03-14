@@ -1,43 +1,141 @@
 <template>
   <div class="news news-customcolor" v-bind:style="'--news-color: ' + newscolor">
     <div class="news-textbox">
-      <div v-bind:id="'news-textbox-block' + news.id" class="news-textbox-block">
+      <div
+        v-bind:id="'news-textbox-block' + news.id"
+        class="news-textbox-block"
+        @click="OpenNews()"
+      >
         <div class="news-title">{{ news.title }}</div>
-        <div class="news-subtitle" :class="{'active': isActive}">{{ news.description }}</div>
+        <div class="news-subtitle" :class="{'active': isActive}">{{ news.subtitle }}</div>
         <div class="news-bar"></div>
+        <img
+          class="news-img-preview"
+          v-bind:src="news.photo"
+          v-if="news.photo != '' && newfocus == ''"
+        />
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
-        <img class="news-img" v-bind:src="news.photos" v-if="news.photos" />
+        <img class="news-img" v-bind:src="news.photo" v-if="news.photo != ''" />
       </div>
       <div class="news-tagbox">
         <span class="news-tag">{{ news.category }}</span>
-        <NewsVisibility v-bind:visibility="true" />
-        <NewsUpdate />
-        <NewsDelete />
+        <button
+          type="button"
+          class="news-visibility-button"
+          @click="ChangeVisibility(news)"
+          v-if="isAdmin"
+        >
+          <b-icon class="sidebar-item-icon" variant="dark" icon="eye" v-if="news.visible == 1" />
+          <b-icon class="sidebar-item-icon" variant="dark" icon="eye-slash" v-else />
+        </button>
+        <NewsUpdate v-if="isAdmin" :autocomplete="news" />
+        <button
+          type="button"
+          class="news-del-button"
+          @click="DeleteVerification(news)"
+          v-if="isAdmin"
+        >
+          <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import NewsVisibility from './news-visibility.bdd'
 import NewsUpdate from './news-update.bdd'
-import NewsDelete from './news-del.bdd'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
-  name: 'NewsMedium',
+  name: 'NewsComp',
   components: {
-    NewsUpdate,
-    NewsVisibility,
-    NewsDelete
+    NewsUpdate
   },
   props: {
     news: Object,
+    arrayid: Number
   },
   computed: {
+    isAdmin() {
+      return this.$store.state.usergroups.includes('admin')
+    },
+    newfocus() {
+      return this.$store.state.newsfocus;
+    },
   },
   methods: {
+    OpenNews() {
+      if (this.$store.state.newsfocus == '') {
+        this.$store.commit('updateNewsFocus', this.arrayid)
+      }
+    },
+    ChangeVisibility(news) {
+      this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
+        title: news.visible == 0 ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
+        id: 'newsmodal3',
+        size: 'md',
+        buttonSize: 'sm',
+        okVariant: news.visible == 0 ? 'success' : 'danger',
+        okTitle: news.visible == 0 ? 'Publier' : 'Rendre invisible',
+        cancelTitle: 'Retour',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            if (news.visible == 1) {
+              this.changeVisNews(news.id, 0)
+            }
+            else {
+              this.changeVisNews(news.id, 1)
+            }
+
+          }
+        })
+    },
+    DeleteVerification(news) {
+      this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer cette actualité : ${news.title}`, {
+        title: 'Cette action est irréversible',
+        id: 'menumodal3',
+        size: 'sm',
+        buttonSize: 'sm',
+        okVariant: 'danger',
+        okTitle: 'Supprimer',
+        cancelTitle: 'Retour',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.deleteNews(news.id)
+          }
+        })
+    },
+    async changeVisNews(id, visible) {
+      try {
+        var url = `apps/intranetagglo/news/pub/${id}`
+        const response = await axios.post(generateUrl(url), { 'id': id, 'visible': visible }, { type: 'application/json' })
+        this.LastModifiedID = response.data.id
+      } catch (e) {
+        console.error(e)
+      }
+      this.$store.commit('setNewsUpdating', true)
+    },
+    async deleteNews(id) {
+      try {
+        var url = `apps/intranetagglo/news/${id}`
+        const response = await axios.delete(generateUrl(url, { id }))
+        this.LastModifiedID = response.data.id
+      } catch (e) {
+        console.error(e)
+      }
+      this.$store.commit('setNewsUpdating', true)
+    },
   },
   mounted() {
     let textboxblock = document.getElementById('news-textbox-block' + this.news.id)
@@ -46,7 +144,8 @@ export default {
   },
   data: function () {
     return {
-      newscolor: '#00B2FF'
+      newscolor: '#00B2FF',
+      focus: ''
     }
   }
 }
@@ -55,7 +154,7 @@ export default {
 <style scoped>
 .news {
   position: relative;
-  max-width: 30%;
+  width: 30%;
   max-height: 100%;
   border-radius: 10px;
   background-color: #fff;
@@ -66,40 +165,55 @@ export default {
   box-shadow: 0 4px 21px -12px var(--color-mode-shadow-4);
   transition: box-shadow 0.2s ease, transform 0.2s ease, height 1s ease;
 }
-.news-row.right .news,
-.news-row.left .news,
-.news-row.center .news {
+.news-row[focus="right"] .news,
+.news-row[focus="left"] .news,
+.news-row[focus="center"] .news {
   cursor: default;
 }
 
 .news-textbox-block[noimg="false"] {
-  flex: 0 0 calc(30% - 20px);
+  flex: 0 0 calc(40% - 20px);
   height: 100%;
-  display: grid;
+  /* display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: max-content max-content max-content auto;
+  grid-template-rows: max-content auto max-content max-content auto;
   grid-template-areas:
     "."
     "."
     "."
-    ".";
+    "."
+    "."; */
+}
+.news-textbox-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.news-row[focus=""] .news-textbox-block * {
+  cursor: pointer;
 }
 .news-textbox-block[noimg="true"] {
   flex: 0 0 100%;
   height: 100%;
 }
-.news-row.right .news-description,
-.news-row.left .news-description,
-.news-row.center .news-description {
+.news-row[focus="right"] .news-description,
+.news-row[focus="left"] .news-description,
+.news-row[focus="center"] .news-description {
   overflow: auto !important;
 }
-.news-row.right .news-textbox-block,
-.news-row.left .news-textbox-block,
-.news-row.center .news-textbox-block {
+.news-row[focus="right"] .news-textbox-block,
+.news-row[focus="left"] .news-textbox-block,
+.news-row[focus="center"] .news-textbox-block {
   padding: 12px 12px 40px 12px;
 }
 
-.news-row:not(.left):not(.right):not(.center) .news-textbox-block:after {
+.news-row[focus="right"] .news-textbox-block .news-img,
+.news-row[focus="left"] .news-textbox-block .news-img,
+.news-row[focus="center"] .news-textbox-block .news-img {
+  display: none;
+}
+
+.news-row[focus=""] .news-textbox-block:after {
   content: "";
   position: absolute;
   z-index: 1;
@@ -114,23 +228,23 @@ export default {
   width: 100%;
   height: 4em;
 }
-.news-row.right .news:hover,
-.news-row.left .news:hover,
-.news-row.center .news:hover,
-.news-row.left .news:hover .news-img,
-.news-row.center .news:hover .news-img,
-.news-row.right .news:hover .news-img {
+.news-row[focus="right"] .news:hover,
+.news-row[focus="left"] .news:hover,
+.news-row[focus="center"] .news:hover,
+.news-row[focus="left"] .news:hover .news-img,
+.news-row[focus="center"] .news:hover .news-img,
+.news-row[focus="right"] .news:hover .news-img {
   transform: none !important;
 }
-.news-row.right .news-bar,
-.news-row.left .news-bar,
-.news-row.center .news-bar {
+.news-row[focus="right"] .news-bar,
+.news-row[focus="left"] .news-bar,
+.news-row[focus="center"] .news-bar {
   width: 128px;
   transition: none;
 }
-.news-row.right:hover .news-bar,
-.news-row.left:hover .news-bar,
-.news-row.center:hover .news-bar {
+.news-row[focus="right"]:hover .news-bar,
+.news-row[focus="left"]:hover .news-bar,
+.news-row[focus="center"]:hover .news-bar {
   width: 128px;
 }
 
@@ -139,48 +253,70 @@ export default {
   transform: translate(0px, -3px);
 }
 .news-img {
-  position: sticky !important;
-  max-height: 100%;
-  max-width: 100%;
-  transition: transform 0.2s ease;
-  overflow: hidden;
-  padding-right: 12px;
-  z-index: 2;
+  display: flex;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  transition: transform 0.2s ease !important;
+  overflow: hidden !important;
+  padding-right: 12px !important;
+  z-index: 2 !important;
+  margin: auto;
+  align-content: center;
+  align-items: center;
+}
+.news-img-preview {
+  display: flex;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  transition: transform 0.2s ease !important;
+  overflow: hidden !important;
+  padding-right: 12px !important;
+  z-index: 2 !important;
+  margin: auto;
+  align-content: center;
+  align-items: center;
+  flex-shrink: 0;
 }
 .news:hover .news-img {
-  transform: scale(1.05) rotate(1deg);
+  transform: scale(1.05) rotate(0.5deg) !important;
 }
 .news:hover .news-bar {
   width: 40%;
 }
-.news-row:not(.left):not(.right):not(.center) .news-textbox {
+.news-row[focus=""] .news-textbox {
   position: relative;
   padding: 12px 12px 40px 12px;
   width: 100%;
   height: 100%;
   font-size: 17px;
 }
-.news-row.right .news-textbox,
-.news-row.left .news-textbox,
-.news-row.center .news-textbox {
+.news-row[focus="right"] .news-textbox,
+.news-row[focus="left"] .news-textbox,
+.news-row[focus="center"] .news-textbox {
   width: auto;
   display: flex;
   width: 100%;
   height: 100%;
 }
 
-.news-row:not(.left):not(.right):not(.center) .news-textbox {
+.news-row[focus=""] .news-textbox {
   height: 100%;
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: minmax(0, 100%) max-content;
   overflow: hidden;
 }
-.news-row.right .news-img-container,
-.news-row.left .news-img-container,
-.news-row.center .news-img-container {
-  grid-area: Img;
-  margin: auto;
+.news-row[focus="right"] .news-img-container,
+.news-row[focus="left"] .news-img-container,
+.news-row[focus="center"] .news-img-container {
+  grid-area: Img !important;
+  flex-grow: 1;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.news-row[focus=""] .news-img-container {
+  display: none;
 }
 
 .news-textbox * {
@@ -275,12 +411,13 @@ export default {
   padding: 0 20px;
   display: flex;
   align-items: center;
-  width: calc(100% - 40px);
+  height: 40px;
   bottom: 0;
   font-size: 14px;
   cursor: default;
   user-select: none;
   background: #fff;
+  width: 100%;
 }
 .news-tag {
   display: inline-block;

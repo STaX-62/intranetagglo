@@ -40,7 +40,7 @@ export default {
       darkmodestring: null,
       darkmode: null,
       patterns: '6',
-      backgroundcolor: '1'
+      backgroundcolor: '2'
     }
   },
   watch: {

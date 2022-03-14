@@ -3,62 +3,56 @@
     <div id="apps-container" class="apps-container">
       <h2 class="apps-header">
         Applications
-        <div id="apps-update-btn" v-if="userid.groups.includes('admin')">
-          <b-icon icon="pencil-square" v-if="!updating" @click="SetUpdating()"></b-icon>
-          <b-icon icon="x" v-if="updating" @click="Return()"></b-icon>
-          <b-icon icon="check2" v-if="updating" @click="Save()"></b-icon>
+        <div id="apps-update-btn" v-if="isAdmin">
+          <AppsUpdate />
         </div>
       </h2>
       <a
         class="apps-content-main"
-        v-for="(app,index) in appsarray"
+        v-for="(app,index) in apps"
         :key="index"
-        @click="Open(app,index,updating)"
+        v-bind:href="app.link"
+        target="_blank"
       >
-        <div class="apps-update-indicator" v-if="userid.groups.includes('admin') && updating">
-          <b-icon icon="gear"></b-icon>
-        </div>
         <b-icon class="apps-icon" v-bind:icon="app.icon"></b-icon>
         <div class="apps-title">{{app.title}}</div>
-        <a v-bind:id="'link'+index" v-bind:href="app.link" target="_blank"></a>
       </a>
     </div>
-    <AppsUpdate ref="apps-update-modal" v-bind:apptoupdate="apptoupdate" v-if="updating" />
   </div>
 </template>
 
 <script>
-import store from '@/store/index.js'
 import AppsUpdate from '@/components/apps/apps-update.bdd.vue'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
+
 export default {
   name: 'Apps',
-  store: store,
   components: {
     AppsUpdate
   },
-  computed: {
-    // FixedAppArray() {
-    //   Object.filter = (obj, predicate) =>
-    //     Object.keys(obj)
-    //       .filter(key => predicate(obj[key]))
-    //       .reduce((res, key) => (res[key] = obj[key], res), {});
-    //   return Object.filter(this.appsarray, app => app.fixed);
-    // },
-    // NonFixedAppArray() {
-    //   Object.filter = (obj, predicate) =>
-    //     Object.keys(obj)
-    //       .filter(key => predicate(obj[key]))
-    //       .reduce((res, key) => (res[key] = obj[key], res), {});
-    //   return Object.filter(this.appsarray, app => !app.fixed);
-    // },
-    appsoptions() {
-      var News = this.$store.state.News
-      var AppsArray = []
-      for (var i = 0; i < News.length; i++) {
-        AppsArray.push(News[i].apps)
+  
+  watch: {
+    updating: function (val) {
+      if (val) {
+        var url = `apps/intranetagglo${'/apps'}`
+        axios.get(generateUrl(url))
+          .then((response) => {
+            this.apps = response.data;
+            this.$store.commit('setAppsUpdating', false)
+          })
       }
-      const uniqueCaterogy = Array.from(new Set(AppsArray))
-      return uniqueCaterogy
+    },
+  },
+  computed: {
+    updating() {
+      return this.$store.state.appsupdating
+    },
+    isAdmin() {
+      return this.$store.state.usergroups.includes('admin')
+    },
+    UserGroups() {
+      return this.$store.state.usergroups
     },
     search: {
       get() {
@@ -67,115 +61,24 @@ export default {
       set(value) {
         this.$store.commit('updateSearch', value)
       }
-    }
+    },
   },
   methods: {
-    SetUpdating() {
-      this.oldapparray = this.apparray
-      this.updating = true
-    },
-    Return() {
-      this.apparray = this.oldapparray
-      this.updating = false
-    },
-    Save() {
-      this.updating = false
-    },
-    Open(app, index, updating) {
-      if (!updating) document.getElementById('link' + index).click();
-      else if (updating && this.userid.groups.includes('admin')) {
-        this.apptoupdate[index] = app;
-        this.$refs['apps-update-modal'].show()
-      }
-    },
     AppsSet(value) {
       this.droptext = value
-      console.log(this.droptext)
       this.$store.commit('updateCategories', value)
     }
+  },
+  mounted() {
+    axios.get(generateUrl(`apps/intranetagglo${'/appsG'}`))
+      .then(response => (this.apps = response.data))
   },
   data: function () {
     return {
       droptext: '',
-      userid: {
-        name: 'Clément',
-        groups: ['', 'info']
-      },
-      updating: false,
-      oldapparray: {},
+      modal: false,
       apptoupdate: {},
-      appsarray: {
-        0: {
-          'id': 1,
-          'title': 'Annuaire téléphonique',
-          'link': 'http://10.200.1.5/annuaire/',
-          'icon': 'telephone',
-          'fixed': true
-        },
-        1: {
-          'id': 2,
-          'title': 'Intervention Informatique',
-          'link': 'http://chouette.ca2bm.local/glpi/front/central.php',
-          'icon': 'display',
-          'fixed': true
-        },
-        2: {
-          'id': 3,
-          'title': 'Accès au webmail',
-          'link': 'http://chouette.ca2bm.local/roundcube/',
-          'icon': 'envelope',
-          'fixed': true
-        },
-        3: {
-          'id': 4,
-          'title': 'CIVIL RH/GF',
-          'link': 'https://civil.ca2bm.local/',
-          'icon': 'display',
-          'fixed': true
-        },
-        4: {
-          'id': 5,
-          'title': 'Astre RH',
-          'link': 'http://192.168.1.6:9998/astre',
-          'icon': 'collection',
-          'fixed': false
-        },
-        5: {
-          'id': 6,
-          'title': 'Astre Finances',
-          'link': 'http://192.168.1.5:7001/astre/gf',
-          'icon': 'calculator',
-          'fixed': false
-        },
-        6: {
-          'id': 7,
-          'title': 'SIG',
-          'link': 'https://sig.ca2bm.fr/intrageo/',
-          'icon': 'map',
-          'fixed': false
-        },
-        7: {
-          'id': 8,
-          'title': 'CartADS',
-          'link': 'https://sig.ca2bm.fr/adscs',
-          'icon': 'map',
-          'fixed': false
-        },
-        8: {
-          'id': 9,
-          'title': 'Réseau des Médiathèques ',
-          'link': 'https://bibbercktse.opale-sud.local/RDWeb',
-          'icon': 'book',
-          'fixed': false
-        },
-        9: {
-          'id': 10,
-          'title': 'Marcoweb',
-          'link': 'http://zebre.ca2bm.local/',
-          'icon': 'journal',
-          'fixed': false
-        }
-      }
+      apps: []
     }
   }
 }

@@ -5,10 +5,10 @@ namespace OCA\IntranetAgglo\Controller;
 use OCA\IntranetAgglo\AppInfo\Application;
 
 use OCP\IRequest;
-use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Controller;
+use OCP\IGroupManager;
+use OCP\IUserSession;
 
 use OCA\IntranetAgglo\Service\AppsService;
 
@@ -19,15 +19,14 @@ class AppsController extends Controller
 
     use Errors;
 
-    public function __construct(IRequest $request, AppsService $service)
+    public function __construct(IRequest $request, AppsService $service, IGroupManager $groupmanager, IUserSession $session)
     {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
+        $this->groupmanager = $groupmanager;
+        $this->session = $session;
     }
 
-    /**
-     * @NoAdminRequired
-     */
     public function index(): DataResponse
     {
         return (new DataResponse($this->service->findAll()));
@@ -36,25 +35,17 @@ class AppsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function show(int $id): DataResponse
+    public function indexG(): DataResponse
     {
-        return $this->handleNotFound(function () use ($id) {
-            return $this->service->find($id);
-        });
+        $user = $this->session->getUser();
+        return (new DataResponse($this->service->findByGroups($this->groupmanager->getUserGroupIds($user))));
     }
 
-
-    /**
-     * @NoAdminRequired
-     */
     public function create(string $title, string $icon, string $link, string $groups)
     {
         return $this->service->create($title, $icon, $link, $groups);
     }
 
-    /**
-     * @NoAdminRequired
-     */
     public function update(int $id, string $title, string $icon, string $link, string $groups)
     {
         return $this->handleNotFound(function () use ($id, $title, $icon, $link, $groups) {
@@ -62,9 +53,6 @@ class AppsController extends Controller
         });
     }
 
-    /**
-     * @NoAdminRequired
-     */
     public function destroy(int $id)
     {
         return $this->handleNotFound(function () use ($id) {

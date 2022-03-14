@@ -16,6 +16,8 @@ class News extends Entity implements JsonSerializable
     protected $photo;
     protected $category;
     protected $groups;
+    protected $time;
+    protected $visible;
 
     public function jsonSerialize()
     {
@@ -27,7 +29,9 @@ class News extends Entity implements JsonSerializable
             'text' => $this->text,
             'photo' => $this->photo,
             'category' => $this->category,
-            'groups' => $this->groups
+            'groups' => $this->groups,
+            'time' => $this->time,
+            'visible' => $this->visible
         ];
     }
 }

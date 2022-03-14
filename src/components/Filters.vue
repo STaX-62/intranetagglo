@@ -82,7 +82,6 @@ export default {
     },
     CategorySet(value) {
       this.droptext = value
-      console.log(this.droptext)
       this.$store.commit('updateCategories', value)
     }
   },

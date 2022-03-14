@@ -20,9 +20,14 @@ class NewsService
 		$this->mapper = $mapper;
 	}
 
-	public function findAll(): array
+	public function findByGroups(int $firstresult, array $groups, string $search): array
 	{
-		return $this->mapper->findAll();
+		return $this->mapper->findByGroups($firstresult, $groups, $search);
+	}
+
+	public function dashboard(array $groups): array
+	{
+		return $this->mapper->dashboard($groups);
 	}
 
 	private function handleException(Exception $e): void
@@ -31,7 +36,7 @@ class NewsService
 			$e instanceof DoesNotExistException ||
 			$e instanceof MultipleObjectsReturnedException
 		) {
-			throw new newsNotFound($e->getMessage());
+			throw $e;
 		} else {
 			throw $e;
 		}
@@ -46,24 +51,30 @@ class NewsService
 		}
 	}
 
-	public function create($author, $title, $subtitle, $text, $photo, $category, $groups)
+	public function findAll($firstresult, $search): array
+	{
+		return $this->mapper->findAll($firstresult, $search);
+	}
+
+	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible)
 	{
 		$news = new News();
-		$news->setTitle($author);
+		$news->setAuthor($author);
 		$news->setTitle($title);
 		$news->setSubtitle($subtitle);
 		$news->setText($text);
 		$news->setPhoto($photo);
 		$news->setCategory($category);
 		$news->setGroups($groups);
+		$news->setTime($time);
+		$news->setVisible($visible);
 		return $this->mapper->insert($news);
 	}
 
-	public function update($id, $author, $title, $subtitle, $text, $photo, $category, $groups)
+	public function update($id, $title, $subtitle, $text, $photo, $category, $groups)
 	{
 		try {
 			$news = $this->mapper->find($id);
-			$news->setTitle($author);
 			$news->setTitle($title);
 			$news->setSubtitle($subtitle);
 			$news->setText($text);
@@ -75,9 +86,28 @@ class NewsService
 			$this->handleException($e);
 		}
 	}
-	/**
-	 * @NoAdminRequired
-	 */
+
+	public function publication($id, $visible, $time)
+	{
+		try {
+			$news = $this->mapper->find($id);
+			$news->setVisible($visible);
+			$news->setTime($time);
+			return $this->mapper->update($news);
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
+	public function category()
+	{
+		try {
+			return $this->mapper->categoryArray();
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
 	public function delete($id)
 	{
 		try {

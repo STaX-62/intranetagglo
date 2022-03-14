@@ -170,7 +170,7 @@ body {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     padding-right: 15px;
-    transform: translateX(-85px);
+    transform: translateX(-90px);
 }
 
 .Content {
@@ -203,12 +203,13 @@ body {
 }
 
 .Settings {
+    display: block;
     position: absolute;
     width: auto;
     right: 20px;
-    top: 89px;
+    top: 130px;
     width: 280px;
-    height: 500px;
+    height: auto;
     border-radius: 15px;
     background: url("../patterns/brilliant.png"),
         var(--color-mode-2);
@@ -305,4 +306,26 @@ body {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.modal {
+    z-index: 2002 !important;
+}
+
+#news-table {
+    white-space: normal;
+}
+
+#appmodal1___BV_modal_outer_,
+#appmodal2___BV_modal_outer_,
+#appmodal3___BV_modal_outer_,
+#menumodal1___BV_modal_outer_,
+#menumodal2___BV_modal_outer_,
+#menumodal3___BV_modal_outer_,
+#newsmodal1___BV_modal_outer_ {
+    z-index: 2001 !important;
+}
+
+input[type="checkbox"].checkbox+label::before {
+    display: none !important;
 }

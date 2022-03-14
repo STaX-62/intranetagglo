@@ -1,38 +1,37 @@
-.news-row.right #news1,
-.news-row.right #news2 {
+.news-row[focus='right'] #news0,
+.news-row[focus='right'] #news1 {
     display: none;
 }
 
-.news-row.right #news3 {
+.news-row[focus='right'] #news2 {
     max-width: 100%;
     width: 95%;
     flex: none;
 }
 
-.news-row.center #news1,
-.news-row.center #news3 {
+.news-row[focus='center'] #news0,
+.news-row[focus='center'] #news2 {
     display: none;
 }
 
-.news-row.center #news2 {
+.news-row[focus='center'] #news1 {
     max-width: 100%;
     width: 95%;
     flex: none;
 }
 
-.news-row.left #news2,
-.news-row.left #news3 {
+.news-row[focus='left'] #news1,
+.news-row[focus='left'] #news2 {
     display: none;
 }
 
-.news-row.left #news1 {
+.news-row[focus='left'] #news0 {
     max-width: 100%;
     width: 95%;
     flex: none;
 }
 
 .news-return {
-    display: none !important;
     position: absolute;
     right: 2.5%;
     top: 10px;
@@ -45,17 +44,13 @@
     background: var(--color-mode-2);
     border: 2px solid var(--color-mode-4);
     cursor: pointer;
-}
-
-.news-row.left .news-return,
-.news-row.center .news-return,
-.news-row.right .news-return {
-    display: block !important;
+    z-index: 30;
 }
 
 .add-news-button::before {
     content: "+";
     position: absolute;
+    border: 2px solid rgba(221, 221, 221, 0.185) !important;
     display: inline;
     justify-content: center;
     align-items: center;
@@ -96,26 +91,9 @@
     font-size: 15px;
     font-weight: 600;
     transition: 0.2s;
+    border: 2px solid rgba(221, 221, 221, 0.185) !important;
 }
 
-.searchbar {
-    flex: 0 0 62.333%;
-    border-radius: 10px;
-    border: 3px solid #f3f4f7;
-    box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
-        7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%),
-        inset 0px 0px 4px rgb(255 255 255 / 0%),
-        inset 7px 7px 15px rgb(55 84 170 / 15%),
-        inset -7px -7px 20px rgb(255 255 255), 0px 0px 4px rgb(255 255 255 / 20%) !important;
-    background: var(--color-mode-2);
-    padding: 5px 15px;
-    outline: none !important;
-    color: #535d74;
-}
-
-.admin-view .searchbar {
-    flex: 0 0 50%;
-}
 
 .news-header {
     display: flex;
@@ -137,6 +115,7 @@
     align-items: center;
     flex: 0 0 30%;
     color: var(--color-mode-contrast-1);
+    border: 2px solid rgba(221, 221, 221, 0.185) !important;
     justify-content: center;
     display: flex;
     text-align: center;

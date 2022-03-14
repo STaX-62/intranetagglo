@@ -11,7 +11,6 @@ import './style/General.css';
 import './style/News.css';
 import './theme/theme.css';
 
-
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.config.productionTip = false

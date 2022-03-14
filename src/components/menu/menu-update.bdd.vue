@@ -4,7 +4,7 @@
       <b-icon class="doc-icon" icon="gear"></b-icon>
       <div>Modifier le menu</div>
     </div>
-    <b-modal size="xl" v-model="global" ref="modal">
+    <b-modal id="menumodal1" size="xl" v-model="global" ref="modal">
       <template #modal-title>Modification du Menu de navigation</template>
       <div style="display:block;position:relative;height:fit-content">
         <div class="menu-table">
@@ -12,14 +12,14 @@
           <div class="table-header">Menu</div>
           <div class="table-header">Sous-Menu</div>
           <div class="table-content">
-            <div
-              class="table-section"
-              v-for="(section,Sindex) in UpdatedSectionArray"
-              v-bind:key="Sindex"
-            >
+            <div class="table-section" v-for="(section,Sindex) in sectionArray" v-bind:key="Sindex">
               <div class="table-block" v-bind:position="Sindex+'-0-0'" type="text">
-                <div>{{section.title}}</div>
-                <button type="button" class="menu-update-button" @click="Modify(section)">
+                {{section.title}}
+                <button
+                  type="button"
+                  class="menu-update-button"
+                  @click="Modify(section)"
+                >
                   <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
                 </button>
                 <button type="button" class="menu-del-button" @click="DeleteVerification(section)">
@@ -29,7 +29,7 @@
               <div>
                 <div
                   class="table-menu"
-                  v-for="(menu,Mindex) in UpdatedMenuArray[Sindex]"
+                  v-for="(menu,Mindex) in menusArray[Sindex]"
                   v-bind:key="Mindex"
                 >
                   <div
@@ -48,7 +48,7 @@
                   <div class="table-submenu">
                     <div
                       class="table-submenu-content"
-                      v-for="(submenu,SMindex) in UpdatedSubMenuArray[Sindex][Mindex]"
+                      v-for="(submenu,SMindex) in submenusArray[Sindex][Mindex]"
                       v-bind:key="SMindex"
                     >
                       <div
@@ -71,28 +71,28 @@
                     </div>
                     <button
                       class="menu-add"
-                      @click="AddSubmenu(UpdatedSubMenuArray[Sindex][Mindex],Sindex,Mindex)"
+                      @click="AddSubmenu(submenusArray[Sindex][Mindex],Sindex,Mindex)"
                       style="width:calc(100% - 10px)"
                     >+</button>
                   </div>
                 </div>
                 <button
                   class="menu-add"
-                  @click="AddMenu(UpdatedMenuArray[Sindex],Sindex)"
+                  @click="AddMenu(menusArray[Sindex],Sindex)"
                   style="width:calc(50% - 10px)"
                 >+</button>
               </div>
             </div>
             <button
               class="menu-add"
-              @click="AddSection(UpdatedSectionArray)"
+              @click="AddSection(sectionArray)"
               style="width:calc(33% - 10px)"
             >+</button>
           </div>
         </div>
       </div>
     </b-modal>
-    <b-modal size="xl" v-model="detailed" ref="modal" @ok="Save">
+    <b-modal id="menumodal2" size="xl" v-model="detailed" ref="modal" @ok="Save">
       <template #modal-title>Modification du Menu de navigation</template>
       <div class="menu-form">
         <div>
@@ -149,18 +149,72 @@
 <script>
 /* eslint-disable */
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import { generateUrl, generateOcsUrl } from '@nextcloud/router'
 export default {
   name: 'NewsUpdate',
   computed: {
     availableOptions() {
-      return this.options.filter(opt => this.modifying.groups.indexOf(opt) === -1)
-    }
+      return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
+    },
+    sectionArray() {
+      var bddmenus = this.menusInBDD;
+      var sections = []
+      for (var i = 0; i < bddmenus.length; i++) {
+        for (var y = 0; y < bddmenus.length; y++) {
+          if (bddmenus[i].position == y + '-0-0') {
+            sections.push(bddmenus[i])
+          }
+        }
+      }
+      return sections;
+    },
+    menusArray() {
+      var bddmenus = this.menusInBDD;
+      var menus = []
+      var tempmenus = []
+      for (var i = 0; i < this.sectionArray.length; i++) {
+        for (var z = 0; z < bddmenus.length; z++) {
+          for (var y = 0; y < bddmenus.length; y++) {
+            if (bddmenus[z].position == i + '-' + (y + 1) + '-0') {
+              tempmenus.push(bddmenus[z])
+            }
+          }
+        }
+        menus.push(tempmenus)
+        tempmenus = []
+      }
+
+      return menus;
+    },
+    submenusArray() {
+      var bddmenus = this.menusInBDD;
+      var menus = []
+      var tempmenus = []
+      var tempsubmenus = []
+      for (var i = 0; i < this.sectionArray.length; i++) {
+        for (var o = 0; o < this.menusArray[i].length; o++) {
+          for (var z = 0; z < bddmenus.length; z++) {
+            for (var y = 0; y < bddmenus.length; y++) {
+              if (bddmenus[z].position == i + '-' + (o + 1) + '-' + (y + 1)) {
+                tempsubmenus.push(bddmenus[z])
+              }
+            }
+          }
+          tempmenus.push(tempsubmenus)
+          tempsubmenus = []
+        }
+        menus.push(tempmenus)
+        tempmenus = []
+      }
+      return menus;
+    },
+
   },
   methods: {
     DeleteVerification(menu) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${menu.title}`, {
         title: 'Confirmation',
+        id: 'menumodal3',
         size: 'sm',
         buttonSize: 'sm',
         okVariant: 'danger',
@@ -172,7 +226,14 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.deleteMenu(menu.id)
+            var index = this.menusInBDD.findIndex(x => x.title === menu.title)
+            if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
+              this.apps.splice(index, 1)
+            }
+            else {
+              this.apps.splice(index, 1)
+              this.deleteMenu(menu.id)
+            }
           }
         })
         .catch(err => {
@@ -189,12 +250,12 @@ export default {
 
       if (positions[1] == 0) {
         this.modifying.icon = menu.icon;
-        if (this.UpdatedMenuArray[0].length == 0) this.modifying.haschild = false;
+        if (this.menusArray[0].length == 0) this.modifying.haschild = false;
         else this.modifying.haschild = true;
       }
       else {
         if (positions[2] == 0) {
-          if (this.UpdatedSubMenuArray[positions[0]][positions[1] - 1].length == 0) this.modifying.haschild = false;
+          if (this.submenusArray[positions[0]][positions[1] - 1].length == 0) this.modifying.haschild = false;
           else this.modifying.haschild = true;
         }
         else {
@@ -269,18 +330,17 @@ export default {
       })
     },
     async createMenu(menu) {
-      this.updating = true
       try {
         var url = `apps/intranetagglo/menus`
         const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
         this.LastModifiedID = response.data.id
+        this.menusInBDD.find(x => x.position === this.modifying.selected).id = response.data.id
       } catch (e) {
         console.error(e)
       }
-      this.updating = false
+      this.$store.commit('setMenuUpdating', true)
     },
     async updateMenu(menu) {
-      this.updating = true
       try {
         var url = `apps/intranetagglo/menus/${menu.id}`
         const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
@@ -288,10 +348,9 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.updating = false
+      this.$store.commit('setMenuUpdating', true)
     },
     async deleteMenu(id) {
-      this.updating = true
       try {
         var url = `apps/intranetagglo/menus/${id}`
         const response = await axios.delete(generateUrl(url, { id }))
@@ -299,20 +358,15 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.updating = false
+      this.$store.commit('setMenuUpdating', true)
     },
-  },
-  props: {
-    UpdatedSectionArray: Array,
-    UpdatedMenuArray: Array,
-    UpdatedSubMenuArray: Array,
-    menusInBDD: Array,
   },
   data: function () {
     return {
       global: false,
       detailed: false,
       updating: false,
+      menusInBDD: [],
       modifying: {
         selected: null,
         title: "",
@@ -321,16 +375,19 @@ export default {
         groups: "",
         haschild: false
       },
-      options: ['admin', 'info', 'notme'],
       LastModifiedID: null
     }
-  }
+  },
+  mounted() {
+    var url = `apps/intranetagglo${'/menus'}`
+    axios.get(generateUrl(url))
+      .then(response => (this.menusInBDD = response.data))
+  },
+
 }
 </script>
 
 <style scoped>
-
-
 .admin-settings {
   display: flex;
   justify-content: center;
@@ -390,7 +447,7 @@ export default {
 
 .table-block {
   display: grid;
-  grid-template-columns: calc(100% - 64px) 32px 32px;
+  grid-template-columns: calc(100% - 100px) 50px 50px;
   grid-auto-rows: auto;
   grid-template-areas: ". . .";
   background-color: var(--color-mode-1);
@@ -434,12 +491,9 @@ export default {
   display: block;
 }
 .menu-add {
-    font-size: 19px;
-    height: auto;
-    margin: 5px 50px 5px 5px;
-    border-radius: 5px;
-}
-.modal{
-  z-index: 2001 !important;
+  font-size: 19px;
+  height: auto;
+  margin: 5px 50px 5px 5px;
+  border-radius: 5px;
 }
 </style>

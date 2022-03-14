@@ -25,6 +25,11 @@ class MenuService
 		return $this->mapper->findAll();
 	}
 
+	public function findByGroups(array $groups): array
+	{
+		return $this->mapper->findByGroups($groups);
+	}
+
 	private function handleException(Exception $e): void
 	{
 		if (
