@@ -78,16 +78,18 @@ class NewsController extends Controller
     {
         $user = $this->session->getUser();
         $photourl = '';
+        if (isset($_FILES['photo'])) {
+            if (file_exists($_FILES['photo']['tmp_name'])) {
+                if ($_FILES['photo']['error'] == 0) {
+                    $fileInfos = pathinfo($_FILES['photo']['name']);
+                    $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
-        if (file_exists($_FILES['photo']['tmp_name'])) {
-            if ($_FILES['photo']['error'] == 0) {
-                $fileInfos = pathinfo($_FILES['photo']['name']);
-                $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
-
-                move_uploaded_file($_FILES['photo']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
-                $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                    move_uploaded_file($_FILES['photo']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
+                    $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                }
             }
         }
+
 
         return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $this->timeFactory->getTime(), 0);
     }
@@ -96,16 +98,17 @@ class NewsController extends Controller
     {
         return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups) {
             $photourl = $photolink;
+            if (isset($_FILES['photo'])) {
+                if (file_exists($_FILES['photo_upd']['tmp_name'])) {
+                    if ($_FILES['photo_upd']['error'] == 0) {
+                        unlink(substr($photourl, 11));
 
-            if (file_exists($_FILES['photo_upd']['tmp_name'])) {
-                if ($_FILES['photo_upd']['error'] == 0) {
-                    unlink(substr($photourl, 11));
+                        $fileInfos = pathinfo($_FILES['photo_upd']['name']);
+                        $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
-                    $fileInfos = pathinfo($_FILES['photo_upd']['name']);
-                    $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
-
-                    move_uploaded_file($_FILES['photo_upd']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
-                    $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                        move_uploaded_file($_FILES['photo_upd']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
+                        $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                    }
                 }
             }
 
