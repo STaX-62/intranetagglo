@@ -1,18 +1,18 @@
 <template>
-  <div
-    class="news news-customcolor"
-    v-bind:style="'--news-color: ' + newscolor"
-    @click="OpenNews()"
-  >
+  <div class="news news-customcolor" v-bind:style="'--news-color: ' + newscolor">
     <div class="news-textbox">
-      <div v-bind:id="'news-textbox-block' + news.id" class="news-textbox-block">
+      <div
+        v-bind:id="'news-textbox-block' + news.id"
+        class="news-textbox-block"
+        @click="OpenNews()"
+      >
         <div class="news-title">{{ news.title }}</div>
         <div class="news-subtitle" :class="{'active': isActive}">{{ news.subtitle }}</div>
         <div class="news-bar"></div>
         <img
           class="news-img-preview"
           v-bind:src="news.photo"
-          v-if="news.photo != '' && newfocus != ''"
+          v-if="news.photo != '' && newfocus == ''"
         />
         <div class="news-description" v-html="news.text"></div>
       </div>
@@ -184,6 +184,9 @@ export default {
     "."
     "."; */
 }
+.news-row[focus=""] .news-textbox-block *{
+  cursor: pointer;
+}
 .news-textbox-block[noimg="true"] {
   flex: 0 0 100%;
   height: 100%;
@@ -302,7 +305,9 @@ export default {
 .news-row[focus="left"] .news-img-container,
 .news-row[focus="center"] .news-img-container {
   grid-area: Img !important;
-
+  flex-grow: 1;
+  flex-shrink: 0;
+  display: flex;
 }
 .news-row[focus=""] .news-img-container {
   display: none;
