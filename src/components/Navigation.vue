@@ -141,6 +141,8 @@ export default {
       else return false
     },
     OpenLink(index, subindex) {
+      console.log(this.submenusArray[index][subindex])
+      console.log(this.submenusArray[index][subindex].link)
       if (this.submenusArray[index][subindex].link != '') {
         window.open(this.submenusArray[index][subindex].link, '_blank');
       }
