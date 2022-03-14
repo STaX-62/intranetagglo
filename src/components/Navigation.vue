@@ -18,7 +18,7 @@
           :key="'B'+subindex"
           @click="ExtendSubMenu(index,subindex)"
         >
-          <div class="submenu-title" @click="OpenLink(index,subindex)">
+          <div class="submenu-title" @click="OpenLink(menu.link)">
             <div class="caret" v-if="isEmpty(submenusArray[index][subindex])">▷</div>
             {{ menu.title }}
           </div>
@@ -140,11 +140,9 @@ export default {
       }
       else return false
     },
-    OpenLink(index, subindex) {
-      console.log(this.submenusArray[index][subindex])
-      console.log(this.submenusArray[index][subindex].link)
-      if (this.submenusArray[index][subindex].link != '') {
-        window.open(this.submenusArray[index][subindex].link, '_blank');
+    OpenLink(link) {
+      if (link != '') {
+        window.open(link, '_blank');
       }
     },
     CategorySet(value) {
