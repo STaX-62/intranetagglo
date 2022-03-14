@@ -18,7 +18,7 @@
           :key="'B'+subindex"
           @click="ExtendSubMenu(index,subindex)"
         >
-          <div class="submenu-title">
+          <div class="submenu-title" @click="OpenLink(index,subindex)">
             <div class="caret" v-if="isEmpty(submenusArray[index][subindex])">▷</div>
             {{ menu.title }}
           </div>
@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="Raccourcis">
-      <MenuUpdate v-if="isAdmin"/>
+      <MenuUpdate v-if="isAdmin" />
       <a class="Files" href="https://cloud.ca2bm.fr/index.php/f/1183804">
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
@@ -139,6 +139,11 @@ export default {
         return true
       }
       else return false
+    },
+    OpenLink(index, subindex) {
+      if (this.submenusArray[index][subindex].link != '') {
+        window.open(this.submenusArray[index][subindex].link, '_blank');
+      }
     },
     CategorySet(value) {
       this.droptext = value

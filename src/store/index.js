@@ -25,7 +25,6 @@ export default new Vuex.Store({
   },
   mutations: {
     updateNewsFocus(state, value) {
-      console.log('store value' + value)
       if (value == 0) state.newsfocus = 'left';
       if (value == 1) state.newsfocus = 'center';
       if (value == 2) state.newsfocus = 'right';
@@ -45,6 +44,7 @@ export default new Vuex.Store({
       state.groupsoptions = groups
     },
     setCategoryOptions(state, category) {
+      console.log(category)
       state.categoryoptions = category
     },
     setAppsUpdating(state, updating) {
@@ -58,10 +58,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getCategoryOptions({ commit }) {
+    getCategoryOptions({ commit }, search) {
       axios.get(generateUrl('apps/intranetagglo/news/category'), {
         params: {
-          search: '',
+          search: search,
         },
       }).then(res => {
         commit('setCategoryOptions', res)

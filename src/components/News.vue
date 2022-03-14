@@ -154,7 +154,7 @@ export default {
         if (response.data[1].includes('admin')) {
           url += `news/0`
           this.$store.dispatch("getGroupsOptions");
-          this.$store.dispatch("getCategoryOptions");
+          this.$store.dispatch("getCategoryOptions", '');
         }
         else {
           url += `newsG/0`
