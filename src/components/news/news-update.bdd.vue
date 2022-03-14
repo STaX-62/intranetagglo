@@ -144,6 +144,7 @@ export default {
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
       this.autocomplete.groups = this.autocomplete.groups.join(';')
+      console.log(this.newimage + ' name : ' + this.newimage.name)
       this.updateNews(this.autocomplete, this.newimage)
     },
     async updateNews(news, newimage) {
@@ -153,7 +154,7 @@ export default {
         data.append('title', news.title);
         data.append('subtitle', news.subtitle);
         data.append('text', news.text);
-        if (news.photo == null) {
+        if (newimage.photo == null) {
           data.append('photo_upd', newimage, newimage.name);
         }
         data.append('photolink', news.photo);
