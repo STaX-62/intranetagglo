@@ -67,10 +67,12 @@ export default {
       return this.$store.state.newsfocus;
     },
     HasImage() {
-      if (this.news.photo != '') {
-        return false
+      console.log(this.news.photo)
+      if (this.news.photo == '') {
+        console.log(true)
+        return true
       }
-      else return true
+      else return false
     }
   },
   methods: {
