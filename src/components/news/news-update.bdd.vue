@@ -154,7 +154,7 @@ export default {
         data.append('title', news.title);
         data.append('subtitle', news.subtitle);
         data.append('text', news.text);
-        if (newimage.photo == null) {
+        if (newimage.photo != null) {
           data.append('photo_upd', newimage, newimage.name);
         }
         data.append('photolink', news.photo);

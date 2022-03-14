@@ -136,7 +136,7 @@ export default {
         data.append('title', news.title);
         data.append('subtitle', news.subtitle);
         data.append('text', news.text);
-        if (news.photo == null) {
+        if (news.photo != null) {
           data.append('photo', news.photo, news.photo.name);
         }
         data.append('category', news.category);
