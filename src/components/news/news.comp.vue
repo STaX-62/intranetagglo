@@ -184,7 +184,7 @@ export default {
     "."
     "."; */
 }
-.news-row[focus=""] .news-textbox-block *{
+.news-row[focus=""] .news-textbox-block * {
   cursor: pointer;
 }
 .news-textbox-block[noimg="true"] {
@@ -308,6 +308,8 @@ export default {
   flex-grow: 1;
   flex-shrink: 0;
   display: flex;
+  height: 100%;
+  width: 100%;
 }
 .news-row[focus=""] .news-img-container {
   display: none;
