@@ -4,7 +4,7 @@
       <div
         v-bind:id="'news-textbox-block' + news.id"
         class="news-textbox-block"
-        :noimg="HasImage"
+        :noimg="news.photo == '' ? true : false"
         @click="OpenNews()"
       >
         <div class="news-title">{{ news.title }}</div>
@@ -21,7 +21,7 @@
         <img class="news-img" v-bind:src="news.photo" v-if="news.photo != ''" />
       </div>
       <div class="news-tagbox">
-        <span class="news-tag">{{ news.category }}</span>
+        <span class="news-tag" @click="search = news.category">{{ news.category }}</span>
         <button
           type="button"
           class="news-visibility-button"
@@ -60,20 +60,20 @@ export default {
     arrayid: Number
   },
   computed: {
+    search: {
+      get() {
+        return this.$store.state.search
+      },
+      set(value) {
+        this.$store.commit('updateSearch', value)
+      }
+    },
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
     },
     newfocus() {
       return this.$store.state.newsfocus;
     },
-    HasImage() {
-      console.log(this.news.photo)
-      if (this.news.photo == '') {
-        console.log(true)
-        return true
-      }
-      else return false
-    }
   },
   methods: {
     OpenNews() {
@@ -440,7 +440,7 @@ export default {
   padding: 0 10px 0 23px;
   position: relative;
   margin-right: 20px;
-  cursor: default;
+  cursor: pointer;
   user-select: none;
   transition: color 0.2s;
 }
