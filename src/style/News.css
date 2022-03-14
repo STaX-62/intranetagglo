@@ -44,7 +44,7 @@
     background: var(--color-mode-2);
     border: 2px solid var(--color-mode-4);
     cursor: pointer;
-    z-index: 30;
+    z-index: 300;
 }
 
 .add-news-button::before {

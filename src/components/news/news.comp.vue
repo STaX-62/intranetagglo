@@ -324,6 +324,13 @@ export default {
   height: 100%;
   width: 100%;
 }
+
+.news-row[focus="right"] .news-img-container .news-img,
+.news-row[focus="left"] .news-img-container .news-img,
+.news-row[focus="center"] .news-img-container .news-img {
+  z-index: 200;
+}
+
 .news-row[focus=""] .news-img-container {
   display: none;
 }
@@ -343,11 +350,13 @@ export default {
   left: -2px;
   width: 20%;
   height: 5px;
+  padding: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
   border-radius: 5px;
   background-color: #424242;
   transition: width 0.2s ease;
+  padding: 2px;
 }
 .news-blue .news-bar {
   background-color: #0088ff;

@@ -8,7 +8,7 @@
           class="searchbar"
           v-model="search"
           placeholder="Rechercher.."
-          @keyup="textSearch()"
+          @change="textSearch()"
         />
         <NewsAdd v-if="isAdmin" />
       </div>
