@@ -523,6 +523,7 @@ export default {
   line-height: 26px;
   padding: 0 10px 0 10px;
   position: absolute;
+  right: 0;
   margin-right: 10px;
   user-select: none;
   transition: color 0.2s;
@@ -564,6 +565,7 @@ export default {
     line-height: 26px;
     padding: 0 10px 0 10px;
     position: absolute;
+    right: 0;
     margin-right: 10px;
     user-select: none;
     transition: color 0.2s;
