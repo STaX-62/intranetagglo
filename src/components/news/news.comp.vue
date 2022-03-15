@@ -38,7 +38,6 @@
             icon="shift-fill"
             v-if="news.pinned == 1"
           />
-          <b-icon class="sidebar-item-icon" variant="dark" icon="shift" v-else />
         </div>
         <button
           type="button"
@@ -58,6 +57,7 @@
         >
           <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
         </button>
+        <div class="news-tag-date">{{ getFormatedDate }}</div>
       </div>
     </div>
   </div>
@@ -67,6 +67,7 @@
 import NewsUpdate from './news-update.bdd'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import moment from '@nextcloud/moment'
 
 export default {
   name: 'NewsComp',
@@ -89,6 +90,9 @@ export default {
         }, 250)
         this.$store.commit('updateSearch', value)
       }
+    },
+    getFormatedDate(){
+      return moment(parseInt(this.news.time)).format('L')
     },
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
@@ -496,6 +500,21 @@ export default {
   background: #e0e0e0;
   color: #777;
   border-radius: 3px 0 0 3px;
+  line-height: 26px;
+  padding: 0 10px 0 23px;
+  position: relative;
+  margin-right: 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+.news-tag-date {
+  display: inline-block;
+  height: 1.7rem;
+  font-size: 13px;
+  background: #e0e0e0;
+  color: #777;
+  border-radius: 10px;
   line-height: 26px;
   padding: 0 10px 0 23px;
   position: relative;
