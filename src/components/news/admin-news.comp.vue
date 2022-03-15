@@ -22,11 +22,11 @@
       </div>
       <div class="news-tagbox">
         <span class="news-tag" @click="search = '#' + news.category">{{ news.category }}</span>
-        <button type="button" class="news-tagbox-button" @click="SetPinned(news)">
+        <button type="button" class="news-tagbox-button" @click="SetPinned(news)" v-if="news.visible == 1">
           <b-icon
             class="sidebar-item-icon"
             variant="dark"
-            :icon="news.pinned == 1 ? 'shift' : 'shift-fill'"
+            :icon="news.pinned == 0 ? 'shift' : 'shift-fill'"
           />
         </button>
         <div class="news-tagbox-button" v-if="news.visible == 0">
@@ -48,7 +48,7 @@
                 <b-icon
                   class="sidebar-item-icon"
                   variant="dark"
-                  :icon="news.visible == 1 ? 'eye' : 'eye-slash'"
+                  :icon="news.visible == 0 ? 'eye' : 'eye-slash'"
                 />
               </button>
               <NewsUpdate :autocomplete="news" />
