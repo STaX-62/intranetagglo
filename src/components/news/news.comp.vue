@@ -4,7 +4,7 @@
       <div
         v-bind:id="'news-textbox-block' + news.id"
         class="news-textbox-block"
-        :noimg="news.photo == '' ? true : false"
+        :img="news.photo == '' ? 'no' : 'yes'"
         @click="OpenNews()"
       >
         <div class="news-title">{{ news.title }}</div>
@@ -229,11 +229,6 @@ export default {
       this.$store.commit('setNewsUpdating', true)
     },
   },
-  mounted() {
-    let textboxblock = document.getElementById('news-textbox-block' + this.news.id)
-    if (this.news.photos == "") textboxblock.setAttribute('noimg', 'true')
-    else textboxblock.setAttribute('noimg', 'false')
-  },
   data: function () {
     return {
       newscolor: '#00B2FF',
@@ -265,7 +260,7 @@ export default {
   cursor: default;
 }
 
-.news-textbox-block[noimg="false"] {
+.news-textbox-block[img="yes"] {
   flex: 0 0 calc(40% - 20px);
   height: 100%;
   /* display: grid;
@@ -286,7 +281,7 @@ export default {
 .news-row[focus=""] .news-textbox-block * {
   cursor: pointer;
 }
-.news-textbox-block[noimg="true"] {
+.news-textbox-block[img="no"] {
   flex: 0 0 100%;
   height: 100%;
 }
@@ -491,7 +486,7 @@ export default {
   background-image: linear-gradient(-70deg, var(--news-color), transparent 50%);
 }
 
-.news-textbox-block[noimg="true"] .news-description {
+.news-textbox-block[img="no"] .news-description {
   overflow: hidden;
   font-size: 15px;
   height: calc(100% - 60px);
@@ -499,7 +494,7 @@ export default {
   color: #424242;
   text-overflow: ellipsis;
 }
-.news-textbox-block[noimg="false"] .news-description {
+.news-textbox-block[img="yes"] .news-description {
   overflow: hidden;
   font-size: 15px;
   height: 100%;
