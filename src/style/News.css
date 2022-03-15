@@ -335,7 +335,8 @@
 .news-row[focus="center"] .news {
     cursor: default;
 }
-.news-textbox{
+
+.news-textbox {
     background-color: var(--color-mode-2);
 }
 
@@ -494,6 +495,7 @@
     display: flex;
     height: calc(100% - 40px);
     width: 100%;
+    background: var(--color-mode-7);
 }
 
 .news-row[focus="right"] .news-img-container .news-img,
@@ -627,7 +629,7 @@
     background: #fff;
     width: 100%;
     z-index: 100;
-    background-color: var(--color-light);
+    background-color: var(--color-mode-1);
 }
 
 .news-tag {
@@ -710,8 +712,14 @@
     content: "";
     position: absolute;
     border-bottom: 13px solid transparent;
-    border-left: 10px solid #e0e0e0;
+    border-left: 10px solid var(--color-mode-6);
     border-top: 13px solid transparent;
     right: -10px;
     top: 0;
+}
+
+.news-visibility-button>svg,
+.news-tagbox-button>svg {
+    fill: var(--color-mode-contrast-1);
+    transition: color 0.2s;
 }

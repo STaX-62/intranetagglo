@@ -97,7 +97,8 @@
   --color-mode-4: #ddd;
   --color-mode-5: #777;
   --color-mode-6: #e0e0e0;
-  --color-mode-shadow-1: rgb(0 0 0 / 20%);
+  --color-mode-7: #f0f0f082;
+   --color-mode-shadow-1: rgb(0 0 0 / 20%);
   --color-mode-shadow-2: rgb(0 0 0 / 14%);
   --color-mode-shadow-3: rgb(0 0 0 / 12%);
   --color-mode-shadow-4: rgba(0, 0, 0, 0.66);
@@ -130,6 +131,7 @@
   --color-mode-4: rgb(119, 119, 119);
   --color-mode-5: #f4f5f8;
   --color-mode-6: #2f3136;
+  --color-mode-7: #2c2e33;
   --color-mode-shadow-1: rgb(255 255 255 / 20%);
   --color-mode-shadow-2: rgb(255 255 255 / 14%);
   --color-mode-shadow-3: rgb(255 255 255 / 12%);
