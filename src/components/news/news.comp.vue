@@ -553,7 +553,7 @@ export default {
   top: 0;
 }
 
-@media (max-height: 1250px) {
+@media (max-width: 1250px) {
   .news-tag-date-sm {
     display: inline-block;
     height: 1.7rem;

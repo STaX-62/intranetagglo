@@ -272,7 +272,7 @@
     outline: none !important;
 }
 
-@media (max-height: 1250px) {
+@media (max-height: 768px) {
     #news-frame{
         grid-template-columns: calc(100% - 200px) 200px;
     }
