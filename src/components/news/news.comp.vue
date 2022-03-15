@@ -91,7 +91,11 @@ export default {
         this.$store.commit('updateSearch', value)
       }
     },
-    getFormatedDate(){
+    getFormatedDate() {
+      console.log('news:' + this.news)
+      console.log('news.time:' + this.news.time)
+      console.log('moment news.time:' + moment(this.news.time).format('L'))
+      console.log('moment parseint:' + moment(parseInt(this.news.time)).format('L'))
       return moment(parseInt(this.news.time)).format('L')
     },
     isAdmin() {
@@ -519,7 +523,6 @@ export default {
   padding: 0 10px 0 23px;
   position: relative;
   margin-right: 20px;
-  cursor: pointer;
   user-select: none;
   transition: color 0.2s;
 }
