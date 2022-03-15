@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 
 module.exports = {
     pages: {
-        intranetagglo33: {
+        intranetagglo34: {
             // entry for the page
             entry: 'src/main.js',
         },
@@ -25,7 +25,9 @@ module.exports = {
             filename: '[name].js'
         },
         optimization: {
-            splitChunks: false
+            splitChunks: {
+                chunks: 'all',
+            },
         }
     }
 }

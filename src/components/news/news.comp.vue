@@ -47,7 +47,7 @@
             @click="ChangeVisibility(news)"
           />
         </div>
-        <button type="button" class="news-pin-button" @click="AdminOptions()" v-if="isAdmin">
+        <button type="button" class="news-tagbox-button" @click="AdminOptions()" v-if="isAdmin">
           <b-icon class="sidebar-item-icon" variant="dark" icon="gear" />
         </button>
         <div class="flip-tagbox" :adminopt="adminopt">
