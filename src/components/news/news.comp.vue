@@ -105,7 +105,7 @@ export default {
         this.$store.commit('updateSearch', value)
       }
     },
-    getFormatedDateMD() {
+    getFormatedDate() {
       return moment((this.news.time * 1000)).format('LL')
     },
     getFormatedDateSM() {
@@ -538,9 +538,6 @@ export default {
 
 .flip-tagbox {
   background-color: transparent;
-  width: 300px;
-  height: 200px;
-  border: 1px solid #f1f1f1;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
@@ -574,7 +571,7 @@ export default {
 }
 
 .admin-tagbox {
-  transform: rotateY(180deg);
+  transform: rotateX(180deg);
 }
 
 .news-tag::after {
