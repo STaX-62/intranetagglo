@@ -155,12 +155,13 @@ export default {
             'accept': 'application/json',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
           }
+        }).then(() => {
+          this.$store.commit('setNewsUpdating', true)
         })
         // this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)
       }
-      this.$store.commit('setNewsUpdating', true)
     },
     toggleModal() {
       this.$refs['modal'].toggle('#toggle-btn')
