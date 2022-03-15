@@ -13,13 +13,24 @@
         <NewsAdd v-if="isAdmin" />
       </div>
       <div id="news-row" class="news-row" :focus="newfocus">
-        <NewsComp
-          :id="'news'+index"
-          v-for="(n,index) in getNews"
-          :key="index"
-          :arrayid="index"
-          :news="news[index]"
-        />
+        <div class="news-wrapper" v-if="isAdmin">
+          <NewsCompAdmin
+            :id="'news'+index"
+            v-for="(n,index) in getNews"
+            :key="index"
+            :arrayid="index"
+            :news="news[index]"
+          />
+        </div>
+        <div class="news-wrapper" v-else>
+          <NewsComp
+            :id="'news'+index"
+            v-for="(n,index) in getNews"
+            :key="index"
+            :arrayid="index"
+            :news="news[index]"
+          />
+        </div>
         <b-icon
           class="news-return"
           icon="arrow-return-left"
@@ -40,6 +51,7 @@
 </template>
 
 <script>
+import NewsCompAdmin from './news/admin-news.comp'
 import NewsComp from './news/news.comp'
 import Apps from './Apps'
 import NewsAdd from './news/news-add.bdd'
@@ -52,6 +64,7 @@ export default {
     msg: String
   },
   components: {
+    NewsCompAdmin,
     NewsComp,
     Apps,
     NewsAdd

@@ -22,62 +22,16 @@
       </div>
       <div class="news-tagbox">
         <span class="news-tag" @click="search = '#' + news.category">{{ news.category }}</span>
-        <button type="button" class="news-tagbox-button" @click="SetPinned(news)" v-if="isAdmin">
+        <div class="news-tagbox-button" v-if="news.pinned == 1">
           <b-icon
             class="sidebar-item-icon"
             variant="dark"
             icon="shift-fill"
-            v-if="news.pinned == 1"
-          />
-          <b-icon class="sidebar-item-icon" variant="dark" icon="shift" v-else />
-        </button>
-        <div class="news-tagbox-button" v-if="!isAdmin">
-          <b-icon
-            class="sidebar-item-icon"
-            variant="dark"
-            icon="shift-fill"
-            v-if="news.pinned == 1"
           />
         </div>
-        <div class="news-tagbox-button" v-if="isAdmin && news.visible == 0">
-          <b-icon
-            class="sidebar-item-icon"
-            variant="dark"
-            icon="eye-slash"
-            @click="ChangeVisibility(news)"
-          />
-        </div>
-        <button type="button" class="news-tagbox-button" @click="AdminOptions()" v-if="isAdmin">
-          <b-icon class="sidebar-item-icon" variant="dark" icon="gear" />
-        </button>
         <div class="flip-tagbox" :adminopt="adminopt">
           <div class="flip-tagbox-inner">
             <div class="news-tag-date">{{ getFormatedDate }}</div>
-            <div class="admin-tagbox">
-              <button
-                type="button"
-                class="news-visibility-button"
-                @click="ChangeVisibility(news)"
-                v-if="isAdmin"
-              >
-                <b-icon
-                  class="sidebar-item-icon"
-                  variant="dark"
-                  icon="eye"
-                  v-if="news.visible == 1"
-                />
-                <b-icon class="sidebar-item-icon" variant="dark" icon="eye-slash" v-else />
-              </button>
-              <NewsUpdate v-if="isAdmin" :autocomplete="news" />
-              <button
-                type="button"
-                class="news-del-button"
-                @click="DeleteVerification(news)"
-                v-if="isAdmin"
-              >
-                <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -86,16 +40,10 @@
 </template>
 
 <script>
-import NewsUpdate from './news-update.bdd'
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
 import moment from '@nextcloud/moment'
 
 export default {
   name: 'NewsComp',
-  components: {
-    NewsUpdate
-  },
   props: {
     news: Object,
     arrayid: Number
@@ -116,117 +64,15 @@ export default {
     getFormatedDate() {
       return moment((this.news.time * 1000)).format('LL')
     },
-    getFormatedDateSM() {
-      return moment((this.news.time * 1000)).format('l')
-    },
-    isAdmin() {
-      return this.$store.state.usergroups.includes('admin')
-    },
     newfocus() {
       return this.$store.state.newsfocus;
     },
   },
   methods: {
-    AdminOptions() {
-      this.adminopt = !this.adminopt
-    },
     OpenNews() {
       if (this.$store.state.newsfocus == '') {
         this.$store.commit('updateNewsFocus', this.arrayid)
       }
-    },
-    SetPinned(news) {
-      this.$bvModal.msgBoxConfirm(`Titre de l'actualité : ${news.title}`, {
-        title: news.pinned == 0 ? 'épingler cette actualité ? (si une autre actualité est épingler, celle ci prendra sa place)' : 'annuler l\'épinglage ?',
-        id: 'newsmodal4',
-        size: 'md',
-        buttonSize: 'sm',
-        okVariant: news.pinned == 0 ? 'success' : 'danger',
-        okTitle: news.pinned == 0 ? 'Epingler' : 'Annuler l\'épinglage',
-        cancelTitle: 'Retour',
-        footerClass: 'p-2',
-        hideHeaderClose: false,
-        centered: true
-      })
-        .then(value => {
-          if (value) {
-            this.changePinned(news.id)
-          }
-        })
-    },
-    ChangeVisibility(news) {
-      this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
-        title: news.visible == 0 ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
-        id: 'newsmodal3',
-        size: 'md',
-        buttonSize: 'sm',
-        okVariant: news.visible == 0 ? 'success' : 'danger',
-        okTitle: news.visible == 0 ? 'Publier' : 'Rendre invisible',
-        cancelTitle: 'Retour',
-        footerClass: 'p-2',
-        hideHeaderClose: false,
-        centered: true
-      })
-        .then(value => {
-          if (value) {
-            if (news.visible == 1) {
-              this.changeVisNews(news.id, 0)
-            }
-            else {
-              this.changeVisNews(news.id, 1)
-            }
-
-          }
-        })
-    },
-    DeleteVerification(news) {
-      this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer cette actualité : ${news.title}`, {
-        title: 'Cette action est irréversible',
-        id: 'menumodal3',
-        size: 'sm',
-        buttonSize: 'sm',
-        okVariant: 'danger',
-        okTitle: 'Supprimer',
-        cancelTitle: 'Retour',
-        footerClass: 'p-2',
-        hideHeaderClose: false,
-        centered: true
-      })
-        .then(value => {
-          if (value) {
-            this.deleteNews(news.id)
-          }
-        })
-    },
-    async changePinned(id) {
-      try {
-        var url = `apps/intranetagglo/news/pin/${id}`
-        const response = await axios.post(generateUrl(url), { 'id': id }, { type: 'application/json' })
-        this.LastModifiedID = response.data.id
-      } catch (e) {
-        console.error(e)
-      }
-      this.$store.commit('setNewsUpdating', true)
-    },
-    async changeVisNews(id, visible) {
-      try {
-        var url = `apps/intranetagglo/news/pub/${id}`
-        const response = await axios.post(generateUrl(url), { 'id': id, 'visible': visible }, { type: 'application/json' })
-        this.LastModifiedID = response.data.id
-      } catch (e) {
-        console.error(e)
-      }
-      this.$store.commit('setNewsUpdating', true)
-    },
-    async deleteNews(id) {
-      try {
-        var url = `apps/intranetagglo/news/${id}`
-        const response = await axios.delete(generateUrl(url, { id }))
-        this.LastModifiedID = response.data.id
-      } catch (e) {
-        console.error(e)
-      }
-      this.$store.commit('setNewsUpdating', true)
     },
   },
   data: function () {
@@ -234,14 +80,13 @@ export default {
       newscolor: '#00B2FF',
       focus: '',
       timer: undefined,
-      adminopt: false
     }
   }
 }
 </script>
 
 <style scoped>
-.news {
+/* .news {
   position: relative;
   width: 30%;
   max-height: 100%;
@@ -263,15 +108,6 @@ export default {
 .news-textbox-block[img="yes"] {
   flex: 0 0 calc(40% - 20px);
   height: 100%;
-  /* display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: max-content auto max-content max-content auto;
-  grid-template-areas:
-    "."
-    "."
-    "."
-    "."
-    "."; */
 }
 .news-textbox-block {
   display: flex;
@@ -545,7 +381,7 @@ export default {
   position: absolute;
   right: 0;
   background-color: transparent;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  perspective: 1000px; 
 }
 
 .flip-tagbox-inner {
@@ -582,7 +418,7 @@ export default {
 
 .news-tag-date,
 .admin-tagbox {
-  -webkit-backface-visibility: hidden; /* Safari */
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   background: #e0e0e0;
   border-radius: 10px;
@@ -597,5 +433,5 @@ export default {
   border-top: 13px solid transparent;
   right: -10px;
   top: 0;
-}
+} */
 </style>
