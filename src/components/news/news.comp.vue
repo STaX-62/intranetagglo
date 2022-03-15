@@ -537,15 +537,16 @@ export default {
 }
 
 .flip-tagbox {
+  display: inline-block;
+  margin-right: 10px;
+  position: absolute;
+  right: 0;
   background-color: transparent;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
 .flip-tagbox-inner {
   user-select: none;
-  margin-right: 10px;
-  display: inline-block;
-  padding: 0 10px 0 10px;
   position: relative;
   right: 0;
   transition: transform 0.8s;
@@ -572,6 +573,8 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
+  justify-content: center;
+  transform: rotateX(180deg);
 }
 
 .news-tag-date,
@@ -579,10 +582,8 @@ export default {
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
   background: #e0e0e0;
-}
-
-.admin-tagbox {
-  transform: rotateX(180deg);
+  border-radius: 10px;
+  padding: 0 10px 0 10px;
 }
 
 .news-tag::after {

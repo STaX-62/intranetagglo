@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <button type="button" class="news-update-button" @click="modal = !modal">
-      <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
-    </button>
+  <button type="button" class="news-update-button" @click="modal = !modal">
+    <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
+
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="UpdNews">
       <template #modal-title>
         Ajouter une
@@ -108,7 +107,7 @@
         <b-button size="md" variant="success" @click="ok()">Modifier</b-button>
       </template>
     </b-modal>
-  </div>
+  </button>
 </template>
 
 
