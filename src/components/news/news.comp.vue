@@ -546,7 +546,7 @@ export default {
   margin-right: 10px;
   display: inline-block;
   padding: 0 10px 0 10px;
-  position: absolute;
+  position: relative;
   right: 0;
   transition: transform 0.8s;
   border-radius: 10px;
@@ -556,15 +556,26 @@ export default {
   transform-style: preserve-3d;
 }
 
-.flip-card[adminopt="true"] .flip-card-inner {
+.flip-tagbox[adminopt="true"] .flip-tagbox-inner {
   transform: rotateX(180deg);
+}
+
+.news-tag-date {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.admin-tagbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 
 .news-tag-date,
 .admin-tagbox {
-  position: absolute;
-  width: 100%;
-  height: 100%;
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
   background: #e0e0e0;
