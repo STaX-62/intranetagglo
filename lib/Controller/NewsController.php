@@ -98,7 +98,7 @@ class NewsController extends Controller
     {
         return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups) {
             $photourl = $photolink;
-            if (isset($_FILES['photo'])) {
+            if (isset($_FILES['photo_upd'])) {
                 if (file_exists($_FILES['photo_upd']['tmp_name'])) {
                     if ($_FILES['photo_upd']['error'] == 0) {
                         unlink(substr($photourl, 11));
