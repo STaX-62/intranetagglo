@@ -23,9 +23,23 @@
       <div class="news-tagbox">
         <span class="news-tag" @click="search = '#' + news.category">{{ news.category }}</span>
         <button type="button" class="news-pin-button" @click="SetPinned(news)" v-if="isAdmin">
-          <b-icon class="sidebar-item-icon" variant="dark" icon="shift-fill" v-if="news.pinned == 1" />
+          <b-icon
+            class="sidebar-item-icon"
+            variant="dark"
+            icon="shift-fill"
+            v-if="news.pinned == 1"
+          />
           <b-icon class="sidebar-item-icon" variant="dark" icon="shift" v-else />
         </button>
+        <div class="news-pin-button" v-if="!isAdmin">
+          <b-icon
+            class="sidebar-item-icon"
+            variant="dark"
+            icon="shift-fill"
+            v-if="news.pinned == 1"
+          />
+          <b-icon class="sidebar-item-icon" variant="dark" icon="shift" v-else />
+        </div>
         <button
           type="button"
           class="news-visibility-button"
@@ -104,7 +118,7 @@ export default {
       })
         .then(value => {
           if (value) {
-              this.changePinned(news.id)
+            this.changePinned(news.id)
           }
         })
     },
