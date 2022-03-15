@@ -98,6 +98,25 @@
     z-index: 100;
 }
 
+@media (max-height: 1250px) {
+    .apps-container-main {
+        display: flex;
+    }
+
+    .apps-content-main .b-icon {
+        display: none;
+    }
+
+    .apps-container {
+        grid-template-columns: 80px 80px;
+    }
+    .apps-title{
+        font-size: 11px;
+    }
+    .apps-header{
+        font-size: 20px;
+    }
+}
 
 
 

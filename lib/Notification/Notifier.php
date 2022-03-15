@@ -62,6 +62,8 @@ class Notifier implements INotifier
         $notification->setParsedSubject($notification->getSubject());
         $notification->setParsedMessage($notification->getMessage());
 
+        $notification->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index', ['id' => $notification->getObjectId()]), 'POST');
+
         $notification->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')))
             ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index', ['id' => $notification->getObjectId()]));
 

@@ -271,3 +271,9 @@
 .news-del-button:focus {
     outline: none !important;
 }
+
+@media (max-height: 1250px) {
+    #news-frame{
+        grid-template-columns: calc(100% - 200px) 200px;
+    }
+}
