@@ -57,7 +57,8 @@
         >
           <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
         </button>
-        <div class="news-tag-date">{{ getFormatedDate }}</div>
+        <div class="news-tag-date-md">{{ getFormatedDateMD }}</div>
+        <div class="news-tag-date-sm">{{ getFormatedDateSM }}</div>
       </div>
     </div>
   </div>
@@ -91,8 +92,11 @@ export default {
         this.$store.commit('updateSearch', value)
       }
     },
-    getFormatedDate() {
+    getFormatedDateMD() {
       return moment((this.news.time * 1000)).format('LLL')
+    },
+    getFormatedDateSM() {
+      return moment((this.news.time * 1000)).format('l')
     },
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
@@ -508,7 +512,7 @@ export default {
   user-select: none;
   transition: color 0.2s;
 }
-.news-tag-date {
+.news-tag-date-md {
   display: inline-block;
   height: 1.7rem;
   font-size: 13px;
@@ -516,12 +520,18 @@ export default {
   color: #777;
   border-radius: 10px;
   line-height: 26px;
-  padding: 0 10px 0 23px;
-  position: relative;
+  padding: 0 10px 0 10px;
+  position: absolute;
+  right: 4px;
   margin-right: 20px;
   user-select: none;
   transition: color 0.2s;
 }
+.news-tag-date-sm {
+  display: none;
+  position: absolute;
+}
+
 .news-tag::before {
   content: "";
   position: absolute;
@@ -541,5 +551,27 @@ export default {
   border-top: 13px solid transparent;
   right: -10px;
   top: 0;
+}
+
+@media (max-height: 1250px) {
+  .news-tag-date-sm {
+    display: inline-block;
+    height: 1.7rem;
+    font-size: 13px;
+    background: #e0e0e0;
+    color: #777;
+    border-radius: 10px;
+    line-height: 26px;
+    padding: 0 10px 0 10px;
+    position: absolute;
+    right: 4px;
+    margin-right: 20px;
+    user-select: none;
+    transition: color 0.2s;
+  }
+  .news-tag-date-md {
+    display: none;
+    position: absolute;
+  }
 }
 </style>
