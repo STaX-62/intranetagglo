@@ -31,12 +31,20 @@
           />
           <b-icon class="sidebar-item-icon" variant="dark" icon="shift" v-else />
         </button>
-        <div class="news-pin-button" v-if="!isAdmin">
+        <div class="news-tagbox-button" v-if="!isAdmin">
           <b-icon
             class="sidebar-item-icon"
             variant="dark"
             icon="shift-fill"
             v-if="news.pinned == 1"
+          />
+        </div>
+        <div class="news-tagbox-button" v-if="isAdmin && news.visible == 0">
+          <b-icon
+            class="sidebar-item-icon"
+            variant="dark"
+            icon="eye-slash"
+            @click="ChangeVisibility(news)"
           />
         </div>
         <button type="button" class="news-pin-button" @click="AdminOptions()" v-if="isAdmin">
@@ -524,7 +532,7 @@ export default {
   line-height: 26px;
   padding: 0 10px 0 10px;
   position: relative;
-  margin-right: 20px;
+  margin-right: 10px;
   cursor: pointer;
   user-select: none;
   transition: color 0.2s;

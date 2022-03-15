@@ -247,7 +247,7 @@
     margin-right: auto;
 }
 
-.news-pin-button,
+.news-tagbox-button,
 .news-admin-button {
     position: relative;
     font-size: 1.25rem !important;
@@ -264,7 +264,7 @@
 }
 
 .news-admin-button,
-.news-pin-button:focus,
+.news-tagbox-button:focus,
 .news-visibility-button:focus,
 .news-update-button:focus,
 .news-del-button:focus {
@@ -289,6 +289,7 @@
     min-height: 26px;
     display: flex;
     align-items: center;
+    padding: 7px 6px;
 }
 
 @media (max-height: 768px) {
