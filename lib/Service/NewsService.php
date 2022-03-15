@@ -48,6 +48,11 @@ class NewsService
 		}
 	}
 
+	public function getLastPinned()
+	{
+		return $this->mapper->getLastPinned();
+	}
+
 	public function findAll($firstresult, $search): array
 	{
 		$search = trim($search, " \n\r\t\v");
@@ -73,7 +78,7 @@ class NewsService
 		return $this->mapper->findByGroups($firstresult, $groups, $search, $category);
 	}
 
-	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible)
+	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible, $pinned)
 	{
 		$news = new News();
 		$news->setAuthor($author);
@@ -85,6 +90,7 @@ class NewsService
 		$news->setGroups($groups);
 		$news->setTime($time);
 		$news->setVisible($visible);
+		$news->setPinned($pinned);
 		return $this->mapper->insert($news);
 	}
 
@@ -110,6 +116,17 @@ class NewsService
 			$news = $this->mapper->find($id);
 			$news->setVisible($visible);
 			$news->setTime($time);
+			return $this->mapper->update($news);
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
+	public function pinNewsById($id, $pinned)
+	{
+		try {
+			$news = $this->mapper->find($id);
+			$news->setPinned($pinned);
 			return $this->mapper->update($news);
 		} catch (Exception $e) {
 			$this->handleException($e);

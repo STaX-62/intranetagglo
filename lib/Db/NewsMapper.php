@@ -36,6 +36,20 @@ class NewsMapper extends QBMapper
         return $this->findEntity($qb);
     }
 
+    public function getLastPinned()
+    {
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+
+        $qb->select('id')
+            ->from($this->getTableName(), 'q')
+            ->where('q.pinned = 1');
+
+        $cursor = $qb->execute();
+        $row = $cursor->fetchAll(\PDO::FETCH_COLUMN);
+        return $row;
+    }
+
     public function categoryArray()
     {
         /* @var $qb IQueryBuilder */
@@ -65,7 +79,8 @@ class NewsMapper extends QBMapper
             ->orWhere('q.category = :category')
             ->setParameter('search', '%' . $search . '%')
             ->setParameter('category', $category)
-            ->orderBy('q.time', 'DESC')
+            ->addOrderBy('q.pinned', 'DESC')
+            ->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
             ->setMaxResults(3);
 
@@ -112,7 +127,8 @@ class NewsMapper extends QBMapper
             ->setParameter('groups', $groups)
             ->setParameter('search', '%' . $search . '%')
             ->setParameter('category', $category)
-            ->orderBy('q.time', 'DESC')
+            ->addOrderBy('q.pinned', 'DESC')
+            ->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
             ->setMaxResults(3);
 
@@ -157,7 +173,8 @@ class NewsMapper extends QBMapper
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
-            ->orderBy('q.time', 'DESC')
+            ->addOrderBy('q.pinned', 'DESC')
+            ->addOrderBy('q.time', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(7);
 

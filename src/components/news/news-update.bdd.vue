@@ -144,7 +144,6 @@ export default {
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
       this.autocomplete.groups = this.autocomplete.groups.join(';')
-      console.log(this.newimage + ' name : ' + this.newimage.name)
       this.updateNews(this.autocomplete, this.newimage)
     },
     async updateNews(news, newimage) {

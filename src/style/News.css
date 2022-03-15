@@ -247,7 +247,7 @@
     margin-right: auto;
 }
 
-
+.news-pin-button,
 .news-visibility-button,
 .news-update-button,
 .news-del-button {
@@ -265,6 +265,7 @@
     border-color: #343a40;
 }
 
+.news-pin-button:focus,
 .news-visibility-button:focus,
 .news-update-button:focus,
 .news-del-button:focus {

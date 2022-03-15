@@ -84,6 +84,12 @@ return [
             'requirements' => ['id' => '\d+'],
         ],
         [
+            'name' => 'news#pinNews',
+            'url' => '/news/pin/{id}',
+            'verb' => 'POST',
+            'requirements' => ['id' => '\d+']
+        ],
+        [
             'name' => 'news#getCategory',
             'url' => '/news/category',
             'verb' => 'GET',
@@ -128,7 +134,7 @@ return [
             'verb' => 'DELETE',
             'requirements' => ['id' => '\d+'],
         ],
-        
+
         //////////  A P I  //////////
         [
             'name' => 'page#searchGroups',

@@ -22,6 +22,10 @@
       </div>
       <div class="news-tagbox">
         <span class="news-tag" @click="search = '#' + news.category">{{ news.category }}</span>
+        <button type="button" class="news-pin-button" @click="SetPinned(news)" v-if="isAdmin">
+          <b-icon class="sidebar-item-icon" variant="dark" icon="shift" v-if="news.pinned == 1" />
+          <b-icon class="sidebar-item-icon" variant="dark" icon="shift-fill" v-else />
+        </button>
         <button
           type="button"
           class="news-visibility-button"
@@ -85,6 +89,31 @@ export default {
         this.$store.commit('updateNewsFocus', this.arrayid)
       }
     },
+    SetPinned(news) {
+      this.$bvModal.msgBoxConfirm(`Titre de l'actualité : ${news.title}`, {
+        title: news.pinned == 0 ? 'épingler cette actualité ? (si une autre actualité est épingler, celle ci prendra sa place)' : 'annuler l\'épinglage ?',
+        id: 'newsmodal4',
+        size: 'md',
+        buttonSize: 'sm',
+        okVariant: news.visible == 0 ? 'success' : 'danger',
+        okTitle: news.visible == 0 ? 'Epingler' : 'Annuler l\'épinglage',
+        cancelTitle: 'Retour',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            if (news.visible == 1) {
+              this.changeVisNews(news.id, 0)
+            }
+            else {
+              this.changeVisNews(news.id, 1)
+            }
+
+          }
+        })
+    },
     ChangeVisibility(news) {
       this.$bvModal.msgBoxConfirm(`Changement de visibilité de cette actualité : ${news.title}`, {
         title: news.visible == 0 ? 'cette actualité n\'est pas encore publiée , voulez-vous la publier ?' : 'cette actualité est publiée , voulez-vous la cacher ?',
@@ -100,7 +129,7 @@ export default {
       })
         .then(value => {
           if (value) {
-            if (news.visible == 1) {
+            if (news.pinned == 1) {
               this.changeVisNews(news.id, 0)
             }
             else {
@@ -128,6 +157,16 @@ export default {
             this.deleteNews(news.id)
           }
         })
+    },
+    async changePinned(id) {
+      try {
+        var url = `apps/intranetagglo/news/pin/${id}`
+        const response = await axios.post(generateUrl(url), { 'id': id }, { type: 'application/json' })
+        this.LastModifiedID = response.data.id
+      } catch (e) {
+        console.error(e)
+      }
+      this.$store.commit('setNewsUpdating', true)
     },
     async changeVisNews(id, visible) {
       try {

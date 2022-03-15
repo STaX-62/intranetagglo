@@ -91,7 +91,7 @@ class NewsController extends Controller
         }
 
 
-        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $this->timeFactory->getTime(), 0);
+        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $this->timeFactory->getTime(), 0, 0);
     }
 
     public function update(int $id, string $title, string $subtitle, string $text,  string $photolink,  string $category,  string $groups)
@@ -113,6 +113,23 @@ class NewsController extends Controller
             }
 
             return $this->service->update($id, $title, $subtitle, $text, $photourl, $category, $groups);
+        });
+    }
+
+    public function pinNews(int $id)
+    {
+        $lastPinned = $this->service->getLastPinned();
+        return $this->handleNotFound(function () use ($id, $lastPinned) {
+            if (count($lastPinned) != 0) {
+                if ($lastPinned[0] == $id) {
+                    return $this->service->pinNewsById($lastPinned[0], 0);
+                } else {
+                    $this->service->pinNewsById($lastPinned[0], 0);
+                    return $this->service->pinNewsById($id, 1);
+                }
+            } else {
+                return $this->service->pinNewsById($id, 1);
+            }
         });
     }
 
