@@ -92,11 +92,7 @@ export default {
       }
     },
     getFormatedDate() {
-      console.log('news:' + this.news)
-      console.log('news.time:' + this.news.time)
-      console.log('moment news.time:' + moment(this.news.time).format('L'))
-      console.log('moment parseint:' + moment(parseInt(this.news.time)).format('L'))
-      return moment(parseInt(this.news.time)).format('L')
+      return moment((this.news.time * 1000)).format('LLL')
     },
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
