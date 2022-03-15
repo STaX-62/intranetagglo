@@ -23,8 +23,8 @@
       <div class="news-tagbox">
         <span class="news-tag" @click="search = '#' + news.category">{{ news.category }}</span>
         <button type="button" class="news-pin-button" @click="SetPinned(news)" v-if="isAdmin">
-          <b-icon class="sidebar-item-icon" variant="dark" icon="shift" v-if="news.pinned == 1" />
-          <b-icon class="sidebar-item-icon" variant="dark" icon="shift-fill" v-else />
+          <b-icon class="sidebar-item-icon" variant="dark" icon="shift-fill" v-if="news.pinned == 1" />
+          <b-icon class="sidebar-item-icon" variant="dark" icon="shift" v-else />
         </button>
         <button
           type="button"
@@ -95,8 +95,8 @@ export default {
         id: 'newsmodal4',
         size: 'md',
         buttonSize: 'sm',
-        okVariant: news.visible == 0 ? 'success' : 'danger',
-        okTitle: news.visible == 0 ? 'Epingler' : 'Annuler l\'épinglage',
+        okVariant: news.pinned == 0 ? 'success' : 'danger',
+        okTitle: news.pinned == 0 ? 'Epingler' : 'Annuler l\'épinglage',
         cancelTitle: 'Retour',
         footerClass: 'p-2',
         hideHeaderClose: false,
@@ -104,13 +104,7 @@ export default {
       })
         .then(value => {
           if (value) {
-            if (news.visible == 1) {
-              this.changeVisNews(news.id, 0)
-            }
-            else {
-              this.changeVisNews(news.id, 1)
-            }
-
+              this.changePinned(news.id)
           }
         })
     },
@@ -129,7 +123,7 @@ export default {
       })
         .then(value => {
           if (value) {
-            if (news.pinned == 1) {
+            if (news.visible == 1) {
               this.changeVisNews(news.id, 0)
             }
             else {

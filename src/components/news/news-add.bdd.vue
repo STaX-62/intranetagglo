@@ -129,6 +129,14 @@ export default {
       this.news.author = this.$store.state.username
       this.news.groups = this.news.groups.join(';')
       this.createNews(this.news)
+      this.news = {
+        title: "",
+        subtitle: "",
+        text: "",
+        photo: null,
+        category: "",
+        groups: []
+      }
     },
     async createNews(news) {
       try {
