@@ -48,7 +48,7 @@
                 <b-icon
                   class="sidebar-item-icon"
                   variant="dark"
-                  :icon="news.visible == 0 ? 'eye' : 'eye-slash'"
+                  :icon="news.visible == 1 ? 'eye' : 'eye-slash'"
                 />
               </button>
               <NewsUpdate :autocomplete="news" />
