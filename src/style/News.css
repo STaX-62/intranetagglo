@@ -146,6 +146,7 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     overflow: auto;
+    height: 100%;
 }
 
 #news-frame {
@@ -334,6 +335,9 @@
 .news-row[focus="center"] .news {
     cursor: default;
 }
+.news-textbox{
+    background-color: var(--color-mode-2);
+}
 
 .news-textbox-block[img="yes"] {
     flex: 0 0 calc(40% - 20px);
@@ -352,6 +356,7 @@
 .news-textbox-block {
     display: flex;
     flex-direction: column;
+    background-color: var(--color-mode-2);
 }
 
 .news-row[focus=""] .news-textbox-block * {
@@ -390,7 +395,7 @@
     pointer-events: none;
     background-image: linear-gradient(to bottom,
             rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 1) 90%);
+            var(--color-mode-2));
     width: 100%;
     height: 4em;
 }
@@ -487,7 +492,7 @@
     grid-area: Img !important;
     flex-grow: 1;
     display: flex;
-    height: 100%;
+    height: calc(100% - 40px);
     width: 100%;
 }
 
@@ -508,6 +513,7 @@
 .news-title {
     font-family: "Voces", "Open Sans", arial, sans-serif;
     font-size: 24px;
+    color: var(--color-mode-contrast-1);
 }
 
 .news-subtitle {
@@ -592,22 +598,20 @@
     background-image: linear-gradient(-70deg, var(--news-color), transparent 50%);
 }
 
-.news-textbox-block[img="no"] .news-description {
+.news-description {
+    color: var(--color-mode-contrast-4);
     overflow: hidden;
     font-size: 15px;
-    height: calc(100% - 60px);
-    margin: 5px;
-    color: #424242;
     text-overflow: ellipsis;
+    margin: 5px;
+}
+
+.news-textbox-block[img="no"] .news-description {
+    height: calc(100% - 60px);
 }
 
 .news-textbox-block[img="yes"] .news-description {
-    overflow: hidden;
-    font-size: 15px;
     height: 100%;
-    margin: 5px;
-    color: #424242;
-    text-overflow: ellipsis;
 }
 
 .news-tagbox {
@@ -630,8 +634,8 @@
     display: inline-block;
     height: 1.7rem;
     font-size: 13px;
-    background: #e0e0e0;
-    color: #777;
+    background: var(--color-mode-6);
+    color: var(--color-mode-5);
     border-radius: 3px 0 0 3px;
     line-height: 26px;
     padding: 0 10px 0 10px;
@@ -645,7 +649,7 @@
 .news-tag-date {
     height: 1.7rem;
     font-size: 13px;
-    color: #777;
+    color: var(--color-mode-5);
     line-height: 26px;
 }
 
@@ -697,7 +701,7 @@
     -webkit-backface-visibility: hidden;
     /* Safari */
     backface-visibility: hidden;
-    background: #e0e0e0;
+    background: var(--color-mode-6);
     border-radius: 10px;
     padding: 0 10px 0 10px;
 }

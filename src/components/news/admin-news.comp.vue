@@ -26,7 +26,7 @@
           <b-icon
             class="sidebar-item-icon"
             variant="dark"
-            :icon="news.pinned ? 'shift' : 'shift-fill'"
+            :icon="news.pinned == 1 ? 'shift' : 'shift-fill'"
           />
         </button>
         <div class="news-tagbox-button" v-if="news.visible == 0">
@@ -48,7 +48,7 @@
                 <b-icon
                   class="sidebar-item-icon"
                   variant="dark"
-                  :icon="news.visible ? 'eye' : 'eye-slash'"
+                  :icon="news.visible == 1 ? 'eye' : 'eye-slash'"
                 />
               </button>
               <NewsUpdate :autocomplete="news" />
