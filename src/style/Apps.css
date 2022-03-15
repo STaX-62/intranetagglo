@@ -98,7 +98,7 @@
     z-index: 100;
 }
 
-@media (max-height: 1250px) {
+@media (max-width: 1250px) {
     .apps-container-main {
         display: flex;
     }
@@ -110,21 +110,15 @@
     .apps-container {
         grid-template-columns: 80px 80px;
     }
-    .apps-title{
+
+    .apps-title {
         font-size: 11px;
     }
-    .apps-header{
+
+    .apps-header {
         font-size: 20px;
     }
 }
-
-
-
-
-
-
-
-
 
 .apps-content-main:nth-child(1n + 6) {
     border-color: var(--color-secondary);

@@ -485,7 +485,7 @@ export default {
 .news-tagbox {
   position: absolute;
   border-radius: 10px;
-  padding: 0 20px;
+  padding: 0 10px;
   display: flex;
   align-items: center;
   height: 40px;
@@ -496,6 +496,7 @@ export default {
   background: #fff;
   width: 100%;
   z-index: 100;
+  background-color:var(--color-light);
 }
 .news-tag {
   display: inline-block;
@@ -522,8 +523,7 @@ export default {
   line-height: 26px;
   padding: 0 10px 0 10px;
   position: absolute;
-  right: 4px;
-  margin-right: 20px;
+  margin-right: 10px;
   user-select: none;
   transition: color 0.2s;
 }
@@ -564,8 +564,7 @@ export default {
     line-height: 26px;
     padding: 0 10px 0 10px;
     position: absolute;
-    right: 4px;
-    margin-right: 20px;
+    margin-right: 10px;
     user-select: none;
     transition: color 0.2s;
   }
