@@ -39,26 +39,39 @@
             v-if="news.pinned == 1"
           />
         </div>
-        <button
-          type="button"
-          class="news-visibility-button"
-          @click="ChangeVisibility(news)"
-          v-if="isAdmin"
-        >
-          <b-icon class="sidebar-item-icon" variant="dark" icon="eye" v-if="news.visible == 1" />
-          <b-icon class="sidebar-item-icon" variant="dark" icon="eye-slash" v-else />
+        <button type="button" class="news-pin-button" @click="AdminOptions()" v-if="isAdmin">
+          <b-icon class="sidebar-item-icon" variant="dark" icon="gear" />
         </button>
-        <NewsUpdate v-if="isAdmin" :autocomplete="news" />
-        <button
-          type="button"
-          class="news-del-button"
-          @click="DeleteVerification(news)"
-          v-if="isAdmin"
-        >
-          <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
-        </button>
-        <div class="news-tag-date-md">{{ getFormatedDateMD }}</div>
-        <div class="news-tag-date-sm">{{ getFormatedDateSM }}</div>
+        <div class="flip-tagbox" :adminopt="adminopt">
+          <div class="flip-tagbox-inner">
+            <div class="news-tag-date">{{ getFormatedDate }}</div>
+            <div class="admin-tagbox">
+              <button
+                type="button"
+                class="news-visibility-button"
+                @click="ChangeVisibility(news)"
+                v-if="isAdmin"
+              >
+                <b-icon
+                  class="sidebar-item-icon"
+                  variant="dark"
+                  icon="eye"
+                  v-if="news.visible == 1"
+                />
+                <b-icon class="sidebar-item-icon" variant="dark" icon="eye-slash" v-else />
+              </button>
+              <NewsUpdate v-if="isAdmin" :autocomplete="news" />
+              <button
+                type="button"
+                class="news-del-button"
+                @click="DeleteVerification(news)"
+                v-if="isAdmin"
+              >
+                <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -93,7 +106,7 @@ export default {
       }
     },
     getFormatedDateMD() {
-      return moment((this.news.time * 1000)).format('LLL')
+      return moment((this.news.time * 1000)).format('LL')
     },
     getFormatedDateSM() {
       return moment((this.news.time * 1000)).format('l')
@@ -106,6 +119,9 @@ export default {
     },
   },
   methods: {
+    AdminOptions() {
+      this.adminopt = !this.adminopt
+    },
     OpenNews() {
       if (this.$store.state.newsfocus == '') {
         this.$store.commit('updateNewsFocus', this.arrayid)
@@ -214,7 +230,8 @@ export default {
     return {
       newscolor: '#00B2FF',
       focus: '',
-      timer: undefined
+      timer: undefined,
+      adminopt: false
     }
   }
 }
@@ -484,7 +501,6 @@ export default {
 }
 .news-tagbox {
   position: absolute;
-  border-radius: 10px;
   padding: 0 10px;
   display: flex;
   align-items: center;
@@ -496,7 +512,7 @@ export default {
   background: #fff;
   width: 100%;
   z-index: 100;
-  background-color:var(--color-light);
+  background-color: var(--color-light);
 }
 .news-tag {
   display: inline-block;
@@ -506,44 +522,61 @@ export default {
   color: #777;
   border-radius: 3px 0 0 3px;
   line-height: 26px;
-  padding: 0 10px 0 23px;
+  padding: 0 10px 0 10px;
   position: relative;
   margin-right: 20px;
   cursor: pointer;
   user-select: none;
   transition: color 0.2s;
 }
-.news-tag-date-md {
-  display: inline-block;
+.news-tag-date {
   height: 1.7rem;
   font-size: 13px;
-  background: #e0e0e0;
   color: #777;
-  border-radius: 10px;
   line-height: 26px;
+}
+
+.flip-tagbox {
+  background-color: transparent;
+  width: 300px;
+  height: 200px;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+.flip-tagbox-inner {
+  user-select: none;
+  margin-right: 10px;
+  display: inline-block;
   padding: 0 10px 0 10px;
   position: absolute;
   right: 0;
-  margin-right: 10px;
-  user-select: none;
-  transition: color 0.2s;
-}
-.news-tag-date-sm {
-  display: none;
-  position: absolute;
+  transition: transform 0.8s;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
 }
 
-.news-tag::before {
-  content: "";
-  position: absolute;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
-  height: 6px;
-  left: 10px;
-  width: 6px;
-  top: 10px;
+.flip-card[adminopt="true"] .flip-card-inner {
+  transform: rotateX(180deg);
 }
+
+.news-tag-date,
+.admin-tagbox {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  background: #e0e0e0;
+}
+
+.admin-tagbox {
+  transform: rotateY(180deg);
+}
+
 .news-tag::after {
   content: "";
   position: absolute;
@@ -552,27 +585,5 @@ export default {
   border-top: 13px solid transparent;
   right: -10px;
   top: 0;
-}
-
-@media (max-width: 1250px) {
-  .news-tag-date-sm {
-    display: inline-block;
-    height: 1.7rem;
-    font-size: 13px;
-    background: #e0e0e0;
-    color: #777;
-    border-radius: 10px;
-    line-height: 26px;
-    padding: 0 10px 0 10px;
-    position: absolute;
-    right: 0;
-    margin-right: 10px;
-    user-select: none;
-    transition: color 0.2s;
-  }
-  .news-tag-date-md {
-    display: none;
-    position: absolute;
-  }
 }
 </style>
