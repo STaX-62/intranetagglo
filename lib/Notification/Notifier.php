@@ -60,7 +60,7 @@ class Notifier implements INotifier
         }
 
         $notification->setParsedSubject($notification->getSubject());
-        $notification->setParsedMessage($notification->getMessage());
+        $notification->setParsedMessage('<a href="' . $this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index') . '#' . $notification->getObjectId() . '>' .  $notification->getMessage() . '</a>');
 
         $notification->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index') . '#' . $notification->getObjectId());
 
