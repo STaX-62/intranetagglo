@@ -59,16 +59,13 @@ class Notifier implements INotifier
             throw new InvalidArgumentException('Unknown subject');
         }
 
-        $notification->setParsedSubject($notification->getSubject())
-            ->setRichSubject('{app} -' . $notification->getSubject(), [
-                'app' => [
-                    'type' => 'app',
-                    'id' => $notification->getObjectType(),
-                    'name' => $notification->getApp(),
-                ]
-            ]);
-        $notification->setParsedMessage($notification->getMessage());
-
+        $notification->setRichSubject('{app} -' . $notification->getSubject(), [
+            'app' => [
+                'type' => 'app',
+                'id' => $notification->getObjectType(),
+                'name' => $notification->getApp(),
+            ]
+        ]);
 
         $notification->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index') . '#' . $notification->getObjectId());
 
