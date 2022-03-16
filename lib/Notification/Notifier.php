@@ -59,7 +59,9 @@ class Notifier implements INotifier
             throw new InvalidArgumentException('Unknown subject');
         }
 
-        $notification->setRichSubject('{app} -' . $notification->getSubject(), [
+        $notification->setParsedSubject($notification->getSubject());
+        $notification->setParsedMessage($notification->getMessage())
+        ->setRichSubject('{app}' . $notification->getMessage(), [
             'app' => [
                 'type' => 'app',
                 'id' => $notification->getObjectType(),
