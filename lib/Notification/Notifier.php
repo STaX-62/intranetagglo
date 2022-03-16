@@ -55,19 +55,16 @@ class Notifier implements INotifier
             throw new \InvalidArgumentException();
         }
 
-        if ($notification->getSubject() !== 'une nouvelle actualité est disponible dans l\'intranet') {
-            throw new InvalidArgumentException('Unknown subject');
-        }
+        $notification->setParsedSubject($notification->getSubject())
+            ->setRichSubject('{app} - ' . $notification->getSubject(), [
+                'app' => [
+                    'type' => 'app',
+                    'id' => $notification->getObjectType(),
+                    'name' => $notification->getApp(),
+                ]
+            ]);
+        $notification->setParsedMessage($notification->getMessage());
 
-        $notification->setParsedSubject($notification->getSubject());
-        $notification->setParsedMessage($notification->getMessage())
-        ->setRichSubject('{app} - ' . $notification->getMessage(), [
-            'app' => [
-                'type' => 'app',
-                'id' => $notification->getObjectType(),
-                'name' => $notification->getApp(),
-            ]
-        ]);
 
         $notification->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index') . '#' . $notification->getObjectId());
 
