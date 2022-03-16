@@ -6,7 +6,7 @@ return [
         // 'menu_api' => ['url' => '/api/0.1/menus']
     ],
     'routes' => [
-        ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+        ['name' => 'page#index', 'url' => '/', 'verb' => 'POST'],
         [
             'name' => 'page#getUserInfo',
             'url' => '/user',
