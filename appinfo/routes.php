@@ -1,12 +1,8 @@
 <?php
 
 return [
-    'resources' => [
-        // 'menu' => ['url' => '/menus'],
-        // 'menu_api' => ['url' => '/api/0.1/menus']
-    ],
     'routes' => [
-        ['name' => 'page#index', 'url' => '/', 'verb' => 'POST'],
+        ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
         [
             'name' => 'page#getUserInfo',
             'url' => '/user',

@@ -60,9 +60,9 @@ class Notifier implements INotifier
         }
 
         $notification->setParsedSubject($notification->getSubject());
-        $notification->setParsedMessage('<a href="' . $this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index') . '#' . $notification->getObjectId() . '>' .  $notification->getMessage() . '</a>');
+        $notification->setParsedMessage($notification->getMessage());
 
-        $notification->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index') . '#' . $notification->getObjectId());
+        $notification->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index'));
 
         $notification->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')));
 
