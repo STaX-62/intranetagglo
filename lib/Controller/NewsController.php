@@ -143,6 +143,10 @@ class NewsController extends Controller
             if ($visible == 1) {
                 $notification = $this->NotificationManager->createNotification();
 
+                $action = $notification->createAction();
+                $action->setLabel('goto')
+                    ->setLink('intranetagglo_goto', 'GET');
+
                 $notification->setApp(Application::APP_ID)
                     ->setDateTime(new \DateTime())
                     ->setObject('news', (string)$rq->getId())
