@@ -147,10 +147,9 @@ class NewsController extends Controller
                 $notification->setApp(Application::APP_ID)
                     ->setDateTime(new \DateTime())
                     ->setObject('news', (string)$rq->getId())
-                    ->setSubject('une nouvelle actualité est disponible dans l\'intranet', [
+                    ->setSubject($rq->getTitle() . ' - ' . $rq->getSubtitle(), [
                         'author' =>  $rq->getAuthor()
-                    ])
-                    ->setMessage($rq->getTitle() . ' - ' . $rq->getSubtitle());
+                    ]);
 
 
                 if ($groups[0] == "") {
