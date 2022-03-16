@@ -67,7 +67,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAll($firstresult, string $search, string $category): array
+    public function findAll($firstresult, string $search, string $category, string $searchid): array
     {
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
@@ -77,8 +77,10 @@ class NewsMapper extends QBMapper
             ->orWhere('q.subtitle LIKE :search')
             ->orWhere('q.text LIKE :search')
             ->orWhere('q.category = :category')
+            ->orWhere('q.id = :searchid')
             ->setParameter('search', '%' . $search . '%')
             ->setParameter('category', $category)
+            ->setParameter('searchid', $searchid)
             ->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
@@ -93,8 +95,10 @@ class NewsMapper extends QBMapper
             ->orWhere('q.subtitle LIKE :search')
             ->orWhere('q.text LIKE :search')
             ->orWhere('q.category = :category')
+            ->orWhere('q.id = :searchid')
             ->setParameter('search', '%' . $search . '%')
-            ->setParameter('category', $category);
+            ->setParameter('category', $category)
+            ->setParameter('searchid', $searchid);
 
         $cursor = $qb2->execute();
         $row = $cursor->fetch();
@@ -143,12 +147,14 @@ class NewsMapper extends QBMapper
             ->orWhere('q.subtitle LIKE :search')
             ->orWhere('q.text LIKE :search')
             ->orWhere('q.category = :category')
+            ->orWhere('q.id = :searchid')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
             ->setParameter('search', '%' . $search . '%')
-            ->setParameter('category', $category);
+            ->setParameter('category', $category)
+            ->setParameter('searchid', $searchid);
 
         $cursor = $qb2->execute();
         $row = $cursor->fetch();

@@ -58,11 +58,16 @@ class NewsService
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#')) {
-			$category =  substr($search, 1);
+			if (is_numeric(substr($search, 1))) {
+				$qb = $this->mapper->findAll($firstresult, $search, '', substr($search, 1));
+			} else {
+				$qb = $this->mapper->findAll($firstresult, $search, substr($search, 1), '');
+			}
 		} else {
-			$category = '';
+			$qb = $this->mapper->findAll($firstresult, $search, '', '');
 		}
-		return $this->mapper->findAll($firstresult, $search, $category);
+
+		return $qb;
 	}
 
 	public function findByGroups(int $firstresult, array $groups, string $search): array
@@ -79,7 +84,7 @@ class NewsService
 			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', '');
 		}
 
-		return [$qb, is_numeric(substr($search, 1))];
+		return $qb;
 	}
 
 	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible, $pinned)
