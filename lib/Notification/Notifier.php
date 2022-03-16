@@ -62,10 +62,20 @@ class Notifier implements INotifier
         $notification->setParsedSubject($notification->getSubject());
         $notification->setParsedMessage($notification->getMessage());
 
-        $notification->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index', ['id' => $notification->getObjectId()]), 'POST');
+        foreach ($notification->getActions() as $action) {
+            switch ($action->getLabel()) {
+                case 'goto':
+                    $action->setParsedLabel($l->t('Accept'))
+                        ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index') . '#' . $notification->getObjectId(), 'POST');
+                    break;
+            }
 
-        $notification->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')))
-            ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index', ['id' => $notification->getObjectId()]));
+            $notification->addParsedAction($action);
+        }
+
+        $notification->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index') . '#' . $notification->getObjectId(), 'POST');
+
+        $notification->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('intranetagglo', 'LogoCA2BM.png')));
 
         return $notification;
     }
