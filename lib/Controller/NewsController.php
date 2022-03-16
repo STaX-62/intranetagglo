@@ -147,9 +147,10 @@ class NewsController extends Controller
                 $notification->setApp(Application::APP_ID)
                     ->setDateTime(new \DateTime())
                     ->setObject('news', (string)$rq->getId())
-                    ->setSubject($rq->getTitle() . ' - ' . $rq->getSubtitle(), [
+                    ->setSubject($rq->getTitle(), [
                         'author' =>  $rq->getAuthor()
-                    ]);
+                    ])
+                    ->setMessage($rq->getSubtitle());
 
 
                 if ($groups[0] == "") {
