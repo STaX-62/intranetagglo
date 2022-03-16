@@ -61,7 +61,7 @@ class Notifier implements INotifier
 
         $notification->setParsedSubject($notification->getSubject());
         $notification->setParsedMessage($notification->getMessage())
-        ->setRichSubject('{app}' . $notification->getMessage(), [
+        ->setRichSubject('{app} - ' . $notification->getMessage(), [
             'app' => [
                 'type' => 'app',
                 'id' => $notification->getObjectType(),
