@@ -143,18 +143,13 @@ class NewsController extends Controller
             if ($visible == 1) {
                 $notification = $this->NotificationManager->createNotification();
 
-                $action = $notification->createAction();
-                $action->setLabel('goto')
-                    ->setLink('intranetagglo_goto', 'POST');
-
                 $notification->setApp(Application::APP_ID)
                     ->setDateTime(new \DateTime())
                     ->setObject('news', (string)$rq->getId())
                     ->setSubject('une nouvelle actualité est disponible dans l\'intranet', [
                         'author' =>  $rq->getAuthor()
                     ])
-                    ->setMessage($rq->getTitle() . ' - ' . $rq->getSubtitle())
-                    ->addAction($action);
+                    ->setMessage($rq->getTitle() . ' - ' . $rq->getSubtitle());
 
 
                 if ($groups[0] == "") {
