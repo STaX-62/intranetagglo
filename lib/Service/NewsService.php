@@ -79,7 +79,7 @@ class NewsService
 			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', '');
 		}
 
-		return $qb;
+		return [$qb, is_numeric(substr($search, 1))];
 	}
 
 	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible, $pinned)
