@@ -28,11 +28,9 @@
         ". .";
     background: url("../patterns/brilliant.png"),
         var(--color-mode-2);
-    box-shadow: 2px 2px 3px rgb(55 84 170 / 15%),
-        0px 0px 4px rgb(255 255 255 / 0%), 7px 7px 15px rgb(55 84 170 / 15%),
-        -7px -7px 20px rgb(0 0 0 / 10%), 0px 0px 4px rgb(255 255 255 / 20%) !important;
-    border: 2px solid rgba(221, 221, 221, 0.185) !important;
+    box-shadow: 0 4px 21px -12px var(--color-mode-shadow-4);
     transition: 0.5s;
+    border: 2px solid var(--color-mode-4);
 }
 
 .apps-container.hidden {

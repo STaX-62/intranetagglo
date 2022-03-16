@@ -173,7 +173,6 @@ class NewsMapper extends QBMapper
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
-            ->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(7);
