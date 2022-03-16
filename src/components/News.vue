@@ -158,7 +158,7 @@ export default {
     }
   },
   mounted() {
-    this.search = window.location.href.substring(this.href.lastIndexOf('/') + 1);
+    this.search = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
     axios.get(generateUrl(`apps/intranetagglo/user`))
       .then(response => {
         this.$store.commit('setUser', response.data)
