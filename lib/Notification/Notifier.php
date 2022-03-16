@@ -65,7 +65,7 @@ class Notifier implements INotifier
         foreach ($notification->getActions() as $action) {
             switch ($action->getLabel()) {
                 case 'goto':
-                    $action->setParsedLabel($l->t('Accept'))
+                    $action->setParsedLabel('Aller à L\'application')
                         ->setLink($this->urlGenerator->linkToRouteAbsolute('intranetagglo.page.index') . '#' . $notification->getObjectId(), 'POST');
                     break;
             }
