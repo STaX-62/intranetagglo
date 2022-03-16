@@ -106,7 +106,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findByGroups(int $firstresult, array $groupsArray, string $search, string $category): array
+    public function findByGroups(int $firstresult, array $groupsArray, string $search, string $category, string $searchid): array
     {
         $groups = '%';
         foreach ($groupsArray as $group) {
@@ -121,11 +121,13 @@ class NewsMapper extends QBMapper
             ->orWhere('q.subtitle LIKE :search')
             ->orWhere('q.text LIKE :search')
             ->orWhere('q.category = :category')
+            ->orWhere('q.id = :searchid')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
             ->setParameter('search', '%' . $search . '%')
+            ->setParameter('searchid', $searchid)
             ->setParameter('category', $category)
             ->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')

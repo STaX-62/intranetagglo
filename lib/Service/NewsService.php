@@ -70,12 +70,16 @@ class NewsService
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#')) {
-			$category =  substr($search, 1);
+			if (is_numeric(substr($search, 1))) {
+				$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', substr($search, 1));
+			} else {
+				$qb = $this->mapper->findByGroups($firstresult, $groups, $search, substr($search, 1), '');
+			}
 		} else {
-			$category = '';
+			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', '');
 		}
 
-		return $this->mapper->findByGroups($firstresult, $groups, $search, $category);
+		return $qb;
 	}
 
 	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible, $pinned)

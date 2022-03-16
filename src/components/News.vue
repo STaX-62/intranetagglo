@@ -158,6 +158,7 @@ export default {
     }
   },
   mounted() {
+    this.search = window.location.href.substring(this.href.lastIndexOf('/') + 1);
     axios.get(generateUrl(`apps/intranetagglo/user`))
       .then(response => {
         this.$store.commit('setUser', response.data)
@@ -170,7 +171,7 @@ export default {
         else {
           url += `newsG/0`
         }
-        axios.post(generateUrl(url), { 'id': 0, 'search': "" }, { type: 'application/json' })
+        axios.post(generateUrl(url), { 'id': 0, 'search': this.search }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
