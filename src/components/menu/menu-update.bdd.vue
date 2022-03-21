@@ -71,23 +71,19 @@
                     </div>
                     <button
                       class="menu-add"
-                      @click="AddSubmenu(submenusArray[Sindex][Mindex],Sindex,Mindex)"
+                      @click="AddSubmenu(section.id, menu.id)"
                       style="width:calc(100% - 10px)"
                     >+</button>
                   </div>
                 </div>
                 <button
                   class="menu-add"
-                  @click="AddMenu(menusArray[Sindex],Sindex)"
+                  @click="AddMenu(section.id)"
                   style="width:calc(50% - 10px)"
                 >+</button>
               </div>
             </div>
-            <button
-              class="menu-add"
-              @click="AddSection(sectionArray)"
-              style="width:calc(33% - 10px)"
-            >+</button>
+            <button class="menu-add" @click="AddSection()" style="width:calc(33% - 10px)">+</button>
           </div>
         </div>
       </div>
@@ -169,6 +165,27 @@ export default {
   computed: {
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
+    },
+    GetMaxSecPos() {
+      var array = []
+      this.sectionArray.forEach(section => {
+        array.push(section.id)
+      })
+      return Math.max(array);
+    },
+    GetMaxMenPos() {
+      var array = []
+      this.menusArray.forEach(menu => {
+        array.push(menu.id)
+      })
+      return Math.max(array);
+    },
+    GetMaxSubPos() {
+      var array = []
+      this.submenusArray.forEach(submenu => {
+        array.push(submenu.id)
+      })
+      return Math.max(array);
     },
     sectionArray() {
       var bddmenus = this.menusInBDD;
@@ -281,79 +298,48 @@ export default {
     },
     Save() {
       var menu = this.menusInBDD.find(x => x.position === this.modifying.selected)
-      if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
-        if (this.modifying.title != "Nouvelle Section" && this.modifying.title != "Nouveau Menu" && this.modifying.title != "Nouveau Sous-Menu") {
-          menu.title = this.modifying.title
-          if (this.modifying.link != null) {
-            menu.link = this.modifying.link
-          }
-          else {
-            menu.link = ""
-          }
-          if (this.modifying.icon != null) {
-            menu.icon = this.modifying.icon
-          }
-          else {
-            menu.icon = ""
-          }
-          menu.groups = this.modifying.groups.join(';')
-          this.createMenu(menu, this.modifying.file)
-        }
-        else {
-          alert("Le titre n'a pas été modifié")
-        }
+      menu.title = this.modifying.title
+      if (this.modifying.link != null) {
+        menu.link = this.modifying.link
       }
       else {
-        menu.title = this.modifying.title
-        if (this.modifying.link != null) {
-          menu.link = this.modifying.link
-        }
-        else {
-          menu.link = ""
-        }
-        if (this.modifying.icon != null) {
-          menu.icon = this.modifying.icon
-        }
-        else {
-          menu.icon = ""
-        }
-        menu.groups = this.modifying.groups.join(';')
-        this.updateMenu(menu, this.modifying.file)
+        menu.link = ""
       }
+      if (this.modifying.icon != null) {
+        menu.icon = this.modifying.icon
+      }
+      else {
+        menu.icon = ""
+      }
+      menu.groups = this.modifying.groups.join(';')
+      this.updateMenu(menu, this.modifying.file)
     },
-    GetMaxPos(array) {
-      var newArray = []
-      array.forEach(element => {
-        newArray.push(element.id)
-      });
-      return newArray;
-    },
-    AddSubmenu(submenus, Sindex, Mindex) {
-      this.menusInBDD.push({
+    AddSubmenu(sectionid, menuid) {
+      this.createMenu({
         'title': 'Nouveau Sous-Menu',
         'icon': '',
         'link': '',
         'groups': '',
-        'position': Sindex + '-' + (Mindex + 1) + '-' + (Math.max(this.GetMaxPos(submenus)) + 1)
-      })
+        'position': sectionid + '-' + menuid + '-' + this.GetMaxSubPos
+      }, null)
     },
-    AddMenu(menu, Sindex) {
-      this.menusInBDD.push({
+    AddMenu(sectionid) {
+      this.createMenu({
         'title': 'Nouveau Menu',
         'icon': '',
         'link': '',
         'groups': '',
-        'position': Sindex + '-' + (Math.max(this.GetMaxPos(menu)) + 1) + '-0'
-      })
+        'position': sectionid + '-' + this.GetMaxMenPos + '-0'
+      }, null)
     },
-    AddSection(section) {
-      this.menusInBDD.push({
-        'title': 'Nouvelle Section',
-        'icon': 'exclamation-triangle',
-        'link': '',
-        'groups': '',
-        'position': Math.max(this.GetMaxPos(section)) + '-0-0'
-      })
+    AddSection() {
+      this.createMenu({
+        title: 'Nouvelle Section',
+        icon: 'exclamation-triangle',
+        link: '',
+        groups: '',
+        position: this.GetMaxSecPos + '-0-0'
+      }, null)
     },
     async createMenu(menu, newfile) {
       try {
