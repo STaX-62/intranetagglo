@@ -6,6 +6,7 @@ use OCA\IntranetAgglo\AppInfo\Application;
 
 use OCP\IRequest;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\AppFramework\Controller;
 use OCP\IGroupManager;
 use OCP\IUserSession;
@@ -17,14 +18,23 @@ class MenuController extends Controller
     /** @var MenuService */
     private $service;
 
+    /** @var ITimeFactory */
+    protected $timeFactory;
+
     use Errors;
 
-    public function __construct(IRequest $request, MenuService $service, IGroupManager $groupmanager, IUserSession $session)
-    {
+    public function __construct(
+        IRequest $request,
+        MenuService $service,
+        IGroupManager $groupmanager,
+        IUserSession $session,
+        ITimeFactory $timeFactory
+    ) {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
         $this->groupmanager = $groupmanager;
         $this->session = $session;
+        $this->timeFactory = $timeFactory;
     }
 
     public function index(): DataResponse
