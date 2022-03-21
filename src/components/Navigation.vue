@@ -71,7 +71,6 @@ export default {
         axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
           .then((response) => {
             this.menusInBDD = response.data;
-            this.$store.commit('setMenuUpdating', false)
           })
       }
     },
