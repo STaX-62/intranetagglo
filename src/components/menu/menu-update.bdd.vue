@@ -103,12 +103,11 @@
           <label for="link">Lien URL</label>
           <b-form-input name="link" type="text" v-model="modifying.link" />
           <button
-            class="menu-add"
             @click="redirectToFile = !redirectToFile"
           >Rediriger vers un fichier</button>
         </div>
         <div v-if="modifying.haschild != true && redirectToFile">
-          <label for="file">Redirection vers Un fichier (Remplace le lien)</label>
+          <label for="file">Redirection vers un fichier (remplace l'URL)</label>
           <b-form-file
             name="file"
             size="sm"
@@ -246,9 +245,6 @@ export default {
             var index = this.menusInBDD.findIndex(x => x.title === menu.title)
             if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
               this.menusInBDD.splice(index, 1)
-              if (menu.id != null) {
-                this.deleteMenu(menu.id)
-              }
             }
             else {
               this.menusInBDD.splice(index, 1)
