@@ -112,8 +112,7 @@
           <b-form-file
             name="file"
             size="sm"
-            accept="image/*"
-            placeholder="Choisir le fichier (.jpg/.jpeg/.png)..."
+            placeholder="Choisir le fichier..."
             drop-placeholder="Placer l'image ici ..."
             v-model="modifying.file"
           ></b-form-file>
@@ -353,9 +352,9 @@ export default {
         let data = new FormData();
         data.append('title', menu.title);
         data.append('link', menu.link);
-        data.append('icon', news.icon);
-        data.append('groups', news.groups);
-        data.append('position', news.position);
+        data.append('icon', menu.icon);
+        data.append('groups', menu.groups);
+        data.append('position', menu.position);
         if (newfile != null && this.redirectToFile) {
           data.append('newfile', newfile, newfile.name);
         }
@@ -379,8 +378,8 @@ export default {
         data.append('id', menu.id)
         data.append('title', menu.title);
         data.append('link', menu.link);
-        data.append('icon', news.icon);
-        data.append('groups', news.groups);
+        data.append('icon', menu.icon);
+        data.append('groups', menu.groups);
         if (newfile != null && this.redirectToFile) {
           data.append('newfile', newfile, newfile.name);
         }
