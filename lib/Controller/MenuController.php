@@ -10,6 +10,7 @@ use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\AppFramework\Controller;
 use OCP\IGroupManager;
 use OCP\IUserSession;
+use OCP\IURLGenerator;
 
 use OCA\IntranetAgglo\Service\MenuService;
 
@@ -28,12 +29,14 @@ class MenuController extends Controller
         MenuService $service,
         IGroupManager $groupmanager,
         IUserSession $session,
+        IURLGenerator $urlGenerator,
         ITimeFactory $timeFactory
     ) {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
         $this->groupmanager = $groupmanager;
         $this->session = $session;
+        $this->urlGenerator = $urlGenerator;
         $this->timeFactory = $timeFactory;
     }
 
