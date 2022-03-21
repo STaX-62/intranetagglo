@@ -224,13 +224,13 @@ export default {
 .section:nth-of-type(even) {
   top: 0;
   position: sticky;
-  background-color: #9fc737;
+  background-color: #9fc737 !important;
 }
 
 .section:nth-of-type(odd) {
   top: 0;
   position: sticky;
-  background-color: #0eb4ed;
+  background-color: #0eb4ed !important;
 }
 
 .section {

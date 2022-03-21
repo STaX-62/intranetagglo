@@ -228,10 +228,10 @@ export default {
           if (value) {
             var index = this.menusInBDD.findIndex(x => x.title === menu.title)
             if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
-              this.apps.splice(index, 1)
+              this.menusInBDD.splice(index, 1)
             }
             else {
-              this.apps.splice(index, 1)
+              this.menusInBDD.splice(index, 1)
               this.deleteMenu(menu.id)
             }
           }
