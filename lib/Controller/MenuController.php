@@ -100,7 +100,7 @@ class MenuController extends Controller
     {
         return $this->handleNotFound(function () use ($id) {
             $rq = $this->service->find($id);
-            unlink(substr($rq->getPhoto(), 11));
+            unlink(substr($rq->getLink(), 11));
             return $this->service->delete($id);
         });
     }
