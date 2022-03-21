@@ -381,7 +381,7 @@ export default {
         data.append('icon', menu.icon);
         data.append('groups', menu.groups);
         if (newfile != null && this.redirectToFile) {
-          data.append('newfile', newfile, newfile.name);
+          data.append('file_upd', newfile, newfile.name);
         }
 
         const response = await axios.post(generateUrl(`apps/intranetagglo/menus/${menu.id}`), data, {
