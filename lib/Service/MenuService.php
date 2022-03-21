@@ -62,7 +62,7 @@ class MenuService
 		return $this->mapper->insert($menu);
 	}
 
-	public function update($id, $title, $icon, $link, $groups, $position)
+	public function update($id, $title, $icon, $link, $groups)
 	{
 		try {
 			$menu = $this->mapper->find($id);
@@ -70,7 +70,6 @@ class MenuService
 			$menu->setIcon($icon);
 			$menu->setLink($link);
 			$menu->setGroups($groups);
-			$menu->setPosition($position);
 			return $this->mapper->update($menu);
 		} catch (Exception $e) {
 			$this->handleException($e);

@@ -99,9 +99,25 @@
           <label for="title">Titre</label>
           <b-form-input name="title" type="text" v-model="modifying.title" />
         </div>
-        <div v-if="modifying.haschild != true">
+        <div v-if="modifying.haschild != true && !redirectToFile">
           <label for="link">Lien URL</label>
           <b-form-input name="link" type="text" v-model="modifying.link" />
+          <button
+            class="menu-add"
+            @click="redirectToFile = !redirectToFile"
+          >Rediriger vers un fichier</button>
+        </div>
+        <div v-if="modifying.haschild != true && redirectToFile">
+          <label for="file">Redirection vers Un fichier (Remplace le lien)</label>
+          <b-form-file
+            name="file"
+            size="sm"
+            accept="image/*"
+            placeholder="Choisir le fichier (.jpg/.jpeg/.png)..."
+            drop-placeholder="Placer l'image ici ..."
+            v-model="modifying.file"
+          ></b-form-file>
+          <button class="menu-add" @click="redirectToFile = !redirectToFile">Rediriger vers une URL</button>
         </div>
         <div v-if="modifying.icon != null">
           <label for="icon">icon (only Section)</label>
@@ -149,7 +165,9 @@
 <script>
 /* eslint-disable */
 import axios from '@nextcloud/axios'
-import { generateUrl, generateOcsUrl } from '@nextcloud/router'
+import { generateUrl } from '@nextcloud/router'
+import FormData from 'form-data'
+
 export default {
   name: 'NewsUpdate',
   computed: {
@@ -282,7 +300,7 @@ export default {
           menu.icon = ""
         }
         menu.groups = this.modifying.groups.join(';')
-        this.createMenu(menu)
+        this.createMenu(menu, this.modifying.file)
       }
       else {
         menu.title = this.modifying.title
@@ -299,7 +317,7 @@ export default {
           menu.icon = ""
         }
         menu.groups = this.modifying.groups.join(';')
-        this.updateMenu(menu)
+        this.updateMenu(menu, this.modifying.file)
       }
     },
     AddSubmenu(submenus, Sindex, Mindex) {
@@ -329,10 +347,24 @@ export default {
         'position': section.length + '-0-0'
       })
     },
-    async createMenu(menu) {
+    async createMenu(menu, newfile) {
       try {
-        var url = `apps/intranetagglo/menus`
-        const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
+
+        let data = new FormData();
+        data.append('title', menu.title);
+        data.append('link', menu.link);
+        data.append('icon', news.icon);
+        data.append('groups', news.groups);
+        data.append('position', news.position);
+        if (newfile != null && this.redirectToFile) {
+          data.append('newfile', newfile, newfile.name);
+        }
+        const response = await axios.post(generateUrl(`apps/intranetagglo/menus`), data, {
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+          }
+        })
         this.LastModifiedID = response.data.id
         this.menusInBDD.find(x => x.position === this.modifying.selected).id = response.data.id
       } catch (e) {
@@ -340,10 +372,25 @@ export default {
       }
       this.$store.commit('setMenuUpdating', true)
     },
-    async updateMenu(menu) {
+    async updateMenu(menu, newfile) {
       try {
-        var url = `apps/intranetagglo/menus/${menu.id}`
-        const response = await axios.post(generateUrl(url), menu, { type: 'application/json' })
+
+        let data = new FormData();
+        data.append('id', menu.id)
+        data.append('title', menu.title);
+        data.append('link', menu.link);
+        data.append('icon', news.icon);
+        data.append('groups', news.groups);
+        if (newfile != null && this.redirectToFile) {
+          data.append('newfile', newfile, newfile.name);
+        }
+
+        const response = await axios.post(generateUrl(`apps/intranetagglo/menus/${menu.id}`), data, {
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+          }
+        })
         this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)
@@ -371,11 +418,13 @@ export default {
         selected: null,
         title: "",
         link: "",
+        file: null,
         icon: "",
         groups: "",
         haschild: false
       },
-      LastModifiedID: null
+      LastModifiedID: null,
+      redirectToFile: false
     }
   },
   mounted() {
