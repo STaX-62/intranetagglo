@@ -321,37 +321,38 @@ export default {
         this.updateMenu(menu, this.modifying.file)
       }
     },
+    GetMaxPos(array) {
+      var newArray = []
+      array.forEach(element => {
+        newArray.push(element.id)
+      });
+      return newArray;
+    },
     AddSubmenu(submenus, Sindex, Mindex) {
-      console.log(submenus)
-      console.log(Math.max(submenus.id) + 1)
       this.menusInBDD.push({
         'title': 'Nouveau Sous-Menu',
         'icon': '',
         'link': '',
         'groups': '',
-        'position': Sindex + '-' + (Mindex + 1) + '-' + (Math.max(submenus.id) + 1)
+        'position': Sindex + '-' + (Mindex + 1) + '-' + (Math.max(this.GetMaxPos(submenus)) + 1)
       })
     },
     AddMenu(menu, Sindex) {
-      console.log(menu)
-      console.log(Math.max(menu.id) + 1)
       this.menusInBDD.push({
         'title': 'Nouveau Menu',
         'icon': '',
         'link': '',
         'groups': '',
-        'position': Sindex + '-' + (Math.max(menu.id) + 1) + '-0'
+        'position': Sindex + '-' + (Math.max(this.GetMaxPos(menu)) + 1) + '-0'
       })
     },
     AddSection(section) {
-      console.log(section)
-      console.log(Math.max(section.id))
       this.menusInBDD.push({
         'title': 'Nouvelle Section',
         'icon': 'exclamation-triangle',
         'link': '',
         'groups': '',
-        'position': Math.max(section.id) + '-0-0'
+        'position': Math.max(this.GetMaxPos(section)) + '-0-0'
       })
     },
     async createMenu(menu, newfile) {
