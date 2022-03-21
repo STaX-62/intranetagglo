@@ -246,6 +246,9 @@ export default {
             var index = this.menusInBDD.findIndex(x => x.title === menu.title)
             if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
               this.menusInBDD.splice(index, 1)
+              if (menu.id != null) {
+                this.deleteMenu(menu.id)
+              }
             }
             else {
               this.menusInBDD.splice(index, 1)
@@ -285,21 +288,26 @@ export default {
     Save() {
       var menu = this.menusInBDD.find(x => x.position === this.modifying.selected)
       if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
-        menu.title = this.modifying.title
-        if (this.modifying.link != null) {
-          menu.link = this.modifying.link
+        if (this.modifying.title != "Nouvelle Section" || this.modifying.title != "Nouveau Menu" || this.modifying.title != "Nouveau Sous-Menu") {
+          menu.title = this.modifying.title
+          if (this.modifying.link != null) {
+            menu.link = this.modifying.link
+          }
+          else {
+            menu.link = ""
+          }
+          if (this.modifying.icon != null) {
+            menu.icon = this.modifying.icon
+          }
+          else {
+            menu.icon = ""
+          }
+          menu.groups = this.modifying.groups.join(';')
+          this.createMenu(menu, this.modifying.file)
         }
         else {
-          menu.link = ""
+          alert("Le titre n'a pas été modifier")
         }
-        if (this.modifying.icon != null) {
-          menu.icon = this.modifying.icon
-        }
-        else {
-          menu.icon = ""
-        }
-        menu.groups = this.modifying.groups.join(';')
-        this.createMenu(menu, this.modifying.file)
       }
       else {
         menu.title = this.modifying.title

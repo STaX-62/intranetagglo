@@ -99,6 +99,8 @@ class MenuController extends Controller
     public function destroy(int $id)
     {
         return $this->handleNotFound(function () use ($id) {
+            $rq = $this->service->find($id);
+            unlink(substr($rq->getPhoto(), 11));
             return $this->service->delete($id);
         });
     }
