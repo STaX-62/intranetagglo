@@ -202,7 +202,7 @@ export default {
       var bddmenus = this.menusInBDD;
       var menus = []
       var tempmenus = []
-      for (var i = 0; i < this.sectionArray.length; i++) {
+      for (var i = 0; i < GetNewPos(); i++) {
         for (var z = 0; z < bddmenus.length; z++) {
           for (var y = 0; y < bddmenus.length; y++) {
             if (bddmenus[z].position == i + '-' + (y + 1) + '-0') {
@@ -221,7 +221,7 @@ export default {
       var menus = []
       var tempmenus = []
       var tempsubmenus = []
-      for (var i = 0; i < this.sectionArray.length; i++) {
+      for (var i = 0; i < GetNewPos(); i++) {
         for (var o = 0; o < this.menusArray[i].length; o++) {
           for (var z = 0; z < bddmenus.length; z++) {
             for (var y = 0; y < bddmenus.length; y++) {
