@@ -182,7 +182,10 @@ export default {
     },
     GetNewPos() {
       console.Log(this.menusInBDD[this.menusInBDD.length - 1].id)
-      return this.menusInBDD[this.menusInBDD.length - 1].id;
+      if(this.menusInBDD.length == 0){
+        return 1;
+      }
+      return this.menusInBDD[this.menusInBDD.length - 1].id + 1;
     },
     sectionArray() {
       var bddmenus = this.menusInBDD;
