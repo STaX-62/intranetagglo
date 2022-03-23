@@ -353,6 +353,7 @@ export default {
           }
         })
         this.LastModifiedID = response.data.id
+        this.menusInBDD.find(x => x.position === this.modifying.selected).id = response.data.id
       } catch (e) {
         console.error(e)
       }
