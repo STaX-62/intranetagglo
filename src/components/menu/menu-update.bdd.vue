@@ -162,30 +162,30 @@ import FormData from 'form-data'
 
 export default {
   name: 'NewsUpdate',
-  watch: {
-    updating: function (val) {
-      if (val) {
-        axios.get(generateUrl(`apps/intranetagglo${'/menus'}`))
-          .then((response) => {
-            this.menusInBDD = response.data;
-            this.$store.commit('setMenuUpdating', false)
-          })
-      }
-    },
-  },
   computed: {
-    updating() {
-      return this.$store.state.menuupdating
-    },
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
-    GetNewPos() {
+    GetMaxSecPos() {
       var array = []
-      this.menusInBDD.forEach(menu => {
+      this.sectionArray.forEach(section => {
+        array.push(section.id)
+      })
+      return Math.max(array);
+    },
+    GetMaxMenPos() {
+      var array = []
+      this.menusArray.forEach(menu => {
         array.push(menu.id)
       })
-      return Math.max(array) + 1;
+      return Math.max(array);
+    },
+    GetMaxSubPos() {
+      var array = []
+      this.submenusArray.forEach(submenu => {
+        array.push(submenu.id)
+      })
+      return Math.max(array);
     },
     sectionArray() {
       var bddmenus = this.menusInBDD;
@@ -257,7 +257,14 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.deleteMenu(menu.id)
+            var index = this.menusInBDD.findIndex(x => x.title === menu.title)
+            if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
+              this.menusInBDD.splice(index, 1)
+            }
+            else {
+              this.menusInBDD.splice(index, 1)
+              this.deleteMenu(menu.id)
+            }
           }
         })
         .catch(err => {
@@ -313,7 +320,7 @@ export default {
         'icon': '',
         'link': '',
         'groups': '',
-        'position': sectionid + '-' + menuid + '-' + this.GetNewPos
+        'position': sectionid + '-' + menuid + '-' + this.GetMaxSubPos
       }, null)
     },
     AddMenu(sectionid) {
@@ -322,7 +329,7 @@ export default {
         'icon': '',
         'link': '',
         'groups': '',
-        'position': sectionid + '-' + this.GetNewPos + '-0'
+        'position': sectionid + '-' + this.GetMaxMenPos + '-0'
       }, null)
     },
     AddSection() {
@@ -331,7 +338,7 @@ export default {
         icon: 'exclamation-triangle',
         link: '',
         groups: '',
-        position: this.GetNewPos + '-0-0'
+        position: this.GetMaxSecPos + '-0-0'
       }, null)
     },
     async createMenu(menu, newfile) {
