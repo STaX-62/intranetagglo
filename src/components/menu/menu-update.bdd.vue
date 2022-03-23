@@ -116,7 +116,7 @@
             drop-placeholder="Placer l'image ici ..."
             v-model="modifying.file"
           ></b-form-file>
-          <button @click="redirectToFile = !redirectToFile">Rediriger vers une URL</button>
+          <button class="menu-add" @click="redirectToFile = !redirectToFile">Rediriger vers une URL</button>
         </div>
         <div v-if="modifying.icon != null">
           <label for="icon">icon (only Section)</label>
@@ -288,7 +288,7 @@ export default {
     Save() {
       var menu = this.menusInBDD.find(x => x.position === this.modifying.selected)
       if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
-        if (this.modifying.title != "Nouvelle Section" && this.modifying.title != "Nouveau Menu" && this.modifying.title != "Nouveau Sous-Menu") {
+        if (this.modifying.title != "Nouvelle Section" || this.modifying.title != "Nouveau Menu" || this.modifying.title != "Nouveau Sous-Menu") {
           menu.title = this.modifying.title
           if (this.modifying.link != null) {
             menu.link = this.modifying.link
@@ -306,7 +306,7 @@ export default {
           this.createMenu(menu, this.modifying.file)
         }
         else {
-          alert("Le titre n'a pas été modifié")
+          alert("Le titre n'a pas été modifier")
         }
       }
       else {
