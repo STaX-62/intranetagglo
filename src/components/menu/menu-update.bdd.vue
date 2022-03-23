@@ -93,7 +93,7 @@
       </div>
     </b-modal>
     <b-modal id="menumodal2" size="xl" v-model="detailed" ref="modal" @ok="Save">
-      <template #modal-title>Modification du Menu de navigation (position : {{modifying.selected}})</template>
+      <template #modal-title>Modification du Menu de navigation</template>
       <div class="menu-form">
         <div>
           <label for="title">Titre</label>
@@ -102,7 +102,9 @@
         <div v-if="modifying.haschild != true && !redirectToFile">
           <label for="link">Lien URL</label>
           <b-form-input name="link" type="text" v-model="modifying.link" />
-          <button @click="redirectToFile = !redirectToFile">Rediriger vers un fichier</button>
+          <button
+            @click="redirectToFile = !redirectToFile"
+          >Rediriger vers un fichier</button>
         </div>
         <div v-if="modifying.haschild != true && redirectToFile">
           <label for="file">Redirection vers un fichier (remplace l'URL)</label>
@@ -327,7 +329,7 @@ export default {
         'icon': '',
         'link': '',
         'groups': '',
-        'position': Sindex + '-' + (Mindex + 1) + '-' + (Math.max(submenus.id) + 1)
+        'position': Sindex + '-' + (Mindex + 1) + '-' + (submenus.length + 1)
       })
     },
     AddMenu(menu, Sindex) {
@@ -336,7 +338,7 @@ export default {
         'icon': '',
         'link': '',
         'groups': '',
-        'position': Sindex + '-' + (Math.max(menu.id) + 1) + '-0'
+        'position': Sindex + '-' + (menu.length + 1) + '-0'
       })
     },
     AddSection(section) {
@@ -345,7 +347,7 @@ export default {
         'icon': 'exclamation-triangle',
         'link': '',
         'groups': '',
-        'position': Math.max(section.id) + '-0-0'
+        'position': section.length + '-0-0'
       })
     },
     async createMenu(menu, newfile) {
