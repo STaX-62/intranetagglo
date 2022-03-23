@@ -322,8 +322,6 @@ export default {
       }
     },
     AddSubmenu(submenus, Sindex, Mindex) {
-      console.log(submenus)
-      console.log(Math.max(submenus.id) + 1)
       this.menusInBDD.push({
         'title': 'Nouveau Sous-Menu',
         'icon': '',
@@ -333,8 +331,6 @@ export default {
       })
     },
     AddMenu(menu, Sindex) {
-      console.log(menu)
-      console.log(Math.max(menu.id) + 1)
       this.menusInBDD.push({
         'title': 'Nouveau Menu',
         'icon': '',
@@ -344,8 +340,6 @@ export default {
       })
     },
     AddSection(section) {
-      console.log(section)
-      console.log(Math.max(section.id))
       this.menusInBDD.push({
         'title': 'Nouvelle Section',
         'icon': 'exclamation-triangle',
