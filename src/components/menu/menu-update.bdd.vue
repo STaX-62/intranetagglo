@@ -181,6 +181,7 @@ export default {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
     GetNewPos() {
+      console.Log(this.menusInBDD[this.menusInBDD.length - 1].id)
       if(this.menusInBDD.length == 0){
         return 1;
       }
