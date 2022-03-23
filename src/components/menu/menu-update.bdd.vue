@@ -181,8 +181,11 @@ export default {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
     GetNewPos() {
-      console.Log(this.menusInBDD[this.menusInBDD.length - 1].id)
-      return this.menusInBDD[this.menusInBDD.length - 1].id;
+      var array = []
+      this.menusInBDD.forEach(menu => {
+        array.push(menu.id)
+      })
+      return Math.max(array) + 1;
     },
     sectionArray() {
       var bddmenus = this.menusInBDD;
