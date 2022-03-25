@@ -40,6 +40,11 @@ return [
             'requirements' => ['id' => '\d+'],
         ],
         [
+            'name' => 'menu#changeOrder',
+            'url' => '/menus/order',
+            'verb' => 'POST'
+        ],
+        [
             'name' => 'menu#destroy',
             'url' => '/menus/{id}',
             'verb' => 'DELETE',

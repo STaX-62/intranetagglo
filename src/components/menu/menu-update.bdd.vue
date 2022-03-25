@@ -11,9 +11,14 @@
           <div class="table-header">Section</div>
           <div class="table-header">Menu</div>
           <div class="table-header">Sous-Menu</div>
-          <div class="table-content">
-            <div class="table-section" v-for="(section,Sindex) in sectionArray" v-bind:key="Sindex">
-              <div class="table-block" v-bind:position="Sindex+'-0-0'" type="text">
+          <div class="table-content" v-sortable="{ onUpdate: UpdateOrder }">
+            <div
+              class="table-section"
+              v-for="(section,Sindex) in sectionArray"
+              v-bind:key="Sindex"
+              v-bind:position="Sindex+'-0-0'"
+            >
+              <div class="table-block" type="text">
                 {{section.title}}
                 <button
                   type="button"
@@ -26,17 +31,14 @@
                   <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                 </button>
               </div>
-              <div>
+              <div v-sortable="{ onUpdate: UpdateOrder }">
                 <div
                   class="table-menu"
                   v-for="(menu,Mindex) in menusArray[Sindex]"
                   v-bind:key="Mindex"
+                  v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
                 >
-                  <div
-                    class="table-block"
-                    v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
-                    type="text"
-                  >
+                  <div class="table-block" type="text">
                     <div>{{menu.title}}</div>
                     <button type="button" class="menu-update-button" @click="Modify(menu)">
                       <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
@@ -45,17 +47,17 @@
                       <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                     </button>
                   </div>
-                  <div class="table-submenu">
+                  <div
+                    class="table-submenu"
+                    v-sortable="{ onUpdate: UpdateOrder }"
+                  >
                     <div
                       class="table-submenu-content"
                       v-for="(submenu,SMindex) in submenusArray[Sindex][Mindex]"
                       v-bind:key="SMindex"
+                      v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
                     >
-                      <div
-                        class="table-block"
-                        v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
-                        type="text"
-                      >
+                      <div class="table-block" type="text">
                         <div>{{submenu.title}}</div>
                         <button type="button" class="menu-update-button" @click="Modify(submenu)">
                           <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
@@ -102,10 +104,7 @@
         <div v-if="modifying.haschild != true && !redirectToFile">
           <label for="link">Lien URL</label>
           <b-form-input name="link" type="text" v-model="modifying.link" />
-          <button
-            class="menu-add"
-            @click="redirectToFile = !redirectToFile"
-          >Rediriger vers un fichier</button>
+          <button @click="redirectToFile = !redirectToFile">Rediriger vers un fichier</button>
         </div>
         <div v-if="modifying.haschild != true && redirectToFile">
           <label for="file">Redirection vers Un fichier (Remplace le lien)</label>
@@ -166,6 +165,9 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
+import Sortable from 'vue-sortable'
+
+Vue.use(Sortable)
 
 export default {
   name: 'NewsUpdate',
@@ -228,6 +230,9 @@ export default {
 
   },
   methods: {
+    UpdateOrder: function (event) {
+      this.changeOrder(event.target.getAttribute('position'), event.newIndex, event.oldIndex)
+    },
     DeleteVerification(menu) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${menu.title}`, {
         title: 'Confirmation',
@@ -287,29 +292,8 @@ export default {
     },
     Save() {
       var menu = this.menusInBDD.find(x => x.position === this.modifying.selected)
-      if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
-        if (this.modifying.title != "Nouvelle Section" && this.modifying.title != "Nouveau Menu" && this.modifying.title != "Nouveau Sous-Menu") {
-          menu.title = this.modifying.title
-          if (this.modifying.link != null) {
-            menu.link = this.modifying.link
-          }
-          else {
-            menu.link = ""
-          }
-          if (this.modifying.icon != null) {
-            menu.icon = this.modifying.icon
-          }
-          else {
-            menu.icon = ""
-          }
-          menu.groups = this.modifying.groups.join(';')
-          this.createMenu(menu, this.modifying.file)
-        }
-        else {
-          alert("Le titre n'a pas été modifié")
-        }
-      }
-      else {
+
+      if (this.modifying.title != "Nouvelle Section" && this.modifying.title != "Nouveau Menu" && this.modifying.title != "Nouveau Sous-Menu") {
         menu.title = this.modifying.title
         if (this.modifying.link != null) {
           menu.link = this.modifying.link
@@ -326,35 +310,38 @@ export default {
         menu.groups = this.modifying.groups.join(';')
         this.updateMenu(menu, this.modifying.file)
       }
+      else {
+        alert("Le titre n'a pas été modifié")
+      }
     },
     AddSubmenu(submenus, Sindex, Mindex) {
-      this.menusInBDD.push({
+      this.createMenu({
         'title': 'Nouveau Sous-Menu',
         'icon': '',
         'link': '',
-        'groups': '',
+        'groups': 'admin',
         'position': Sindex + '-' + (Mindex + 1) + '-' + (submenus.length + 1)
       })
     },
     AddMenu(menu, Sindex) {
-      this.menusInBDD.push({
+      this.createMenu({
         'title': 'Nouveau Menu',
         'icon': '',
         'link': '',
-        'groups': '',
+        'groups': 'admin',
         'position': Sindex + '-' + (menu.length + 1) + '-0'
       })
     },
     AddSection(section) {
-      this.menusInBDD.push({
+      this.createMenu({
         'title': 'Nouvelle Section',
         'icon': 'exclamation-triangle',
         'link': '',
-        'groups': '',
+        'groups': 'admin',
         'position': section.length + '-0-0'
       })
     },
-    async createMenu(menu, newfile) {
+    async createMenu(menu) {
       try {
 
         let data = new FormData();
@@ -363,9 +350,6 @@ export default {
         data.append('icon', menu.icon);
         data.append('groups', menu.groups);
         data.append('position', menu.position);
-        if (newfile != null && this.redirectToFile) {
-          data.append('newfile', newfile, newfile.name);
-        }
         const response = await axios.post(generateUrl(`apps/intranetagglo/menus`), data, {
           headers: {
             'accept': 'application/json',
@@ -414,6 +398,19 @@ export default {
       }
       this.$store.commit('setMenuUpdating', true)
     },
+    async changeOrder(actualPosition, newIndex, oldIndex) {
+      try {
+        let data = new FormData();
+        data.append('oldPosition', actualPosition);
+        data.append('newIndex', newIndex);
+        data.append('oldIndex', oldIndex);
+        const response = await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' })
+        this.menusInBDD = response.data
+      } catch (e) {
+        console.error(e)
+      }
+      this.$store.commit('setMenuUpdating', true)
+    },
   },
   data: function () {
     return {
@@ -430,6 +427,7 @@ export default {
         groups: "",
         haschild: false
       },
+      tempMenus: [],
       LastModifiedID: null,
       redirectToFile: false
     }

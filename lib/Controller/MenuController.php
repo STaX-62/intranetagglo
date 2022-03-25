@@ -2,6 +2,7 @@
 
 namespace OCA\IntranetAgglo\Controller;
 
+use Exception;
 use OCA\IntranetAgglo\AppInfo\Application;
 
 use OCP\IRequest;
@@ -94,6 +95,50 @@ class MenuController extends Controller
 
             return $this->service->update($id, $title, $icon, $fileurl, $groups);
         });
+    }
+
+    public function changeOrder(string $oldPosition, int $newIndex, int $oldIndex)
+    {
+        function reOrder($menus, $level, $newIndex, $oldIndex)
+        {
+            if ($newIndex < $oldIndex) {
+                for ($i = $newIndex; $i < count($menus); $i++) {
+                    $menuPosition = explode('-', $menus[$i]->getPosition());
+                    $menuPosition[$level] = $menuPosition[$level] + 1;
+                    $menus[$i]->setPosition(implode('-', $menuPosition));
+                }
+            } else {
+                for ($i = $oldIndex; $i < count($menus); $i++) {
+                    $menuPosition = explode('-', $menus[$i]->getPosition());
+                    $menuPosition[$level] = $menuPosition[$level] - 1;
+                    $menus[$i]->setPosition(implode('-', $menuPosition));
+                }
+            }
+            return $menus;
+        }
+
+        if ($newIndex == $oldIndex) {
+            return 'aucun changement';
+        }
+
+        $positionToChange = explode('-', $oldPosition);
+
+        if ($positionToChange[1] == '0') {
+            $menusToChange = $this->service->findByPosition('');
+            $newMenuOrder = reOrder($menusToChange, 0, $newIndex, $oldIndex);
+        }
+        if ($positionToChange[2] == '0') {
+            $menusToChange = $this->service->findByPosition($positionToChange[0] . '%');
+            $newMenuOrder = reOrder($menusToChange, 1, $newIndex, $oldIndex);
+        } else {
+            $menusToChange = $this->service->findByPosition($positionToChange[0] . '-' . $positionToChange[1] . '%');
+            $newMenuOrder = reOrder($menusToChange, 2, $newIndex, $oldIndex);
+        }
+
+        foreach ($newMenuOrder as $menu) {
+            $this->service->updateOrder($menu->getId(), $menu->getPosition());
+        }
+        return $this->service->findByGroups($this->groupmanager->getUserGroupIds($user));
     }
 
     public function destroy(int $id)

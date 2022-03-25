@@ -30,6 +30,11 @@ class MenuService
 		return $this->mapper->findByGroups($groups);
 	}
 
+	public function findByPosition(string $position): array
+	{
+		return $this->mapper->findByPosition($position);
+	}
+
 	private function handleException(Exception $e): void
 	{
 		if (
@@ -75,6 +80,18 @@ class MenuService
 			$this->handleException($e);
 		}
 	}
+
+	public function updateOrder($id, $position)
+	{
+		try {
+			$menu = $this->mapper->find($id);
+			$menu->setPosition($position);
+			return $this->mapper->update($menu);
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
 	/**
 	 * @NoAdminRequired
 	 */

@@ -65,9 +65,25 @@ class MenuMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
-            ->andWhere("q.groups = ''")
+            ->where("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->setParameter('groups', $groups);
+
+        return $this->findEntities($qb);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function findByPosition(string $position): array
+    {
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('*')
+            ->from($this->getTableName(), 'q')
+            ->where("q.position LIKE :position")
+            ->setParameter('position', $position);
 
         return $this->findEntities($qb);
     }
