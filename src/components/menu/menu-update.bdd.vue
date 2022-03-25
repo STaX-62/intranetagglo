@@ -165,9 +165,6 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
-import Sortable from 'vue-sortable'
-
-Vue.use(Sortable)
 
 export default {
   name: 'NewsUpdate',
