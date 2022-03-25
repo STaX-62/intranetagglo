@@ -11,7 +11,7 @@
           <div class="table-header">Section</div>
           <div class="table-header">Menu</div>
           <div class="table-header">Sous-Menu</div>
-          <div class="table-content" v-sortable="{ onUpdate: UpdateOrder }">
+          <div class="table-content" v-sortable="{ onUpdate: UpdateOrder, handle: '.handle' }">
             <div
               class="table-section"
               v-for="(section,Sindex) in sectionArray"
@@ -30,8 +30,9 @@
                 <button type="button" class="menu-del-button" @click="DeleteVerification(section)">
                   <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                 </button>
+                <i class="handle"></i>
               </div>
-              <div v-sortable="{ onUpdate: UpdateOrder }">
+              <div v-sortable="{ onUpdate: UpdateOrder, handle: '.handle' }">
                 <div
                   class="table-menu"
                   v-for="(menu,Mindex) in menusArray[Sindex]"
@@ -46,10 +47,11 @@
                     <button type="button" class="menu-del-button" @click="DeleteVerification(menu)">
                       <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                     </button>
+                    <i class="handle"></i>
                   </div>
                   <div
                     class="table-submenu"
-                    v-sortable="{ onUpdate: UpdateOrder }"
+                    v-sortable="{ onUpdate: UpdateOrder, handle: '.handle' }"
                   >
                     <div
                       class="table-submenu-content"
@@ -69,6 +71,7 @@
                         >
                           <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                         </button>
+                        <i class="handle"></i>
                       </div>
                     </div>
                     <button
@@ -165,6 +168,10 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
+import Sortable from 'vue-sortable'
+import Vue from 'vue'
+Vue.use(Sortable)
+
 
 export default {
   name: 'NewsUpdate',
@@ -546,5 +553,9 @@ export default {
   height: auto;
   margin: 5px 50px 5px 5px;
   border-radius: 5px;
+}
+
+.handle:before {
+  content: "\e068";
 }
 </style>
