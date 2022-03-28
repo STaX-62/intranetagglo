@@ -256,7 +256,7 @@ export default {
     Modify(menu) {
       console.log(menu)
       this.modifying = menu;
-      this.modifying.groups = menu.groups.split(';');
+      this.modifying.groups = menu.groups;
       var positions = menu.position.split('-');
 
       if (positions[1] == 0) {
