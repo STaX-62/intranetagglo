@@ -214,6 +214,7 @@ export default {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
     sectionArray() {
+      console.log(this.menuInBDD)
       return this.menuInBDD[0].forEach((section) => {
         var menuArray = this.menuInBDD[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
         menuArray.forEach((menu) => {
