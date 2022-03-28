@@ -242,9 +242,7 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.deleteMenu(menu.id).then(() => {
-              this.$store.commit('setMenuAdminUpdating', true)
-            })
+            this.deleteMenu(menu.id)
           }
         })
         .catch(err => {
@@ -284,8 +282,6 @@ export default {
         'link': '',
         'groups': 'admin',
         'position': Sindex + '-' + (Mindex + 1) + '-' + (submenus.length + 1)
-      }).then(() => {
-        this.$store.commit('setMenuAdminUpdating', true)
       })
     },
     AddMenu(menu, Sindex) {
@@ -295,8 +291,6 @@ export default {
         'link': '',
         'groups': 'admin',
         'position': Sindex + '-' + (menu.length + 1) + '-0'
-      }).then(() => {
-        this.$store.commit('setMenuAdminUpdating', true)
       })
     },
     AddSection(section) {
@@ -324,7 +318,6 @@ export default {
         }).then(() => {
           this.$store.commit('setMenuAdminUpdating', true)
         })
-        this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)
       }
@@ -350,19 +343,23 @@ export default {
         }).then(() => {
           this.$store.commit('setMenuAdminUpdating', true)
         })
-        this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)
       }
+      this.$store.commit('setMenuUpdating', true)
     },
     async deleteMenu(id) {
       try {
         var url = `apps/intranetagglo/menus/${id}`
         const response = await axios.delete(generateUrl(url, { id }))
+          .then(() => {
+            this.$store.commit('setMenuAdminUpdating', true)
+          })
         this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)
       }
+      this.$store.commit('setMenuUpdating', true)
     },
     async changeOrder(actualPosition, newIndex, oldIndex) {
       try {
@@ -383,6 +380,7 @@ export default {
       } catch (e) {
         console.error(e)
       }
+      this.$store.commit('setMenuUpdating', true)
     },
   },
   data: function () {
