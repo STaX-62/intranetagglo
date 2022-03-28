@@ -198,7 +198,7 @@ export default {
   watch: {
     updating: function (val) {
       if (val) {
-        axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
+        axios.get(generateUrl(`apps/intranetagglo${'/menus'}`))
           .then((response) => {
             this.sectionArray = response.data[0];
             this.sectionArray.forEach((section) => {
@@ -335,7 +335,7 @@ export default {
         if (newfile != null && this.redirectToFile) {
           data.append('file_upd', newfile, newfile.name);
         }
-        const response = await axios.post(generateUrl(`apps/intranetagglo/menus/${menu.id}`), data, {
+        await axios.post(generateUrl(`apps/intranetagglo/menus/${menu.id}`), data, {
           headers: {
             'accept': 'application/json',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
@@ -351,11 +351,10 @@ export default {
     async deleteMenu(id) {
       try {
         var url = `apps/intranetagglo/menus/${id}`
-        const response = await axios.delete(generateUrl(url, { id }))
+        await axios.delete(generateUrl(url, { id }))
           .then(() => {
             this.$store.commit('setMenuAdminUpdating', true)
           })
-        this.LastModifiedID = response.data.id
       } catch (e) {
         console.error(e)
       }
