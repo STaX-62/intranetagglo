@@ -393,6 +393,15 @@ export default {
       updating: false,
       sectionArray: [],
       tempMenus: [],
+      modifying: {
+        selected: null,
+        title: "",
+        link: "",
+        file: null,
+        icon: "",
+        groups: "",
+        haschild: false
+      },
       LastModifiedID: null,
       redirectToFile: false
     }
