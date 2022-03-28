@@ -256,24 +256,13 @@ export default {
     Modify(menu) {
       console.log(menu)
       this.modifying = menu;
-      this.modifying.groups = menu.groups;
       var positions = menu.position.split('-');
+      if (menu.childs.length == 0) this.modifying.haschild = false;
+      else this.modifying.haschild = true;
 
       if (positions[1] == 0) {
         this.modifying.icon = menu.icon;
-        if (this.menusArray[0].length == 0) this.modifying.haschild = false;
-        else this.modifying.haschild = true;
       }
-      else {
-        if (positions[2] == 0) {
-          if (this.submenusArray[positions[0]][positions[1] - 1].length == 0) this.modifying.haschild = false;
-          else this.modifying.haschild = true;
-        }
-        else {
-          this.modifying.haschild = false;
-        }
-      }
-
       this.detailed = !this.detailed;
     },
     Save() {
