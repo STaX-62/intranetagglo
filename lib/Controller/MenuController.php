@@ -138,6 +138,7 @@ class MenuController extends Controller
         foreach ($newMenuOrder as $menu) {
             $this->service->updateOrder($menu->getId(), $menu->getPosition());
         }
+        $user = $this->session->getUser();
         return $this->service->findByGroups($this->groupmanager->getUserGroupIds($user));
     }
 
