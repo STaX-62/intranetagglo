@@ -4,7 +4,7 @@
       <b-icon class="doc-icon" icon="gear"></b-icon>
       <div>Modifier le menu</div>
     </div>
-    <b-modal id="menumodal1" size="xl" v-model="global" ref="modal">
+    <b-modal id="menumodal1" size="xl" v-model="global" ref="modal" @ok="UpdateBackground">
       <template #modal-title>Modification du Menu de navigation</template>
       <div style="display:block;position:relative;height:fit-content">
         <div class="menu-table">
@@ -208,6 +208,7 @@ export default {
               })
               section.childs = menuArray;
             })
+            this.$forceUpdate()
             this.$store.commit('setMenuAdminUpdating', false)
           })
       }
@@ -222,6 +223,9 @@ export default {
     },
   },
   methods: {
+    UpdateBackground() {
+      this.$store.commit('setMenuUpdating', true)
+    },
     UpdateOrder: function (event) {
       console.log(event)
       this.$forceUpdate()
@@ -310,7 +314,7 @@ export default {
         data.append('icon', menu.icon);
         data.append('groups', menu.groups);
         data.append('position', menu.position);
-        const response = await axios.post(generateUrl(`apps/intranetagglo/menus`), data, {
+        await axios.post(generateUrl(`apps/intranetagglo/menus`), data, {
           headers: {
             'accept': 'application/json',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
@@ -321,7 +325,6 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.$store.commit('setMenuUpdating', true)
     },
     async updateMenu(menu, newfile) {
       try {
@@ -346,7 +349,6 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.$store.commit('setMenuUpdating', true)
     },
     async deleteMenu(id) {
       try {
@@ -358,7 +360,6 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.$store.commit('setMenuUpdating', true)
     },
     async changeOrder(actualPosition, newIndex, oldIndex) {
       try {
@@ -375,11 +376,11 @@ export default {
             })
             section.childs = menuArray;
           })
+          this.$forceUpdate()
         })
       } catch (e) {
         console.error(e)
       }
-      this.$store.commit('setMenuUpdating', true)
     },
   },
   data: function () {
