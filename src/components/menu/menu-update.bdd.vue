@@ -15,17 +15,14 @@
             class="table-content"
             tag="div"
             :list="sectionArray"
-            :options="{group: 'sections'}"
-            v-model="sectionArray"
             draggable=".table-section"
             handle=".handlesec"
             @sort="UpdateOrder"
-            
           >
             <div
               class="table-section"
               v-for="(section,Sindex) in sectionArray"
-              v-bind:key="Sindex"
+              v-bind:key="section.id"
               v-bind:position="Sindex+'-0-0'"
             >
               <div class="table-block" type="text">
@@ -46,8 +43,6 @@
                 class="table-content"
                 tag="div"
                 :list="sectionArray[Sindex].childs"
-                :options="{group: 'menus-' +Sindex}"
-                v-model="sectionArray[Sindex].childs"
                 draggable=".table-menu"
                 handle=".handlemen"
                 @sort="UpdateOrder"
@@ -55,7 +50,7 @@
                 <div
                   class="table-menu"
                   v-for="(menu,Mindex) in sectionArray[Sindex].childs"
-                  v-bind:key="Mindex"
+                  v-bind:key="menu.id"
                   v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
                 >
                   <div class="table-block" type="text">
@@ -73,7 +68,6 @@
                     tag="div"
                     :list="sectionArray[Sindex].childs[Mindex].childs"
                     :options="{group: 'submenus-' + Sindex + '-'+ Mindex}"
-                    v-model="sectionArray[Sindex].childs[Mindex].childs"
                     draggable=".table-submenu-content"
                     handle=".handlesub"
                     @sort="UpdateOrder"
@@ -81,7 +75,7 @@
                     <div
                       class="table-submenu-content"
                       v-for="(submenu,SMindex) in sectionArray[Sindex].childs[Mindex].childs"
-                      v-bind:key="SMindex"
+                      v-bind:key="submenu.id"
                       v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
                     >
                       <div class="table-block" type="text">
@@ -101,21 +95,21 @@
                     </div>
                     <button
                       class="menu-add"
-                      @click="AddSubmenu(BDDArray[Sindex].childs[Mindex].childs,Sindex,Mindex)"
+                      @click="AddSubmenu(sectionArray[Sindex].childs[Mindex].childs,Sindex,Mindex)"
                       style="width:calc(100% - 10px)"
                     >+</button>
                   </draggable>
                 </div>
                 <button
                   class="menu-add"
-                  @click="AddMenu(BDDArray[Sindex].childs,Sindex)"
+                  @click="AddMenu(sectionArray[Sindex].childs,Sindex)"
                   style="width:calc(50% - 10px)"
                 >+</button>
               </draggable>
             </div>
             <button
               class="menu-add"
-              @click="AddSection(BDDArray)"
+              @click="AddSection(sectionArray)"
               style="width:calc(33% - 10px)"
             >+</button>
           </draggable>
@@ -205,7 +199,7 @@ export default {
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
-    BDDArray(){
+    BDDArray() {
       return this.sectionArray;
     }
   },
