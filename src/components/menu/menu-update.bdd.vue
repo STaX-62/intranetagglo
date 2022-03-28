@@ -16,6 +16,7 @@
             tag="div"
             :list="sectionArray"
             :options="{group: 'sections'}"
+            v-model="sectionArray"
             draggable=".table-section"
             handle=".handlesec"
             @sort="UpdateOrder"
@@ -23,7 +24,7 @@
           >
             <div
               class="table-section"
-              v-for="(section,Sindex) in BDDArray"
+              v-for="(section,Sindex) in sectionArray"
               v-bind:key="Sindex"
               v-bind:position="Sindex+'-0-0'"
             >
@@ -46,13 +47,14 @@
                 tag="div"
                 :list="sectionArray[Sindex].childs"
                 :options="{group: 'menus-' +Sindex}"
+                v-model="sectionArray[Sindex].childs"
                 draggable=".table-menu"
                 handle=".handlemen"
                 @sort="UpdateOrder"
               >
                 <div
                   class="table-menu"
-                  v-for="(menu,Mindex) in BDDArray[Sindex].childs"
+                  v-for="(menu,Mindex) in sectionArray[Sindex].childs"
                   v-bind:key="Mindex"
                   v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
                 >
@@ -71,13 +73,14 @@
                     tag="div"
                     :list="sectionArray[Sindex].childs[Mindex].childs"
                     :options="{group: 'submenus-' + Sindex + '-'+ Mindex}"
+                    v-model="sectionArray[Sindex].childs[Mindex].childs"
                     draggable=".table-submenu-content"
                     handle=".handlesub"
                     @sort="UpdateOrder"
                   >
                     <div
                       class="table-submenu-content"
-                      v-for="(submenu,SMindex) in BDDArray[Sindex].childs[Mindex].childs"
+                      v-for="(submenu,SMindex) in sectionArray[Sindex].childs[Mindex].childs"
                       v-bind:key="SMindex"
                       v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
                     >
