@@ -41,13 +41,28 @@ class MenuMapper extends QBMapper
      */
     public function findAll(): array
     {
-        /* @var $qb IQueryBuilder */
-        $qb = $this->db->getQueryBuilder();
+        /* @var $qbSection IQueryBuilder */
+        $qbSection = $this->db->getQueryBuilder();
 
-        $qb->select('*')
+        $qbSection->select('*')
+            ->where("q.position LIKE '%-0-0'")
             ->from($this->getTableName());
 
-        return $this->findEntities($qb);
+        /* @var $qbMenu IQueryBuilder */
+        $qbMenu = $this->db->getQueryBuilder();
+
+        $qbMenu->select('*')
+            ->where("q.position LIKE '%-0'")
+            ->from($this->getTableName());
+
+        /* @var $qb IQueryBuilder */
+        $qbSubmenu = $this->db->getQueryBuilder();
+
+        $qbSubmenu->select('*')
+            ->where("q.position NOT LIKE '%-0'")
+            ->from($this->getTableName());
+
+        return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
     }
 
 
@@ -62,14 +77,33 @@ class MenuMapper extends QBMapper
         }
 
         /* @var $qb IQueryBuilder */
-        $qb = $this->db->getQueryBuilder();
-        $qb->select('*')
+        $qbSection = $this->db->getQueryBuilder();
+        $qbSection->select('*')
             ->from($this->getTableName(), 'q')
             ->where("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
+            ->andWhere("q.position LIKE '%-0-0'")
             ->setParameter('groups', $groups);
 
-        return $this->findEntities($qb);
+        /* @var $qb IQueryBuilder */
+        $qbMenu = $this->db->getQueryBuilder();
+        $qbMenu->select('*')
+            ->from($this->getTableName(), 'q')
+            ->where("q.groups = ''")
+            ->orWhere("q.groups LIKE :groups")
+            ->andWhere("q.position LIKE '%-0'")
+            ->setParameter('groups', $groups);
+
+        /* @var $qb IQueryBuilder */
+        $qbSubmenu = $this->db->getQueryBuilder();
+        $qbSubmenu->select('*')
+            ->from($this->getTableName(), 'q')
+            ->where("q.groups = ''")
+            ->orWhere("q.groups LIKE :groups")
+            ->andWhere("q.position NOT LIKE '%-0'")
+            ->setParameter('groups', $groups);
+
+        return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
     }
 
 

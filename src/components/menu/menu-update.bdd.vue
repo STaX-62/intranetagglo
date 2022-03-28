@@ -195,58 +195,58 @@ export default {
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
-    sectionArray() {
-      var bddmenus = this.menusInBDD;
-      var sections = []
-      for (var i = 0; i < bddmenus.length; i++) {
-        for (var y = 0; y < bddmenus.length; y++) {
-          if (bddmenus[i].position == y + '-0-0') {
-            sections.push(bddmenus[i])
-          }
-        }
-      }
-      return sections;
-    },
-    menusArray() {
-      var bddmenus = this.menusInBDD;
-      var menus = []
-      var tempmenus = []
-      for (var i = 0; i < this.sectionArray.length; i++) {
-        for (var z = 0; z < bddmenus.length; z++) {
-          for (var y = 0; y < bddmenus.length; y++) {
-            if (bddmenus[z].position == i + '-' + (y + 1) + '-0') {
-              tempmenus.push(bddmenus[z])
-            }
-          }
-        }
-        menus.push(tempmenus)
-        tempmenus = []
-      }
+    // sectionArray() {
+    //   var bddmenus = this.menusInBDD;
+    //   var sections = []
+    //   for (var i = 0; i < bddmenus.length; i++) {
+    //     for (var y = 0; y < bddmenus.length; y++) {
+    //       if (bddmenus[i].position == y + '-0-0') {
+    //         sections.push(bddmenus[i])
+    //       }
+    //     }
+    //   }
+    //   return sections;
+    // },
+    // menusArray() {
+    //   var bddmenus = this.menusInBDD;
+    //   var menus = []
+    //   var tempmenus = []
+    //   for (var i = 0; i < this.sectionArray.length; i++) {
+    //     for (var z = 0; z < bddmenus.length; z++) {
+    //       for (var y = 0; y < bddmenus.length; y++) {
+    //         if (bddmenus[z].position == i + '-' + (y + 1) + '-0') {
+    //           tempmenus.push(bddmenus[z])
+    //         }
+    //       }
+    //     }
+    //     menus.push(tempmenus)
+    //     tempmenus = []
+    //   }
 
-      return menus;
-    },
-    submenusArray() {
-      var bddmenus = this.menusInBDD;
-      var menus = []
-      var tempmenus = []
-      var tempsubmenus = []
-      for (var i = 0; i < this.sectionArray.length; i++) {
-        for (var o = 0; o < this.menusArray[i].length; o++) {
-          for (var z = 0; z < bddmenus.length; z++) {
-            for (var y = 0; y < bddmenus.length; y++) {
-              if (bddmenus[z].position == i + '-' + (o + 1) + '-' + (y + 1)) {
-                tempsubmenus.push(bddmenus[z])
-              }
-            }
-          }
-          tempmenus.push(tempsubmenus)
-          tempsubmenus = []
-        }
-        menus.push(tempmenus)
-        tempmenus = []
-      }
-      return menus;
-    },
+    //   return menus;
+    // },
+    // submenusArray() {
+    //   var bddmenus = this.menusInBDD;
+    //   var menus = []
+    //   var tempmenus = []
+    //   var tempsubmenus = []
+    //   for (var i = 0; i < this.sectionArray.length; i++) {
+    //     for (var o = 0; o < this.menusArray[i].length; o++) {
+    //       for (var z = 0; z < bddmenus.length; z++) {
+    //         for (var y = 0; y < bddmenus.length; y++) {
+    //           if (bddmenus[z].position == i + '-' + (o + 1) + '-' + (y + 1)) {
+    //             tempsubmenus.push(bddmenus[z])
+    //           }
+    //         }
+    //       }
+    //       tempmenus.push(tempsubmenus)
+    //       tempsubmenus = []
+    //     }
+    //     menus.push(tempmenus)
+    //     tempmenus = []
+    //   }
+    //   return menus;
+    // },
 
   },
   methods: {
@@ -440,6 +440,9 @@ export default {
       detailed: false,
       updating: false,
       menusInBDD: [],
+      sectionArray: [],
+      menusArray: [],
+      submenusArray: [],
       modifying: {
         selected: null,
         title: "",
@@ -457,7 +460,11 @@ export default {
   mounted() {
     var url = `apps/intranetagglo${'/menus'}`
     axios.get(generateUrl(url))
-      .then(response => (this.menusInBDD = response.data))
+      .then((response) => {
+        this.sectionArray = response.data[0];
+        this.menusArray = response.data[1];
+        this.submenusArray = response.data[2];
+      })
   },
 
 }
