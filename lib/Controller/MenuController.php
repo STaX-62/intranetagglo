@@ -114,7 +114,7 @@ class MenuController extends Controller
                     $menus[$i]->setPosition(implode('-', $menuPosition));
                 }
             }
-            return $menus;
+            return [$menus,$menuPosition];
         }
 
         if ($newIndex == $oldIndex) {
@@ -135,9 +135,9 @@ class MenuController extends Controller
             $newMenuOrder = reOrder($menusToChange, 2, $newIndex, $oldIndex);
         }
 
-        foreach ($newMenuOrder as $menu) {
-            $this->service->updateOrder($menu->getId(), $menu->getPosition());
-        }
+        // foreach ($newMenuOrder as $menu) {
+        //     $this->service->updateOrder($menu->getId(), $menu->getPosition());
+        // }
         $user = $this->session->getUser();
         return [$this->service->findByGroups($this->groupmanager->getUserGroupIds($user)), $newMenuOrder];
     }
