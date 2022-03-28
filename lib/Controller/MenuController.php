@@ -104,13 +104,13 @@ class MenuController extends Controller
             if ($newIndex < $oldIndex) {
                 for ($i = $newIndex; $i < count($menus); $i++) {
                     $menuPosition = explode('-', $menus[$i]->getPosition());
-                    $menuPosition[$level] = $menuPosition[$level] + 1;
+                    $menuPosition[$level] = intval($menuPosition[$level]) + 1;
                     $menus[$i]->setPosition(implode('-', $menuPosition));
                 }
             } else {
                 for ($i = $oldIndex; $i < count($menus); $i++) {
                     $menuPosition = explode('-', $menus[$i]->getPosition());
-                    $menuPosition[$level] = $menuPosition[$level] - 1;
+                    $menuPosition[$level] = intval($menuPosition[$level]) - 1;
                     $menus[$i]->setPosition(implode('-', $menuPosition));
                 }
             }
