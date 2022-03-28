@@ -254,6 +254,7 @@ export default {
         })
     },
     Modify(menu) {
+      console.log(menu)
       this.modifying = menu;
       this.modifying.groups = menu.groups.split(';');
       var positions = menu.position.split('-');
