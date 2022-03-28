@@ -129,22 +129,24 @@ class MenuController extends Controller
             $menusToChange = $this->service->findByPosition('');
             $newMenuOrder = reOrder($menusToChange, 0, $newIndex, $oldIndex);
             $iftest = "stage 0";
-        }
-        if ($positionToChange[2] == '0') {
-            $menusToChange = $this->service->findByPosition($positionToChange[0] . '%');
-            $newMenuOrder = reOrder($menusToChange, 1, $newIndex, $oldIndex);
-            $iftest = "stage 1";
         } else {
-            $menusToChange = $this->service->findByPosition($positionToChange[0] . '-' . $positionToChange[1] . '%');
-            $newMenuOrder = reOrder($menusToChange, 2, $newIndex, $oldIndex);
-            $iftest = "stage 2";
+            if ($positionToChange[2] == '0') {
+                $menusToChange = $this->service->findByPosition($positionToChange[0] . '%');
+                $newMenuOrder = reOrder($menusToChange, 1, $newIndex, $oldIndex);
+                $iftest = "stage 1";
+            } else {
+                $menusToChange = $this->service->findByPosition($positionToChange[0] . '-' . $positionToChange[1] . '%');
+                $newMenuOrder = reOrder($menusToChange, 2, $newIndex, $oldIndex);
+                $iftest = "stage 2";
+            }
         }
 
-        // foreach ($newMenuOrder as $menu) {
-        //     $this->service->updateOrder($menu->getId(), $menu->getPosition());
-        // }
+
+        foreach ($newMenuOrder as $menu) {
+            $this->service->updateOrder($menu->getId(), $menu->getPosition());
+        }
         $user = $this->session->getUser();
-        return [$this->service->findByGroups($this->groupmanager->getUserGroupIds($user)), $positionToChange, $iftest];
+        return $this->service->findByGroups($this->groupmanager->getUserGroupIds($user));
     }
 
     public function destroy(int $id)
