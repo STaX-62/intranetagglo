@@ -124,17 +124,20 @@ class MenuController extends Controller
         }
 
         $positionToChange = explode('-', $oldPosition);
-
+        $iftest = "";
         if ($positionToChange[1] == '0') {
             $menusToChange = $this->service->findByPosition('');
             $newMenuOrder = reOrder($menusToChange, 0, $newIndex, $oldIndex);
+            $iftest = "stage 0";
         }
         if ($positionToChange[2] == '0') {
             $menusToChange = $this->service->findByPosition($positionToChange[0] . '%');
             $newMenuOrder = reOrder($menusToChange, 1, $newIndex, $oldIndex);
+            $iftest = "stage 1";
         } else {
             $menusToChange = $this->service->findByPosition($positionToChange[0] . '-' . $positionToChange[1] . '%');
             $newMenuOrder = reOrder($menusToChange, 2, $newIndex, $oldIndex);
+            $iftest = "stage 2";
         }
 
         // foreach ($newMenuOrder as $menu) {
