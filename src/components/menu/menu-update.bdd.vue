@@ -206,6 +206,7 @@ export default {
   methods: {
     UpdateOrder: function (event) {
       console.log(event)
+      this.$forceUpdate()
       //this.changeOrder(event.dragged.getAttribute("position"), event.newIndex, event.oldIndex)
     },
     DeleteVerification(menu) {

@@ -16,6 +16,7 @@ export default new Vuex.Store({
     appsupdating: false,
     menuupdating: false,
     newsupdating: false,
+    adminMenus: [],
     newsfocus: ""
   },
   getters: {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
       if (value == 1) state.newsfocus = 'center';
       if (value == 2) state.newsfocus = 'right';
       if (value == 3) state.newsfocus = '';
+    },
+    updateAdminMenus(state, adminMenus) {
+      state.adminMenus = adminMenus;
     },
     updateSearch(state, search) {
       state.search = search;
