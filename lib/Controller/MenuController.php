@@ -102,7 +102,7 @@ class MenuController extends Controller
         function reOrder($menus, $level, $newIndex, $oldIndex)
         {
             $explodedmenu = [];
-            if ($newIndex < $oldIndex) {
+            if ($newIndex > $oldIndex) {
                 for ($i = $newIndex; $i < count($menus); $i++) {
                     $menuPosition = explode('-', $menus[$i]->getPosition());
                     $menuPosition[$level] = intval($menuPosition[$level]) + 1;
