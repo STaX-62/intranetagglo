@@ -23,7 +23,7 @@
           >
             <div
               class="table-section"
-              v-for="(section,Sindex) in sectionArray"
+              v-for="(section,Sindex) in BDDArray"
               v-bind:key="Sindex"
               v-bind:position="Sindex+'-0-0'"
             >
@@ -52,7 +52,7 @@
               >
                 <div
                   class="table-menu"
-                  v-for="(menu,Mindex) in sectionArray[Sindex].childs"
+                  v-for="(menu,Mindex) in BDDArray[Sindex].childs"
                   v-bind:key="Mindex"
                   v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
                 >
@@ -77,7 +77,7 @@
                   >
                     <div
                       class="table-submenu-content"
-                      v-for="(submenu,SMindex) in sectionArray[Sindex].childs[Mindex].childs"
+                      v-for="(submenu,SMindex) in BDDArray[Sindex].childs[Mindex].childs"
                       v-bind:key="SMindex"
                       v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
                     >
@@ -98,21 +98,21 @@
                     </div>
                     <button
                       class="menu-add"
-                      @click="AddSubmenu(sectionArray[Sindex].childs[Mindex].childs,Sindex,Mindex)"
+                      @click="AddSubmenu(BDDArray[Sindex].childs[Mindex].childs,Sindex,Mindex)"
                       style="width:calc(100% - 10px)"
                     >+</button>
                   </draggable>
                 </div>
                 <button
                   class="menu-add"
-                  @click="AddMenu(sectionArray[Sindex].childs,Sindex)"
+                  @click="AddMenu(BDDArray[Sindex].childs,Sindex)"
                   style="width:calc(50% - 10px)"
                 >+</button>
               </draggable>
             </div>
             <button
               class="menu-add"
-              @click="AddSection(sectionArray)"
+              @click="AddSection(BDDArray)"
               style="width:calc(33% - 10px)"
             >+</button>
           </draggable>
@@ -202,6 +202,9 @@ export default {
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
+    BDDArray(){
+      return this.sectionArray;
+    }
   },
   methods: {
     UpdateOrder: function (event) {
@@ -223,7 +226,7 @@ export default {
       })
         .then(value => {
           if (value) {
-            var index = this.menusInBDD.findIndex(x => x.title === menu.title)
+            var index = this.BDDArray.findIndex(x => x.title === menu.title)
             if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
               this.menusInBDD.splice(index, 1)
               if (menu.id != null) {
