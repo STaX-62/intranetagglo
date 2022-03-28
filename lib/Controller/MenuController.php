@@ -114,7 +114,7 @@ class MenuController extends Controller
                     $menus[$i]->setPosition(implode('-', $menuPosition));
                 }
             }
-            return [$menus,$menuPosition, explode('-', $menus[$i]->getPosition()),$menuPosition[$level]];
+            return [$menus,$menuPosition, explode('-', $menus[0]->getPosition()),$menuPosition[$level]];
         }
 
         if ($newIndex == $oldIndex) {
