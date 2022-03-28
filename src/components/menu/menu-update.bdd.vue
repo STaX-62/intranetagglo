@@ -16,8 +16,10 @@
             tag="div"
             :list="sectionArray"
             :options="{group: 'sections'}"
+            draggable=".table-section"
             handle=".handlesec"
             @sort="UpdateOrder"
+            
           >
             <div
               class="table-section"
@@ -44,6 +46,7 @@
                 tag="div"
                 :list="sectionArray[Sindex].childs"
                 :options="{group: 'menus-' +Sindex}"
+                draggable=".table-menu"
                 handle=".handlemen"
                 @sort="UpdateOrder"
               >
@@ -68,6 +71,7 @@
                     tag="div"
                     :list="sectionArray[Sindex].childs[Mindex].childs"
                     :options="{group: 'submenus-' + Sindex + '-'+ Mindex}"
+                    draggable=".table-submenu-content"
                     handle=".handlesub"
                     @sort="UpdateOrder"
                   >
@@ -202,7 +206,6 @@ export default {
   methods: {
     UpdateOrder: function (event) {
       console.log(event)
-      console.log(event.dragged.getAttribute("position"))
       //this.changeOrder(event.dragged.getAttribute("position"), event.newIndex, event.oldIndex)
     },
     DeleteVerification(menu) {
