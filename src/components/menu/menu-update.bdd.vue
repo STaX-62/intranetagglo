@@ -41,7 +41,7 @@
               <draggable
                 class="table-content"
                 tag="div"
-                :list="sectionArray[Sindex]"
+                :list="sectionArray[Sindex].childs"
                 handle=".handlemen"
                 :move="UpdateOrder"
               >
@@ -64,13 +64,13 @@
                   <draggable
                     class="table-content"
                     tag="div"
-                    :list="sectionArray[Sindex][Mindex]"
+                    :list="sectionArray[Sindex].childs[Mindex].childs"
                     handle=".handlesub"
                     :move="UpdateOrder"
                   >
                     <div
                       class="table-submenu-content"
-                      v-for="(submenu,SMindex) in sectionArray[Sindex][Mindex].childs"
+                      v-for="(submenu,SMindex) in sectionArray[Sindex].childs[Mindex].childs"
                       v-bind:key="SMindex"
                       v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
                     >
@@ -91,7 +91,7 @@
                     </div>
                     <button
                       class="menu-add"
-                      @click="AddSubmenu(sectionArray[Sindex][Mindex].childs,Sindex,Mindex)"
+                      @click="AddSubmenu(sectionArray[Sindex].childs[Mindex].childs,Sindex,Mindex)"
                       style="width:calc(100% - 10px)"
                     >+</button>
                   </draggable>
