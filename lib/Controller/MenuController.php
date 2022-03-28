@@ -101,6 +101,7 @@ class MenuController extends Controller
     {
         function reOrder($menus, $level, $newIndex, $oldIndex)
         {
+            $explodedmenu = [];
             if ($newIndex < $oldIndex) {
                 for ($i = $newIndex; $i < count($menus); $i++) {
                     $menuPosition = explode('-', $menus[$i]->getPosition());
@@ -110,11 +111,12 @@ class MenuController extends Controller
             } else {
                 for ($i = $oldIndex; $i < count($menus); $i++) {
                     $menuPosition = explode('-', $menus[$i]->getPosition());
+                    $explodedmenu[] = $menuPosition;
                     $menuPosition[$level] = intval($menuPosition[$level]) - 1;
                     $menus[$i]->setPosition(implode('-', $menuPosition));
                 }
             }
-            return [$menus,$menuPosition, explode('-', $menus[$newIndex]->getPosition()),$menuPosition[$level]];
+            return [$menus, $menuPosition, $explodedmenu, $menuPosition[$level]];
         }
 
         if ($newIndex == $oldIndex) {
