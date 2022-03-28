@@ -188,6 +188,7 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
 import draggable from 'vuedraggable'
+import Vue from 'vue'
 
 export default {
   name: 'NewsUpdate',
@@ -199,8 +200,14 @@ export default {
       if (val) {
         axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
           .then((response) => {
-            this.menuInBDD = response.data;
-            console.log(response.data)
+            this.sectionArray = response.data[0];
+            this.sectionArray.forEach((section) => {
+              var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
+              menuArray.forEach((menu) => {
+                menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
+              })
+              section.childs = menuArray;
+            })
             this.$store.commit('setMenuAdminUpdating', false)
           })
       }
@@ -213,24 +220,20 @@ export default {
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
-    sectionArray() {
-      console.log(this.menuInBDD)
-      return this.menuInBDD[0].forEach((section) => {
-        var menuArray = this.menuInBDD[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
-        menuArray.forEach((menu) => {
-          menu.childs = this.menuInBDD[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
-        })
-        section.childs = menuArray;
-      })
-    }
   },
   methods: {
     UpdateOrder: function (event) {
       console.log(event)
       this.$forceUpdate()
       this.changeOrder(event.clone.getAttribute("position"), event.newIndex, event.oldIndex).then((response) => {
-        this.menuInBDD = response.data;
-        console.log(response.data)
+        this.sectionArray = response.data[0];
+        this.sectionArray.forEach((section) => {
+          var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
+          menuArray.forEach((menu) => {
+            menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
+          })
+          section.childs = menuArray;
+        })
       })
     },
     DeleteVerification(menu) {
@@ -385,7 +388,7 @@ export default {
       global: false,
       detailed: false,
       updating: false,
-      menuInBDD: [],
+      sectionArray: [],
       tempMenus: [],
       modifying: {
         selected: null,
@@ -400,12 +403,18 @@ export default {
       redirectToFile: false
     }
   },
-  beforeMount() {
+  mounted() {
     var url = `apps/intranetagglo${'/menus'}`
     axios.get(generateUrl(url))
       .then((response) => {
-        this.menuInBDD = response.data;
-        console.log(response.data)
+        this.sectionArray = response.data[0];
+        this.sectionArray.forEach((section) => {
+          var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
+          menuArray.forEach((menu) => {
+            menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
+          })
+          section.childs = menuArray;
+        })
       })
   },
 
