@@ -11,7 +11,13 @@
           <div class="table-header">Section</div>
           <div class="table-header">Menu</div>
           <div class="table-header">Sous-Menu</div>
-          <div class="table-content" v-sortable="{ onUpdate: UpdateOrder, handle: '.handle' }">
+          <draggable
+            class="table-content"
+            tag="div"
+            :list="sectionArray"
+            handle=".handlesec"
+            :move="UpdateOrder"
+          >
             <div
               class="table-section"
               v-for="(section,Sindex) in sectionArray"
@@ -30,9 +36,15 @@
                 <button type="button" class="menu-del-button" @click="DeleteVerification(section)">
                   <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                 </button>
-                <i class="handle"></i>
+                <b-icon icon="arrows-move" class="handlesec"></b-icon>
               </div>
-              <div v-sortable="{ onUpdate: UpdateOrder, handle: '.handle' }">
+              <draggable
+                class="table-content"
+                tag="div"
+                :list="menusArray[Sindex]"
+                handle=".handlemen"
+                :move="UpdateOrder"
+              >
                 <div
                   class="table-menu"
                   v-for="(menu,Mindex) in menusArray[Sindex]"
@@ -47,11 +59,14 @@
                     <button type="button" class="menu-del-button" @click="DeleteVerification(menu)">
                       <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                     </button>
-                    <i class="handle"></i>
+                    <b-icon icon="arrows-move" class="handlemen"></b-icon>
                   </div>
-                  <div
-                    class="table-submenu"
-                    v-sortable="{ onUpdate: UpdateOrder, handle: '.handle' }"
+                  <draggable
+                    class="table-content"
+                    tag="div"
+                    :list="submenusArray[Sindex][Mindex]"
+                    handle=".handlesub"
+                    :move="UpdateOrder"
                   >
                     <div
                       class="table-submenu-content"
@@ -71,7 +86,7 @@
                         >
                           <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                         </button>
-                        <i class="handle"></i>
+                        <b-icon icon="arrows-move" class="handlesub"></b-icon>
                       </div>
                     </div>
                     <button
@@ -79,21 +94,21 @@
                       @click="AddSubmenu(submenusArray[Sindex][Mindex],Sindex,Mindex)"
                       style="width:calc(100% - 10px)"
                     >+</button>
-                  </div>
+                  </draggable>
                 </div>
                 <button
                   class="menu-add"
                   @click="AddMenu(menusArray[Sindex],Sindex)"
                   style="width:calc(50% - 10px)"
                 >+</button>
-              </div>
+              </draggable>
             </div>
             <button
               class="menu-add"
               @click="AddSection(sectionArray)"
               style="width:calc(33% - 10px)"
             >+</button>
-          </div>
+          </draggable>
         </div>
       </div>
     </b-modal>
@@ -168,13 +183,14 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
-import Sortable from 'vue-sortable'
+import draggable from 'vuedraggable'
 import Vue from 'vue'
-Vue.use(Sortable)
-
 
 export default {
   name: 'NewsUpdate',
+  components: {
+    draggable,
+  },
   computed: {
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
@@ -235,7 +251,7 @@ export default {
   },
   methods: {
     UpdateOrder: function (event) {
-      this.changeOrder(event.target.getAttribute('position'), event.newIndex, event.oldIndex)
+      this.changeOrder(event.dragged.getAttribute("position"), event.newIndex, event.oldIndex)
     },
     DeleteVerification(menu) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${menu.title}`, {
