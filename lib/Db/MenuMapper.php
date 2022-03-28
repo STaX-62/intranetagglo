@@ -46,21 +46,21 @@ class MenuMapper extends QBMapper
 
         $qbSection->select('*')
             ->where("q.position LIKE '%-0-0'")
-            ->from($this->getTableName());
+            ->from($this->getTableName(), 'q');
 
         /* @var $qbMenu IQueryBuilder */
         $qbMenu = $this->db->getQueryBuilder();
 
         $qbMenu->select('*')
             ->where("q.position LIKE '%-0'")
-            ->from($this->getTableName());
+            ->from($this->getTableName(), 'q');
 
         /* @var $qb IQueryBuilder */
         $qbSubmenu = $this->db->getQueryBuilder();
 
         $qbSubmenu->select('*')
             ->where("q.position NOT LIKE '%-0'")
-            ->from($this->getTableName());
+            ->from($this->getTableName(), 'q');
 
         return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
     }
