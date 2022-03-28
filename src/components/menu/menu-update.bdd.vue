@@ -236,6 +236,7 @@ export default {
   },
   methods: {
     UpdateBackground() {
+      this.$store.commit('setMenuAdminUpdating', true)
       this.$store.commit('setMenuUpdating', true)
     },
     UpdateOrder: function (event) {
@@ -286,10 +287,7 @@ export default {
       }
       this.modifying.groups = this.modifying.groups.join(';')
 
-      this.updateMenu(this.modifying, this.modifying.file).then(() => {
-        this.$store.commit('setMenuAdminUpdating', true)
-      })
-
+      this.updateMenu(this.modifying, this.modifying.file)
     },
     AddSubmenu(submenus, Sindex, Mindex) {
       this.createMenu({
@@ -419,11 +417,23 @@ export default {
     var url = `apps/intranetagglo${'/menus'}`
     axios.get(generateUrl(url))
       .then((response) => {
-        this.sectionArray = response.data[0];
+        this.sectionArray = response.data[0].sort((a, b) => {
+          if (a.position.split('-')[0] < b.position.split('-')[0]) return -1;
+          if (a.position.split('-')[0] > b.position.split('-')[0]) return 1;
+          return 0;
+        });
         this.sectionArray.forEach((section) => {
-          var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
+          var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2)).sort((a, b) => {
+            if (a.position.split('-')[1] < b.position.split('-')[1]) return -1;
+            if (a.position.split('-')[1] > b.position.split('-')[1]) return 1;
+            return 0;
+          });
           menuArray.forEach((menu) => {
-            menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
+            menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4)).sort((a, b) => {
+              if (a.position.split('-')[2] < b.position.split('-')[2]) return -1;
+              if (a.position.split('-')[2] > b.position.split('-')[2]) return 1;
+              return 0;
+            });
           })
           section.childs = menuArray;
         })
