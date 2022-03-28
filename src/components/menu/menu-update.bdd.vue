@@ -251,7 +251,9 @@ export default {
   },
   methods: {
     UpdateOrder: function (event) {
-      this.changeOrder(event.dragged.getAttribute("position"), event.newIndex, event.oldIndex)
+      console.log(event)
+      console.log(event.dragged.getAttribute("position"))
+      //this.changeOrder(event.dragged.getAttribute("position"), event.newIndex, event.oldIndex)
     },
     DeleteVerification(menu) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${menu.title}`, {
@@ -514,14 +516,14 @@ export default {
   display: grid;
   grid-template-columns: 33% 66%;
   grid-auto-rows: auto;
-  grid-template-areas: ". .";
+  grid-template-areas: ". Content";
   row-gap: 10px;
   width: 100%;
 }
 
 .table-block {
   display: grid;
-  grid-template-columns: calc(100% - 100px) 50px 50px;
+  grid-template-columns: calc(100% - 150px) 50px 50px 50px;
   grid-auto-rows: auto;
   grid-template-areas: ". . .";
   background-color: var(--color-mode-1);
@@ -553,7 +555,7 @@ export default {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-auto-rows: auto;
-  grid-template-areas: "Menu .";
+  grid-template-areas: "Menu Content";
   row-gap: 10px;
 }
 
