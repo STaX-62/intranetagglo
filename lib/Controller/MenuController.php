@@ -140,7 +140,7 @@ class MenuController extends Controller
         // foreach ($newMenuOrder as $menu) {
         //     $this->service->updateOrder($menu->getId(), $menu->getPosition());
         // }
-        return [$this->service->findAll(), $menusToChange[0]->getPosition()];
+        return [$this->service->findAll(), $menusToChange[0], $menusToChange];
     }
 
     public function destroy(int $id)
