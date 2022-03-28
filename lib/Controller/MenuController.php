@@ -139,7 +139,7 @@ class MenuController extends Controller
             $this->service->updateOrder($menu->getId(), $menu->getPosition());
         }
         $user = $this->session->getUser();
-        return $this->service->findByGroups($this->groupmanager->getUserGroupIds($user));
+        return [$this->service->findByGroups($this->groupmanager->getUserGroupIds($user)), $newMenuOrder];
     }
 
     public function destroy(int $id)
