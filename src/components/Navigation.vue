@@ -89,7 +89,6 @@ export default {
               })
               section.childs = menuArray;
             })
-            this.$forceUpdate()
             this.$store.commit('setMenuUpdating', false)
           })
       }
@@ -132,7 +131,30 @@ export default {
 
   },
   mounted() {
-    this.$store.commit('setMenuUpdating', false)
+    var url = `apps/intranetagglo${'/menusG'}`
+    axios.get(generateUrl(url))
+      .then((response) => {
+        this.sectionArray = response.data[0].sort((a, b) => {
+          if (a.position.split('-')[0] < b.position.split('-')[0]) return -1;
+          if (a.position.split('-')[0] > b.position.split('-')[0]) return 1;
+          return 0;
+        });
+        this.sectionArray.forEach((section) => {
+          var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2)).sort((a, b) => {
+            if (a.position.split('-')[1] < b.position.split('-')[1]) return -1;
+            if (a.position.split('-')[1] > b.position.split('-')[1]) return 1;
+            return 0;
+          });
+          menuArray.forEach((menu) => {
+            menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4)).sort((a, b) => {
+              if (a.position.split('-')[2] < b.position.split('-')[2]) return -1;
+              if (a.position.split('-')[2] > b.position.split('-')[2]) return 1;
+              return 0;
+            });
+          })
+          section.childs = menuArray;
+        })
+      })
   }
 }
 </script>
