@@ -125,8 +125,8 @@ class MenuController extends Controller
 
         $positionToChange = explode('-', $oldPosition);
         if ($positionToChange[1] == '0') {
-            $menusToChange = $this->service->findAll();
-            // $newMenuOrder = reOrder($menusToChange, 0, $newIndex, $oldIndex);
+            $menusToChange = $this->service->findByPosition('%');
+            $newMenuOrder = reOrder($menusToChange, 0, $newIndex, $oldIndex);
         } else {
             if ($positionToChange[2] == '0') {
                 $menusToChange = $this->service->findByPosition($positionToChange[0] . '%');
@@ -137,10 +137,10 @@ class MenuController extends Controller
             }
         }
 
-        // foreach ($newMenuOrder as $menu) {
-        //     $this->service->updateOrder($menu->getId(), $menu->getPosition());
-        // }
-        return [$this->service->findAll(), $menusToChange[0], $menusToChange];
+        foreach ($newMenuOrder as $menu) {
+            $this->service->updateOrder($menu->getId(), $menu->getPosition());
+        }
+        return $this->service->findAll();
     }
 
     public function destroy(int $id)
