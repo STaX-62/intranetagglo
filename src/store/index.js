@@ -15,6 +15,7 @@ export default new Vuex.Store({
     categoryfilter: '',
     appsupdating: false,
     menuupdating: false,
+    menuAdminUpdating: false,
     newsupdating: false,
     adminMenus: [],
     newsfocus: ""
@@ -56,6 +57,9 @@ export default new Vuex.Store({
     },
     setMenuUpdating(state, updating) {
       state.menuupdating = updating
+    },
+    setMenuAdminUpdating(state, updating) {
+      state.menuAdminUpdating = updating
     },
     setNewsUpdating(state, updating) {
       state.newsupdating = updating

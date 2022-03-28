@@ -195,19 +195,39 @@ export default {
   components: {
     draggable,
   },
+  watch: {
+    updating: function (val) {
+      if (val) {
+        axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
+          .then((response) => {
+            this.sectionArray = response.data[0];
+            this.sectionArray.forEach((section) => {
+              var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
+              menuArray.forEach((menu) => {
+                menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
+              })
+              section.childs = menuArray;
+            })
+            this.$store.commit('setMenuAdminUpdating', false)
+          })
+      }
+    },
+  },
   computed: {
+    updating() {
+      return this.$store.state.menuAdminUpdating
+    },
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
-    BDDArray() {
-      return this.sectionArray;
-    }
   },
   methods: {
     UpdateOrder: function (event) {
       console.log(event)
       this.$forceUpdate()
-      //this.changeOrder(event.dragged.getAttribute("position"), event.newIndex, event.oldIndex)
+      this.changeOrder(event.clone.getAttribute("position"), event.newIndex, event.oldIndex).then(() => {
+        this.$store.commit('setMenuAdminUpdating', true)
+      })
     },
     DeleteVerification(menu) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${menu.title}`, {
@@ -224,17 +244,9 @@ export default {
       })
         .then(value => {
           if (value) {
-            var index = this.BDDArray.findIndex(x => x.title === menu.title)
-            if (menu.title == "Nouvelle Section" || menu.title == "Nouveau Menu" || menu.title == "Nouveau Sous-Menu") {
-              this.menusInBDD.splice(index, 1)
-              if (menu.id != null) {
-                this.deleteMenu(menu.id)
-              }
-            }
-            else {
-              this.menusInBDD.splice(index, 1)
-              this.deleteMenu(menu.id)
-            }
+            this.deleteMenu(menu.id).then(() => {
+              this.$store.commit('setMenuAdminUpdating', true)
+            })
           }
         })
         .catch(err => {
@@ -242,10 +254,7 @@ export default {
         })
     },
     Modify(menu) {
-      this.modifying.selected = menu.position;
-      this.modifying.title = menu.title;
-      this.modifying.link = menu.link;
-      this.modifying.icon = null;
+      this.modifying = menu;
       this.modifying.groups = menu.groups.split(';');
       var positions = menu.position.split('-');
 
@@ -267,28 +276,18 @@ export default {
       this.detailed = !this.detailed;
     },
     Save() {
-      var menu = this.menusInBDD.find(x => x.position === this.modifying.selected)
+      if (this.modifying.link == null) {
+        this.modifying = ""
+      }
+      if (this.modifying.icon == null) {
+        menu.icon = ""
+      }
+      this.modifying.groups = this.modifying.groups.join(';')
 
-      if (this.modifying.title != "Nouvelle Section" && this.modifying.title != "Nouveau Menu" && this.modifying.title != "Nouveau Sous-Menu") {
-        menu.title = this.modifying.title
-        if (this.modifying.link != null) {
-          menu.link = this.modifying.link
-        }
-        else {
-          menu.link = ""
-        }
-        if (this.modifying.icon != null) {
-          menu.icon = this.modifying.icon
-        }
-        else {
-          menu.icon = ""
-        }
-        menu.groups = this.modifying.groups.join(';')
-        this.updateMenu(menu, this.modifying.file)
-      }
-      else {
-        alert("Le titre n'a pas été modifié")
-      }
+      this.updateMenu(this.modifying, this.modifying.file).then(() => {
+        this.$store.commit('setMenuAdminUpdating', true)
+      })
+
     },
     AddSubmenu(submenus, Sindex, Mindex) {
       this.createMenu({
@@ -297,6 +296,8 @@ export default {
         'link': '',
         'groups': 'admin',
         'position': Sindex + '-' + (Mindex + 1) + '-' + (submenus.length + 1)
+      }).then(() => {
+        this.$store.commit('setMenuAdminUpdating', true)
       })
     },
     AddMenu(menu, Sindex) {
@@ -306,6 +307,8 @@ export default {
         'link': '',
         'groups': 'admin',
         'position': Sindex + '-' + (menu.length + 1) + '-0'
+      }).then(() => {
+        this.$store.commit('setMenuAdminUpdating', true)
       })
     },
     AddSection(section) {
@@ -315,11 +318,12 @@ export default {
         'link': '',
         'groups': 'admin',
         'position': section.length + '-0-0'
+      }).then(() => {
+        this.$store.commit('setMenuAdminUpdating', true)
       })
     },
     async createMenu(menu) {
       try {
-
         let data = new FormData();
         data.append('title', menu.title);
         data.append('link', menu.link);
@@ -333,7 +337,6 @@ export default {
           }
         })
         this.LastModifiedID = response.data.id
-        this.menusInBDD.find(x => x.position === this.modifying.selected).id = response.data.id
       } catch (e) {
         console.error(e)
       }
@@ -351,7 +354,6 @@ export default {
         if (newfile != null && this.redirectToFile) {
           data.append('file_upd', newfile, newfile.name);
         }
-
         const response = await axios.post(generateUrl(`apps/intranetagglo/menus/${menu.id}`), data, {
           headers: {
             'accept': 'application/json',
@@ -362,7 +364,6 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.$store.commit('setMenuUpdating', true)
     },
     async deleteMenu(id) {
       try {
@@ -372,7 +373,6 @@ export default {
       } catch (e) {
         console.error(e)
       }
-      this.$store.commit('setMenuUpdating', true)
     },
     async changeOrder(actualPosition, newIndex, oldIndex) {
       try {
@@ -380,12 +380,10 @@ export default {
         data.append('oldPosition', actualPosition);
         data.append('newIndex', newIndex);
         data.append('oldIndex', oldIndex);
-        const response = await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' })
-        this.menusInBDD = response.data
+        await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' })
       } catch (e) {
         console.error(e)
       }
-      this.$store.commit('setMenuUpdating', true)
     },
   },
   data: function () {
@@ -393,19 +391,7 @@ export default {
       global: false,
       detailed: false,
       updating: false,
-      menusInBDD: [],
       sectionArray: [],
-      menusArray: [],
-      submenusArray: [],
-      modifying: {
-        selected: null,
-        title: "",
-        link: "",
-        file: null,
-        icon: "",
-        groups: "",
-        haschild: false
-      },
       tempMenus: [],
       LastModifiedID: null,
       redirectToFile: false
