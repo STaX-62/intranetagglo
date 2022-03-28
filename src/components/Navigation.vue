@@ -14,21 +14,21 @@
         <div
           v-bind:id="'menu-'+index+'-'+subindex"
           class="menu"
-          v-for="(menu,subindex) in menusArray[index]"
+          v-for="(menu,subindex) in sectionArray[index].childs"
           :key="'B'+subindex"
           @click="ExtendSubMenu(index,subindex)"
         >
           <div
             class="submenu-title"
-            @click="OpenLink(menu.link, isEmpty(submenusArray[index][subindex]))"
+            @click="OpenLink(menu.link, isEmpty(sectionArray[index].childs[subindex].childs))"
           >
-            <div class="caret" v-if="!isEmpty(submenusArray[index][subindex])">▷</div>
+            <div class="caret" v-if="!isEmpty(sectionArray[index].childs[subindex].childs)">▷</div>
             {{ menu.title }}
           </div>
           <div v-bind:id="'container-'+ index + '-'+ subindex" class="menu-container">
             <a
               class="nav-link text-truncate"
-              v-for="(submenu,subsubindex) in submenusArray[index][subindex]"
+              v-for="(submenu,subsubindex) in sectionArray[index].childs[subindex].childs"
               :key="'B'+subsubindex"
               v-bind:href="submenu.link"
             >
@@ -61,8 +61,7 @@ export default {
       image: '/nextcloud/apps/intranetagglo/img/LogoCA2BM.png', // require('../assets/LogoCA2BM.png'),//'/nextcloud/apps/intranetca/src/assets/LogoCA2BM.png'
       user: [],
       lastOpenedContainer: null,
-      menusInBDD: [
-      ]
+      sectionArray: []
     }
   },
   watch: {
@@ -70,7 +69,14 @@ export default {
       if (val) {
         axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
           .then((response) => {
-            this.menusInBDD = response.data;
+            this.sectionArray = response.data[0];
+            this.sectionArray.forEach((section) => {
+              var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
+              menuArray.forEach((menu) => {
+                menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
+              })
+              section.childs = menuArray;
+            })
             this.$store.commit('setMenuUpdating', false)
           })
       }
@@ -83,58 +89,6 @@ export default {
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
     },
-    sectionArray() {
-      var bddmenus = this.menusInBDD;
-      var sections = []
-      for (var i = 0; i < bddmenus.length; i++) {
-        for (var y = 0; y < bddmenus.length; y++) {
-          if (bddmenus[i].position == y + '-0-0') {
-            sections.push(bddmenus[i])
-          }
-        }
-      }
-      return sections;
-    },
-    menusArray() {
-      var bddmenus = this.menusInBDD;
-      var menus = []
-      var tempmenus = []
-      for (var i = 0; i < this.sectionArray.length; i++) {
-        for (var z = 0; z < bddmenus.length; z++) {
-          for (var y = 0; y < bddmenus.length; y++) {
-            if (bddmenus[z].position == i + '-' + (y + 1) + '-0') {
-              tempmenus.push(bddmenus[z])
-            }
-          }
-        }
-        menus.push(tempmenus)
-        tempmenus = []
-      }
-
-      return menus;
-    },
-    submenusArray() {
-      var bddmenus = this.menusInBDD;
-      var menus = []
-      var tempmenus = []
-      var tempsubmenus = []
-      for (var i = 0; i < this.sectionArray.length; i++) {
-        for (var o = 0; o < this.menusArray[i].length; o++) {
-          for (var z = 0; z < bddmenus.length; z++) {
-            for (var y = 0; y < bddmenus.length; y++) {
-              if (bddmenus[z].position == i + '-' + (o + 1) + '-' + (y + 1)) {
-                tempsubmenus.push(bddmenus[z])
-              }
-            }
-          }
-          tempmenus.push(tempsubmenus)
-          tempsubmenus = []
-        }
-        menus.push(tempmenus)
-        tempmenus = []
-      }
-      return menus;
-    },
   },
   methods: {
     isEmpty(array) {
@@ -143,7 +97,7 @@ export default {
       }
       else return true
     },
-    OpenLink(link,isEmpty) {
+    OpenLink(link, isEmpty) {
       if (link != '' && isEmpty) {
         window.open(link, '_blank');
       }
@@ -167,7 +121,16 @@ export default {
   mounted() {
     var url = `apps/intranetagglo${'/menusG'}`
     axios.get(generateUrl(url))
-      .then(response => (this.menusInBDD = response.data))
+      .then((response) => {
+        this.sectionArray = response.data[0];
+        this.sectionArray.forEach((section) => {
+          var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
+          menuArray.forEach((menu) => {
+            menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
+          })
+          section.childs = menuArray;
+        })
+      })
   }
 }
 </script>
