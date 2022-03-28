@@ -225,16 +225,7 @@ export default {
     UpdateOrder: function (event) {
       console.log(event)
       this.$forceUpdate()
-      this.changeOrder(event.clone.getAttribute("position"), event.newIndex, event.oldIndex).then((response) => {
-        this.sectionArray = response.data[0];
-        this.sectionArray.forEach((section) => {
-          var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
-          menuArray.forEach((menu) => {
-            menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
-          })
-          section.childs = menuArray;
-        })
-      })
+      this.changeOrder(event.clone.getAttribute("position"), event.newIndex, event.oldIndex)
     },
     DeleteVerification(menu) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${menu.title}`, {
@@ -315,8 +306,6 @@ export default {
         'link': '',
         'groups': 'admin',
         'position': section.length + '-0-0'
-      }).then(() => {
-        this.$store.commit('setMenuAdminUpdating', true)
       })
     },
     async createMenu(menu) {
@@ -332,6 +321,8 @@ export default {
             'accept': 'application/json',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
           }
+        }).then(() => {
+          this.$store.commit('setMenuAdminUpdating', true)
         })
         this.LastModifiedID = response.data.id
       } catch (e) {
@@ -356,6 +347,8 @@ export default {
             'accept': 'application/json',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
           }
+        }).then(() => {
+          this.$store.commit('setMenuAdminUpdating', true)
         })
         this.LastModifiedID = response.data.id
       } catch (e) {
@@ -377,7 +370,16 @@ export default {
         data.append('oldPosition', actualPosition);
         data.append('newIndex', newIndex);
         data.append('oldIndex', oldIndex);
-        await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' })
+        await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then((response) => {
+          this.sectionArray = response.data[0];
+          this.sectionArray.forEach((section) => {
+            var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
+            menuArray.forEach((menu) => {
+              menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
+            })
+            section.childs = menuArray;
+          })
+        })
       } catch (e) {
         console.error(e)
       }
