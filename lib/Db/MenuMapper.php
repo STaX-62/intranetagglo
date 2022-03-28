@@ -53,6 +53,7 @@ class MenuMapper extends QBMapper
 
         $qbMenu->select('*')
             ->where("q.position LIKE '%-0'")
+            ->andWhere("q.position NOT LIKE '%-0-0'")
             ->from($this->getTableName(), 'q');
 
         /* @var $qb IQueryBuilder */
@@ -92,6 +93,7 @@ class MenuMapper extends QBMapper
             ->where("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.position LIKE '%-0'")
+            ->andWhere("q.position NOT LIKE '%-0-0'")
             ->setParameter('groups', $groups);
 
         /* @var $qb IQueryBuilder */

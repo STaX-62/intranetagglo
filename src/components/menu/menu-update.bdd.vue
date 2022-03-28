@@ -47,7 +47,7 @@
               >
                 <div
                   class="table-menu"
-                  v-for="(menu,Mindex) in menusArray[Sindex]"
+                  v-for="(menu,Mindex) in sectionArray[Sindex].childs"
                   v-bind:key="Mindex"
                   v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
                 >
@@ -70,7 +70,7 @@
                   >
                     <div
                       class="table-submenu-content"
-                      v-for="(submenu,SMindex) in submenusArray[Sindex][Mindex]"
+                      v-for="(submenu,SMindex) in submenusArray[Sindex][Mindex].childs"
                       v-bind:key="SMindex"
                       v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
                     >
@@ -91,14 +91,14 @@
                     </div>
                     <button
                       class="menu-add"
-                      @click="AddSubmenu(submenusArray[Sindex][Mindex],Sindex,Mindex)"
+                      @click="AddSubmenu(submenusArray[Sindex][Mindex].childs,Sindex,Mindex)"
                       style="width:calc(100% - 10px)"
                     >+</button>
                   </draggable>
                 </div>
                 <button
                   class="menu-add"
-                  @click="AddMenu(menusArray[Sindex],Sindex)"
+                  @click="AddMenu(menusArray[Sindex].childs,Sindex)"
                   style="width:calc(50% - 10px)"
                 >+</button>
               </draggable>
@@ -462,8 +462,13 @@ export default {
     axios.get(generateUrl(url))
       .then((response) => {
         this.sectionArray = response.data[0];
-        this.menusArray = response.data[1];
-        this.submenusArray = response.data[2];
+        this.sectionArray.forEach((section) => {
+          var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
+          menuArray.forEach((menu) => {
+            menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
+          })
+          section.childs = menuArray;
+        })
       })
   },
 
