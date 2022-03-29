@@ -105,7 +105,9 @@ class MenuController extends Controller
                 $menus = [{Objet1, position = 0-0-0}, {Objet2, position = 1-0-0}], $level = 0 , $newIndex = 1 , $oldIndex = 0
 
             */
+            $log = '';
             if ($newIndex < $oldIndex) { //$newIndex = 1 < $oldIndex = 0 est faux
+                $log = '$newIndex < $oldIndex';
                 for ($i = $oldIndex; $i < count($menus); $i++) {
                     $menuPosition = explode('-', $menus[$i]->getPosition());
                     $menuPosition[$level] = intval($menuPosition[$level]) + 1;
@@ -115,16 +117,17 @@ class MenuController extends Controller
                 $menuPosition[$level] = $newIndex;
                 $menus[$newIndex]->setPosition(implode('-', $menuPosition));
             } else {
+                $log = '$newIndex > $oldIndex';
                 for ($i = $newIndex; $i < count($menus); $i++) { //$i = 1 , count($menus = 2)
                     $menuPosition = explode('-', $menus[$i]->getPosition()); //position d'objet 2 ['1','0','0']
                     $menuPosition[$level] = intval($menuPosition[$level]) - 1; // $menuPosition[$level = 0] = 1  ===>> 1-1 = 0
                     $menus[$i]->setPosition(implode('-', $menuPosition)); // $menu[1] donc objet2 position prend la valeur '0-0-0'
                 }
                 $menuPosition = explode('-', $menus[$oldIndex]->getPosition()); //position d'objet 1 ['0','0','0']
-                $menuPosition[$level] = $newIndex;// $menuPosition[$level = 0] = 0  ===>> $menuPosition[$level] = 1
+                $menuPosition[$level] = $newIndex; // $menuPosition[$level = 0] = 0  ===>> $menuPosition[$level] = 1
                 $menus[$oldIndex]->setPosition(implode('-', $menuPosition)); //menus[0] position = '1-0-0'
             }
-            return $menus; // menus = [{Objet1, position = 1-0-0}, {Objet2, position = 0-0-0}],
+            return [$menus, $log]; // menus = [{Objet1, position = 1-0-0}, {Objet2, position = 0-0-0}],
         }
 
         if ($newIndex == $oldIndex) {
@@ -145,10 +148,10 @@ class MenuController extends Controller
             }
         }
 
-        foreach ($newMenuOrder as $menu) {
-            $this->service->updateOrder($menu->getId(), $menu->getPosition());
-        }
-        return $this->service->findAll();
+        // foreach ($newMenuOrder as $menu) {
+        //     $this->service->updateOrder($menu->getId(), $menu->getPosition());
+        // }
+        return [$this->service->findAll(), $newMenuOrder[1]];
     }
 
     public function destroy(int $id)
