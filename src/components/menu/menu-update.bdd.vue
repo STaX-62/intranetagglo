@@ -371,8 +371,9 @@ export default {
     async changeOrder(actualPosition, newIndex, oldIndex) {
       try {
         let data = new FormData();
-        data.append('sectionid', actualPosition.split('-')[0]);
-        data.append('menuid', actualPosition.split('-')[1]);
+        data.append('sectionid', parseInt(actualPosition.split('-')[0]));
+        data.append('menuid', parseInt(actualPosition.split('-')[1]));
+        data.append('submenuid', parseInt(actualPosition.split('-')[2]));
         data.append('newIndex', newIndex);
         data.append('oldIndex', oldIndex);
         await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then((response) => {

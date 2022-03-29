@@ -97,13 +97,23 @@ class MenuController extends Controller
         });
     }
 
-    public function changeOrder(int $sectionid, int $menuid, int $newIndex, int $oldIndex)
+    public function changeOrder(int $sectionid, int $menuid, int $submenuid, int $newIndex, int $oldIndex)
     {
         if ($newIndex == $oldIndex) {
             return 'aucun changement';
         }
-        
-        if ($sectionid == -1) {
+
+        if ($menuid == 0) {
+            $level = 0;
+        } else {
+            if ($submenuid == 0) {
+                $level = 1;
+            } else {
+                $level = 2;
+            }
+        }
+
+        if ($level == 0) {
             if ($newIndex < $oldIndex) {
                 $menusToChange = $this->service->findBySection($newIndex, $oldIndex);
                 for ($i = $oldIndex; $i < $newIndex; $i++) {
@@ -120,7 +130,7 @@ class MenuController extends Controller
                 $menusToChange[$oldIndex]->setSectionid($newIndex);
             }
         } else {
-            if ($menuid > 0) {
+            if ($level == 1) {
                 if ($newIndex < $oldIndex) {
                     $menusToChange = $this->service->findByMenu($sectionid, $newIndex, $oldIndex);
                     for ($i = $oldIndex; $i < $newIndex; $i++) {
