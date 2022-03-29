@@ -116,14 +116,14 @@ class MenuController extends Controller
         if ($level == 0) {
             if ($newIndex < $oldIndex) {
                 $menusToChange = $this->service->findBySection($newIndex, $oldIndex); //renvoie objet ou sectionid est entre 0 et 1
-                for ($i = $oldIndex; $i < count($menusToChange); $i++) {
+                for ($i = $newIndex; $i < count($menusToChange); $i++) {
                     $menuPosition =  $menusToChange[$i]->getSectionid() + 1;
                     $menusToChange[$i]->setSectionid($menuPosition);
                 }
-                $menusToChange[$newIndex]->setSectionid($oldIndex); //menu[1] = 0
+                $menusToChange[$oldIndex]->setSectionid($newIndex); //menu[0] = 1
             } else {
                 $menusToChange = $this->service->findBySection($oldIndex, $newIndex); //renvoie objet ou sectionid est entre 0 et 1
-                for ($i = $newIndex; $i < count($menusToChange); $i++) { // i = 1 , count = 2
+                for ($i = $oldIndex; $i < count($menusToChange); $i++) { // i = 1 , count = 2
                     $menuPosition =  $menusToChange[$i]->getSectionid() - 1; // menu[1]= 1-1 = 0
                     $menusToChange[$i]->setSectionid($menuPosition); // on le set
                 }
@@ -144,7 +144,7 @@ class MenuController extends Controller
                         $menuPosition =  $menusToChange[$i]->getMenuid() - 1;
                         $menusToChange[$i]->setMenuid($menuPosition);
                     }
-                    $menusToChange[$newIndex]->setMenuid($oldIndex);
+                    $menusToChange[$oldIndex]->setMenuid($newIndex);
                 }
             } else {
                 if ($newIndex < $oldIndex) {
@@ -160,7 +160,7 @@ class MenuController extends Controller
                         $menuPosition =  $menusToChange[$i]->getSubmenuid() - 1;
                         $menusToChange[$i]->setSubmenuid($menuPosition);
                     }
-                    $menusToChange[$newIndex]->setSubmenuid($oldIndex);
+                    $menusToChange[$oldIndex]->setSubmenuid($newIndex);
                 }
             }
         }
