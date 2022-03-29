@@ -21,9 +21,9 @@
           >
             <div
               class="table-section"
-              v-for="section in MenuToDisplay"
+              v-for="(section,Sindex) in MenuToDisplay"
               v-bind:key="section.id"
-              v-bind:position="section.sectionid + '-0-0'"
+              v-bind:position="Sindex+'-0-0'"
             >
               <div class="table-block" type="text">
                 {{section.title}}
@@ -42,16 +42,16 @@
               <draggable
                 class="table-content"
                 tag="div"
-                :list="MenuToDisplay[section.sectionid].childs"
+                :list="MenuToDisplay[Sindex].childs"
                 draggable=".table-menu"
                 handle=".handlemen"
                 @sort="UpdateOrder"
               >
                 <div
                   class="table-menu"
-                  v-for="menu in MenuToDisplay[section.sectionid].childs"
+                  v-for="(menu,Mindex) in MenuToDisplay[Sindex].childs"
                   v-bind:key="menu.id"
-                  v-bind:position="section.sectionid +'-'+ menu.menuid + '-0'"
+                  v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
                 >
                   <div class="table-block" type="text">
                     <div>{{menu.title}}</div>
@@ -66,17 +66,16 @@
                   <draggable
                     class="table-content"
                     tag="div"
-                    :list="MenuToDisplay[section.sectionid].childs[menu.menuid].childs"
-                    :options="{group: 'submenus-' + section.sectionid + '-'+ menu.menuid}"
+                    :list="MenuToDisplay[Sindex].childs[Mindex].childs" 
                     draggable=".table-submenu-content"
                     handle=".handlesub"
                     @sort="UpdateOrder"
                   >
                     <div
                       class="table-submenu-content"
-                      v-for="submenu in MenuToDisplay[section.sectionid].childs[menu.menuid].childs"
+                      v-for="(submenu,SMindex) in MenuToDisplay[Sindex].childs[Mindex].childs"
                       v-bind:key="submenu.id"
-                      v-bind:position="section.sectionid +'-'+ menu.menuid + '-'+ submenu.submenuid"
+                      v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
                     >
                       <div class="table-block" type="text">
                         <div>{{submenu.title}}</div>
@@ -95,14 +94,14 @@
                     </div>
                     <button
                       class="menu-add"
-                      @click="AddSubmenu(MenuToDisplay[section.sectionid].childs[menu.menuid].childs,section.sectionid,menu.menuid)"
+                      @click="AddSubmenu(MenuToDisplay[Sindex].childs[Mindex].childs,Sindex,Mindex)"
                       style="width:calc(100% - 10px)"
                     >+</button>
                   </draggable>
                 </div>
                 <button
                   class="menu-add"
-                  @click="AddMenu(MenuToDisplay[section.sectionid].childs,section.sectionid)"
+                 @click="AddMenu(MenuToDisplay[Sindex].childs,Sindex)"
                   style="width:calc(50% - 10px)"
                 >+</button>
               </draggable>
