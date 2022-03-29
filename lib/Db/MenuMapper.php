@@ -45,22 +45,23 @@ class MenuMapper extends QBMapper
         $qbSection = $this->db->getQueryBuilder();
 
         $qbSection->select('*')
-            ->where("q.position LIKE '%-0-0'")
+            ->andWhere("q.menuId = 0")
+            ->andWhere("q.submenuId = 0")
             ->from($this->getTableName(), 'q');
 
         /* @var $qbMenu IQueryBuilder */
         $qbMenu = $this->db->getQueryBuilder();
 
         $qbMenu->select('*')
-            ->where("q.position LIKE '%-0'")
-            ->andWhere("q.position NOT LIKE '%-0-0'")
+            ->andWhere("q.menuId > 0")
+            ->andWhere("q.submenuId = 0")
             ->from($this->getTableName(), 'q');
 
         /* @var $qb IQueryBuilder */
         $qbSubmenu = $this->db->getQueryBuilder();
 
         $qbSubmenu->select('*')
-            ->where("q.position NOT LIKE '%-0'")
+            ->andWhere("q.submenuId > 0")
             ->from($this->getTableName(), 'q');
 
         return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
@@ -83,7 +84,8 @@ class MenuMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
-            ->andWhere("q.position LIKE '%-0-0'")
+            ->andWhere("q.menuId = 0")
+            ->andWhere("q.submenuId = 0")
             ->setParameter('groups', $groups);
 
         /* @var $qb IQueryBuilder */
@@ -92,8 +94,8 @@ class MenuMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
-            ->andWhere("q.position LIKE '%-0'")
-            ->andWhere("q.position NOT LIKE '%-0-0'")
+            ->andWhere("q.menuId > 0")
+            ->andWhere("q.submenuId = 0")
             ->setParameter('groups', $groups);
 
         /* @var $qb IQueryBuilder */
@@ -102,7 +104,7 @@ class MenuMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
-            ->andWhere("q.position NOT LIKE '%-0'")
+            ->andWhere("q.submenuId > 0")
             ->setParameter('groups', $groups);
 
         return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
@@ -112,14 +114,56 @@ class MenuMapper extends QBMapper
     /**
      * @return array
      */
-    public function findByPosition(string $position): array
+    public function findBySection(int $sectionA, int $sectionB): array
     {
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("q.position LIKE :position")
-            ->setParameter('position', $position);
+            ->where("q.sectionId BETWEEN :sectionA AND :sectionB")
+            ->addOrderBy('q.sectionId', 'ASC')
+            ->setParameter('sectionA', $sectionA)
+            ->setParameter('sectionB', $sectionB);
+
+        return $this->findEntities($qb);
+    }
+
+    /**
+     * @return array
+     */
+    public function findByMenu(int $section, int $menuA, int $menuB): array
+    {
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('*')
+            ->from($this->getTableName(), 'q')
+            ->where("q.sectionId = :section")
+            ->andWhere("q.menuId BETWEEN :menuA AND :menuB")
+            ->addOrderBy('q.menuId', 'ASC')
+            ->setParameter('section', $section)
+            ->setParameter('menuA', $menuA)
+            ->setParameter('menuB', $menuB);
+
+        return $this->findEntities($qb);
+    }
+
+    /**
+     * @return array
+     */
+    public function findBySubmenu(int $section, int $menu, int $submenuA, int $submenuB): array
+    {
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('*')
+            ->from($this->getTableName(), 'q')
+            ->where("q.sectionId = :section")
+            ->andWhere("q.menuId = :menu")
+            ->andWhere("q.submenuId BETWEEN :submenuA AND :submenuB")
+            ->addOrderBy('q.submenuId', 'ASC')
+            ->setParameter('section', $section)
+            ->setParameter('menu', $menu)
+            ->setParameter('submenuA', $submenuA)
+            ->setParameter('submenuB', $submenuB);
 
         return $this->findEntities($qb);
     }

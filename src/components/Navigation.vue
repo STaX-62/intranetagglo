@@ -4,7 +4,7 @@
       <img v-bind:src="image" />
     </div>
     <div class="sidenav-menu">
-      <div class="section-block" v-for="(section,index) in sectionArray" :key="'B'+index">
+      <div class="section-block" v-for="(section,index) in MenuToDisplay" :key="'B'+index">
         <button class="section">
           <div class="section-icon">
             <b-icon v-bind:icon="section.icon"></b-icon>
@@ -14,21 +14,21 @@
         <div
           v-bind:id="'menu-'+index+'-'+subindex"
           class="menu"
-          v-for="(menu,subindex) in sectionArray[index].childs"
+          v-for="(menu,subindex) in MenuToDisplay[index].childs"
           :key="'B'+subindex"
           @click="ExtendSubMenu(index,subindex)"
         >
           <div
             class="submenu-title"
-            @click="OpenLink(menu.link, isEmpty(sectionArray[index].childs[subindex].childs))"
+            @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))"
           >
-            <div class="caret" v-if="!isEmpty(sectionArray[index].childs[subindex].childs)">▷</div>
+            <div class="caret" v-if="!isEmpty(MenuToDisplay[index].childs[subindex].childs)">▷</div>
             {{ menu.title }}
           </div>
           <div v-bind:id="'container-'+ index + '-'+ subindex" class="menu-container">
             <a
               class="nav-link text-truncate"
-              v-for="(submenu,subsubindex) in sectionArray[index].childs[subindex].childs"
+              v-for="(submenu,subsubindex) in MenuToDisplay[index].childs[subindex].childs"
               :key="'B'+subsubindex"
               v-bind:href="submenu.link"
             >
@@ -61,7 +61,7 @@ export default {
       image: '/nextcloud/apps/intranetagglo/img/LogoCA2BM.png', // require('../assets/LogoCA2BM.png'),//'/nextcloud/apps/intranetca/src/assets/LogoCA2BM.png'
       user: [],
       lastOpenedContainer: null,
-      sectionArray: []
+      menuInBDD: [[], [], []]
     }
   },
   watch: {
@@ -69,26 +69,7 @@ export default {
       if (val) {
         axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
           .then((response) => {
-            this.sectionArray = response.data[0].sort((a, b) => {
-              if (a.position.split('-')[0] < b.position.split('-')[0]) return -1;
-              if (a.position.split('-')[0] > b.position.split('-')[0]) return 1;
-              return 0;
-            });
-            this.sectionArray.forEach((section) => {
-              var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2)).sort((a, b) => {
-                if (a.position.split('-')[1] < b.position.split('-')[1]) return -1;
-                if (a.position.split('-')[1] > b.position.split('-')[1]) return 1;
-                return 0;
-              });
-              menuArray.forEach((menu) => {
-                menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4)).sort((a, b) => {
-                  if (a.position.split('-')[2] < b.position.split('-')[2]) return -1;
-                  if (a.position.split('-')[2] > b.position.split('-')[2]) return 1;
-                  return 0;
-                });
-              })
-              section.childs = menuArray;
-            })
+            this.menuInBDD = response.data
             this.$store.commit('setMenuUpdating', false)
           })
       }
@@ -100,6 +81,31 @@ export default {
     },
     isAdmin() {
       return this.$store.state.usergroups.includes('admin')
+    },
+    MenuToDisplay() {
+      var sectionArray = this.menuInBDD[0]
+
+      sectionArray.sort((a, b) => {
+        if (a.sectionId < b.sectionId) return -1;
+        if (a.sectionId > b.sectionId) return 1;
+        return 0;
+      });
+      sectionArray.forEach((section) => {
+        var menuArray = this.menuInBDD[1].filter(menu => menu.sectionId == section.sectionId).sort((a, b) => {
+          if (a.menuId < b.menuId) return -1;
+          if (a.menuId > b.menuId) return 1;
+          return 0;
+        });
+        menuArray.forEach((menu) => {
+          menu.childs = this.menuInBDD[2].filter(submenu => submenu.menuId == menu.menuId).sort((a, b) => {
+            if (a.submenuId < b.submenuId) return -1;
+            if (a.submenuId > b.submenuId) return 1;
+            return 0;
+          });
+        })
+        section.childs = menuArray;
+      })
+      return sectionArray
     },
   },
   methods: {
@@ -131,29 +137,9 @@ export default {
 
   },
   mounted() {
-    var url = `apps/intranetagglo${'/menusG'}`
-    axios.get(generateUrl(url))
+    axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
       .then((response) => {
-        this.sectionArray = response.data[0].sort((a, b) => {
-          if (a.position.split('-')[0] < b.position.split('-')[0]) return -1;
-          if (a.position.split('-')[0] > b.position.split('-')[0]) return 1;
-          return 0;
-        });
-        this.sectionArray.forEach((section) => {
-          var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2)).sort((a, b) => {
-            if (a.position.split('-')[1] < b.position.split('-')[1]) return -1;
-            if (a.position.split('-')[1] > b.position.split('-')[1]) return 1;
-            return 0;
-          });
-          menuArray.forEach((menu) => {
-            menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4)).sort((a, b) => {
-              if (a.position.split('-')[2] < b.position.split('-')[2]) return -1;
-              if (a.position.split('-')[2] > b.position.split('-')[2]) return 1;
-              return 0;
-            });
-          })
-          section.childs = menuArray;
-        })
+        this.menuInBDD = response.data
       })
   }
 }

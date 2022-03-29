@@ -30,9 +30,19 @@ class MenuService
 		return $this->mapper->findByGroups($groups);
 	}
 
-	public function findByPosition(string $position): array
+	public function findBySection(int $sectionA, int $sectionB): array
 	{
-		return $this->mapper->findByPosition($position);
+		return $this->mapper->findBySection($sectionA, $sectionB);
+	}
+
+	public function findByMenu(int $section, int $menuA, int $menuB): array
+	{
+		return $this->mapper->findByMenu($section, $menuA, $menuB);
+	}
+
+	public function findBySubmenu(int $section, int $menu, int $submenuA, int $submenuB): array
+	{
+		return $this->mapper->findBySubmenu($section, $menu, $submenuA, $submenuB);
 	}
 
 	private function handleException(Exception $e): void
@@ -56,14 +66,16 @@ class MenuService
 		}
 	}
 
-	public function create($title, $icon,  $link, $groups, $position)
+	public function create($title, $icon,  $link, $groups, $sectionId, $menuId, $submenuId)
 	{
 		$menu = new Menu();
 		$menu->setTitle($title);
 		$menu->setIcon($icon);
 		$menu->setLink($link);
 		$menu->setGroups($groups);
-		$menu->setPosition($position);
+		$menu->setSectionId($sectionId);
+		$menu->setMenuId($menuId);
+		$menu->setSubmenuId($submenuId);
 		return $this->mapper->insert($menu);
 	}
 
@@ -81,11 +93,13 @@ class MenuService
 		}
 	}
 
-	public function updateOrder($id, $position)
+	public function updateOrder($id, $sectionId, $menuId, $submenuId)
 	{
 		try {
 			$menu = $this->mapper->find($id);
-			$menu->setPosition($position);
+			$menu->setSectionId($sectionId);
+			$menu->setMenuId($menuId);
+			$menu->setSubmenuId($submenuId);
 			return $this->mapper->update($menu);
 		} catch (Exception $e) {
 			$this->handleException($e);

@@ -13,7 +13,9 @@ class Menu extends Entity implements JsonSerializable
     protected $icon;
     protected $link;
     protected $groups;
-    protected $position;
+    protected $sectionId;
+    protected $menuId;
+    protected $submenuId;
 
     public function jsonSerialize()
     {
@@ -23,7 +25,9 @@ class Menu extends Entity implements JsonSerializable
             'icon' => $this->icon,
             'link' => $this->link,
             'groups' => $this->groups,
-            'position' => $this->position
+            'sectionId' => $this->sectionId,
+            'menuId' => $this->menuId,
+            'submenuId' => $this->submenuId
         ];
     }
 }
