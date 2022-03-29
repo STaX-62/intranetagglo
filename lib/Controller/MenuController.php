@@ -123,11 +123,11 @@ class MenuController extends Controller
                     $menuPosition[$level] = intval($menuPosition[$level]) - 1; // $menuPosition[$level = 0] = 1  ===>> 1-1 = 0
                     $menus[$i]->setPosition(implode('-', $menuPosition)); // $menu[1] donc objet2 position prend la valeur '0-0-0'
                 }
-                $menuPosition = explode('-', $menus[$oldIndex]->getPosition()); //position d'objet 1 ['0','0','0']
-                $menuPosition[$level] = $newIndex; // $menuPosition[$level = 0] = 0  ===>> $menuPosition[$level] = 1
-                $menus[$oldIndex]->setPosition(implode('-', $menuPosition)); //menus[0] position = '1-0-0'
+                // $menuPosition = explode('-', $menus[$oldIndex]->getPosition()); //position d'objet 1 ['0','0','0']
+                // $menuPosition[$level] = $newIndex; // $menuPosition[$level = 0] = 0  ===>> $menuPosition[$level] = 1
+                // $menus[$oldIndex]->setPosition(implode('-', $menuPosition)); //menus[0] position = '1-0-0'
             }
-            return [$menus, $log]; // menus = [{Objet1, position = 1-0-0}, {Objet2, position = 0-0-0}],
+            return [$menus, $log, intval($menuPosition[$level]) , intval($menuPosition[$level]) - 1]; // menus = [{Objet1, position = 1-0-0}, {Objet2, position = 0-0-0}],
         }
 
         if ($newIndex == $oldIndex) {
@@ -151,7 +151,7 @@ class MenuController extends Controller
         // foreach ($newMenuOrder as $menu) {
         //     $this->service->updateOrder($menu->getId(), $menu->getPosition());
         // }
-        return [$this->service->findAll(), $newMenuOrder[1]];
+        return [$this->service->findAll(), $newMenuOrder[1], $newMenuOrder[2], $newMenuOrder[3]];
     }
 
     public function destroy(int $id)
