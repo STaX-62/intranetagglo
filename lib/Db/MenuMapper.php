@@ -6,7 +6,7 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
 use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
-use OCP\idBConnection;
+use OCP\IDBConnection;
 
 class MenuMapper extends QBMapper
 {
