@@ -33,7 +33,7 @@ class MenuController extends Controller
         IURLGenerator $urlGenerator,
         ITimeFactory $timeFactory
     ) {
-        parent::__construct(Application::APP_ID, $request);
+        parent::__construct(Application::APP_id, $request);
         $this->service = $service;
         $this->groupmanager = $groupmanager;
         $this->session = $session;
@@ -55,7 +55,7 @@ class MenuController extends Controller
         return (new DataResponse($this->service->findByGroups($this->groupmanager->getUserGroupIds($user))));
     }
 
-    public function create(string $title, string $icon, string $link, string $groups, int $sectionId, int $menuId, int $submenuId)
+    public function create(string $title, string $icon, string $link, string $groups, int $sectionid, int $menuid, int $submenuid)
     {
         $fileurl = $link;
 
@@ -70,7 +70,7 @@ class MenuController extends Controller
                 }
             }
         }
-        $this->service->create($title, $icon, $fileurl, $groups, $sectionId, $menuId, $submenuId);
+        $this->service->create($title, $icon, $fileurl, $groups, $sectionid, $menuid, $submenuid);
         return $this->service->findAll();
     }
 
@@ -97,66 +97,66 @@ class MenuController extends Controller
         });
     }
 
-    public function changeOrder(int $sectionId, int $menuId, int $newIndex, int $oldIndex)
+    public function changeOrder(int $sectionid, int $menuid, int $newIndex, int $oldIndex)
     {
         if ($newIndex == $oldIndex) {
             return 'aucun changement';
         }
         
-        if ($sectionId == -1) {
+        if ($sectionid == -1) {
             if ($newIndex < $oldIndex) {
                 $menusToChange = $this->service->findBySection($newIndex, $oldIndex);
                 for ($i = $oldIndex; $i < $newIndex; $i++) {
-                    $menuPosition =  $menusToChange[$i]->getSectionId() + 1;
-                    $menusToChange[$i]->setSectionId($menuPosition);
+                    $menuPosition =  $menusToChange[$i]->getSectionid() + 1;
+                    $menusToChange[$i]->setSectionid($menuPosition);
                 }
-                $menusToChange[$oldIndex]->setSectionId($newIndex);
+                $menusToChange[$oldIndex]->setSectionid($newIndex);
             } else {
                 $menusToChange = $this->service->findBySection($oldIndex, $newIndex);
                 for ($i = $newIndex; $i < $oldIndex; $i++) {
-                    $menuPosition =  $menusToChange[$i]->getSectionId() + 1;
-                    $menusToChange[$i]->setSectionId($menuPosition);
+                    $menuPosition =  $menusToChange[$i]->getSectionid() + 1;
+                    $menusToChange[$i]->setSectionid($menuPosition);
                 }
-                $menusToChange[$oldIndex]->setSectionId($newIndex);
+                $menusToChange[$oldIndex]->setSectionid($newIndex);
             }
         } else {
-            if ($menuId > 0) {
+            if ($menuid > 0) {
                 if ($newIndex < $oldIndex) {
-                    $menusToChange = $this->service->findByMenu($sectionId, $newIndex, $oldIndex);
+                    $menusToChange = $this->service->findByMenu($sectionid, $newIndex, $oldIndex);
                     for ($i = $oldIndex; $i < $newIndex; $i++) {
-                        $menuPosition =  $menusToChange[$i]->getMenuId() + 1;
-                        $menusToChange[$i]->setMenuId($menuPosition);
+                        $menuPosition =  $menusToChange[$i]->getMenuid() + 1;
+                        $menusToChange[$i]->setMenuid($menuPosition);
                     }
-                    $menusToChange[$oldIndex]->setMenuId($newIndex);
+                    $menusToChange[$oldIndex]->setMenuid($newIndex);
                 } else {
-                    $menusToChange = $this->service->findByMenu($sectionId, $oldIndex, $newIndex);
+                    $menusToChange = $this->service->findByMenu($sectionid, $oldIndex, $newIndex);
                     for ($i = $newIndex; $i < $oldIndex; $i++) {
-                        $menuPosition =  $menusToChange[$i]->getMenuId() + 1;
-                        $menusToChange[$i]->setMenuId($menuPosition);
+                        $menuPosition =  $menusToChange[$i]->getMenuid() + 1;
+                        $menusToChange[$i]->setMenuid($menuPosition);
                     }
-                    $menusToChange[$oldIndex]->setMenuId($newIndex);
+                    $menusToChange[$oldIndex]->setMenuid($newIndex);
                 }
             } else {
                 if ($newIndex < $oldIndex) {
-                    $menusToChange = $this->service->findBySubmenu($sectionId, $menuId, $newIndex, $oldIndex);
+                    $menusToChange = $this->service->findBySubmenu($sectionid, $menuid, $newIndex, $oldIndex);
                     for ($i = $oldIndex; $i < $newIndex; $i++) {
-                        $menuPosition =  $menusToChange[$i]->getSubmenuId() + 1;
-                        $menusToChange[$i]->setSubmenuId($menuPosition);
+                        $menuPosition =  $menusToChange[$i]->getSubmenuid() + 1;
+                        $menusToChange[$i]->setSubmenuid($menuPosition);
                     }
-                    $menusToChange[$oldIndex]->setSubmenuId($newIndex);
+                    $menusToChange[$oldIndex]->setSubmenuid($newIndex);
                 } else {
-                    $menusToChange = $this->service->findBySubmenu($sectionId, $menuId, $oldIndex, $newIndex);
+                    $menusToChange = $this->service->findBySubmenu($sectionid, $menuid, $oldIndex, $newIndex);
                     for ($i = $newIndex; $i < $oldIndex; $i++) {
-                        $menuPosition =  $menusToChange[$i]->getSubmenuId() + 1;
-                        $menusToChange[$i]->setSubmenuId($menuPosition);
+                        $menuPosition =  $menusToChange[$i]->getSubmenuid() + 1;
+                        $menusToChange[$i]->setSubmenuid($menuPosition);
                     }
-                    $menusToChange[$oldIndex]->setSubmenuId($newIndex);
+                    $menusToChange[$oldIndex]->setSubmenuid($newIndex);
                 }
             }
         }
 
         foreach ($menusToChange as $menu) {
-            $this->service->updateOrder($menu->getId(), $menu->getSectionId(), $menu->getMenuId(), $menu->getSubmenuId());
+            $this->service->updateOrder($menu->getid(), $menu->getSectionid(), $menu->getMenuid(), $menu->getSubmenuid());
         }
         return $this->service->findAll();
     }

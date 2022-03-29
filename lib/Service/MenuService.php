@@ -66,16 +66,16 @@ class MenuService
 		}
 	}
 
-	public function create($title, $icon,  $link, $groups, $sectionId, $menuId, $submenuId)
+	public function create($title, $icon,  $link, $groups, $sectionid, $menuid, $submenuid)
 	{
 		$menu = new Menu();
 		$menu->setTitle($title);
 		$menu->setIcon($icon);
 		$menu->setLink($link);
 		$menu->setGroups($groups);
-		$menu->setSectionId($sectionId);
-		$menu->setMenuId($menuId);
-		$menu->setSubmenuId($submenuId);
+		$menu->setSectionid($sectionid);
+		$menu->setMenuid($menuid);
+		$menu->setSubmenuid($submenuid);
 		return $this->mapper->insert($menu);
 	}
 
@@ -93,13 +93,13 @@ class MenuService
 		}
 	}
 
-	public function updateOrder($id, $sectionId, $menuId, $submenuId)
+	public function updateOrder($id, $sectionid, $menuid, $submenuid)
 	{
 		try {
 			$menu = $this->mapper->find($id);
-			$menu->setSectionId($sectionId);
-			$menu->setMenuId($menuId);
-			$menu->setSubmenuId($submenuId);
+			$menu->setSectionid($sectionid);
+			$menu->setMenuid($menuid);
+			$menu->setSubmenuid($submenuid);
 			return $this->mapper->update($menu);
 		} catch (Exception $e) {
 			$this->handleException($e);

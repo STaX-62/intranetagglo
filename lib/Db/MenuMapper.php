@@ -6,12 +6,12 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
 use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
-use OCP\IDBConnection;
+use OCP\idBConnection;
 
 class MenuMapper extends QBMapper
 {
 
-    public function __construct(IDBConnection $db)
+    public function __construct(idBConnection $db)
     {
         parent::__construct($db, 'intranetagglomenu', Menu::class);
     }
@@ -45,23 +45,23 @@ class MenuMapper extends QBMapper
         $qbSection = $this->db->getQueryBuilder();
 
         $qbSection->select('*')
-            ->andWhere("q.menuId = 0")
-            ->andWhere("q.submenuId = 0")
+            ->andWhere("q.menuid = 0")
+            ->andWhere("q.submenuid = 0")
             ->from($this->getTableName(), 'q');
 
         /* @var $qbMenu IQueryBuilder */
         $qbMenu = $this->db->getQueryBuilder();
 
         $qbMenu->select('*')
-            ->andWhere("q.menuId > 0")
-            ->andWhere("q.submenuId = 0")
+            ->andWhere("q.menuid > 0")
+            ->andWhere("q.submenuid = 0")
             ->from($this->getTableName(), 'q');
 
         /* @var $qb IQueryBuilder */
         $qbSubmenu = $this->db->getQueryBuilder();
 
         $qbSubmenu->select('*')
-            ->andWhere("q.submenuId > 0")
+            ->andWhere("q.submenuid > 0")
             ->from($this->getTableName(), 'q');
 
         return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
@@ -84,8 +84,8 @@ class MenuMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
-            ->andWhere("q.menuId = 0")
-            ->andWhere("q.submenuId = 0")
+            ->andWhere("q.menuid = 0")
+            ->andWhere("q.submenuid = 0")
             ->setParameter('groups', $groups);
 
         /* @var $qb IQueryBuilder */
@@ -94,8 +94,8 @@ class MenuMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
-            ->andWhere("q.menuId > 0")
-            ->andWhere("q.submenuId = 0")
+            ->andWhere("q.menuid > 0")
+            ->andWhere("q.submenuid = 0")
             ->setParameter('groups', $groups);
 
         /* @var $qb IQueryBuilder */
@@ -104,7 +104,7 @@ class MenuMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
-            ->andWhere("q.submenuId > 0")
+            ->andWhere("q.submenuid > 0")
             ->setParameter('groups', $groups);
 
         return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
@@ -120,8 +120,8 @@ class MenuMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("q.sectionId BETWEEN :sectionA AND :sectionB")
-            ->addOrderBy('q.sectionId', 'ASC')
+            ->where("q.sectionid BETWEEN :sectionA AND :sectionB")
+            ->addOrderBy('q.sectionid', 'ASC')
             ->setParameter('sectionA', $sectionA)
             ->setParameter('sectionB', $sectionB);
 
@@ -137,9 +137,9 @@ class MenuMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("q.sectionId = :section")
-            ->andWhere("q.menuId BETWEEN :menuA AND :menuB")
-            ->addOrderBy('q.menuId', 'ASC')
+            ->where("q.sectionid = :section")
+            ->andWhere("q.menuid BETWEEN :menuA AND :menuB")
+            ->addOrderBy('q.menuid', 'ASC')
             ->setParameter('section', $section)
             ->setParameter('menuA', $menuA)
             ->setParameter('menuB', $menuB);
@@ -156,10 +156,10 @@ class MenuMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("q.sectionId = :section")
-            ->andWhere("q.menuId = :menu")
-            ->andWhere("q.submenuId BETWEEN :submenuA AND :submenuB")
-            ->addOrderBy('q.submenuId', 'ASC')
+            ->where("q.sectionid = :section")
+            ->andWhere("q.menuid = :menu")
+            ->andWhere("q.submenuid BETWEEN :submenuA AND :submenuB")
+            ->addOrderBy('q.submenuid', 'ASC')
             ->setParameter('section', $section)
             ->setParameter('menu', $menu)
             ->setParameter('submenuA', $submenuA)
