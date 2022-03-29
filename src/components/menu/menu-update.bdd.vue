@@ -382,7 +382,7 @@ export default {
       global: false,
       detailed: false,
       updating: false,
-      menuInBDD: [],
+      menuInBDD: [[],[],[]],
       tempMenus: [],
       modifying: {
         selected: null,
