@@ -396,7 +396,7 @@ export default {
       redirectToFile: false
     }
   },
-  beforeMount() {
+  created: function () {
     var url = `apps/intranetagglo${'/menus'}`
     axios.get(generateUrl(url))
       .then((response) => {
