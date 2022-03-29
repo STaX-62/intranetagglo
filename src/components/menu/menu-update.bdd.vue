@@ -14,14 +14,14 @@
           <draggable
             class="table-content"
             tag="div"
-            :list="sectionArray"
+            :list="MenuToDisplay"
             draggable=".table-section"
             handle=".handlesec"
             @sort="UpdateOrder"
           >
             <div
               class="table-section"
-              v-for="(section,Sindex) in sectionArray"
+              v-for="(section,Sindex) in MenuToDisplay"
               v-bind:key="section.id"
               v-bind:position="Sindex+'-0-0'"
             >
@@ -42,14 +42,14 @@
               <draggable
                 class="table-content"
                 tag="div"
-                :list="sectionArray[Sindex].childs"
+                :list="MenuToDisplay[Sindex].childs"
                 draggable=".table-menu"
                 handle=".handlemen"
                 @sort="UpdateOrder"
               >
                 <div
                   class="table-menu"
-                  v-for="(menu,Mindex) in sectionArray[Sindex].childs"
+                  v-for="(menu,Mindex) in MenuToDisplay[Sindex].childs"
                   v-bind:key="menu.id"
                   v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
                 >
@@ -66,7 +66,7 @@
                   <draggable
                     class="table-content"
                     tag="div"
-                    :list="sectionArray[Sindex].childs[Mindex].childs"
+                    :list="MenuToDisplay[Sindex].childs[Mindex].childs"
                     :options="{group: 'submenus-' + Sindex + '-'+ Mindex}"
                     draggable=".table-submenu-content"
                     handle=".handlesub"
@@ -74,7 +74,7 @@
                   >
                     <div
                       class="table-submenu-content"
-                      v-for="(submenu,SMindex) in sectionArray[Sindex].childs[Mindex].childs"
+                      v-for="(submenu,SMindex) in MenuToDisplay[Sindex].childs[Mindex].childs"
                       v-bind:key="submenu.id"
                       v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
                     >
@@ -95,21 +95,21 @@
                     </div>
                     <button
                       class="menu-add"
-                      @click="AddSubmenu(sectionArray[Sindex].childs[Mindex].childs,Sindex,Mindex)"
+                      @click="AddSubmenu(MenuToDisplay[Sindex].childs[Mindex].childs,Sindex,Mindex)"
                       style="width:calc(100% - 10px)"
                     >+</button>
                   </draggable>
                 </div>
                 <button
                   class="menu-add"
-                  @click="AddMenu(sectionArray[Sindex].childs,Sindex)"
+                  @click="AddMenu(MenuToDisplay[Sindex].childs,Sindex)"
                   style="width:calc(50% - 10px)"
                 >+</button>
               </draggable>
             </div>
             <button
               class="menu-add"
-              @click="AddSection(sectionArray)"
+              @click="AddSection(MenuToDisplay)"
               style="width:calc(33% - 10px)"
             >+</button>
           </draggable>
@@ -188,43 +188,11 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
 import draggable from 'vuedraggable'
-import Vue from 'vue'
 
 export default {
   name: 'NewsUpdate',
   components: {
     draggable,
-  },
-  watch: {
-    updating: function (val) {
-      if (val) {
-        axios.get(generateUrl(`apps/intranetagglo${'/menus'}`))
-          .then((response) => {
-            this.sectionArray = response.data[0].sort((a, b) => {
-              if (a.position.split('-')[0] < b.position.split('-')[0]) return -1;
-              if (a.position.split('-')[0] > b.position.split('-')[0]) return 1;
-              return 0;
-            });
-            this.sectionArray.forEach((section) => {
-              var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2)).sort((a, b) => {
-                if (a.position.split('-')[1] < b.position.split('-')[1]) return -1;
-                if (a.position.split('-')[1] > b.position.split('-')[1]) return 1;
-                return 0;
-              });
-              menuArray.forEach((menu) => {
-                menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4)).sort((a, b) => {
-                  if (a.position.split('-')[2] < b.position.split('-')[2]) return -1;
-                  if (a.position.split('-')[2] > b.position.split('-')[2]) return 1;
-                  return 0;
-                });
-              })
-              section.childs = menuArray;
-            })
-            this.$forceUpdate()
-            this.$store.commit('setMenuAdminUpdating', false)
-          })
-      }
-    },
   },
   computed: {
     updating() {
@@ -233,12 +201,35 @@ export default {
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
+    MenuToDisplay() {
+      var sectionArray = this.menuInBDD[0].sort((a, b) => {
+        if (a.position.split('-')[0] < b.position.split('-')[0]) return -1;
+        if (a.position.split('-')[0] > b.position.split('-')[0]) return 1;
+        return 0;
+      });
+      sectionArray.forEach((section) => {
+        var menuArray = this.menuInBDD[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2)).sort((a, b) => {
+          if (a.position.split('-')[1] < b.position.split('-')[1]) return -1;
+          if (a.position.split('-')[1] > b.position.split('-')[1]) return 1;
+          return 0;
+        });
+        menuArray.forEach((menu) => {
+          menu.childs = this.menuInBDD[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4)).sort((a, b) => {
+            if (a.position.split('-')[2] < b.position.split('-')[2]) return -1;
+            if (a.position.split('-')[2] > b.position.split('-')[2]) return 1;
+            return 0;
+          });
+        })
+        section.childs = menuArray;
+      })
+      return sectionArray
+    },
   },
   methods: {
     UpdateBackground() {
-      this.$store.commit('setMenuAdminUpdating', true)
       this.$store.commit('setMenuUpdating', true)
     },
+
     UpdateOrder: function (event) {
       console.log(event)
       this.$forceUpdate()
@@ -329,8 +320,8 @@ export default {
             'accept': 'application/json',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
           }
-        }).then(() => {
-          this.$store.commit('setMenuAdminUpdating', true)
+        }).then((response) => {
+          this.menuInBDD = response.data;
         })
       } catch (e) {
         console.error(e)
@@ -353,8 +344,8 @@ export default {
             'accept': 'application/json',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
           }
-        }).then(() => {
-          this.$store.commit('setMenuAdminUpdating', true)
+        }).then((response) => {
+          this.menuInBDD = response.data;
         })
       } catch (e) {
         console.error(e)
@@ -363,10 +354,10 @@ export default {
     async deleteMenu(id) {
       try {
         var url = `apps/intranetagglo/menus/${id}`
-        await axios.delete(generateUrl(url, { id }))
-          .then(() => {
-            this.$store.commit('setMenuAdminUpdating', true)
-          })
+        await axios.delete(generateUrl(url, { id })).then((response) => {
+          this.menuInBDD = response.data;
+          this.$forceUpdate()
+        })
       } catch (e) {
         console.error(e)
       }
@@ -378,14 +369,7 @@ export default {
         data.append('newIndex', newIndex);
         data.append('oldIndex', oldIndex);
         await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then((response) => {
-          this.sectionArray = response.data[0];
-          this.sectionArray.forEach((section) => {
-            var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2))
-            menuArray.forEach((menu) => {
-              menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4));
-            })
-            section.childs = menuArray;
-          })
+          this.menuInBDD = response.data;
           this.$forceUpdate()
         })
       } catch (e) {
@@ -398,7 +382,7 @@ export default {
       global: false,
       detailed: false,
       updating: false,
-      sectionArray: [],
+      menuInBDD: [],
       tempMenus: [],
       modifying: {
         selected: null,
@@ -409,34 +393,14 @@ export default {
         groups: "",
         haschild: false
       },
-      LastModifiedID: null,
       redirectToFile: false
     }
   },
-  mounted() {
+  beforeMount() {
     var url = `apps/intranetagglo${'/menus'}`
     axios.get(generateUrl(url))
       .then((response) => {
-        this.sectionArray = response.data[0].sort((a, b) => {
-          if (a.position.split('-')[0] < b.position.split('-')[0]) return -1;
-          if (a.position.split('-')[0] > b.position.split('-')[0]) return 1;
-          return 0;
-        });
-        this.sectionArray.forEach((section) => {
-          var menuArray = response.data[1].filter(menu => menu.position.slice(0, 2) == section.position.slice(0, 2)).sort((a, b) => {
-            if (a.position.split('-')[1] < b.position.split('-')[1]) return -1;
-            if (a.position.split('-')[1] > b.position.split('-')[1]) return 1;
-            return 0;
-          });
-          menuArray.forEach((menu) => {
-            menu.childs = response.data[2].filter(submenu => submenu.position.slice(0, 4) == menu.position.slice(0, 4)).sort((a, b) => {
-              if (a.position.split('-')[2] < b.position.split('-')[2]) return -1;
-              if (a.position.split('-')[2] > b.position.split('-')[2]) return 1;
-              return 0;
-            });
-          })
-          section.childs = menuArray;
-        })
+        this.menuInBDD = response.data
       })
   },
 

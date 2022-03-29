@@ -70,8 +70,8 @@ class MenuController extends Controller
                 }
             }
         }
-
-        return $this->service->create($title, $icon, $fileurl, $groups, $position);
+        $this->service->create($title, $icon, $fileurl, $groups, $position);
+        return $this->service->findAll();
     }
 
     public function update(int $id, string $title, string $icon, string $link, string $groups)
@@ -92,8 +92,8 @@ class MenuController extends Controller
                     }
                 }
             }
-
-            return $this->service->update($id, $title, $icon, $fileurl, $groups);
+            $this->service->update($id, $title, $icon, $fileurl, $groups);
+            return $this->service->findAll();
         });
     }
 
@@ -154,7 +154,8 @@ class MenuController extends Controller
         return $this->handleNotFound(function () use ($id) {
             $rq = $this->service->find($id);
             unlink(substr($rq->getLink(), 11));
-            return $this->service->delete($id);
+            $this->service->delete($id);
+            return $this->service->findAll();
         });
     }
 }
