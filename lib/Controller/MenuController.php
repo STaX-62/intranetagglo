@@ -33,7 +33,7 @@ class MenuController extends Controller
         IURLGenerator $urlGenerator,
         ITimeFactory $timeFactory
     ) {
-        parent::__construct(Application::APP_id, $request);
+        parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
         $this->groupmanager = $groupmanager;
         $this->session = $session;
