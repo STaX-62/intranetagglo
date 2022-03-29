@@ -115,12 +115,12 @@ class MenuController extends Controller
         //int $sectionid = 0, int $menuid = 0, int $submenuid = 0, int $newIndex = 1, int $oldIndex = 0
         if ($level == 0) {
             if ($newIndex < $oldIndex) {
-                $menusToChange = $this->service->findBySection($newIndex, $oldIndex); 
+                $menusToChange = $this->service->findBySection($newIndex, $oldIndex); //renvoie objet ou sectionid est entre 0 et 1
                 for ($i = $oldIndex; $i < count($menusToChange); $i++) {
                     $menuPosition =  $menusToChange[$i]->getSectionid() + 1;
                     $menusToChange[$i]->setSectionid($menuPosition);
                 }
-                $menusToChange[$oldIndex]->setSectionid($newIndex);
+                $menusToChange[$newIndex]->setSectionid($oldIndex); //menu[1] = 0
             } else {
                 $menusToChange = $this->service->findBySection($oldIndex, $newIndex); //renvoie objet ou sectionid est entre 0 et 1
                 for ($i = $newIndex; $i < count($menusToChange); $i++) { // i = 1 , count = 2
@@ -144,7 +144,7 @@ class MenuController extends Controller
                         $menuPosition =  $menusToChange[$i]->getMenuid() - 1;
                         $menusToChange[$i]->setMenuid($menuPosition);
                     }
-                    $menusToChange[$oldIndex]->setMenuid($newIndex);
+                    $menusToChange[$newIndex]->setMenuid($oldIndex);
                 }
             } else {
                 if ($newIndex < $oldIndex) {
@@ -160,7 +160,7 @@ class MenuController extends Controller
                         $menuPosition =  $menusToChange[$i]->getSubmenuid() - 1;
                         $menusToChange[$i]->setSubmenuid($menuPosition);
                     }
-                    $menusToChange[$oldIndex]->setSubmenuid($newIndex);
+                    $menusToChange[$newIndex]->setSubmenuid($oldIndex);
                 }
             }
         }
