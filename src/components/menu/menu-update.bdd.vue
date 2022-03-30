@@ -212,8 +212,7 @@ export default {
 
     UpdateOrder: function (event) {
       console.log(event)
-      console.log(event.clone.getAttribute("position"))
-      // this.changeOrder(event.clone.getAttribute("position"), newPosition.join('-'))
+      this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"))
       this.$forceUpdate()
     },
     DeleteVerification(menu) {
