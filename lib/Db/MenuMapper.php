@@ -128,7 +128,11 @@ class MenuMapper extends QBMapper
             ->addOrderBy('q.sectionId', 'DESC')
             ->setMaxResults(1);
 
-        return $qb->getQuery()->getOneOrNullResult();
+        $result = $qb->execute();
+        $max = (int)$result->fetchColumn();
+        $result->closeCursor();
+
+        return $max;
     }
 
     /**
