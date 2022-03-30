@@ -123,12 +123,12 @@ class MenuMapper extends QBMapper
     {
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
-        $qb->select('MAX(q.sectionId)')
-            ->from($this->getTableName(), 'q');
-        $cursor = $qb->execute();
-        $row = $cursor->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_UNIQUE);
-        $cursor->closeCursor();
-        return $row;
+        $qb->select('q.sectionId')
+            ->from($this->getTableName(), 'q')
+            ->addOrderBy('q.sectionId', 'DESC')
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
