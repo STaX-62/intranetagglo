@@ -182,43 +182,7 @@ class MenuMapper extends QBMapper
     /**
      * @return array
      */
-    public function findBySection(int $sectionA, int $sectionB): array
-    {
-        /* @var $qb IQueryBuilder */
-        $qb = $this->db->getQueryBuilder();
-        $qb->select('*')
-            ->from($this->getTableName(), 'q')
-            ->where("q.sectionid BETWEEN :sectionA AND :sectionB")
-            ->addOrderBy('q.sectionid', 'ASC')
-            ->setParameter('sectionA', $sectionA)
-            ->setParameter('sectionB', $sectionB);
-
-        return $this->findEntities($qb);
-    }
-
-    /**
-     * @return array
-     */
-    public function findByMenu(int $section, int $menuA, int $menuB): array
-    {
-        /* @var $qb IQueryBuilder */
-        $qb = $this->db->getQueryBuilder();
-        $qb->select('*')
-            ->from($this->getTableName(), 'q')
-            ->where("q.sectionid = :section")
-            ->andWhere("q.menuid BETWEEN :menuA AND :menuB")
-            ->addOrderBy('q.menuid', 'ASC')
-            ->setParameter('section', $section)
-            ->setParameter('menuA', $menuA)
-            ->setParameter('menuB', $menuB);
-
-        return $this->findEntities($qb);
-    }
-
-    /**
-     * @return array
-     */
-    public function findBySubmenu(int $section, int $menu, int $submenuA, int $submenuB): array
+    public function findByPosition($section, $menu, $submenu): array
     {
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
@@ -226,12 +190,10 @@ class MenuMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.sectionid = :section")
             ->andWhere("q.menuid = :menu")
-            ->andWhere("q.submenuid BETWEEN :submenuA AND :submenuB")
-            ->addOrderBy('q.submenuid', 'ASC')
+            ->andWhere("q.submenuid = :submenu")
             ->setParameter('section', $section)
             ->setParameter('menu', $menu)
-            ->setParameter('submenuA', $submenuA)
-            ->setParameter('submenuB', $submenuB);
+            ->setParameter('submenu', $submenu);
 
         return $this->findEntities($qb);
     }

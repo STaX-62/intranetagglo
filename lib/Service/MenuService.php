@@ -30,19 +30,9 @@ class MenuService
 		return $this->mapper->findByGroups($groups);
 	}
 
-	public function findBySection(int $sectionA, int $sectionB): array
+	public function findByPosition(int $section, int $menu, int $submenu): array
 	{
-		return $this->mapper->findBySection($sectionA, $sectionB);
-	}
-
-	public function findByMenu(int $section, int $menuA, int $menuB): array
-	{
-		return $this->mapper->findByMenu($section, $menuA, $menuB);
-	}
-
-	public function findBySubmenu(int $section, int $menu, int $submenuA, int $submenuB): array
-	{
-		return $this->mapper->findBySubmenu($section, $menu, $submenuA, $submenuB);
+		return $this->mapper->findByPosition($section, $menu, $submenu);
 	}
 
 	public function NewIdSection()

@@ -213,7 +213,7 @@ export default {
     UpdateOrder: function (event) {
       console.log(event)
       this.$forceUpdate()
-      this.changeOrder(event.clone.getAttribute("position"), event.newIndex, event.oldIndex)
+      this.changeOrder(event.clone.getAttribute("position"), event.item.getAttribute("position"), event.newIndex, event.oldIndex)
     },
     DeleteVerification(menu) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${menu.title}`, {
@@ -349,12 +349,11 @@ export default {
         console.error(e)
       }
     },
-    async changeOrder(actualPosition, newIndex, oldIndex) {
+    async changeOrder(actualPosition, newPosition, newIndex, oldIndex) {
       try {
         let data = new FormData();
-        data.append('sectionid', parseInt(actualPosition.split('-')[0]));
-        data.append('menuid', parseInt(actualPosition.split('-')[1]));
-        data.append('submenuid', parseInt(actualPosition.split('-')[2]));
+        data.append('actualPosition', actualPosition);
+        data.append('newPosition', newPosition);
         data.append('newIndex', newIndex);
         data.append('oldIndex', oldIndex);
         await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then((response) => {
