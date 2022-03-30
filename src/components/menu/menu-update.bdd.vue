@@ -211,11 +211,35 @@ export default {
     },
 
     UpdateOrder: function (event) {
-      console.log(event)
+      var newPosition = ''
+      var oldPosition = event.clone.getAttribute("position").split('-');
+      if (oldPosition[1] = "0") {
+        newPosition = [
+          this.MenuToDisplay[event.newIndex].sectionid,
+          this.MenuToDisplay[event.newIndex].menuid,
+          this.MenuToDisplay[event.newIndex].submenuid
+        ]
+      }
+      else {
+        if (oldPosition.split('-')[2] = "0") {
+          newPosition = [
+            this.MenuToDisplay[oldPosition[0]].childs[event.newIndex].sectionid,
+            this.MenuToDisplay[oldPosition[0]].childs[event.newIndex].menuid,
+            this.MenuToDisplay[oldPosition[0]].childs[event.newIndex].submenuid
+          ]
+        }
+        else {
+          newPosition = [
+            this.MenuToDisplay[oldPosition[0]].childs[oldPosition[1]].childs[event.newIndex].sectionid,
+            this.MenuToDisplay[oldPosition[0]].childs[oldPosition[1]].childs[event.newIndex].menuid,
+            this.MenuToDisplay[oldPosition[0]].childs[oldPosition[1]].childs[event.newIndex].submenuid
+          ]
+        }
+      }
+      console.log(this.MenuToDisplay)
       console.log(event.clone.getAttribute("position"))
-      console.log(event.item.getAttribute("position"))
+      this.changeOrder(event.clone.getAttribute("position"),newPosition.join('-'))
       this.$forceUpdate()
-      this.changeOrder(event.clone.getAttribute("position"), event.item.getAttribute("position"))
     },
     DeleteVerification(menu) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer ce menu : ${menu.title}`, {
