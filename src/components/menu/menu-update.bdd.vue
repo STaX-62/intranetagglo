@@ -213,6 +213,7 @@ export default {
     UpdateOrder: function (event) {
       var newPosition = ''
       var oldPosition = event.clone.getAttribute("position").split('-');
+      console.log(oldPosition)
       if (oldPosition[1] == "0") {
         newPosition = [
           this.MenuToDisplay[event.newIndex].sectionid,
@@ -223,16 +224,16 @@ export default {
       else {
         if (oldPosition[2] == "0") {
           newPosition = [
-            this.MenuToDisplay[oldPosition[0]].childs[event.newIndex].sectionid,
-            this.MenuToDisplay[oldPosition[0]].childs[event.newIndex].menuid,
-            this.MenuToDisplay[oldPosition[0]].childs[event.newIndex].submenuid
+            this.MenuToDisplay[parseInt(oldPosition[0])].childs[event.newIndex].sectionid,
+            this.MenuToDisplay[parseInt(oldPosition[0])].childs[event.newIndex].menuid,
+            this.MenuToDisplay[parseInt(oldPosition[0])].childs[event.newIndex].submenuid
           ]
         }
         else {
           newPosition = [
-            this.MenuToDisplay[oldPosition[0]].childs[oldPosition[1]].childs[event.newIndex].sectionid,
-            this.MenuToDisplay[oldPosition[0]].childs[oldPosition[1]].childs[event.newIndex].menuid,
-            this.MenuToDisplay[oldPosition[0]].childs[oldPosition[1]].childs[event.newIndex].submenuid
+            this.MenuToDisplay[parseInt(oldPosition[0])].childs[parseInt(oldPosition[1])].childs[event.newIndex].sectionid,
+            this.MenuToDisplay[parseInt(oldPosition[0])].childs[parseInt(oldPosition[1])].childs[event.newIndex].menuid,
+            this.MenuToDisplay[parseInt(oldPosition[0])].childs[parseInt(oldPosition[1])].childs[event.newIndex].submenuid
           ]
         }
       }
