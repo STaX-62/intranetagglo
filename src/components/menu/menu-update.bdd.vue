@@ -289,7 +289,7 @@ export default {
       })
     },
     AddMenu(menu, Sindex) {
-      console.log(menu.length + "  " + SIndex + "  " + (menu.length + 1))
+      console.log(menu.length + "  " + Sindex + "  " + (menu.length + 1))
       this.createMenu({
         'title': 'Nouveau Menu',
         'icon': '',
