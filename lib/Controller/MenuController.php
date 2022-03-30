@@ -106,12 +106,8 @@ class MenuController extends Controller
         });
     }
 
-    public function changeOrder(string $actualPosition, string $newPosition, int $newIndex, int $oldIndex)
+    public function changeOrder(string $actualPosition, string $newPosition)
     {
-        if ($newIndex == $oldIndex) {
-            return 'aucun changement';
-        }
-
         $oldIds = explode('-', $actualPosition);
         $newIds = explode('-', $newPosition);
         $oldMenu = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
