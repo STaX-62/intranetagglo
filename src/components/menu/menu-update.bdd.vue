@@ -66,7 +66,7 @@
                   <draggable
                     class="table-content"
                     tag="div"
-                    :list="MenuToDisplay[Sindex].childs[Mindex].childs" 
+                    :list="MenuToDisplay[Sindex].childs[Mindex].childs"
                     draggable=".table-submenu-content"
                     handle=".handlesub"
                     @sort="UpdateOrder"
@@ -101,7 +101,7 @@
                 </div>
                 <button
                   class="menu-add"
-                 @click="AddMenu(MenuToDisplay[Sindex].childs,Sindex)"
+                  @click="AddMenu(MenuToDisplay[Sindex].childs,Sindex)"
                   style="width:calc(50% - 10px)"
                 >+</button>
               </draggable>
@@ -295,7 +295,7 @@ export default {
         'link': '',
         'groups': 'admin',
         'sectionid': Sindex,
-        'menuid': menu.length,
+        'menuid': (menu.length + 1),
         'submenuid': 0
       })
     },
@@ -305,7 +305,7 @@ export default {
         'icon': 'exclamation-triangle',
         'link': '',
         'groups': 'admin',
-        'sectionid': section.length,
+        'sectionid': (section.length + 1),
         'menuid': 0,
         'submenuid': 0
       })
