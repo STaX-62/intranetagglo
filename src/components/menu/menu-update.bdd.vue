@@ -16,6 +16,7 @@
             tag="div"
             :list="MenuToDisplay"
             draggable=".table-section"
+            group="section"
             handle=".handlesec"
             :move="UpdateOrder"
           >
@@ -44,6 +45,7 @@
                 tag="div"
                 :list="MenuToDisplay[Sindex].childs"
                 draggable=".table-menu"
+                group="menu"
                 handle=".handlemen"
                 :move="UpdateOrder"
               >
@@ -68,6 +70,7 @@
                     tag="div"
                     :list="MenuToDisplay[Sindex].childs[Mindex].childs"
                     draggable=".table-submenu-content"
+                    group="submenu"
                     handle=".handlesub"
                     :move="UpdateOrder"
                   >

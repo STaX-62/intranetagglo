@@ -112,9 +112,13 @@ class MenuController extends Controller
         $newIds = explode('-', $newPosition);
         $oldMenuQB = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
         $newMenuQB = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
+
         $this->service->updateOrder($oldMenuQB[0]->getId(), $newIds[0], $newIds[1], $newIds[2]);
         $this->service->updateOrder($newMenuQB[0]->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
-
+        
+        // foreach ($menusToChange as $menu) {
+        //     $this->service->updateOrder($oldMenuQB[0]->getId(), $menu->getSectionid(), $menu->getMenuid(), $menu->getSubmenuid());
+        // }
         return $this->service->findAll();
     }
 
