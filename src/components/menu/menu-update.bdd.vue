@@ -369,11 +369,13 @@ export default {
         console.error(e)
       }
     },
-    async changeOrder(actualPosition, newPosition) {
+    async changeOrder(actualPosition, newPosition, sectionpos, menupos) {
       try {
         let data = new FormData();
         data.append('actualPosition', actualPosition);
         data.append('newPosition', newPosition);
+        data.append('sectionpos', sectionpos);
+        data.append('menupos', menupos);
         await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then((response) => {
           this.menuInBDD = response.data;
           this.$forceUpdate()
