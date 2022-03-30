@@ -199,24 +199,10 @@ export default {
     },
     MenuToDisplay() {
       var sectionArray = this.menuInBDD[0]
-
-      sectionArray = this.menuInBDD[0].sort((a, b) => {
-        if (a.sectionid < b.sectionid) return -1;
-        if (a.sectionid > b.sectionid) return 1;
-        return 0;
-      });
       sectionArray.forEach((section) => {
-        var menuArray = this.menuInBDD[1].filter(menu => menu.sectionid == section.sectionid).sort((a, b) => {
-          if (a.menuid < b.menuid) return -1;
-          if (a.menuid > b.menuid) return 1;
-          return 0;
-        });
+        var menuArray = this.menuInBDD[1].filter(menu => menu.sectionid == section.sectionid);
         menuArray.forEach((menu) => {
-          menu.childs = this.menuInBDD[2].filter(submenu => submenu.menuid == menu.menuid).sort((a, b) => {
-            if (a.submenuid < b.submenuid) return -1;
-            if (a.submenuid > b.submenuid) return 1;
-            return 0;
-          });
+          menu.childs = this.menuInBDD[2].filter(submenu => submenu.menuid == menu.menuid);
         })
         section.childs = menuArray;
       })
