@@ -37,7 +37,7 @@
                 <button type="button" class="menu-del-button" @click="DeleteVerification(section)">
                   <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                 </button>
-                <b-icon icon="arrows-move" class="handlesec"></b-icon>
+                <b-icon icon="arrows-expand" class="handlesec"></b-icon>
               </div>
               <draggable
                 class="table-content"
@@ -61,7 +61,7 @@
                     <button type="button" class="menu-del-button" @click="DeleteVerification(menu)">
                       <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                     </button>
-                    <b-icon icon="arrows-move" class="handlemen"></b-icon>
+                    <b-icon icon="arrows-expand" class="handlemen"></b-icon>
                   </div>
                   <draggable
                     class="table-content"
@@ -89,7 +89,7 @@
                         >
                           <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
                         </button>
-                        <b-icon icon="arrows-move" class="handlesub"></b-icon>
+                        <b-icon icon="arrows-expand" class="handlesub"></b-icon>
                       </div>
                     </div>
                     <button
@@ -240,7 +240,7 @@ export default {
     Modify(menu) {
       console.log(menu)
       this.modifying = menu;
-      if (menu.childs.isArray()) {
+      if (typeof menu.childs !== 'undefined') {
         if (menu.childs.length == 0) this.modifying.haschild = false;
         else this.modifying.haschild = true;
       }
@@ -506,7 +506,9 @@ export default {
   border-radius: 5px;
 }
 
-.handle:before {
-  content: "\e068";
+.handlesec,
+.handlemen,
+.handlesub {
+  margin: auto;
 }
 </style>
