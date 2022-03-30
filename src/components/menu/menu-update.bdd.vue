@@ -213,7 +213,7 @@ export default {
     UpdateOrder: function (event) {
       var newPosition = ''
       var oldPosition = event.clone.getAttribute("position").split('-');
-      if (oldPosition[1] = "0") {
+      if (oldPosition[1] == "0") {
         newPosition = [
           this.MenuToDisplay[event.newIndex].sectionid,
           this.MenuToDisplay[event.newIndex].menuid,
@@ -221,7 +221,7 @@ export default {
         ]
       }
       else {
-        if (oldPosition.split('-')[2] = "0") {
+        if (oldPosition.split('-')[2] == "0") {
           newPosition = [
             this.MenuToDisplay[oldPosition[0]].childs[event.newIndex].sectionid,
             this.MenuToDisplay[oldPosition[0]].childs[event.newIndex].menuid,
