@@ -48,6 +48,7 @@
                 group="menu"
                 handle=".handlemen"
                 :move="UpdateOrder"
+                :sectionid="section.sectionid"
               >
                 <div
                   class="table-menu"
@@ -73,6 +74,8 @@
                     group="submenu"
                     handle=".handlesub"
                     :move="UpdateOrder"
+                    :sectionid="menu.sectionid"
+                    :menuid="menu.menuid"
                   >
                     <div
                       class="table-submenu-content"
@@ -212,10 +215,20 @@ export default {
     UpdateBackground() {
       this.$store.commit('setMenuUpdating', true)
     },
-
     UpdateOrder: function (event) {
       console.log(event)
-      this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"))
+
+      if (event.related.getAttribute("position") == null) {
+        if (event.related.getAttribute("menuid") == null) {
+          this.changeOrder(event.dragged.getAttribute("position"), null, event.related.getAttribute("sectionid"), null)
+        }
+        else {
+          this.changeOrder(event.dragged.getAttribute("position"), null, event.related.getAttribute("sectionid"), event.related.getAttribute("menuid"))
+        }
+      }
+      else {
+        this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), null, null)
+      }
       this.$forceUpdate()
     },
     DeleteVerification(menu) {
