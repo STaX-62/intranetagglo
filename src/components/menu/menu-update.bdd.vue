@@ -240,9 +240,13 @@ export default {
     Modify(menu) {
       console.log(menu)
       this.modifying = menu;
-      if (menu.childs.length == 0) this.modifying.haschild = false;
-      else this.modifying.haschild = true;
-
+      if (menu.childs.isArray()) {
+        if (menu.childs.length == 0) this.modifying.haschild = false;
+        else this.modifying.haschild = true;
+      }
+      else {
+        this.modifying.haschild = false;
+      }
       if (menu.menuid == 0 && menu.submenuid == 0) {
         this.modifying.icon = menu.icon;
       }
