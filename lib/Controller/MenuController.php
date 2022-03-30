@@ -114,13 +114,13 @@ class MenuController extends Controller
 
         $oldIds = explode('-', $actualPosition);
         $newIds = explode('-', $newPosition);
-        $oldMenu = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2])[0];
-        $newMenu = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2])[0];
+        $oldMenu = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
+        $newMenu = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
 
-        $this->service->updateOrder($oldMenu->getId(), $newIds[0], $newIds[1], $newIds[2]);
-        $this->service->updateOrder($newMenu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
+        // $this->service->updateOrder($oldMenu->getId(), $newIds[0], $newIds[1], $newIds[2]);
+        // $this->service->updateOrder($newMenu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
 
-        return $this->service->findAll();
+        return [$this->service->findAll(), $oldMenu, $newMenu];
     }
 
     public function destroy(int $id)

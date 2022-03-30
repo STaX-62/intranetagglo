@@ -195,6 +195,10 @@ class MenuMapper extends QBMapper
             ->setParameter('menu', $menu)
             ->setParameter('submenu', $submenu);
 
-        return $this->findEntities($qb);
+        $result = $qb->execute();
+        $row = (int)$result->fetchColumn();
+        $result->closeCursor();
+        
+        return $row;
     }
 }
