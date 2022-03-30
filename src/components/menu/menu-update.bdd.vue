@@ -23,7 +23,7 @@
               class="table-section"
               v-for="(section,Sindex) in MenuToDisplay"
               v-bind:key="section.id"
-              v-bind:position="Sindex+'-0-0'"
+              v-bind:position="section.sectionid+'-0-0'"
             >
               <div class="table-block" type="text">
                 {{section.title}}
@@ -51,7 +51,7 @@
                   class="table-menu"
                   v-for="(menu,Mindex) in MenuToDisplay[Sindex].childs"
                   v-bind:key="menu.id"
-                  v-bind:position="Sindex+'-'+ (Mindex+1) + '-0'"
+                  v-bind:position="menu.sectionid+'-'+ menu.menuid + '-0'"
                 >
                   <div class="table-block" type="text">
                     <div>{{menu.title}}</div>
@@ -73,9 +73,9 @@
                   >
                     <div
                       class="table-submenu-content"
-                      v-for="(submenu,SMindex) in MenuToDisplay[Sindex].childs[Mindex].childs"
+                      v-for="submenu in MenuToDisplay[Sindex].childs[Mindex].childs"
                       v-bind:key="submenu.id"
-                      v-bind:position="Sindex+'-'+ (Mindex+1)+ '-'+ (SMindex+1)"
+                      v-bind:position="submenu.sectionid+'-'+ submenu.menuid+ '-'+ submenu.submenuid"
                     >
                       <div class="table-block" type="text">
                         <div>{{submenu.title}}</div>
@@ -238,7 +238,7 @@ export default {
       }
       console.log(this.MenuToDisplay)
       console.log(event.clone.getAttribute("position"))
-      this.changeOrder(event.clone.getAttribute("position"),newPosition.join('-'))
+      this.changeOrder(event.clone.getAttribute("position"), newPosition.join('-'))
       this.$forceUpdate()
     },
     DeleteVerification(menu) {
