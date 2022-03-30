@@ -116,6 +116,20 @@ class MenuMapper extends QBMapper
         return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
     }
 
+    /**
+     * @return array
+     */
+    public function MaxIdSection(): int
+    {
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('MAX(sectionId')
+            ->from($this->getTableName(), 'q');
+        $cursor = $qb->execute();
+        $row = $cursor->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_UNIQUE);
+        $cursor->closeCursor();
+        return $row;
+    }
 
     /**
      * @return array

@@ -71,7 +71,7 @@ class MenuController extends Controller
             }
         }
         $this->service->create($title, $icon, $fileurl, $groups, $sectionid, $menuid, $submenuid);
-        return $this->service->findAll();
+        return [$this->service->findAll(), $this->service->MaxIdSection()];
     }
 
     public function update(int $id, string $title, string $icon, string $link, string $groups)
