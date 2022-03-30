@@ -45,9 +45,17 @@ class MenuService
 		return $this->mapper->findBySubmenu($section, $menu, $submenuA, $submenuB);
 	}
 
-	public function MaxIdSection()
+	public function NewIdSection()
 	{
-		return $this->mapper->MaxIdSection();
+		return $this->mapper->NewIdSection();
+	}
+	public function NewIdMenu($section)
+	{
+		return $this->mapper->NewIdMenu($section);
+	}
+	public function NewIdSubmenu($section, $menu)
+	{
+		return $this->mapper->NewIdSubmenu($section, $menu);
 	}
 
 	private function handleException(Exception $e): void

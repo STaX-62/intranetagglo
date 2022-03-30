@@ -94,23 +94,19 @@
                     </div>
                     <button
                       class="menu-add"
-                      @click="AddSubmenu(MenuToDisplay[Sindex].childs[Mindex].childs,Sindex,Mindex)"
+                      @click="AddSubmenu(section.sectionid,menu.menuid)"
                       style="width:calc(100% - 10px)"
                     >+</button>
                   </draggable>
                 </div>
                 <button
                   class="menu-add"
-                  @click="AddMenu(MenuToDisplay[Sindex].childs,Sindex)"
+                  @click="AddMenu(section.sectionid)"
                   style="width:calc(50% - 10px)"
                 >+</button>
               </draggable>
             </div>
-            <button
-              class="menu-add"
-              @click="AddSection(MenuToDisplay)"
-              style="width:calc(33% - 10px)"
-            >+</button>
+            <button class="menu-add" @click="AddSection()" style="width:calc(33% - 10px)">+</button>
           </draggable>
         </div>
       </div>
@@ -263,38 +259,37 @@ export default {
 
       this.updateMenu(this.modifying, this.modifying.file)
     },
-    AddSubmenu(submenus, Sindex, Mindex) {
+    AddSubmenu(Sindex, Mindex) {
       this.createMenu({
         'title': 'Nouveau Sous-Menu',
         'icon': '',
         'link': '',
         'groups': 'admin',
         'sectionid': Sindex,
-        'menuid': (Mindex + 1),
-        'submenuid': submenus.length
+        'menuid': Mindex,
+        'level': 2
       })
     },
-    AddMenu(menu, Sindex) {
-      console.log(menu.length + "  " + Sindex + "  " + (menu.length + 1))
+    AddMenu(Sindex) {
       this.createMenu({
         'title': 'Nouveau Menu',
         'icon': '',
         'link': '',
         'groups': 'admin',
         'sectionid': Sindex,
-        'menuid': (menu.length + 1),
-        'submenuid': 0
+        'menuid': 0,
+        'level': 1
       })
     },
-    AddSection(section) {
+    AddSection() {
       this.createMenu({
         'title': 'Nouvelle Section',
         'icon': 'exclamation-triangle',
         'link': '',
         'groups': 'admin',
-        'sectionid': (section.length + 1),
+        'sectionid': 0,
         'menuid': 0,
-        'submenuid': 0
+        'level': 0
       })
     },
     async createMenu(menu) {
@@ -306,7 +301,7 @@ export default {
         data.append('groups', menu.groups);
         data.append('sectionid', menu.sectionid);
         data.append('menuid', menu.menuid);
-        data.append('submenuid', menu.submenuid);
+        data.append('level', menu.level);
         await axios.post(generateUrl(`apps/intranetagglo/menus`), data, {
           headers: {
             'accept': 'application/json',

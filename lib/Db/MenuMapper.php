@@ -119,20 +119,64 @@ class MenuMapper extends QBMapper
     /**
      * @return array
      */
-    public function MaxIdSection(): int
+    public function NewIdSection(): int
     {
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
-        $qb->select('q.sectionId')
+        $qb->select('q.sectionid')
             ->from($this->getTableName(), 'q')
-            ->addOrderBy('q.sectionId', 'DESC')
+            ->addOrderBy('q.sectionid', 'DESC')
             ->setMaxResults(1);
 
         $result = $qb->execute();
         $max = (int)$result->fetchColumn();
         $result->closeCursor();
 
-        return $max;
+        return ($max + 1);
+    }
+
+    /**
+     * @return array
+     */
+    public function NewIdMenu($section): int
+    {
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('q.menuid')
+            ->from($this->getTableName(), 'q')
+            ->addOrderBy('q.menuid', 'DESC')
+            ->where("q.sectionid = :section")
+            ->setParameter('section', $section)
+            ->setMaxResults(1);
+
+        $result = $qb->execute();
+        $max = (int)$result->fetchColumn();
+        $result->closeCursor();
+
+        return ($max + 1);
+    }
+
+    /**
+     * @return array
+     */
+    public function NewIdSubmenu($section, $menu): int
+    {
+        /* @var $qb IQueryBuilder */
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('q.submenuid')
+            ->from($this->getTableName(), 'q')
+            ->addOrderBy('q.submenuid', 'DESC')
+            ->where("q.sectionid = :section")
+            ->andWhere("q.menuid = :menu")
+            ->setParameter('section', $section)
+            ->setParameter('menu', $menu)
+            ->setMaxResults(1);
+
+        $result = $qb->execute();
+        $max = (int)$result->fetchColumn();
+        $result->closeCursor();
+
+        return ($max + 1);
     }
 
     /**

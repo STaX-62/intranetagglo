@@ -55,7 +55,7 @@ class MenuController extends Controller
         return (new DataResponse($this->service->findByGroups($this->groupmanager->getUserGroupIds($user))));
     }
 
-    public function create(string $title, string $icon, string $link, string $groups, int $sectionid, int $menuid, int $submenuid)
+    public function create(string $title, string $icon, string $link, string $groups, int $sectionid, int $menuid, int $level)
     {
         $fileurl = $link;
 
@@ -70,8 +70,17 @@ class MenuController extends Controller
                 }
             }
         }
-        $this->service->create($title, $icon, $fileurl, $groups, $sectionid, $menuid, $submenuid);
-        return [$this->service->findAll(), $this->service->MaxIdSection()];
+        if ($level == 0) {
+            $this->service->create($title, $icon, $fileurl, $groups, $this->service->NewIdSection(), 0, 0);
+        } else {
+            if ($level == 1) {
+                $this->service->create($title, $icon, $fileurl, $groups, $sectionid, $this->service->NewIdMenu($sectionid), 0);
+            } else {
+                $this->service->create($title, $icon, $fileurl, $groups, $sectionid, $menuid, $this->service->NewIdSubmenu($sectionid, $menuid));
+            }
+        }
+
+        return $this->service->findAll();
     }
 
     public function update(int $id, string $title, string $icon, string $link, string $groups)
