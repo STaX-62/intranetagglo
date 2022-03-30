@@ -221,7 +221,7 @@ export default {
         ]
       }
       else {
-        if (oldPosition.split('-')[2] == "0") {
+        if (oldPosition[2] == "0") {
           newPosition = [
             this.MenuToDisplay[oldPosition[0]].childs[event.newIndex].sectionid,
             this.MenuToDisplay[oldPosition[0]].childs[event.newIndex].menuid,
