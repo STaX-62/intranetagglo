@@ -117,8 +117,8 @@ class MenuController extends Controller
         $oldMenu = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
         $newMenu = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
 
-        $this->service->updateOrder($oldMenu[0]->getid(), $newIds[0], $newIds[1], $newIds[2]);
-        $this->service->updateOrder($newMenu[0]->getid(), $oldIds[0], $oldIds[1], $oldIds[2]);
+        $this->service->updateOrder($oldMenu[0]->getId(), $newIds[0], $newIds[1], $newIds[2]);
+        $this->service->updateOrder($newMenu[0]->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
 
         return $this->service->findAll();
     }
