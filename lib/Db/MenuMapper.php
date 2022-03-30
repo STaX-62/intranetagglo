@@ -47,6 +47,7 @@ class MenuMapper extends QBMapper
         $qbSection->select('*')
             ->andWhere("q.menuid = 0")
             ->andWhere("q.submenuid = 0")
+            ->addOrderBy('q.sectionid', 'ASC')
             ->from($this->getTableName(), 'q');
 
         /* @var $qbMenu IQueryBuilder */
@@ -55,6 +56,7 @@ class MenuMapper extends QBMapper
         $qbMenu->select('*')
             ->andWhere("q.menuid > 0")
             ->andWhere("q.submenuid = 0")
+            ->addOrderBy('q.menuid', 'ASC')
             ->from($this->getTableName(), 'q');
 
         /* @var $qb IQueryBuilder */
@@ -62,6 +64,7 @@ class MenuMapper extends QBMapper
 
         $qbSubmenu->select('*')
             ->andWhere("q.submenuid > 0")
+            ->addOrderBy('q.submenuid', 'ASC')
             ->from($this->getTableName(), 'q');
 
         return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
@@ -86,6 +89,7 @@ class MenuMapper extends QBMapper
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.menuid = 0")
             ->andWhere("q.submenuid = 0")
+            ->addOrderBy('q.sectionid', 'ASC')
             ->setParameter('groups', $groups);
 
         /* @var $qb IQueryBuilder */
@@ -96,6 +100,7 @@ class MenuMapper extends QBMapper
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.menuid > 0")
             ->andWhere("q.submenuid = 0")
+            ->addOrderBy('q.menuid', 'ASC')
             ->setParameter('groups', $groups);
 
         /* @var $qb IQueryBuilder */
@@ -105,6 +110,7 @@ class MenuMapper extends QBMapper
             ->where("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.submenuid > 0")
+            ->addOrderBy('q.submenuid', 'ASC')
             ->setParameter('groups', $groups);
 
         return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
