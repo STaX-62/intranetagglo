@@ -220,16 +220,16 @@ export default {
       console.log(event.relatedContext.component)
       console.log(event.relatedContext.component.$attrs.sectionid)
 
-      if (event.related.getAttribute("position") == null) {
-        if (event.related.getAttribute("menuid") == null) {
-          this.changeOrder(event.dragged.getAttribute("position"), null, event.relatedContext.component.$attrs.sectionid, null)
-        }
-        else {
-          this.changeOrder(event.dragged.getAttribute("position"), null, event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
-        }
+      if (event.relatedContext.component.$attrs.sectionid != null) {
+        this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, null)
       }
       else {
-        this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), null, null)
+        if (event.relatedContext.component.$attrs.menuid != null) {
+          this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
+        }
+        else {
+          this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), null, null)
+        }
       }
       this.$forceUpdate()
     },
