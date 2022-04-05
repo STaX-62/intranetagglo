@@ -217,13 +217,15 @@ export default {
     },
     UpdateOrder: function (event) {
       console.log(event)
+      onsole.log(event.relatedContext.component)
+      console.log(event.relatedContext.component.$attrs.sectionid)
 
       if (event.related.getAttribute("position") == null) {
         if (event.related.getAttribute("menuid") == null) {
-          this.changeOrder(event.dragged.getAttribute("position"), null, event.related.getAttribute("sectionid"), null)
+          this.changeOrder(event.dragged.getAttribute("position"), null, event.relatedContext.component.$attrs.sectionid, null)
         }
         else {
-          this.changeOrder(event.dragged.getAttribute("position"), null, event.related.getAttribute("sectionid"), event.related.getAttribute("menuid"))
+          this.changeOrder(event.dragged.getAttribute("position"), null, event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
         }
       }
       else {
