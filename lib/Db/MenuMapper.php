@@ -189,12 +189,22 @@ class MenuMapper extends QBMapper
         $qb->select('*')
             ->from($this->getTableName(), 'q')
             ->where("q.sectionid = :section")
-            ->andWhere("q.menuid = :menu")
-            ->andWhere("q.submenuid = :submenu")
-            ->setParameter('section', $section)
-            ->setParameter('menu', $menu)
-            ->setParameter('submenu', $submenu);
-        
+            ->setParameter('section', $section);
+        if ($menu != 0) {
+            $qb->andWhere("q.menuid = :menu")
+                ->setParameter('menu', $menu);
+        } else {
+            if ($submenu != 0) {
+                $qb->andWhere("q.submenuid = :submenu")
+                    ->setParameter('submenu', $submenu);
+            }
+        }
+        $qb->addOrderBy('q.sectionid', 'ASC')
+            ->addOrderBy('q.menuid', 'ASC')
+            ->addOrderBy('q.submenuid', 'ASC');
+
+
+
         return $this->findEntities($qb);
     }
 }

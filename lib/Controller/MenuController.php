@@ -123,14 +123,13 @@ class MenuController extends Controller
                 $this->service->updateOrder($oldMenuQB[0]->getId(), $sectionpos, $this->service->NewIdMenu($sectionpos), 0);
             }
         }
-
-
-        $this->service->updateOrder($oldMenuQB[0]->getId(), $newIds[0], $newIds[1], $newIds[2]);
-        $this->service->updateOrder($newMenuQB[0]->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
-
-        // foreach ($menusToChange as $menu) {
-        //     $this->service->updateOrder($oldMenuQB[0]->getId(), $menu->getSectionid(), $menu->getMenuid(), $menu->getSubmenuid());
-        // }
+        
+        foreach ($oldMenuQB as $menu) {
+            $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
+        }
+        foreach ($newMenuQB as $menu) {
+            $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
+        }
         return $this->service->findAll();
     }
 
