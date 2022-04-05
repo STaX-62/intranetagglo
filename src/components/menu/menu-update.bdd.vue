@@ -217,7 +217,7 @@ export default {
     },
     UpdateOrder: function (event) {
       console.log(event)
-      onsole.log(event.relatedContext.component)
+      console.log(event.relatedContext.component)
       console.log(event.relatedContext.component.$attrs.sectionid)
 
       if (event.related.getAttribute("position") == null) {
