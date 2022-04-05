@@ -220,12 +220,12 @@ export default {
       console.log(event.relatedContext.component)
       console.log(event.relatedContext.component.$attrs.sectionid)
 
-      if (event.relatedContext.component.$attrs.sectionid != null) {
-        this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, null)
+      if (event.relatedContext.component.$attrs.menuid != null) {
+        this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
       }
       else {
-        if (event.relatedContext.component.$attrs.menuid != null) {
-          this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
+        if (event.relatedContext.component.$attrs.sectionid != null) {
+          this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, null)
         }
         else {
           this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), null, null)
