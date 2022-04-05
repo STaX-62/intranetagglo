@@ -109,27 +109,18 @@ class MenuController extends Controller
     public function changeOrder(string $actualPosition, string $newPosition, $sectionpos, $menupos)
     {
         $oldIds = explode('-', $actualPosition);
+        $newIds = explode('-', $newPosition);
 
         $oldMenuQB = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
+        $newMenuQB = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
 
-        if ($newPosition != null) {
-            $newIds = explode('-', $newPosition);
-            $newMenuQB = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
-        } else {
-            if ($menupos != null) {
-                $oldMenuQB = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
-                $this->service->updateOrder($oldMenuQB[0]->getId(), $sectionpos, $menupos, $this->service->NewIdSubmenu($sectionpos, $menupos));
-            } else {
-                $this->service->updateOrder($oldMenuQB[0]->getId(), $sectionpos, $this->service->NewIdMenu($sectionpos), 0);
-            }
-        }
-        
         foreach ($oldMenuQB as $menu) {
             $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
         }
         foreach ($newMenuQB as $menu) {
             $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
         }
+        
         return $this->service->findAll();
     }
 
