@@ -193,7 +193,6 @@ class MenuMapper extends QBMapper
         if ($menu != '0') {
             $qb->andWhere("q.menuid = :menu")
                 ->setParameter('menu', $menu);
-        } else {
             if ($submenu != '0') {
                 $qb->andWhere("q.submenuid = :submenu")
                     ->setParameter('submenu', $submenu);
