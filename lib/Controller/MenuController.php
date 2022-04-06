@@ -120,12 +120,12 @@ class MenuController extends Controller
                     $newMenuQB = $this->service->findByPosition(
                         $sectionpos,
                         $menupos,
-                        (int)$this->service->NewIdSubmenu(intval($sectionpos), intval($menupos))
+                        $this->service->NewIdSubmenu(intval($sectionpos), intval($menupos))
                     );
                 } else {
                     $newMenuQB = $this->service->findByPosition(
                         $sectionpos,
-                        (int)$this->service->NewIdMenu(intval($sectionpos)),
+                        $this->service->NewIdMenu(intval($sectionpos)),
                         0
                     );
                 }
@@ -150,7 +150,7 @@ class MenuController extends Controller
         //     }
         // }
 
-        return [$this->service->findAll(), $oldMenuQB, $newMenuQB];
+        return [$this->service->findAll(), $oldMenuQB, $newMenuQB, gettype($this->service->NewIdMenu(intval($sectionpos))), $this->service->NewIdMenu(intval($sectionpos))];
     }
 
     public function destroy(int $id)
