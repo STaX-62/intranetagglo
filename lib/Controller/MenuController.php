@@ -109,18 +109,43 @@ class MenuController extends Controller
     public function changeOrder(string $actualPosition, string $newPosition, $sectionpos, $menupos)
     {
         $oldIds = explode('-', $actualPosition);
-        $newIds = explode('-', $newPosition);
+
+
+        if ($newPosition != null) {
+            $newIds = explode('-', $newPosition);
+            $newMenuQB = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
+        } else {
+            if ($sectionpos != null) {
+                if ($menupos != null) {
+                    $newMenuQB = $this->service->findByPosition(
+                        $sectionpos,
+                        $menupos,
+                        (int)$this->service->NewIdSubmenu($sectionpos, $menupos)
+                    );
+                } else {
+                    $newMenuQB = $this->service->findByPosition(
+                        $sectionpos,
+                        (int)$this->service->NewIdMenu($sectionpos),
+                        0
+                    );
+                }
+            }
+
+
+            $newMenuQB = $this->service->findByPosition($sectionpos, $menupos, 0);
+        }
 
         $oldMenuQB = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
-        $newMenuQB = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
+
 
         foreach ($oldMenuQB as $menu) {
-            $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
+            if ($sectionpos != null)
+                $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $newIds[2]);
         }
         foreach ($newMenuQB as $menu) {
-            $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
+            $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $oldIds[2]);
         }
-        
+
         return $this->service->findAll();
     }
 
