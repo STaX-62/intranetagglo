@@ -149,11 +149,7 @@ class MenuController extends Controller
         }
         if ($newPosition != "null") {
             foreach ($newMenuQB as $menu) {
-                if ($sectionpos != "null") {
-                    $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $oldIds[2]);
-                } else {
-                    $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
-                }
+                $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
             }
         }
 
