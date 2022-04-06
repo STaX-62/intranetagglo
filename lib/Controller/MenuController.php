@@ -149,12 +149,12 @@ class MenuController extends Controller
         }
         if ($newPosition != "null") {
             foreach ($newMenuQB as $menu) {
-                $array[] = $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
+                $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
             }
         }
 
 
-        return [$this->service->findAll(), $array];
+        return $this->service->findAll();
     }
 
     public function destroy(int $id)
