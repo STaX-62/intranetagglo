@@ -134,23 +134,28 @@ class MenuController extends Controller
 
         $oldMenuQB = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
 
-
-        // foreach ($oldMenuQB as $menu) {
-        //     if ($sectionpos != "null") {
-        //         $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $newIds[2]);
-        //     } else {
-        //         $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
-        //     }
-        // }
-        // if ($newPosition != "null") {
-        //     foreach ($newMenuQB as $menu) {
-        //         if ($sectionpos != "null") {
-        //             $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $oldIds[2]);
-        //         } else {
-        //             $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
-        //         }
-        //     }
-        // }
+        if ($newPosition == "null") {
+            foreach ($oldMenuQB as $menu) {
+                if ($menupos == "null") {
+                    $this->service->updateOrder($menu->getId(), $sectionpos, $this->service->NewIdMenu(intval($sectionpos)), 0);
+                } else {
+                    $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $this->service->NewIdSubmenu(intval($sectionpos), intval($menupos)));
+                }
+            }
+        } else {
+            foreach ($oldMenuQB as $menu) {
+                $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
+            }
+        }
+        if ($newPosition != "null") {
+            foreach ($newMenuQB as $menu) {
+                if ($sectionpos != "null") {
+                    $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $oldIds[2]);
+                } else {
+                    $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
+                }
+            }
+        }
 
 
         return [$this->service->findAll(), $oldMenuQB, $oldIds];
