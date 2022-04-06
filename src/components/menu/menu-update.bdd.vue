@@ -216,10 +216,6 @@ export default {
       this.$store.commit('setMenuUpdating', true)
     },
     UpdateOrder: function (event) {
-      console.log(event)
-      console.log(event.relatedContext.component)
-      console.log(event.relatedContext.component.$attrs.sectionid)
-
       if (event.relatedContext.component.$attrs.menuid != null) {
         this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
       }
