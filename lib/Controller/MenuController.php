@@ -153,7 +153,7 @@ class MenuController extends Controller
         }
 
 
-        return [$this->service->findAll(), $oldMenuQB, $newMenuQB, gettype($this->service->NewIdMenu(intval($sectionpos))), $this->service->NewIdMenu(intval($sectionpos))];
+        return $this->service->findAll();
     }
 
     public function destroy(int $id)
