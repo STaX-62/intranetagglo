@@ -143,7 +143,7 @@ class MenuController extends Controller
         //     $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $oldIds[2]);
         // }
 
-        return [$this->service->findAll(),gettype($newPosition)];
+        return [$this->service->findAll(), gettype($newPosition), $newPosition];
     }
 
     public function destroy(int $id)
