@@ -111,39 +111,39 @@ class MenuController extends Controller
         $oldIds = explode('-', $actualPosition);
 
 
-        if ($newPosition != null) {
-            $newIds = explode('-', $newPosition);
-            $newMenuQB = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
-        } else {
-            if ($sectionpos != null) {
-                if ($menupos != null) {
-                    $newMenuQB = $this->service->findByPosition(
-                        intval($sectionpos),
-                        intval($menupos),
-                        (int)$this->service->NewIdSubmenu(intval($sectionpos), intval($menupos))
-                    );
-                } else {
-                    $newMenuQB = $this->service->findByPosition(
-                        intval($sectionpos),
-                        (int)$this->service->NewIdMenu(intval($sectionpos)),
-                        0
-                    );
-                }
-            }
-        }
+        // if ($newPosition != null) {
+        //     $newIds = explode('-', $newPosition);
+        //     $newMenuQB = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
+        // } else {
+        //     if ($sectionpos != null) {
+        //         if ($menupos != null) {
+        //             $newMenuQB = $this->service->findByPosition(
+        //                 intval($sectionpos),
+        //                 intval($menupos),
+        //                 (int)$this->service->NewIdSubmenu(intval($sectionpos), intval($menupos))
+        //             );
+        //         } else {
+        //             $newMenuQB = $this->service->findByPosition(
+        //                 intval($sectionpos),
+        //                 (int)$this->service->NewIdMenu(intval($sectionpos)),
+        //                 0
+        //             );
+        //         }
+        //     }
+        // }
 
         $oldMenuQB = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
 
 
-        foreach ($oldMenuQB as $menu) {
-            if ($sectionpos != null)
-                $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $newIds[2]);
-        }
-        foreach ($newMenuQB as $menu) {
-            $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $oldIds[2]);
-        }
+        // foreach ($oldMenuQB as $menu) {
+        //     if ($sectionpos != null)
+        //         $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $newIds[2]);
+        // }
+        // foreach ($newMenuQB as $menu) {
+        //     $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $oldIds[2]);
+        // }
 
-        return $this->service->findAll();
+        return [$this->service->findAll(),gettype($newPosition)];
     }
 
     public function destroy(int $id)
