@@ -137,11 +137,18 @@ class MenuController extends Controller
 
 
         foreach ($oldMenuQB as $menu) {
-            if ($sectionpos != null)
+            if ($sectionpos != "null") {
                 $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $newIds[2]);
+            } else {
+                $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
+            }
         }
         foreach ($newMenuQB as $menu) {
-            $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $oldIds[2]);
+            if ($sectionpos != "null") {
+                $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $oldIds[2]);
+            } else {
+                $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
+            }
         }
 
         return $this->service->findAll();
