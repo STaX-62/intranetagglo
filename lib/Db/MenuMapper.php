@@ -182,7 +182,7 @@ class MenuMapper extends QBMapper
     /**
      * @return array
      */
-    public function findByPosition($section, $menu, $submenu): array
+    public function findByPosition(string $section, string $menu, string $submenu): array
     {
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
@@ -190,11 +190,11 @@ class MenuMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.sectionid = :section")
             ->setParameter('section', $section);
-        if ($menu != 0) {
+        if ($menu != '0') {
             $qb->andWhere("q.menuid = :menu")
                 ->setParameter('menu', $menu);
         } else {
-            if ($submenu != 0) {
+            if ($submenu != '0') {
                 $qb->andWhere("q.submenuid = :submenu")
                     ->setParameter('submenu', $submenu);
             }

@@ -112,19 +112,20 @@ class MenuController extends Controller
 
 
         if ($newPosition != "null") {
+
             $newIds = explode('-', $newPosition);
             $newMenuQB = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
         } else {
             if ($sectionpos != "null") {
                 if ($menupos != "null") {
                     $newMenuQB = $this->service->findByPosition(
-                        intval($sectionpos),
-                        intval($menupos),
+                        $sectionpos,
+                        $menupos,
                         (int)$this->service->NewIdSubmenu(intval($sectionpos), intval($menupos))
                     );
                 } else {
                     $newMenuQB = $this->service->findByPosition(
-                        intval($sectionpos),
+                        $sectionpos,
                         (int)$this->service->NewIdMenu(intval($sectionpos)),
                         0
                     );
