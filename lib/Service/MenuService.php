@@ -45,7 +45,7 @@ class MenuService
 	}
 	public function NewIdSubmenu($section, $menu)
 	{
-		return intval($this->mapper->NewIdSubmenu($section, $menu));
+		return $this->mapper->NewIdSubmenu($section, $menu);
 	}
 
 	private function handleException(Exception $e): void
