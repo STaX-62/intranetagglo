@@ -28,6 +28,12 @@ body {
     font-display: swap;
 }
 
+#content{
+    display: block;
+}
+
+
+
 #Home {
     height: calc(100vh - 50px);
     display: grid;

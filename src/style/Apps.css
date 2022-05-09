@@ -96,7 +96,7 @@
     z-index: 100;
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 1350px) {
     .apps-container-main {
         display: flex;
     }
@@ -110,7 +110,7 @@
     }
 
     .apps-title {
-        font-size: 11px;
+        font-size: 10px;
     }
 
     .apps-header {
