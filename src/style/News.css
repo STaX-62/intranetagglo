@@ -251,6 +251,14 @@
         flex: 0 0 72%;
     }
 
+    .add-news-button {
+        flex: 0 0 20%;
+    }
+
+    .admin-view .searchbar {
+        flex: 0 0 65%;
+    }
+
     .news-row[focus='left'] .news-wrapper,
     .news-row[focus='center'] .news-wrapper,
     .news-row[focus="right"] .news-wrapper {
@@ -258,11 +266,9 @@
         overflow: unset;
     }
 
-    .news-row:not([focus='left']) .news,
-    .news-row:not([focus='center']) .news,
-    .news-row:not([focus="right"]) .news {
+    .news-row:not([focus="right"]):not([focus='center']):not([focus='left']) .news {
         width: 90%;
-        margin: 0 5%;
+        margin: 0 10px 5%;
     }
 }
 
