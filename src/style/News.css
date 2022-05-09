@@ -238,11 +238,6 @@
         grid-template-rows: 60px calc(100% - 120px);
     }
 
-    .news {
-        width: 90%;
-        margin: 0 5%;
-    }
-
     .news-wrapper {
         display: block;
         overflow: auto;
@@ -263,11 +258,11 @@
         overflow: unset;
     }
 
-    .news-row[focus='left'] .news,
-    .news-row[focus='center'] .news,
-    .news-row[focus="right"] .news {
-        width: unset;
-        margin: 0;
+    .news-row:not([focus='left']) .news,
+    .news-row:not([focus='center']) .news,
+    .news-row:not([focus="right"]) .news {
+        width: 90%;
+        margin: 0 5%;
     }
 }
 
