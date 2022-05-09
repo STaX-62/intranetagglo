@@ -102,7 +102,7 @@
 .news-header {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     grid-area: Titre;
 }
 
@@ -191,10 +191,8 @@
     grid-gap: 0 15px;
     justify-content: center;
     vertical-align: middle;
-    overflow-y: auto;
-    overflow-x: hidden;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 50px);
     grid-template-areas:
         "Titre"
         "NewsRow"
@@ -248,7 +246,7 @@
     }
 
     .searchbar {
-        flex: 0 0 72%;
+        flex: 0 0 85%;
     }
 
     .add-news-button {
@@ -256,7 +254,7 @@
     }
 
     .admin-view .searchbar {
-        flex: 0 0 65%;
+        flex: 0 0 65% !important;
     }
 
     .news-row[focus='left'] .news-wrapper,
@@ -268,7 +266,7 @@
 
     .news-row:not([focus="right"]):not([focus='center']):not([focus='left']) .news {
         width: 90%;
-        margin: 0 10px 5%;
+        margin-bottom: 10px;
     }
 }
 
