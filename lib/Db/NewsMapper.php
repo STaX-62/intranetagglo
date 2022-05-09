@@ -73,8 +73,8 @@ class NewsMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
-            ->where('LOWER(q.title) LIKE :search)')
-            ->orWhere('LOWER(q.subtitle) LIKE :search)')
+            ->where('LOWER(q.title) LIKE LOWER(:search)')
+            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->orWhere('q.category = :category')
             ->orWhere('q.id = :searchid')
