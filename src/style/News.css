@@ -691,19 +691,18 @@
         display: block;
     }
 
-}
-
-@media (max-height: 768px) {
-    #news-frame {
-        grid-template-columns: calc(100% - 200px) 200px;
+    .news-header {
+        width: calc(100% - 102px);
     }
 
     .news-row:not([focus="right"]):not([focus='center']):not([focus='left']) .news {
         width: 100% !important;
     }
+}
 
-    .news-header {
-        width: calc(100% - 102px);
+@media (max-height: 768px) {
+    #news-frame {
+        grid-template-columns: calc(100% - 200px) 200px;
     }
 }
 
