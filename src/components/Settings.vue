@@ -40,13 +40,6 @@ export default {
     patternoptions.children[parseInt(this.patterns) - 1].setAttribute("selected", "selected");
     variantoptions.children[parseInt(this.backgroundcolor) - 1].setAttribute("selected", "selected");
 
-
-    function Toggle() {
-      document.getElementById('Settings').classList.toggle('hidden')
-      document.getElementById('apps-container').classList.toggle('hidden')
-      this.$emit('hide')
-    }
-
     function Pattern(e) {
       var pattern = document.createAttribute("pattern");
       pattern.value = e.target.value;
@@ -61,7 +54,11 @@ export default {
       document.getElementById('Home').attributes.setNamedItem(variant)
     }
 
-    document.getElementById('close').addEventListener("click", Toggle);
+    document.getElementById('close').addEventListener("click", () => {
+      document.getElementById('Settings').classList.toggle('hidden')
+      document.getElementById('apps-container').classList.toggle('hidden')
+      this.$emit('hide')
+    });
     document.getElementById('pattern-select').addEventListener("change", Pattern);
     document.getElementById('variant-select').addEventListener("change", Variant);
   },
