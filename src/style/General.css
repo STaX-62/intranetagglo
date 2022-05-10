@@ -367,13 +367,14 @@ input[type="checkbox"].checkbox+label::before {
         position: absolute;
         width: 95%;
         height: 250px;
+        top: 60px;
     }
 
     .Settings.hidden {
         transform: translateY(-260px) translateX(0);
     }
 
-    .settings-box.box-hidden {
+    .settings-box.hidden {
         top: 310px;
     }
 }

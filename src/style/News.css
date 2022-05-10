@@ -701,6 +701,11 @@
 
     .Settings:not(.hidden)+div+#news-frame {
         margin-top: 260px;
+        height: calc(100% - 260px);
+    }
+
+    .Settings:not(.hidden)+div+#news-frame .news-container {
+        height: 100%;
     }
 }
 
