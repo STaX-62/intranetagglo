@@ -374,7 +374,7 @@ input[type="checkbox"].checkbox+label::before {
         transform: translateY(-260px) translateX(0);
     }
 
-    .settings-box.hidden {
+    .settings-box:not(.hidden) {
         top: 310px;
     }
 }

@@ -6,7 +6,7 @@
     v-bind:pattern="patterns"
     v-bind:variant="backgroundcolor"
   >
-    <div class="settings-box hidden">
+    <div id="settings-box" class="settings-box hidden">
       <b-icon id="cog" name="cog" class="cog" icon="gear"></b-icon>
       <label id="#cog-label" for="cog" style="position:absolute">Paramètres</label>
       <input type="checkbox" class="checkbox" id="checkbox" v-model="darkmode" />
