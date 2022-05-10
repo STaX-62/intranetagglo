@@ -28,7 +28,7 @@ body {
     font-display: swap;
 }
 
-#content{
+#content {
     display: block;
 }
 
@@ -208,6 +208,7 @@ body {
     grid-area: Navbar;
 }
 
+
 .Settings {
     display: block;
     position: absolute;
@@ -334,4 +335,18 @@ body {
 
 input[type="checkbox"].checkbox+label::before {
     display: none !important;
+}
+
+@media (max-width: 726px) {
+    .Navbar {
+        display: none;
+    }
+
+    #Home {
+        display: block;
+    }
+
+    .settings-box {
+        width: 102px;
+    }
 }

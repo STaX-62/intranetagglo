@@ -114,6 +114,12 @@
     }
 }
 
+@media (max-width: 726px) {
+    #apps {
+        display: none;
+    }
+}
+
 @media (max-height:680px) {
     .apps-content-main {
         display: flex;
