@@ -44,7 +44,7 @@ export default {
     function Toggle() {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')
-      this.$emit('hide', false)
+      this.$emit('hide')
     }
 
     function Pattern(e) {

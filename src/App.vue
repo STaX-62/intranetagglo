@@ -6,7 +6,7 @@
     v-bind:pattern="patterns"
     v-bind:variant="backgroundcolor"
   >
-    <div :class="settings ? 'settings-box' : 'settings-box hidden'">
+    <div class="settings-box hidden">
       <b-icon id="cog" name="cog" class="cog" icon="gear"></b-icon>
       <label id="#cog-label" for="cog" style="position:absolute">Paramètres</label>
       <input type="checkbox" class="checkbox" id="checkbox" v-model="darkmode" />
@@ -16,11 +16,7 @@
         <div class="ball"></div>
       </label>
     </div>
-    <Settings
-      id="Settings"
-      :class="settings ? 'Settings' : 'Settings hidden'"
-      :hide="settings = $event"
-    />
+    <Settings id="Settings" class="Settings hidden" :hide="HideSettings" />
     <Navigation class="Navbar" />
     <News />
   </div>
@@ -45,7 +41,7 @@ export default {
       darkmode: null,
       patterns: '6',
       backgroundcolor: '2',
-      settings: true
+      settings: false
     }
   },
   watch: {
@@ -65,7 +61,14 @@ export default {
     document.getElementById('cog').addEventListener("click", () => {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')
+      document.getElementById('settings-box').classList.toggle('hidden')
     });
+  },
+  methods: {
+    HideSettings() {
+      document.getElementById('settings-box').classList.toggle('hidden')
+      document.getElementById('Settings').classList.toggle('hidden')
+    }
   },
   created: function () {
     var current_scheme = localStorage.getItem('color_scheme');
