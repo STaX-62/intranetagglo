@@ -207,6 +207,6 @@ export default {
 }
 
 .admin-view .searchbar {
-  flex: 0 0 50%;
+  flex: 0 0 55%;
 }
 </style>
