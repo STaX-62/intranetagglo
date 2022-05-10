@@ -355,7 +355,7 @@ input[type="checkbox"].checkbox+label::before {
         width: 80px;
     }
 
-    .settings-box label {
+    .settings-box #cog-label {
         display: none;
     }
 

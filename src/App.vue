@@ -6,9 +6,9 @@
     v-bind:pattern="patterns"
     v-bind:variant="backgroundcolor"
   >
-    <div id="settings-box" class="settings-box">
+    <div :class="settings ? 'settings-box' : 'settings-box hidden'">
       <b-icon id="cog" name="cog" class="cog" icon="gear"></b-icon>
-      <label for="cog" style="position:absolute">Paramètres</label>
+      <label id="#cog-label" for="cog" style="position:absolute">Paramètres</label>
       <input type="checkbox" class="checkbox" id="checkbox" v-model="darkmode" />
       <label for="checkbox" class="label">
         <b-icon icon="moon" style="color: #f1c40f;"></b-icon>
@@ -16,7 +16,11 @@
         <div class="ball"></div>
       </label>
     </div>
-    <Settings id="Settings" class="Settings hidden" />
+    <Settings
+      id="Settings"
+      :class="settings ? 'Settings' : 'Settings hidden'"
+      :hide="settings = $event"
+    />
     <Navigation class="Navbar" />
     <News />
   </div>
@@ -40,7 +44,8 @@ export default {
       darkmodestring: null,
       darkmode: null,
       patterns: '6',
-      backgroundcolor: '2'
+      backgroundcolor: '2',
+      settings: true
     }
   },
   watch: {
@@ -60,7 +65,6 @@ export default {
     document.getElementById('cog').addEventListener("click", () => {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')
-      document.getElementById('settings-box').classList.toggle('box-hidden')
     });
   },
   created: function () {
