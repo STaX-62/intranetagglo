@@ -339,7 +339,7 @@ input[type="checkbox"].checkbox+label::before {
 
 @media (max-width: 726px) {
     .Navbar {
-        display: none;
+        display: none !important;
     }
 
     #Home {
@@ -347,6 +347,33 @@ input[type="checkbox"].checkbox+label::before {
     }
 
     .settings-box {
-        width: 102px;
+        width: 95px;
+    }
+
+    .settings-box::before {
+        right: 8px;
+        width: 80px;
+    }
+
+    .settings-box label {
+        display: none;
+    }
+
+    .cog {
+        margin-right: 5px;
+    }
+
+    .Settings {
+        position: absolute;
+        width: 95%;
+        height: 250px;
+    }
+
+    .Settings.hidden {
+        transform: translateY(-260px) translateX(0);
+    }
+
+    .settings-box.box-hidden {
+        top: 310px;
     }
 }

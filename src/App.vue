@@ -6,7 +6,7 @@
     v-bind:pattern="patterns"
     v-bind:variant="backgroundcolor"
   >
-    <div class="settings-box">
+    <div id="settings-box" class="settings-box">
       <b-icon id="cog" name="cog" class="cog" icon="gear"></b-icon>
       <label for="cog" style="position:absolute">Paramètres</label>
       <input type="checkbox" class="checkbox" id="checkbox" v-model="darkmode" />
@@ -60,6 +60,7 @@ export default {
     document.getElementById('cog').addEventListener("click", () => {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')
+      document.getElementById('settings-box').classList.toggle('box-hidden')
     });
   },
   created: function () {

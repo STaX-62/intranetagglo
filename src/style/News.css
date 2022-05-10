@@ -698,6 +698,10 @@
     .news-row:not([focus="right"]):not([focus='center']):not([focus='left']) .news {
         width: 100% !important;
     }
+
+    .Settings:not(.hidden)+div+.news-frame {
+        margin-top: 260px;
+    }
 }
 
 @media (max-height: 768px) {
