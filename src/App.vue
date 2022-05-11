@@ -61,7 +61,7 @@ export default {
     }
   },
   mounted: function () {
-    axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => this.isOnSite = response)
+    axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => this.isOnSite = response.data)
     document.getElementById('cog').addEventListener("click", () => {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')
