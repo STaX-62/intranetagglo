@@ -68,7 +68,7 @@ class PageController extends Controller
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
 
-		if (str_starts_with($ip, '10.'))
+		if (str_starts_with($ip, '192.'))
 			$isOnSite = true;
 
 		return $isOnSite;
