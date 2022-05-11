@@ -690,6 +690,13 @@
     display: block;
 }
 
+#Home:not([isonsite]) .news-header {
+    width: calc(100% - 250px);
+}
+
+#Home:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-wrapper {
+    width: calc(95% - 270px);
+}
 
 @media (max-width: 726px) {
     #news-frame {
@@ -711,6 +718,10 @@
 
     .Settings:not(.hidden)+div+#news-frame .news-container {
         height: 100%;
+    }
+
+    #Home:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-wrapper {
+        width: auto;
     }
 }
 
