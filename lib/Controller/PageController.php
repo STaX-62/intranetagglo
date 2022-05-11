@@ -66,7 +66,7 @@ class PageController extends Controller
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
 
-		return str_starts_with($ip, '192.');
+		return str_starts_with($ip, '10.');
 	}
 
 
