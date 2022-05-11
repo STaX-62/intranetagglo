@@ -686,6 +686,11 @@
     transition: color 0.2s;
 }
 
+#Home:not([isonsite]) #news-frame {
+    display: block;
+}
+
+
 @media (max-width: 726px) {
     #news-frame {
         display: block;

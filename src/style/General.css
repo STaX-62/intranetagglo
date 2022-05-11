@@ -337,6 +337,15 @@ input[type="checkbox"].checkbox+label::before {
     display: none !important;
 }
 
+#Home:not([isonsite]) {
+    display: block;
+}
+
+#Home:not([isonsite]) .Navbar {
+    display: none;
+}
+
+
 @media (max-width: 726px) {
     .Navbar {
         display: none !important;

@@ -5,6 +5,7 @@
     ref="Home"
     v-bind:pattern="patterns"
     v-bind:variant="backgroundcolor"
+    v-bind:isonsite="isOnSite"
   >
     <div id="settings-box" class="settings-box hidden">
       <b-icon id="cog" name="cog" class="cog" icon="gear"></b-icon>
@@ -42,7 +43,8 @@ export default {
       darkmodestring: null,
       darkmode: null,
       patterns: '6',
-      backgroundcolor: '2'
+      backgroundcolor: '2',
+      isOnSite: false
     }
   },
   watch: {
@@ -59,7 +61,7 @@ export default {
     }
   },
   mounted: function () {
-    axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => console.log(response))
+    axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => this.isOnSite = response)
     document.getElementById('cog').addEventListener("click", () => {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')

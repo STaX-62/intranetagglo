@@ -114,6 +114,10 @@
     }
 }
 
+#Home:not([isonsite]) #apps {
+    display: none;
+}
+
 @media (max-width: 726px) {
     #apps {
         display: none;
