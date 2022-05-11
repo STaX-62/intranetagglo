@@ -57,7 +57,7 @@ export default {
     document.getElementById('close').addEventListener("click", () => {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')
-      this.$emit('hide')
+      document.getElementById('settings-box').classList.toggle('hidden')
     });
     document.getElementById('pattern-select').addEventListener("change", Pattern);
     document.getElementById('variant-select').addEventListener("change", Variant);

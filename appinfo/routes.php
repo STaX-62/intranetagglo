@@ -9,6 +9,11 @@ return [
             'verb' => 'GET'
         ],
         [
+            'name' => 'page#getLocation',
+            'url' => '/location',
+            'verb' => 'GET'
+        ],
+        [
             'name' => 'menu_api#preflighted_cors', 'url' => '/api/0.1/{path}',
             'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']
         ],
