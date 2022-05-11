@@ -13,7 +13,6 @@ use OCP\IUserSession;
 use OCP\IUser;
 
 
-
 class PageController extends Controller
 {
 	private $db;
@@ -59,6 +58,8 @@ class PageController extends Controller
 
 	public function getLocation()
 	{
+		$isOnSite = false;
+
 		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
 		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -66,7 +67,11 @@ class PageController extends Controller
 		} else {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
-		return $ip;
+
+		if (str_starts_with($ip, '10.'))
+			$isOnSite = true;
+
+		return $isOnSite;
 	}
 
 
