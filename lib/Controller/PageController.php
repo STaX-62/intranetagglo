@@ -58,8 +58,6 @@ class PageController extends Controller
 
 	public function getLocation()
 	{
-		$isOnSite = false;
-
 		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
 		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -68,10 +66,7 @@ class PageController extends Controller
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
 
-		if (str_starts_with($ip, '192.'))
-			$isOnSite = true;
-
-		return $isOnSite;
+		return str_starts_with($ip, '192.');
 	}
 
 
