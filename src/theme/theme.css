@@ -16,7 +16,7 @@
 
 :root {
   /** primary **/
-  --color-primary: #9FC737;
+  --color-primary-intra: #9FC737;
   --color-primary-contrast: #122200;
   --color-primary-shade: #214B00;
   --color-primary-tint: #86AE19;

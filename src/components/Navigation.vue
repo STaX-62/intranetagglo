@@ -354,8 +354,8 @@ export default {
   padding: 0.375rem 0.75rem;
   text-align: center;
   color: var(--color-mode-1);
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+  background-color: var(--color-primary-intra);
+  border-color: var(--color-primary-intra);
   font-size: 15px;
   box-shadow: var(--color-mode-shadow-1) 0px 3px 1px -2px,
     var(--color-mode-shadow-2) 0px 2px 2px 0px,
