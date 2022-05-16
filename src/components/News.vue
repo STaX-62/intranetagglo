@@ -3,12 +3,7 @@
     <div id="news-container" class="news-container">
       <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
         <h2 class="news-header-title">Actualités</h2>
-        <input
-          type="text"
-          class="searchbar"
-          v-model="search"
-          placeholder="Rechercher.."
-        />
+        <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
         <NewsAdd v-if="isAdmin" />
       </div>
       <div id="news-row" class="news-row" :focus="newfocus">
@@ -208,5 +203,10 @@ export default {
 
 .admin-view .searchbar {
   flex: 0 0 55%;
+}
+@media (max-width: 1100px) {
+  .searchbar {
+    flex: 0 0 100%;
+  }
 }
 </style>

@@ -692,6 +692,12 @@
 
 #Home:not([isonsite]) .news-header {
     width: calc(100% - 250px);
+    margin-left: 2.5%;
+    justify-content: left;
+}
+
+#Home:not([isonsite]) .news-return {
+    right: 2.2%;
 }
 
 #Home:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-wrapper {
@@ -703,7 +709,11 @@
         display: block;
     }
 
-    #Home:not([isonsite]) .news-header,
+    #Home:not([isonsite]) .news-header {
+        width: calc(95% - 102px) !important;
+        margin-left: 1%;
+    }
+
     .news-header {
         width: calc(100% - 102px);
         margin-left: unset;
@@ -775,10 +785,6 @@
 
     .news-header-title {
         display: none;
-    }
-
-    .searchbar {
-        flex: 0 0 95%;
     }
 
     .admin-view .searchbar {
