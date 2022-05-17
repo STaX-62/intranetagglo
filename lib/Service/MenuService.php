@@ -30,7 +30,7 @@ class MenuService
 		return $this->mapper->findByGroups($groups);
 	}
 
-	public function findByPosition(int $section, int $menu, int $submenu): array
+	public function findByPosition(string $section, string $menu, string $submenu): array
 	{
 		return $this->mapper->findByPosition($section, $menu, $submenu);
 	}

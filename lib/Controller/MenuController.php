@@ -131,12 +131,12 @@ class MenuController extends Controller
                     $newMenuQB = $this->service->findByPosition(
                         $newSec,
                         $newMen,
-                        $this->service->NewIdSubmenu(intval($newSec), intval($newMen))
+                        $this->service->NewIdSubmenu($newSec, $newMen)
                     );
                 } else {
                     $newMenuQB = $this->service->findByPosition(
                         $newSec,
-                        $this->service->NewIdMenu(intval($newSec)),
+                        $this->service->NewIdMenu($newSec),
                         0
                     );
                 }
