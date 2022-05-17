@@ -4,13 +4,6 @@ import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-/* add font awesome icon component */
-Vue.component('font-awesome-icon', FontAwesomeIcon)
-
-import '@fortawesome/fontawesome-pro/css/all.css'
-
 
 import './style/Apps.css';
 import './style/General.css';
