@@ -108,19 +108,19 @@ class MenuController extends Controller
 
     public function changeOrder($oldSec, $oldMen, $oldId, $newSec, $newMen, $newId, $containerIsEmpty)
     {
-        $oldIds = [$oldSec, $oldMen, $oldId + 1];
+        $oldIds = [$oldSec, $oldMen, $oldId];
 
         if ($oldMen == "null")
-            $oldIds = [$oldSec, $oldId + 1, "0"];
+            $oldIds = [$oldSec, $oldId, "0"];
         if ($oldSec == "null")
             $oldIds = [$oldId + 1, "0", "0"];
 
-        $newIds = [$newSec, $newMen, $newId + 1];
+        $newIds = [$newSec, $newMen, $newId];
 
         if ($newIds == "null")
-            $newIds = [$newSec, $newId + 1, "0"];
+            $newIds = [$newSec, $newId, "0"];
         if ($newIds == "null")
-            $newIds = [$newId + 1, "0", "0"];
+            $newIds = [$newId, "0", "0"];
 
 
         if ($containerIsEmpty != "0") {
