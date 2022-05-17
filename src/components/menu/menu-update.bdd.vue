@@ -74,6 +74,7 @@
                     group="submenu"
                     handle=".handlesub"
                     @end="UpdateOrder"
+                    :move="OldUpdateOrder"
                     :sectionid="menu.sectionid"
                     :menuid="menu.menuid"
                   >
@@ -215,8 +216,18 @@ export default {
     UpdateBackground() {
       this.$store.commit('setMenuUpdating', true)
     },
+    OldUpdateOrder: function (event) {
+      console.log(event.relatedContext.component.$attrs.sectionid)
+      console.log(event.relatedContext.component.$attrs.menuid)
+      console.log(event.dragged.getAttribute("position"))
+      console.log(event.related.getAttribute("position"))
+    },
     UpdateOrder: function (event) {
       console.log(event)
+      console.log(event.from.__vue__.$attrs.sectionid)
+      console.log(event.from.__vue__.$attrs.menuid)
+      console.log(event.to.__vue__.$attrs.sectionid)
+      console.log(event.to.__vue__.$attrs.menuid)
       // if (event.relatedContext.component.$attrs.menuid != null) {
       //   this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
       // }
