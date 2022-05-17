@@ -18,7 +18,7 @@
             draggable=".table-section"
             group="section"
             handle=".handlesec"
-            :move="UpdateOrder"
+            @end="UpdateOrder"
           >
             <div
               class="table-section"
@@ -47,7 +47,7 @@
                 draggable=".table-menu"
                 group="menu"
                 handle=".handlemen"
-                :move="UpdateOrder"
+                @end="UpdateOrder"
                 :sectionid="section.sectionid"
               >
                 <div
@@ -73,7 +73,7 @@
                     draggable=".table-submenu-content"
                     group="submenu"
                     handle=".handlesub"
-                    :move="UpdateOrder"
+                    @end="UpdateOrder"
                     :sectionid="menu.sectionid"
                     :menuid="menu.menuid"
                   >
@@ -217,17 +217,17 @@ export default {
     },
     UpdateOrder: function (event) {
       console.log(event)
-      if (event.relatedContext.component.$attrs.menuid != null) {
-        this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
-      }
-      else {
-        if (event.relatedContext.component.$attrs.sectionid != null) {
-          this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, null)
-        }
-        else {
-          this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), null, null)
-        }
-      }
+      // if (event.relatedContext.component.$attrs.menuid != null) {
+      //   this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
+      // }
+      // else {
+      //   if (event.relatedContext.component.$attrs.sectionid != null) {
+      //     this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, null)
+      //   }
+      //   else {
+      //     this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), null, null)
+      //   }
+      // }
       this.$forceUpdate()
     },
     DeleteVerification(menu) {
