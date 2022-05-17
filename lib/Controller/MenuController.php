@@ -111,16 +111,16 @@ class MenuController extends Controller
         $oldIds = [$oldSec, $oldMen, $oldId + 1];
 
         if ($oldMen == "null")
-            $oldIds = [$oldSec, $oldId, "0"];
+            $oldIds = [$oldSec, $oldId + 1, "0"];
         if ($oldSec == "null")
-            $oldIds = [$oldId, "0", "0"];
+            $oldIds = [$oldId + 1, "0", "0"];
 
         $newIds = [$newSec, $newMen, $newId + 1];
 
         if ($newIds == "null")
-            $newIds = [$newSec, $newId, "0"];
+            $newIds = [$newSec, $newId + 1, "0"];
         if ($newIds == "null")
-            $newIds = [$newId, "0", "0"];
+            $newIds = [$newId + 1, "0", "0"];
 
 
         if ($containerIsEmpty != "0") {
