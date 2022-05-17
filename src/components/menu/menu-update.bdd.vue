@@ -228,7 +228,7 @@ export default {
         event.to.__vue__.$attrs.sectionid,
         event.to.__vue__.$attrs.menuid,
         event.newIndex,
-        (event.to.childElementCount - 2))
+        (event.to.childElementCount - 1))
       this.$forceUpdate()
     },
     DeleteVerification(menu) {
