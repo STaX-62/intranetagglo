@@ -108,14 +108,14 @@ class MenuController extends Controller
 
     public function changeOrder(string $oldSec, string $oldMen, string  $oldId, string $newSec, string $newMen, string $newId, string $containerIsEmpty)
     {
-        $oldIds = [$oldSec, $oldMen, $oldId];
+        $oldIds = [$oldSec, $oldMen, $oldId + 1];
 
         if ($oldMen == "null")
             $oldIds = [$oldSec, $oldId, "0"];
         if ($oldSec == "null")
             $oldIds = [$oldId, "0", "0"];
 
-        $newIds = [$newSec, $newMen, $newId];
+        $newIds = [$newSec, $newMen, $newId + 1];
 
         if ($newIds == "null")
             $newIds = [$newSec, $newId, "0"];
@@ -165,7 +165,7 @@ class MenuController extends Controller
         }
 
 
-        return $this->service->findAll();
+        return [$this->service->findAll(),];
     }
 
     public function destroy(int $id)
