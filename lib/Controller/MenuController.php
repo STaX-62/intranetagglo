@@ -106,26 +106,37 @@ class MenuController extends Controller
         });
     }
 
-    public function changeOrder(string $actualPosition, string $newPosition, $sectionpos, $menupos)
+    public function changeOrder(string $oldSec, string $oldMen, string  $oldId, string $newSec, string $newMen, string $newId, string $containerIsEmpty)
     {
-        $oldIds = explode('-', $actualPosition);
+        $oldIds = [$oldSec, $oldMen, $oldId];
+
+        if ($oldMen == "null")
+            $oldIds = [$oldSec, $oldId, "0"];
+        if ($oldSec == "null")
+            $oldIds = [$oldId, "0", "0"];
+
+        $newIds = [$newSec, $newMen, $newId];
+
+        if ($newIds == "null")
+            $newIds = [$newSec, $newId, "0"];
+        if ($newIds == "null")
+            $newIds = [$newId, "0", "0"];
 
 
-        if ($newPosition != "null") {
-            $newIds = explode('-', $newPosition);
+        if ($containerIsEmpty != "0") {
             $newMenuQB = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
         } else {
-            if ($sectionpos != "null") {
-                if ($menupos != "null") {
+            if ($newSec != "null") {
+                if ($newMen != "null") {
                     $newMenuQB = $this->service->findByPosition(
-                        $sectionpos,
-                        $menupos,
-                        $this->service->NewIdSubmenu(intval($sectionpos), intval($menupos))
+                        $newSec,
+                        $newMen,
+                        $this->service->NewIdSubmenu(intval($newSec), intval($newMen))
                     );
                 } else {
                     $newMenuQB = $this->service->findByPosition(
-                        $sectionpos,
-                        $this->service->NewIdMenu(intval($sectionpos)),
+                        $newSec,
+                        $this->service->NewIdMenu(intval($newSec)),
                         0
                     );
                 }
@@ -134,12 +145,12 @@ class MenuController extends Controller
 
         $oldMenuQB = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
 
-        if ($newPosition == "null") {
+        if ($containerIsEmpty == "null") {
             foreach ($oldMenuQB as $menu) {
-                if ($menupos == "null") {
-                    $this->service->updateOrder($menu->getId(), $sectionpos, $this->service->NewIdMenu(intval($sectionpos)), 0);
+                if ($newMen == "null") {
+                    $this->service->updateOrder($menu->getId(), $newSec, $this->service->NewIdMenu(intval($newSec)), 0);
                 } else {
-                    $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $this->service->NewIdSubmenu(intval($sectionpos), intval($menupos)));
+                    $this->service->updateOrder($menu->getId(), $newSec, $newMen, $this->service->NewIdSubmenu(intval($newSec), intval($newMen)));
                 }
             }
         } else {
@@ -147,7 +158,7 @@ class MenuController extends Controller
                 $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
             }
         }
-        if ($newPosition != "null") {
+        if ($containerIsEmpty != "null") {
             foreach ($newMenuQB as $menu) {
                 $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
             }

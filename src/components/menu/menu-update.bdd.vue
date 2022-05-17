@@ -74,7 +74,6 @@
                     group="submenu"
                     handle=".handlesub"
                     @end="UpdateOrder"
-                    :move="OldUpdateOrder"
                     :sectionid="menu.sectionid"
                     :menuid="menu.menuid"
                   >
@@ -216,29 +215,20 @@ export default {
     UpdateBackground() {
       this.$store.commit('setMenuUpdating', true)
     },
-    OldUpdateOrder: function (event) {
-      console.log(event.relatedContext.component.$attrs.sectionid)
-      console.log(event.relatedContext.component.$attrs.menuid)
-      console.log(event.dragged.getAttribute("position"))
-      console.log(event.related.getAttribute("position"))
-    },
     UpdateOrder: function (event) {
       console.log(event)
       console.log(event.from.__vue__.$attrs.sectionid)
       console.log(event.from.__vue__.$attrs.menuid)
       console.log(event.to.__vue__.$attrs.sectionid)
       console.log(event.to.__vue__.$attrs.menuid)
-      // if (event.relatedContext.component.$attrs.menuid != null) {
-      //   this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
-      // }
-      // else {
-      //   if (event.relatedContext.component.$attrs.sectionid != null) {
-      //     this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, null)
-      //   }
-      //   else {
-      //     this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), null, null)
-      //   }
-      // }
+      this.changeOrder(
+        event.from.__vue__.$attrs.sectionid,
+        event.from.__vue__.$attrs.menuid,
+        event.oldIndex,
+        event.to.__vue__.$attrs.sectionid,
+        event.to.__vue__.$attrs.menuid,
+        event.newIndex,
+        (event.to.childElementCount - 2))
       this.$forceUpdate()
     },
     DeleteVerification(menu) {
@@ -379,13 +369,16 @@ export default {
         console.error(e)
       }
     },
-    async changeOrder(actualPosition, newPosition, sectionpos, menupos) {
+    async changeOrder(oldSec, oldMen, oldId, newSec, newMen, newId, containerIsEmpty) {
       try {
         let data = new FormData();
-        data.append('actualPosition', actualPosition);
-        data.append('newPosition', newPosition);
-        data.append('sectionpos', sectionpos);
-        data.append('menupos', menupos);
+        data.append('oldSec', oldSec);
+        data.append('oldMen', oldMen);
+        data.append('oldId', oldId);
+        data.append('newSec', newSec);
+        data.append('newMen', newMen);
+        data.append('newId', newId);
+        data.append('containerIsEmpty', containerIsEmpty);
         await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then((response) => {
           this.menuInBDD = response.data;
           this.$forceUpdate()
