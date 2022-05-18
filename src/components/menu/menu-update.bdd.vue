@@ -24,7 +24,7 @@
               class="table-section"
               v-for="(section,Sindex) in MenuToDisplay"
               v-bind:key="section.id"
-              v-bind:position="section.sectionid"
+              v-bind:position="section.sectionid+'-0-0'"
             >
               <div class="table-block" type="text">
                 {{section.title}}
@@ -54,7 +54,7 @@
                   class="table-menu"
                   v-for="(menu,Mindex) in MenuToDisplay[Sindex].childs"
                   v-bind:key="menu.id"
-                  v-bind:position="menu.menuid"
+                  v-bind:position="menu.sectionid+'-'+ menu.menuid + '-0'"
                 >
                   <div class="table-block" type="text">
                     <div>{{menu.title}}</div>
@@ -81,7 +81,7 @@
                       class="table-submenu-content"
                       v-for="submenu in MenuToDisplay[Sindex].childs[Mindex].childs"
                       v-bind:key="submenu.id"
-                      v-bind:position="submenu.submenuid"
+                      v-bind:position="submenu.sectionid+'-'+ submenu.menuid+ '-'+ submenu.submenuid"
                     >
                       <div class="table-block" type="text">
                         <div>{{submenu.title}}</div>
@@ -216,15 +216,14 @@ export default {
       this.$store.commit('setMenuUpdating', true)
     },
     UpdateOrder: function (event) {
-      console.log(event)
-      // this.changeOrder(
-      //   event.from.__vue__.$attrs.sectionid,
-      //   event.from.__vue__.$attrs.menuid,
-      //   event.oldIndex,
-      //   event.to.__vue__.$attrs.sectionid,
-      //   event.to.__vue__.$attrs.menuid,
-      //   event.newIndex,
-      //   (event.to.childElementCount - 1))
+      this.changeOrder(
+        event.from.__vue__.$attrs.sectionid,
+        event.from.__vue__.$attrs.menuid,
+        event.oldIndex,
+        event.to.__vue__.$attrs.sectionid,
+        event.to.__vue__.$attrs.menuid,
+        event.newIndex,
+        (event.to.childElementCount - 1))
       this.$forceUpdate()
     },
     DeleteVerification(menu) {
