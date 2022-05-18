@@ -135,6 +135,7 @@ class MenuController extends Controller
 
         if ($newPosition != "null" && $sectionpos != "null" && $menupos != "null") {
             if ($newIds[0] != $oldIds[0] || $newIds[1] != $oldIds[1]) {
+
                 foreach ($oldMenuQB as $menu) {
                     $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $this->service->NewIdSubmenu(intval($newIds[0]), intval($newIds[1])));
                 }
@@ -182,7 +183,7 @@ class MenuController extends Controller
             }
         }
 
-        return $this->service->findAll();
+        return [$this->service->findAll(), $oldMenuQB, $newMenuQB];
     }
 
     public function destroy(int $id)
