@@ -216,6 +216,11 @@ export default {
       this.$store.commit('setMenuUpdating', true)
     },
     UpdateOrder: function (event) {
+      console.log(event)
+      console.log(event.from.__vue__.$attrs.sectionid)
+      console.log(event.from.__vue__.$attrs.menuid)
+      console.log(event.to.__vue__.$attrs.sectionid)
+      console.log(event.to.__vue__.$attrs.menuid)
       this.changeOrder(
         event.from.__vue__.$attrs.sectionid,
         event.from.__vue__.$attrs.menuid,
@@ -367,11 +372,11 @@ export default {
     async changeOrder(oldSec, oldMen, oldId, newSec, newMen, newId, containerIsEmpty) {
       try {
         let data = new FormData();
-        data.append('oldSec', typeof oldSec == "undefined" ? null : oldSec);
-        data.append('oldMen', typeof oldMen == "undefined" ? null : oldMen);
+        data.append('oldSec', oldSec);
+        data.append('oldMen', oldMen);
         data.append('oldId', oldId);
-        data.append('newSec', typeof newSec == "undefined" ? null : newSec);
-        data.append('newMen', typeof newMen == "undefined" ? null : newMen);
+        data.append('newSec', newSec);
+        data.append('newMen', newMen);
         data.append('newId', newId);
         data.append('containerIsEmpty', containerIsEmpty);
         await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then((response) => {
