@@ -18,6 +18,7 @@
             draggable=".table-section"
             group="section"
             handle=".handlesec"
+            :move="newposition = $event"
             @end="UpdateOrder"
           >
             <div
@@ -47,6 +48,7 @@
                 draggable=".table-menu"
                 group="menu"
                 handle=".handlemen"
+                :move="newposition = $event"
                 @end="UpdateOrder"
                 :sectionid="section.sectionid"
               >
@@ -73,6 +75,7 @@
                     draggable=".table-submenu-content"
                     group="submenu"
                     handle=".handlesub"
+                    :move="newposition = $event"
                     @end="UpdateOrder"
                     :sectionid="menu.sectionid"
                     :menuid="menu.menuid"
@@ -215,19 +218,19 @@ export default {
     UpdateBackground() {
       this.$store.commit('setMenuUpdating', true)
     },
-    UpdateOrder: function (event) {
-      console.log(event)
-      // if (event.relatedContext.component.$attrs.menuid != null) {
-      //   this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
-      // }
-      // else {
-      //   if (event.relatedContext.component.$attrs.sectionid != null) {
-      //     this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, null)
-      //   }
-      //   else {
-      //     this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), null, null)
-      //   }
-      // }
+    UpdateOrder: function () {
+      var event = this.newposition;
+      if (event.relatedContext.component.$attrs.menuid != null) {
+        this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)
+      }
+      else {
+        if (event.relatedContext.component.$attrs.sectionid != null) {
+          this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, null)
+        }
+        else {
+          this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), null, null)
+        }
+      }
       this.$forceUpdate()
     },
     DeleteVerification(menu) {
@@ -399,6 +402,7 @@ export default {
         groups: "",
         haschild: false
       },
+      newposition: {},
       redirectToFile: false
     }
   },
