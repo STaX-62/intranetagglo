@@ -110,7 +110,6 @@ class MenuController extends Controller
     {
         $oldIds = explode('-', $actualPosition);
 
-
         if ($newPosition != "null") {
             $newIds = explode('-', $newPosition);
             $newMenuQB = $this->service->findByPosition($newIds[0], $newIds[1], $newIds[2]);
@@ -134,6 +133,36 @@ class MenuController extends Controller
 
         $oldMenuQB = $this->service->findByPosition($oldIds[0], $oldIds[1], $oldIds[2]);
 
+        if ($newPosition != "null" && $sectionpos != "null" && $menupos != "null") {
+            if ($newIds[0] != $oldIds[0] || $newIds[1] != $oldIds[1]) {
+                foreach ($oldMenuQB as $menu) {
+                    $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $this->service->NewIdSubmenu(intval($newIds[0]), intval($newIds[1])));
+                }
+            } else {
+                foreach ($oldMenuQB as $menu) {
+                    $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
+                }
+            }
+        }
+
+        if ($newPosition != "null" && $sectionpos != "null" && $menupos == "null") {
+            if ($newIds[0] != $oldIds[0]) {
+                foreach ($oldMenuQB as $menu) {
+                    $this->service->updateOrder($menu->getId(), $newIds[0], $this->service->NewIdMenu(intval($newIds[1])), $newIds[2]);
+                }
+            } else {
+                foreach ($oldMenuQB as $menu) {
+                    $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
+                }
+            }
+        }
+
+        if ($newPosition != "null" && $sectionpos == "null" && $menupos == "null") {
+            foreach ($oldMenuQB as $menu) {
+                $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
+            }
+        }
+
         if ($newPosition == "null") {
             foreach ($oldMenuQB as $menu) {
                 if ($menupos == "null") {
@@ -143,16 +172,10 @@ class MenuController extends Controller
                 }
             }
         } else {
-            foreach ($oldMenuQB as $menu) {
-                $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
-            }
-        }
-        if ($newPosition != "null") {
             foreach ($newMenuQB as $menu) {
                 $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
             }
         }
-
 
         return $this->service->findAll();
     }
