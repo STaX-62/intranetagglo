@@ -139,6 +139,9 @@ class MenuController extends Controller
                     $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $this->service->NewIdSubmenu(intval($newIds[0]), intval($newIds[1])));
                 }
             } else {
+                foreach ($newMenuQB as $menu) {
+                    $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
+                }
                 foreach ($oldMenuQB as $menu) {
                     $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
                 }
@@ -151,6 +154,9 @@ class MenuController extends Controller
                     $this->service->updateOrder($menu->getId(), $newIds[0], $this->service->NewIdMenu(intval($newIds[1])), $newIds[2]);
                 }
             } else {
+                foreach ($newMenuQB as $menu) {
+                    $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
+                }
                 foreach ($oldMenuQB as $menu) {
                     $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
                 }
@@ -161,6 +167,9 @@ class MenuController extends Controller
             foreach ($oldMenuQB as $menu) {
                 $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
             }
+            foreach ($newMenuQB as $menu) {
+                $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
+            }
         }
 
         if ($newPosition == "null") {
@@ -170,10 +179,6 @@ class MenuController extends Controller
                 } else {
                     $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $this->service->NewIdSubmenu(intval($sectionpos), intval($menupos)));
                 }
-            }
-        } else {
-            foreach ($newMenuQB as $menu) {
-                $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
             }
         }
 
