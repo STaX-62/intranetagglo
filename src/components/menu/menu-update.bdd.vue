@@ -217,15 +217,13 @@ export default {
     },
     UpdateOrder: function (event) {
       console.log(event)
-      console.log(event.item.getAttribute('position'))
-      console.log(event.from.__vue__.children[event.oldIndex].getAttribute('position'))
       // this.changeOrder(
       //   event.from.__vue__.$attrs.sectionid,
       //   event.from.__vue__.$attrs.menuid,
-      //   event.from.__vue__.children[event.oldIndex].getAttribute('position'),
+      //   event.oldIndex,
       //   event.to.__vue__.$attrs.sectionid,
       //   event.to.__vue__.$attrs.menuid,
-      //   event.item.getAttribute('position'),
+      //   event.newIndex,
       //   (event.to.childElementCount - 1))
       this.$forceUpdate()
     },
