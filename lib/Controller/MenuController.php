@@ -106,7 +106,7 @@ class MenuController extends Controller
         });
     }
 
-    public function changeOrder($oldSec, $oldMen, $oldId, $newSec, $newMen, $newId, $containerIsEmpty)
+    public function changeOrder(string $oldSec, string $oldMen, string  $oldId, string $newSec, string $newMen, string $newId, string $containerIsEmpty)
     {
         $oldIds = [$oldSec, $oldMen, $oldId + 1];
 
@@ -165,7 +165,7 @@ class MenuController extends Controller
         }
 
 
-        return $this->service->findAll();
+        return [$this->service->findAll(),];
     }
 
     public function destroy(int $id)
