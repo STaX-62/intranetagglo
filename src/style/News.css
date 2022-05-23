@@ -704,7 +704,7 @@
     width: calc(95% - 270px);
 }
 
-@media (max-width: 726px) {
+@media (max-width: 780px) {
     #news-frame {
         display: block;
     }
@@ -734,6 +734,26 @@
 
     #Home:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-wrapper {
         width: auto;
+    }
+
+    .news-textbox[focus="right"] .news-textbox,
+    .news-textbox[focus="center"] .news-textbox,
+    .news-textbox[focus="left"] .news-textbox {
+        display: block;
+    }
+
+    .news-textbox[focus="right"] .news-textbox-block,
+    .news-textbox[focus="center"] .news-textbox-block,
+    .news-textbox[focus="left"] .news-textbox-block {
+        height: 50%;
+        padding: 0px 5px 0px 15px;
+
+    }
+
+    .news-textbox[focus="right"] .news-img-container,
+    .news-textbox[focus="center"] .news-img-container,
+    .news-textbox[focus="left"] .news-img-container {
+        height: calc(50% - 40px);
     }
 }
 
