@@ -87,7 +87,7 @@ export default {
       sectionArray.forEach((section) => {
         var menuArray = this.menuInBDD[1].filter(menu => menu.sectionid == section.sectionid);
         menuArray.forEach((menu) => {
-          menu.childs = this.menuInBDD[2].filter(submenu => submenu.menuid == menu.menuid);
+          menu.childs = this.menuInBDD[2].filter(submenu => submenu.menuid == menu.menuid && submenu.sectionid == menu.sectionid);
         })
         section.childs = menuArray;
       })
