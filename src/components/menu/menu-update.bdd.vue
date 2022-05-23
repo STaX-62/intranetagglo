@@ -211,6 +211,7 @@ export default {
         })
         section.childs = menuArray;
       })
+      console.log(sectionArray)
       return sectionArray
     },
   },
