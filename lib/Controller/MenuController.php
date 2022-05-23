@@ -183,7 +183,7 @@ class MenuController extends Controller
                     if ($newmenupos == 0) {
                         $newmenupos = $this->service->NewIdMenu(intval($sectionpos));
                     }
-                    $this->service->updateOrder($menu->getId(), $sectionpos, $newmenupos , 0);
+                    $this->service->updateOrder($menu->getId(), $sectionpos, $newmenupos, 0);
                 } else {
                     $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $this->service->NewIdSubmenu(intval($sectionpos), intval($menupos)));
                 }
@@ -197,8 +197,12 @@ class MenuController extends Controller
     {
         return $this->handleNotFound(function () use ($id) {
             $rq = $this->service->find($id);
-            unlink(substr($rq->getLink(), 11));
-            $this->service->delete($id);
+            $Menutodelete = $this->service->findByPosition($rq->getSectionid(), $rq->getMenuid(), $rq->getSubmenuid());
+            foreach ($Menutodelete as $menu) {
+                if (str_starts_with($menu->getLink(), '/nextcloud'))
+                    unlink(substr($menu->getLink(), 11));
+                $this->service->delete($menu->getId());
+            }
             return $this->service->findAll();
         });
     }
