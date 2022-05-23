@@ -142,10 +142,10 @@ class MenuController extends Controller
                 }
             } else {
                 foreach ($newMenuQB as $menu) {
-                    $updatedorder =  $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
+                    $updatedorder =  $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
                 }
                 foreach ($oldMenuQB as $menu) {
-                    $updatedorder2 = $this->service->updateOrder($menu->getId(), $newIds[0], $newIds[1], $newIds[2]);
+                    $updatedorder2 = $this->service->updateOrder($menu->getId(), $oldIds[0], $oldIds[1], $oldIds[2]);
                 }
             }
         }
