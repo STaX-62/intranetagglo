@@ -146,6 +146,7 @@ class MenuMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->addOrderBy('q.menuid', 'DESC')
             ->where("q.sectionid = :section")
+            ->andWhere("q.submenuid = 0")
             ->setParameter('section', $section)
             ->setMaxResults(1);
 
