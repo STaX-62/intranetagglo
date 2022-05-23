@@ -101,8 +101,12 @@ class MenuService
 		try {
 			$menu = $this->mapper->find($id);
 			$menu->setSectionid($sectionid);
-			$menu->setMenuid($menuid);
-			$menu->setSubmenuid($submenuid);
+			if ($menuid != 0) {
+				$menu->setMenuid($menuid);
+			}
+			if ($submenuid != 0) {
+				$menu->setSubmenuid($submenuid);
+			}
 			return $this->mapper->update($menu);
 		} catch (Exception $e) {
 			$this->handleException($e);
