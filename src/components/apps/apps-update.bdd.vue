@@ -118,6 +118,14 @@ export default {
       .then(response => (this.apps = response.data))
   },
   methods: {
+    AddToast(title, subject, variant) {
+      this.$bvToast.toast(subject, {
+        title: title,
+        variant: variant,
+        autoHideDelay: 10000,
+        appendToast: false
+      })
+    },
     Save() {
       if (this.apptoupdate.id == null) {
         this.apptoupdate.groups = this.apptoupdate.groups.join(';')
@@ -149,7 +157,7 @@ export default {
         .then(value => {
           if (value) {
             this.apps.splice(index, 1)
-            this.deleteApps(app.id)
+            this.deleteApps(app.id, app.title)
           }
         })
     },
@@ -173,36 +181,33 @@ export default {
       this.updateapp = !this.updateapp;
     },
     async createApps(apps) {
-      try {
-        var url = `apps/intranetagglo/apps`
-        const response = await axios.post(generateUrl(url), apps, { type: 'application/json' })
-        this.LastModifiedID = response.data.id
-        this.apps.find(x => x.id === null).id = response.data.id
-      } catch (e) {
-        console.error(e)
-      }
-      this.$store.commit('setAppsUpdating', true)
+      var url = `apps/intranetagglo/apps`
+      await axios.post(generateUrl(url), apps, { type: 'application/json' }).then(() => {
+        // this.apps.find(x => x.id === null).id = response.data.id
+        this.AddToast('création d\'application', `L'application '${apps.title.length > 60 ? apps.title.substring(0, 60) + '...' : apps.title}' a bien été créée`, 'success')
+        this.$store.commit('setAppsUpdating', true)
+      }).catch((error) => {
+        this.AddToast('Erreur durant la création de l\'application', error.message, 'danger')
+      })
     },
     async updateApps(apps) {
-      try {
-        var url = `apps/intranetagglo/apps/${apps.id}`
-        const response = await axios.post(generateUrl(url), apps, { type: 'application/json' })
-        this.LastModifiedID = response.data.id
-      } catch (e) {
-        console.error(e)
-      }
-      this.$store.commit('setAppsUpdating', true)
-    },
-    async deleteApps(id) {
+      var url = `apps/intranetagglo/apps/${apps.id}`
+      await axios.post(generateUrl(url), apps, { type: 'application/json' }).then(() => {
+        this.AddToast('Modification d\'application', `L'application '${apps.title.length > 60 ? apps.title.substring(0, 60) + '...' : apps.title}' a bien été modifiée`, 'success')
+        this.$store.commit('setAppsUpdating', true)
+      }).catch((error) => {
+        this.AddToast('Erreur durant la modification de l\'application', error.message, 'danger')
+      })
 
-      try {
-        var url = `apps/intranetagglo/apps/${id}`
-        const response = await axios.delete(generateUrl(url, { id }))
-        this.LastModifiedID = response.data.id
-      } catch (e) {
-        console.error(e)
-      }
-      this.$store.commit('setAppsUpdating', true)
+    },
+    async deleteApps(id, title) {
+      var url = `apps/intranetagglo/apps/${id}`
+      await axios.delete(generateUrl(url, { id })).then(() => {
+        this.AddToast('Suppression d\'application', `L'application '${title.length > 60 ? title.substring(0, 60) + '...' : title}' a bien été supprimée`, 'success')
+        this.$store.commit('setAppsUpdating', true)
+      }).catch((error) => {
+        this.AddToast('Erreur durant la suppression de l\'application', error.message, 'danger')
+      })
     },
   },
   data: function () {

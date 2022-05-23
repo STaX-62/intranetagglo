@@ -139,29 +139,37 @@ export default {
       }
     },
     async createNews(news) {
-      try {
-        let data = new FormData();
-        data.append('title', news.title);
-        data.append('subtitle', news.subtitle);
-        data.append('text', news.text);
-        if (news.photo != null) {
-          data.append('photo', news.photo, news.photo.name);
-        }
-        data.append('category', news.category);
-        data.append('groups', news.groups);
-
-        axios.post(generateUrl(`apps/intranetagglo/news`), data, {
-          headers: {
-            'accept': 'application/json',
-            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-          }
-        }).then(() => {
-          this.$store.commit('setNewsUpdating', true)
-        })
-        // this.LastModifiedID = response.data.id
-      } catch (e) {
-        console.error(e)
+      let data = new FormData();
+      data.append('title', news.title);
+      data.append('subtitle', news.subtitle);
+      data.append('text', news.text);
+      if (news.photo != null) {
+        data.append('photo', news.photo, news.photo.name);
       }
+      data.append('category', news.category);
+      data.append('groups', news.groups);
+
+      axios.post(generateUrl(`apps/intranetagglo/news`), data, {
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+        }
+      }).then(() => {
+        this.$store.commit('setNewsUpdating', true)
+        this.$bvToast.toast(`L'actualité '${news.title.length > 60 ? news.title.substring(0, 60) + '...' : news.title}' a été créée`, {
+          title: 'Création de l\'actualité',
+          variant: 'success',
+          autoHideDelay: 10000,
+          appendToast: false
+        })
+      }).catch((error) => {
+        this.$bvToast.toast(error.message, {
+          title: 'Erreur durant la création de l\'actualité',
+          variant: 'danger',
+          autoHideDelay: 10000,
+          appendToast: false
+        })
+      })
     },
     toggleModal() {
       this.$refs['modal'].toggle('#toggle-btn')

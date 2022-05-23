@@ -32,7 +32,9 @@ body {
     display: block;
 }
 
-
+.b-toaster.b-toaster-top-right .b-toaster-slot {
+    top: calc(0.5rem + 50px) !important;
+}
 
 #Home {
     height: calc(100vh - 50px);

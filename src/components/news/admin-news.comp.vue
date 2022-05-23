@@ -22,7 +22,12 @@
       </div>
       <div class="news-tagbox">
         <span class="news-tag" @click="search = '#' + news.category">{{ news.category }}</span>
-        <button type="button" class="news-tagbox-button" @click="SetPinned(news)" v-if="news.visible == 1">
+        <button
+          type="button"
+          class="news-tagbox-button"
+          @click="SetPinned(news)"
+          v-if="news.visible == 1"
+        >
           <b-icon
             class="sidebar-item-icon"
             variant="dark"
@@ -102,6 +107,14 @@ export default {
     AdminOptions() {
       this.adminopt = !this.adminopt
     },
+    AddToast(title, subject, variant) {
+      this.$bvToast.toast(subject, {
+        title: title,
+        variant: variant,
+        autoHideDelay: 10000,
+        appendToast: false
+      })
+    },
     OpenNews() {
       if (this.$store.state.newsfocus == '') {
         this.$store.commit('updateNewsFocus', this.arrayid)
@@ -166,38 +179,35 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.deleteNews(news.id)
+            this.deleteNews(news.id, news.title)
           }
         })
     },
-    async changePinned(id) {
-      try {
-        var url = `apps/intranetagglo/news/pin/${id}`
-        const response = await axios.post(generateUrl(url), { 'id': id }, { type: 'application/json' })
-        this.LastModifiedID = response.data.id
-      } catch (e) {
-        console.error(e)
-      }
+    async changePinned(id, title) {
+      var url = `apps/intranetagglo/news/pin/${id}`
+      await axios.post(generateUrl(url), { 'id': id }, { type: 'application/json' }).then(() => {
+        this.AddToast('Actualité éplinglée', `L'actualité '${title.length > 60 ? title.substring(0, 60) + '...' : title}' est désormais épinglée`, 'success')
+      }).catch((error) => {
+        this.AddToast('Erreur durant l\'épinglage de l\'actualité', error.message, 'danger')
+      })
       this.$store.commit('setNewsUpdating', true)
     },
-    async changeVisNews(id, visible) {
-      try {
-        var url = `apps/intranetagglo/news/pub/${id}`
-        const response = await axios.post(generateUrl(url), { 'id': id, 'visible': visible }, { type: 'application/json' })
-        this.LastModifiedID = response.data.id
-      } catch (e) {
-        console.error(e)
-      }
+    async changeVisNews(id, visible, title) {
+      var url = `apps/intranetagglo/news/pub/${id}`
+      await axios.post(generateUrl(url), { 'id': id, 'visible': visible }, { type: 'application/json' }).then(() => {
+        this.AddToast('Changement de visibilité de l\'actualité', `L'actualité '${title.length > 60 ? title.substring(0, 60) + '...' : title}' est désormais ${visible ? 'visible' : 'cachée'}`, 'success')
+      }).catch((error) => {
+        this.AddToast('Erreur durant le changement de visibilité de l\'actualité', error.message, 'danger')
+      })
       this.$store.commit('setNewsUpdating', true)
     },
-    async deleteNews(id) {
-      try {
-        var url = `apps/intranetagglo/news/${id}`
-        const response = await axios.delete(generateUrl(url, { id }))
-        this.LastModifiedID = response.data.id
-      } catch (e) {
-        console.error(e)
-      }
+    async deleteNews(id, title) {
+      var url = `apps/intranetagglo/news/${id}`
+      await axios.delete(generateUrl(url, { id })).then(() => {
+        this.AddToast('Suppression de news', `L'actualité '${title.length > 60 ? title.substring(0, 60) + '...' : title}' a bien été supprimée`, 'success')
+      }).catch((error) => {
+        this.AddToast('Erreur durant la suppression de l\'actualité', error.message, 'danger')
+      })
       this.$store.commit('setNewsUpdating', true)
     },
   },

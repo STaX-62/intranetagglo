@@ -100,13 +100,13 @@
 }
 
 .news-header.admin-view {
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .news-header {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     grid-area: Titre;
 }
 
