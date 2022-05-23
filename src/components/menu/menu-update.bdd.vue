@@ -218,6 +218,14 @@ export default {
     UpdateBackground() {
       this.$store.commit('setMenuUpdating', true)
     },
+    AddToast(title, subject, variant) {
+      this.$bvToast.toast(subject, {
+        title: title,
+        variant: variant,
+        autoHideDelay: 10000,
+        appendToast: false
+      })
+    },
     UpdateOrder() {
       var event = this.newposition;
       console.log([event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid])
@@ -254,7 +262,7 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.deleteMenu(menu.id)
+            this.deleteMenu(menu.id, menu.title)
           }
         })
         .catch(err => {
@@ -321,76 +329,71 @@ export default {
       })
     },
     async createMenu(menu) {
-      try {
-        let data = new FormData();
-        data.append('title', menu.title);
-        data.append('link', menu.link);
-        data.append('icon', menu.icon);
-        data.append('groups', menu.groups);
-        data.append('sectionid', menu.sectionid);
-        data.append('menuid', menu.menuid);
-        data.append('level', menu.level);
-        await axios.post(generateUrl(`apps/intranetagglo/menus`), data, {
-          headers: {
-            'accept': 'application/json',
-            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-          }
-        }).then((response) => {
-          this.menuInBDD = response.data;
-        })
-      } catch (e) {
-        console.error(e)
-      }
+      let data = new FormData();
+      data.append('title', menu.title);
+      data.append('link', menu.link);
+      data.append('icon', menu.icon);
+      data.append('groups', menu.groups);
+      data.append('sectionid', menu.sectionid);
+      data.append('menuid', menu.menuid);
+      data.append('level', menu.level);
+      await axios.post(generateUrl(`apps/intranetagglo/menus`), data, {
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+        }
+      }).then((response) => {
+        this.menuInBDD = response.data;
+        this.AddToast('Création de menu', `Le menu '${menu.title.length > 60 ? menu.title.substring(0, 60) + '...' : menu.title}' a bien été créé`, 'success')
+      }).catch((error) => {
+        this.AddToast('Erreur durant la création du menu', error.message, 'danger')
+      })
     },
     async updateMenu(menu, newfile) {
-      try {
-
-        let data = new FormData();
-        data.append('id', menu.id)
-        data.append('title', menu.title);
-        data.append('link', menu.link);
-        data.append('icon', menu.icon);
-        data.append('groups', menu.groups);
-        if (newfile != null && this.redirectToFile) {
-          data.append('file_upd', newfile, newfile.name);
+      let data = new FormData();
+      data.append('id', menu.id)
+      data.append('title', menu.title);
+      data.append('link', menu.link);
+      data.append('icon', menu.icon);
+      data.append('groups', menu.groups);
+      if (newfile != null && this.redirectToFile) {
+        data.append('file_upd', newfile, newfile.name);
+      }
+      await axios.post(generateUrl(`apps/intranetagglo/menus/${menu.id}`), data, {
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
         }
-        await axios.post(generateUrl(`apps/intranetagglo/menus/${menu.id}`), data, {
-          headers: {
-            'accept': 'application/json',
-            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-          }
-        }).then((response) => {
-          this.menuInBDD = response.data;
-        })
-      } catch (e) {
-        console.error(e)
-      }
+      }).then((response) => {
+        this.menuInBDD = response.data;
+        this.AddToast('Modification de menu', `Le menu '${menu.title.length > 60 ? menu.title.substring(0, 60) + '...' : menu.title}' a bien été modifié`, 'success')
+      }).catch((error) => {
+        this.AddToast('Erreur durant la modification du menu', error.message, 'danger')
+      })
     },
-    async deleteMenu(id) {
-      try {
-        var url = `apps/intranetagglo/menus/${id}`
-        await axios.delete(generateUrl(url, { id })).then((response) => {
-          this.menuInBDD = response.data;
-          this.$forceUpdate()
-        })
-      } catch (e) {
-        console.error(e)
-      }
+    async deleteMenu(id, title) {
+      var url = `apps/intranetagglo/menus/${id}`
+      await axios.delete(generateUrl(url, { id })).then((response) => {
+        this.menuInBDD = response.data;
+        this.AddToast('Suppression de menu', `Le menu '${title.length > 60 ? title.substring(0, 60) + '...' : title}' a bien été supprimé`, 'success')
+        this.$forceUpdate()
+      }).catch((error) => {
+        this.AddToast('Erreur durant la suppression du menu', error.message, 'danger')
+      })
     },
     async changeOrder(actualPosition, newPosition, sectionpos, menupos) {
-      try {
-        let data = new FormData();
-        data.append('actualPosition', actualPosition);
-        data.append('newPosition', newPosition);
-        data.append('sectionpos', sectionpos);
-        data.append('menupos', menupos);
-        await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then((response) => {
-          this.menuInBDD = response.data;
-          this.$forceUpdate()
-        })
-      } catch (e) {
-        console.error(e)
-      }
+      let data = new FormData();
+      data.append('actualPosition', actualPosition);
+      data.append('newPosition', newPosition);
+      data.append('sectionpos', sectionpos);
+      data.append('menupos', menupos);
+      await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then((response) => {
+        this.menuInBDD = response.data;
+        this.AddToast('Réorganisation des menus', `L'ordre a bien été modifié`, 'success')
+        this.$forceUpdate()
+      }).catch((error) => {
+        this.AddToast('Erreur durant la réorganisation des menus', error.message, 'danger')
+      })
     },
   },
   data: function () {

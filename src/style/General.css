@@ -227,6 +227,7 @@ body {
 }
 
 .Settings.hidden {
+    opacity: 0;
     transform: translateX(300px);
 }
 
@@ -380,6 +381,7 @@ input[type="checkbox"].checkbox+label::before {
     }
 
     .Settings.hidden {
+        opacity: 0;
         transform: translateY(-260px) translateX(0);
     }
 

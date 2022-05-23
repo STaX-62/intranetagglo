@@ -184,7 +184,7 @@ export default {
 
 <style scoped>
 .searchbar {
-  flex: 0 0 62.333%;
+  flex: 0 0 66%;
   border-radius: 10px !important;
   border: 2px solid var(--color-mode-4) !important;
   box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
