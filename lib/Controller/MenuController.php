@@ -173,9 +173,13 @@ class MenuController extends Controller
         }
 
         if ($newPosition == "null") {
+            $newmenupos = 0;
             foreach ($oldMenuQB as $menu) {
                 if ($menupos == "null") {
-                    $this->service->updateOrder($menu->getId(), $sectionpos, $this->service->NewIdMenu(intval($sectionpos)), 0);
+                    if ($newmenupos == 0) {
+                        $newmenupos = $this->service->NewIdMenu(intval($sectionpos));
+                    }
+                    $this->service->updateOrder($menu->getId(), $sectionpos, $newmenupos , 0);
                 } else {
                     $this->service->updateOrder($menu->getId(), $sectionpos, $menupos, $this->service->NewIdSubmenu(intval($sectionpos), intval($menupos)));
                 }
