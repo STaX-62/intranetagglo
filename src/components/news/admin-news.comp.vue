@@ -135,7 +135,7 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.changePinned(news.id)
+            this.changePinned(news.id, news.title)
           }
         })
     },
@@ -155,10 +155,10 @@ export default {
         .then(value => {
           if (value) {
             if (news.visible == 1) {
-              this.changeVisNews(news.id, 0)
+              this.changeVisNews(news.id, 0, news.title)
             }
             else {
-              this.changeVisNews(news.id, 1)
+              this.changeVisNews(news.id, 1, news.title)
             }
 
           }
