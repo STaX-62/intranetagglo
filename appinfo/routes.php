@@ -9,6 +9,11 @@ return [
             'verb' => 'GET'
         ],
         [
+            'name' => 'page#userIsAdmin',
+            'url' => '/isadmin',
+            'verb' => 'GET'
+        ],
+        [
             'name' => 'page#getLocation',
             'url' => '/location',
             'verb' => 'GET'
@@ -60,11 +65,6 @@ return [
         [
             'name' => 'news#index',
             'url' => '/news/{id}',
-            'verb' => 'POST'
-        ],
-        [
-            'name' => 'news#indexG',
-            'url' => '/newsG/{id}',
             'verb' => 'POST'
         ],
         [

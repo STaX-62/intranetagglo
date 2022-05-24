@@ -4,6 +4,10 @@
       <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
         <h2 class="news-header-title">Actualités</h2>
         <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
+        <button id="news-filtres">
+          <b-icon icon="filter"></b-icon>
+        </button>
+        <Filtres />
         <NewsAdd v-if="isAdmin" />
       </div>
       <div id="news-row" class="news-row" :focus="newfocus">
@@ -49,6 +53,7 @@ import NewsCompAdmin from './news/admin-news.comp'
 import NewsComp from './news/news.comp'
 import Apps from './Apps'
 import NewsAdd from './news/news-add.bdd'
+import Filtres from './news/news-filtres.comp.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 
@@ -61,19 +66,14 @@ export default {
     NewsCompAdmin,
     NewsComp,
     Apps,
-    NewsAdd
+    NewsAdd,
+    Filtres
   },
   watch: {
     updating: function (val) {
       if (val) {
-        var url = 'apps/intranetagglo/'
-        if (this.$store.state.usergroups.includes('admin')) {
-          url += `news/${this.currentPage - 1}`
-        }
-        else {
-          url += `newsG/${this.currentPage - 1}`
-        }
-        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search }, { type: 'application/json' })
+        var url = `apps/intranetagglo/news/${this.currentPage - 1}`
+        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter.join(';') }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
@@ -106,7 +106,7 @@ export default {
       return this.news
     },
     isAdmin() {
-      return this.$store.state.usergroups.includes('admin')
+      return this.$store.state.isAdmin
     },
     search: {
       get() {
@@ -119,6 +119,11 @@ export default {
         }, 250)
         this.$store.commit('updateSearch', value)
       }
+    },
+    categoryfilter: {
+      get() {
+        return this.$store.state.categoryfilter
+      },
     },
     currentPage: {
       get() {
@@ -153,26 +158,24 @@ export default {
   },
   mounted() {
     this.search = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-    axios.get(generateUrl(`apps/intranetagglo/user`))
+    axios.get(generateUrl(`apps/intranetagglo/isadmin`))
       .then(response => {
-        this.$store.commit('setUser', response.data)
-        var url = 'apps/intranetagglo/'
-        if (response.data[1].includes('admin')) {
-          url += `news/0`
+        console.log('isAdmin:', response.data)
+        this.$store.commit('setisAdmin', response.data)
+        if (response.data) {
           this.$store.dispatch("getGroupsOptions");
           this.$store.dispatch("getCategoryOptions", '');
         }
-        else {
-          url += `newsG/0`
-        }
-        axios.post(generateUrl(url), { 'id': 0, 'search': this.search }, { type: 'application/json' })
-          .then((response) => {
-            this.news = response.data[0];
-            this.rows = response.data[1];
-            this.$store.commit('setNewsUpdating', false)
-          })
       })
-
+    axios.get(generateUrl(`apps/intranetagglo/user`)).then(response => {
+      this.$store.commit('setUser', response.data)
+    })
+    var url = `apps/intranetagglo/news/${this.currentPage - 1}`
+    axios.post(generateUrl(url), { 'id': 0, 'search': this.search, 'categories': '' }, { type: 'application/json' })
+      .then((response) => {
+        this.news = response.data[0];
+        this.rows = response.data[1];
+      })
   },
   destroyed() {
     var target = document.getElementById('news-container');

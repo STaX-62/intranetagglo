@@ -117,6 +117,9 @@ export default {
     VueTrix
   },
   computed: {
+    categoryoptions() {
+      return this.$store.state.categoryoptions;
+    },
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.news.groups.indexOf(opt) === -1)
     },

@@ -53,35 +53,27 @@ class NewsService
 		return $this->mapper->getLastPinned();
 	}
 
-	public function findAll($firstresult, $search): array
+	public function findAll($firstresult, $search, $categories): array
 	{
 		$search = trim($search, " \n\r\t\v");
 
-		if (str_starts_with($search, '#')) {
-			if (is_numeric(substr($search, 1))) {
-				$qb = $this->mapper->findAll($firstresult, $search, '', substr($search, 1));
-			} else {
-				$qb = $this->mapper->findAll($firstresult, $search, substr($search, 1), '');
-			}
+		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
+			$qb = $this->mapper->findAll($firstresult, $search, '', substr($search, 1));
 		} else {
-			$qb = $this->mapper->findAll($firstresult, $search, '', '');
+			$qb = $this->mapper->findAll($firstresult, $search, $categories, '');
 		}
 
 		return $qb;
 	}
 
-	public function findByGroups(int $firstresult, array $groups, string $search): array
+	public function findByGroups(int $firstresult, array $groups, string $search, string $categories): array
 	{
 		$search = trim($search, " \n\r\t\v");
 
-		if (str_starts_with($search, '#')) {
-			if (is_numeric(substr($search, 1))) {
-				$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', substr($search, 1));
-			} else {
-				$qb = $this->mapper->findByGroups($firstresult, $groups, $search, substr($search, 1), '');
-			}
+		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
+			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', substr($search, 1));
 		} else {
-			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', '');
+			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, $categories, '');
 		}
 
 		return $qb;

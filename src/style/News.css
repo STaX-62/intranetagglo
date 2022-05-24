@@ -88,7 +88,7 @@
         7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%);
     font-size: 13px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 80%;
     font-weight: 600;
     transition: 0.2s;
     border: 2px solid var(--color-mode-4) !important;
@@ -784,9 +784,6 @@
 }
 
 @media (max-width: 1350px) {
-    .add-news-button {
-        font-size: 10px;
-    }
 
     .news-header-title {
         font-size: 1.5em;

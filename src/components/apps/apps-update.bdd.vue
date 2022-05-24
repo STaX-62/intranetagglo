@@ -113,7 +113,7 @@ export default {
     },
   },
   mounted() {
-    var url = `apps/intranetagglo${'/apps'}`
+    var url = `apps/intranetagglo/apps`
     axios.get(generateUrl(url))
       .then(response => (this.apps = response.data))
   },

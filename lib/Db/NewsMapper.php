@@ -67,7 +67,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAll($firstresult, string $search, string $category, string $searchid): array
+    public function findAll($firstresult, string $search, string $categories, string $searchid): array
     {
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
@@ -75,11 +75,12 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
-            ->orWhere('q.category = :category')
-            ->orWhere('q.id = :searchid')
+            ->orWhere('LOWER(q.text) LIKE LOWER(:search)');
+        foreach (explode(';', $categories) as $category) {
+            $qb->orWhere('q.category = "' . $category . '"');
+        }
+        $qb->orWhere('q.id = :searchid')
             ->setParameter('search', '%' . $search . '%')
-            ->setParameter('category', $category)
             ->setParameter('searchid', $searchid)
             ->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')
@@ -93,11 +94,12 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
-            ->orWhere('q.category = :category')
-            ->orWhere('q.id = :searchid')
+            ->orWhere('LOWER(q.text) LIKE LOWER(:search)');
+        foreach (explode(';', $categories) as $category) {
+            $qb->orWhere('q.category = "' . $category . '"');
+        }
+        $qb->orWhere('q.id = :searchid')
             ->setParameter('search', '%' . $search . '%')
-            ->setParameter('category', $category)
             ->setParameter('searchid', $searchid);
 
         $cursor = $qb2->execute();
@@ -110,7 +112,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findByGroups(int $firstresult, array $groupsArray, string $search, string $category, string $searchid): array
+    public function findByGroups(int $firstresult, array $groupsArray, string $search, string $categories, string $searchid): array
     {
         $groups = '%';
         foreach ($groupsArray as $group) {
@@ -123,16 +125,18 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
-            ->orWhere('q.category = :category')
-            ->orWhere('q.id = :searchid')
+            ->orWhere('LOWER(q.text) LIKE LOWER(:search)');
+        foreach (explode(';', $categories) as $category) {
+            $qb->orWhere('q.category = "' . $category . '"');
+        }
+        $qb->orWhere('q.id = :searchid')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
             ->setParameter('search', '%' . $search . '%')
             ->setParameter('searchid', $searchid)
-            ->setParameter('category', $category)
+
             ->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
@@ -145,15 +149,16 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
-            ->orWhere('q.category = :category')
-            ->orWhere('q.id = :searchid')
+            ->orWhere('LOWER(q.text) LIKE LOWER(:search)');
+        foreach (explode(';', $categories) as $category) {
+            $qb->orWhere('q.category = "' . $category . '"');
+        }
+        $qb->orWhere('q.id = :searchid')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
             ->setParameter('search', '%' . $search . '%')
-            ->setParameter('category', $category)
             ->setParameter('searchid', $searchid);
 
         $cursor = $qb2->execute();

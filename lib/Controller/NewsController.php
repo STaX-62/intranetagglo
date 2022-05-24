@@ -60,19 +60,18 @@ class NewsController extends Controller
         $this->timeFactory = $timeFactory;
     }
 
-    public function index(int $id, string $search): DataResponse
-    {
-        return (new DataResponse($this->service->findAll($id, $search)));
-    }
-
     /**
      * @NoAdminRequired
      */
-    public function indexG(int $id, string $search): DataResponse
+    public function index(int $id, string $search, string $categories): DataResponse
     {
         $user = $this->session->getUser();
-        return (new DataResponse($this->service->findByGroups($id, $this->groupManager->getUserGroupIds($user), $search)));
+        if ($this->groupManager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupManager->isInGroup($user->getUID(), 'admin')) {
+            return (new DataResponse($this->service->findAll($id, $search, $categories)));
+        }
+        return (new DataResponse($this->service->findByGroups($id, $this->groupManager->getUserGroupIds($user), $search, $categories)));
     }
+
 
     public function create(string $title, string $subtitle, string $text,  string $category,  string $groups)
     {

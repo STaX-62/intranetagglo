@@ -10,6 +10,7 @@ export default new Vuex.Store({
     search: "",
     username: "",
     usergroups: [],
+    isAdmin: false,
     groupsoptions: [],
     categoryoptions: [],
     categoryfilter: '',
@@ -44,12 +45,14 @@ export default new Vuex.Store({
       state.username = user[0]
       state.usergroups = user[1]
     },
+    setisAdmin(state, value) {
+      state.isAdmin = value;
+    },
     setGroupsOptions(state, groups) {
       state.groupsoptions = groups
     },
     setCategoryOptions(state, category) {
-      console.log(category)
-      state.categoryoptions = category
+      state.categoryoptions = category.data
     },
     setAppsUpdating(state, updating) {
       state.appsupdating = updating

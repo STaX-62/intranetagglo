@@ -15,9 +15,6 @@ use OCP\IUser;
 
 class PageController extends Controller
 {
-	private $db;
-	private IUser $user;
-
 	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session, NewsController $newscontroller)
 	{
 		parent::__construct(Application::APP_ID, $request);
@@ -48,6 +45,17 @@ class PageController extends Controller
 	{
 		$user = $this->session->getUser();
 		$userinfo = [$user->getDisplayName(), $this->groupmanager->getUserGroupIds($user)];
+		return new DataResponse($userinfo);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 */
+
+	public function userIsAdmin()
+	{
+		$user = $this->session->getUser();
+		$userinfo = $this->groupmanager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupmanager->isInGroup($user->getUID(), 'admin');
 		return new DataResponse($userinfo);
 	}
 
