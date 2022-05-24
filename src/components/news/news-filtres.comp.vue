@@ -6,7 +6,7 @@
         :value="category"
         v-for="(category,index) in categoryoptions"
         :key="index"
-      >{{category}}]</b-form-checkbox>
+      >{{category}}</b-form-checkbox>
     </b-form-checkbox-group>
   </b-popover>
 </template>
@@ -29,6 +29,7 @@ export default {
         this.timer = setTimeout(() => {
           this.$store.commit('setNewsUpdating', true)
         }, 250)
+        console.log(value)
         this.$store.commit('updateFilter', value)
       }
     }

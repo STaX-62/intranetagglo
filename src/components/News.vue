@@ -70,10 +70,10 @@ export default {
     Filtres
   },
   watch: {
-    updating(val) {
+    updating: function(val) {
       if (val) {
         var url = `apps/intranetagglo/news/${this.currentPage - 1}`
-        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter.join(';') }, { type: 'application/json' })
+        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
@@ -122,7 +122,7 @@ export default {
     },
     categoryfilter: {
       get() {
-        return this.$store.state.categoryfilter
+        return this.$store.state.categoryfilter.join(';')
       },
     },
     currentPage: {
