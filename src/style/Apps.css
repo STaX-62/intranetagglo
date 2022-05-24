@@ -8,24 +8,13 @@
 
 .apps-container {
     position: relative;
-    display: grid;
-    grid-template-columns: 120px 120px;
-    grid-auto-rows: 50px calc(20% - 10px) calc(20% - 10px) calc(20% - 10px) calc(20% - 10px) calc(20% - 10px);
-    grid-auto-flow: dense;
-    grid-gap: 0 10px;
-    justify-content: center;
-    vertical-align: middle;
+    display: block;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 20px 15px 10px;
     height: calc(100% - 60px);
     width: auto;
     border-radius: 15px;
-    grid-template-areas:
-        "Title Title"
-        ". ."
-        ". ."
-        ". .";
     background: url("../patterns/brilliant.png"),
         var(--color-mode-2);
     box-shadow: 0 4px 21px -12px var(--color-mode-shadow-4);
@@ -35,6 +24,15 @@
 
 .apps-container.hidden {
     transform: translateX(300px);
+}
+
+.apps-block {
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 120px 120px;
+    grid-auto-rows: 10%;
+    grid-auto-flow: dense;
+    grid-gap: 0 10px;
 }
 
 .apps-content-main {
@@ -102,11 +100,23 @@
     }
 
     .apps-title {
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .apps-header {
-        font-size: 20px;
+        font-size: 25px;
+    }
+
+    #news-frame {
+        grid-template-columns: calc(100% - 210px) 200px;
+    }
+
+    .apps-block {
+        display: block;
+    }
+
+    .apps-block a {
+        height: 10%;
     }
 }
 

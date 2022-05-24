@@ -783,12 +783,6 @@
 
 }
 
-@media (max-height: 768px) {
-    #news-frame {
-        grid-template-columns: calc(100% - 200px) 200px;
-    }
-}
-
 @media (max-width: 1350px) {
     .add-news-button {
         font-size: 10px;

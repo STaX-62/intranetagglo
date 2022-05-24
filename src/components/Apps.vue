@@ -7,16 +7,18 @@
           <AppsUpdate />
         </div>
       </h2>
-      <a
-        class="apps-content-main"
-        v-for="(app,index) in apps"
-        :key="index"
-        v-bind:href="app.link"
-        target="_blank"
-      >
-        <b-icon class="apps-icon" v-bind:icon="app.icon"></b-icon>
-        <div class="apps-title">{{app.title}}</div>
-      </a>
+      <div class="apps-block">
+        <a
+          class="apps-content-main"
+          v-for="(app,index) in apps"
+          :key="index"
+          v-bind:href="app.link"
+          target="_blank"
+        >
+          <b-icon class="apps-icon" v-bind:icon="app.icon"></b-icon>
+          <div class="apps-title">{{app.title}}</div>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -31,7 +33,7 @@ export default {
   components: {
     AppsUpdate
   },
-  
+
   watch: {
     updating: function (val) {
       if (val) {
