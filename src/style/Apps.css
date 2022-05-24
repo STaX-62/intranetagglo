@@ -13,7 +13,7 @@
     overflow-x: hidden;
     padding: 20px 15px 10px;
     height: calc(100% - 60px);
-    width: auto;
+    width: 100%;
     border-radius: 15px;
     background: url("../patterns/brilliant.png"),
         var(--color-mode-2);
@@ -68,6 +68,7 @@
 }
 
 .apps-icon {
+    margin-top: 7%;
     font-size: 2.5em;
     padding: 5px 0 10px 0;
 }
@@ -116,6 +117,15 @@
         grid-template-columns: 100%;
         grid-auto-rows: 10%;
     }
+
+    .apps-content-main {
+        display: flex;
+    }
+
+    .apps-icon {
+        font-size: 2em;
+        padding: 10px 0 10px 0;
+    }
 }
 
 #Home:not([isonsite]) #apps {
@@ -131,12 +141,6 @@
 @media (max-height:680px) {
     .apps-content-main .b-icon {
         display: none;
-    }
-}
-
-@media (max-height:800px) {
-    .apps-content-main {
-        display: flex;
     }
 }
 
