@@ -70,10 +70,10 @@ export default {
     Filtres
   },
   watch: {
-    updating: function(val) {
+    updating: function (val) {
       if (val) {
         var url = `apps/intranetagglo/news/${this.currentPage - 1}`
-        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter }, { type: 'application/json' })
+        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter.length > 0 ? this.$store.state.categoryfilter.join(';') : "" }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
@@ -122,7 +122,7 @@ export default {
     },
     categoryfilter: {
       get() {
-        return this.$store.state.categoryfilter.join(';')
+        return this.$store.state.categoryfilter
       },
     },
     currentPage: {
@@ -188,7 +188,8 @@ export default {
 <style scoped>
 .searchbar {
   flex: 0 0 61%;
-  border-radius: 10px !important;
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
   border: 2px solid var(--color-mode-4) !important;
   box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
     7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%),

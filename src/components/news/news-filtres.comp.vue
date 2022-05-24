@@ -3,7 +3,7 @@
     <template #title>Filtres</template>
     <b-form-checkbox-group v-model="selected" name="categories">
       <b-form-checkbox
-        :value="category"
+        :value="categoryfilter"
         v-for="(category,index) in categoryoptions"
         :key="index"
       >{{category}}</b-form-checkbox>

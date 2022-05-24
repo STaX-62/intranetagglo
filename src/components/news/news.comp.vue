@@ -21,13 +21,9 @@
         <img class="news-img" v-bind:src="news.photo" v-if="news.photo != ''" />
       </div>
       <div class="news-tagbox">
-        <span class="news-tag" @click="search = '#' + news.category">{{ news.category }}</span>
+        <span class="news-tag" @click="addFilter(news.category)">{{ news.category }}</span>
         <div class="news-tagbox-button" v-if="news.pinned == 1">
-          <b-icon
-            class="sidebar-item-icon"
-            variant="dark"
-            icon="shift-fill"
-          />
+          <b-icon class="sidebar-item-icon" variant="dark" icon="shift-fill" />
         </div>
         <div class="flip-tagbox" :adminopt="adminopt">
           <div class="flip-tagbox-inner">
@@ -49,6 +45,19 @@ export default {
     arrayid: Number
   },
   computed: {
+    categoryfilter: {
+      get() {
+        return this.$store.state.categoryfilter
+      },
+      set(value) {
+        clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.$store.commit('setNewsUpdating', true)
+        }, 250)
+        console.log(value)
+        this.$store.commit('updateFilter', value)
+      }
+    },
     search: {
       get() {
         return this.$store.state.search
@@ -69,6 +78,11 @@ export default {
     },
   },
   methods: {
+    addFilter(category) {
+      if(!this.categoryfilter.includes(category)){
+        this.categoryfilter.push(category)
+      }
+    },
     OpenNews() {
       if (this.$store.state.newsfocus == '') {
         this.$store.commit('updateNewsFocus', this.arrayid)
