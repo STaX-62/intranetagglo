@@ -81,8 +81,13 @@ class NewsMapper extends QBMapper
         if ($categoryArray[0] != '') {
             $index = 0;
             foreach ($categoryArray  as $category) {
-                $qb->andWhere('q.category = :category' . $index)
-                    ->setParameter('category' . $index, $category);
+                if ($index == 0) {
+                    $qb->andWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                } else {
+                    $qb->orWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                }
                 $index++;
             }
         }
@@ -105,9 +110,13 @@ class NewsMapper extends QBMapper
         if ($categoryArray[0] != '') {
             $index = 0;
             foreach ($categoryArray  as $category) {
-                $qb->andWhere('q.category = :category' . $index)
-                    ->setParameter('category' . $index, $category);
-                $index++;
+                if ($index == 0) {
+                    $qb->andWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                } else {
+                    $qb->orWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                }
             }
         }
 
@@ -143,9 +152,13 @@ class NewsMapper extends QBMapper
         if ($categoryArray[0] != '') {
             $index = 0;
             foreach ($categoryArray  as $category) {
-                $qb->andWhere('q.category = :category' . $index)
-                    ->setParameter('category' . $index, $category);
-                $index++;
+                if ($index == 0) {
+                    $qb->andWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                } else {
+                    $qb->orWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                }
             }
         }
         $qb->orWhere('q.id = :searchid')
@@ -173,9 +186,13 @@ class NewsMapper extends QBMapper
         if ($categoryArray[0] != '') {
             $index = 0;
             foreach ($categoryArray  as $category) {
-                $qb->andWhere('q.category = :category' . $index)
-                    ->setParameter('category' . $index, $category);
-                $index++;
+                if ($index == 0) {
+                    $qb->andWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                } else {
+                    $qb->orWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                }
             }
         }
         $qb->orWhere('q.id = :searchid')
