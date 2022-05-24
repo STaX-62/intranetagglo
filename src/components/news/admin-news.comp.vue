@@ -84,6 +84,19 @@ export default {
     arrayid: Number
   },
   computed: {
+    categoryfilter: {
+      get() {
+        return this.$store.state.categoryfilter
+      },
+      set(value) {
+        clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.$store.commit('setNewsUpdating', true)
+        }, 250)
+        console.log(value)
+        this.$store.commit('updateFilter', value)
+      }
+    },
     search: {
       get() {
         return this.$store.state.search

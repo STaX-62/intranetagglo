@@ -69,6 +69,7 @@ class NewsMapper extends QBMapper
      */
     public function findAll($firstresult, string $search, string $categories, string $searchid): array
     {
+        $categoryArray = explode(';', $categories);
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
@@ -77,7 +78,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
-        foreach (explode(';', $categories) as $category) {
+        foreach ($categoryArray as $category) {
             $qb->orWhere('q.category = "' . $category . '"');
         }
         $qb->orWhere('q.id = :searchid')
@@ -96,7 +97,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
-        foreach (explode(';', $categories) as $category) {
+        foreach ($categoryArray as $category) {
             $qb->orWhere('q.category = "' . $category . '"');
         }
         $qb->orWhere('q.id = :searchid')
@@ -107,7 +108,7 @@ class NewsMapper extends QBMapper
         $row = $cursor->fetch();
         $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count']];
+        return [$this->findEntities($qb), $row['count'], $categoryArray];
     }
 
     /**
@@ -119,6 +120,7 @@ class NewsMapper extends QBMapper
         foreach ($groupsArray as $group) {
             $groups .= $group . '%';
         }
+        $categoryArray = explode(';', $categories);
 
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
@@ -128,7 +130,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
-        foreach (explode(';', $categories) as $category) {
+        foreach ($categoryArray  as $category) {
             $qb->orWhere('q.category = "' . $category . '"');
         }
         $qb->orWhere('q.id = :searchid')
@@ -153,7 +155,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
-        foreach (explode(';', $categories) as $category) {
+        foreach ($categoryArray as $category) {
             $qb->orWhere('q.category = "' . $category . '"');
         }
         $qb->orWhere('q.id = :searchid')
@@ -168,7 +170,7 @@ class NewsMapper extends QBMapper
         $row = $cursor->fetch();
         $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count']];
+        return [$this->findEntities($qb), $row['count'], $categoryArray];
     }
 
 

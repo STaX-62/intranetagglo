@@ -85,7 +85,6 @@ export default {
   },
   data: function () {
     return {
-      categorysearch: '',
       addNews: false,
       AddNewsModal: false,
       news: [],
