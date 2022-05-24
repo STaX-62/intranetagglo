@@ -79,7 +79,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
         foreach ($categoryArray as $category) {
-            $qb->orWhere($qb->expr()->eq('q.category', $category));
+            $qb->orWhere('q.category = ' . $category);
         }
         $qb->orWhere('q.id = :searchid')
             ->setParameter('searchid', $searchid)
@@ -98,7 +98,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
         foreach ($categoryArray as $category) {
-            $qb2->orWhere($qb->expr()->eq('q.category', $category));
+            $qb2->orWhere('q.category = ' . $category);
         }
         $qb2->orWhere('q.id = :searchid')
             ->setParameter('searchid', $searchid);
@@ -130,7 +130,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
         foreach ($categoryArray  as $category) {
-            $qb->orWhere($qb->expr()->eq('q.category', $category));
+            $qb->orWhere('q.category = ' . $category);
         }
         $qb->orWhere('q.id = :searchid')
             ->andWhere("q.groups = ''")
@@ -155,7 +155,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
         foreach ($categoryArray as $category) {
-            $qb->orWhere($qb->expr()->eq('q.category', $category));
+            $qb->orWhere('q.category = ' . $category);
         }
         $qb->orWhere('q.id = :searchid')
             ->andWhere("q.groups = ''")
