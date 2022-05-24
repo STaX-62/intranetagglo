@@ -13,7 +13,7 @@ export default new Vuex.Store({
     isAdmin: false,
     groupsoptions: [],
     categoryoptions: [],
-    categoryfilter: '',
+    categoryfilter: [],
     appsupdating: false,
     menuupdating: false,
     newsupdating: false,
