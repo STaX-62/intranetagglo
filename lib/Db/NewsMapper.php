@@ -98,17 +98,16 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
         foreach ($categoryArray as $category) {
-            $qb->orWhere('q.category = "' . $category . '"');
+            $qb2->orWhere('q.category = "' . $category . '"');
         }
-        $qb->orWhere('q.id = :searchid')
-
+        $qb2->orWhere('q.id = :searchid')
             ->setParameter('searchid', $searchid);
 
         $cursor = $qb2->execute();
         $row = $cursor->fetch();
         $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count'], $categoryArray];
+        return [$this->findEntities($qb), $row['count'], $qb->getSql()];
     }
 
     /**
