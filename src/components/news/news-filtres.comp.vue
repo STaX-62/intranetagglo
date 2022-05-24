@@ -1,9 +1,9 @@
 <template>
   <b-popover target="news-filtres" placement="bottomleft" triggers="hover focus">
     <template #title>Filtres</template>
-    <b-form-checkbox-group v-model="selected" name="categories">
+    <b-form-checkbox-group v-model="categoryfilter" name="categories">
       <b-form-checkbox
-        :value="categoryfilter"
+        :value="category"
         v-for="(category,index) in categoryoptions"
         :key="index"
       >{{category}}</b-form-checkbox>
@@ -30,7 +30,7 @@ export default {
           this.$store.commit('setNewsUpdating', true)
         }, 250)
         console.log(value)
-        this.$store.commit('updateFilter', value)
+        this.$store.commit('updateCategories', value)
       }
     }
   },
