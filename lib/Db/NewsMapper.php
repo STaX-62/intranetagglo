@@ -126,7 +126,8 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)');
+            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
+            ->setParameter('search', '%' . $search . '%');
         foreach (explode(';', $categories) as $category) {
             $qb->orWhere('q.category = "' . $category . '"');
         }
@@ -135,7 +136,7 @@ class NewsMapper extends QBMapper
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
-            ->setParameter('search', '%' . $search . '%')
+
             ->setParameter('searchid', $searchid)
 
             ->addOrderBy('q.pinned', 'DESC')
@@ -150,7 +151,8 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)');
+            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
+            ->setParameter('search', '%' . $search . '%');
         foreach (explode(';', $categories) as $category) {
             $qb->orWhere('q.category = "' . $category . '"');
         }
@@ -159,7 +161,7 @@ class NewsMapper extends QBMapper
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
-            ->setParameter('search', '%' . $search . '%')
+
             ->setParameter('searchid', $searchid);
 
         $cursor = $qb2->execute();
