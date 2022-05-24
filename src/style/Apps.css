@@ -110,7 +110,7 @@
     }
 
     #news-frame {
-        grid-template-columns: calc(100% - 210px) 200px;
+        grid-template-columns: calc(100% - 210px) 200px !important;
     }
 
     .apps-block {
