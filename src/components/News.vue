@@ -73,12 +73,11 @@ export default {
     updating: function (val) {
       if (val) {
         var url = `apps/intranetagglo/news/${this.currentPage - 1}`
-        console.log(this.categoryfilter)
-        console.log(this.categoryfilter.join(';'))
-        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter.length > 0 ? this.categoryfilter.join(';') : "" }, { type: 'application/json' })
+        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter.join(';') }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
+            console.log(response.data)
             this.$store.commit('setNewsUpdating', false)
           })
       }

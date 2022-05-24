@@ -21,7 +21,7 @@
         <img class="news-img" v-bind:src="news.photo" v-if="news.photo != ''" />
       </div>
       <div class="news-tagbox">
-        <span class="news-tag" @click="search = '#' + news.category">{{ news.category }}</span>
+        <span class="news-tag" @click="addFilter(news.category)">{{ news.category }}</span>
         <button
           type="button"
           class="news-tagbox-button"
@@ -114,6 +114,11 @@ export default {
         autoHideDelay: 10000,
         appendToast: false
       })
+    },
+    addFilter(category) {
+      if (!this.categoryfilter.includes(category)) {
+        this.categoryfilter.push(category)
+      }
     },
     OpenNews() {
       if (this.$store.state.newsfocus == '') {
