@@ -78,7 +78,7 @@ class NewsController extends Controller
     public function isAdmin()
     {
         $user = $this->session->getUser();
-        return $this->groupmanager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupmanager->isInGroup($user->getUID(), 'admin');
+        return $this->groupManager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupManager->isInGroup($user->getUID(), 'admin');
     }
 
     /**
