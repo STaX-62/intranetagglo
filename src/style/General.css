@@ -374,6 +374,13 @@ input[type="checkbox"].checkbox+label::before {
 }
 
 @media (max-width: 780px) {
+    .settings-title {
+        text-align: center;
+        padding-left: 0;
+        margin-top: 10px;
+        font-size: 2rem;
+    }
+
     .Navbar {
         display: none !important;
     }
