@@ -78,7 +78,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
-        if ($categoryArray[0] != '') {
+        if ($categories != '') {
             $index = 0;
             foreach ($categoryArray  as $category) {
                 if ($index == 0) {
@@ -107,9 +107,9 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
-        if ($categoryArray[0] != '') {
+        if ($categories != '') {
             $index = 0;
-            foreach ($categoryArray  as $category) {
+            foreach ($categoryArray as $category) {
                 if ($index == 0) {
                     $qb->andWhere('q.category = :category' . $index)
                         ->setParameter('category' . $index, $category);
