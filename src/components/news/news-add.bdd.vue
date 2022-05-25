@@ -198,7 +198,6 @@ export default {
         category: "",
         groups: []
       },
-      categoryoptions: []
     }
   }
 }

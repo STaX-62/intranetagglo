@@ -833,12 +833,11 @@
 
     #news0,
     #news1 {
-        margin-right: unset;
+        margin-right: auto;
     }
 
     #Home:not([isonsite]) .news-header {
         width: calc(95% - 250px);
-        /* margin: 0 auto; */
         margin-left: 5%;
     }
 
