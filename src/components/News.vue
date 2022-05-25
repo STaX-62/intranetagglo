@@ -164,9 +164,9 @@ export default {
         this.$store.commit('setisAdmin', response.data)
         if (response.data) {
           this.$store.dispatch("getGroupsOptions");
-          this.$store.dispatch("getCategoryOptions", '');
         }
       })
+    this.$store.dispatch("getCategoryOptions", '');
     axios.get(generateUrl(`apps/intranetagglo/user`)).then(response => {
       this.$store.commit('setUser', response.data)
     })
