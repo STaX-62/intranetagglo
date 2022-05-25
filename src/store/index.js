@@ -14,6 +14,7 @@ export default new Vuex.Store({
     groupsoptions: [],
     categoryoptions: [],
     categoryfilter: [],
+    datefilter: ['', ''],
     appsupdating: false,
     menuupdating: false,
     newsupdating: false,
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     },
     updateCategories(state, categoryfilter) {
       state.categoryfilter = categoryfilter;
+    },
+    updateDateFilter(state, dates) {
+      state.datefilter = dates
     },
     setUser(state, user) {
       state.username = user[0]

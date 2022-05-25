@@ -1,10 +1,10 @@
 <template>
   <b-popover target="news-filtres" placement="bottomleft" triggers="hover focus" :dark="darkmode">
     <template #title>Filtres</template>
-    <b-form-group label="Filtrer par Date">
+    <b-form-group label="Par Date">
       <b-form-datepicker
         id="picker-début"
-        v-model="value"
+        v-model="datefilter[0]"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
@@ -13,7 +13,7 @@
       ></b-form-datepicker>
       <b-form-datepicker
         id="picker-fin"
-        v-model="value"
+        v-model="datefilter[1]"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
@@ -21,7 +21,7 @@
         placeholder="Date de Fin"
       ></b-form-datepicker>
     </b-form-group>
-    <b-form-group label="Filtrer par catégorie">
+    <b-form-group label="Par catégorie">
       <b-form-checkbox-group v-model="categoryfilter" name="categories">
         <b-form-checkbox
           :value="category"
@@ -45,6 +45,15 @@ export default {
     categoryoptions() {
       return this.$store.state.categoryoptions
     },
+    datefilter: {
+      get() {
+        return this.$store.state.datefilter
+      },
+      set(value) {
+        console.log(value)
+        this.$store.commit('updateDateFilter', value)
+      }
+    },
     categoryfilter: {
       get() {
         return this.$store.state.categoryfilter
@@ -54,7 +63,6 @@ export default {
         this.timer = setTimeout(() => {
           this.$store.commit('setNewsUpdating', true)
         }, 250)
-        console.log(value)
         this.$store.commit('updateCategories', value)
       }
     }
