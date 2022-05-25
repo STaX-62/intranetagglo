@@ -14,7 +14,10 @@ export default new Vuex.Store({
     groupsoptions: [],
     categoryoptions: [],
     categoryfilter: [],
-    datefilter: ['', ''],
+    datefilter: {
+      start: "",
+      end: ""
+    },
     appsupdating: false,
     menuupdating: false,
     newsupdating: false,

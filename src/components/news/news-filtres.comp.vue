@@ -4,7 +4,7 @@
     <b-form-group label="Par Date">
       <b-form-datepicker
         id="picker-début"
-        v-model="datefilter[0]"
+        v-model="datefilter.start"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
@@ -13,7 +13,7 @@
       ></b-form-datepicker>
       <b-form-datepicker
         id="picker-fin"
-        v-model="datefilter[1]"
+        v-model="datefilter.end"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
