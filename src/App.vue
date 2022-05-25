@@ -53,10 +53,12 @@ export default {
         localStorage.setItem('color_scheme', 'dark');
         this.darkmodestring = 'dark'
         this.darkmode = 'dark'
+        this.$store.commit('setDarkmode', true)
       }
       else {
         localStorage.setItem('color_scheme', 'light');
         this.darkmodestring = ''
+        this.$store.commit('setDarkmode', false)
       }
     }
   },
@@ -77,6 +79,7 @@ export default {
       if (current_scheme === 'dark') {
         this.darkmodestring = 'dark';
         this.darkmode = true
+        this.$store.commit('setDarkmode', true)
       }
       else {
         this.darkmodestring = '';

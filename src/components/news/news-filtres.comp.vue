@@ -1,24 +1,24 @@
 <template>
-  <b-popover target="news-filtres" placement="bottomleft" triggers="hover focus">
+  <b-popover target="news-filtres" placement="bottomleft" triggers="hover focus" :dark="darkmode">
     <template #title>Filtres</template>
     <div style="display:flex;justify-content:space-between;align-items:center">
       <b-form-datepicker
-        id="example-i18n-picker"
+        id="picker-début"
         v-model="value"
+        :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
-        class="mb-2"
+        size="sm"
         placeholder="Date de Début"
-        style="width:150px;height:60px"
       ></b-form-datepicker>
       <b-form-datepicker
-        id="example-i18n-picker"
+        id="picker-fin"
         v-model="value"
+        :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
-        class="mb-2"
+        size="sm"
         placeholder="Date de Fin"
-        style="width:150px;height:60px"
       ></b-form-datepicker>
     </div>
     <b-form-checkbox-group v-model="categoryfilter" name="categories">
@@ -37,6 +37,9 @@ export default {
   name: 'Filtres',
   store: store,
   computed: {
+    darkmode() {
+      return this.$store.state.darkmode
+    },
     categoryoptions() {
       return this.$store.state.categoryoptions
     },

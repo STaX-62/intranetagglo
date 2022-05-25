@@ -18,7 +18,8 @@ export default new Vuex.Store({
     menuupdating: false,
     newsupdating: false,
     adminMenus: [],
-    newsfocus: ""
+    newsfocus: "",
+    darkmode: false
   },
   getters: {
     News_length: state => {
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.username = user[0]
       state.usergroups = user[1]
+    },
+    setDarmode(state, value) {
+      state.darkmode = value;
     },
     setisAdmin(state, value) {
       state.isAdmin = value;
