@@ -126,8 +126,15 @@
 .news-header {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     grid-area: Titre;
+}
+
+.news-header:not(.admin-view) {
+    margin: 0 2.5%;
+}
+
+.news-header:not(.admin-view) .news-header-title {
+    margin-right: 2%;
 }
 
 #Update-settings svg {
@@ -845,7 +852,7 @@
     }
 
     .admin-view .searchbar {
-        flex: 0 0 70% !important;
+        flex: 0 0 65% !important;
     }
 
     .add-news-button {
