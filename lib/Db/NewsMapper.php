@@ -117,6 +117,7 @@ class NewsMapper extends QBMapper
                     $qb->orWhere('q.category = :category' . $index)
                         ->setParameter('category' . $index, $category);
                 }
+                $index++;
             }
         }
 
@@ -159,6 +160,7 @@ class NewsMapper extends QBMapper
                     $qb->orWhere('q.category = :category' . $index)
                         ->setParameter('category' . $index, $category);
                 }
+                $index++;
             }
         }
         $qb->orWhere('q.id = :searchid')
@@ -193,6 +195,7 @@ class NewsMapper extends QBMapper
                     $qb->orWhere('q.category = :category' . $index)
                         ->setParameter('category' . $index, $category);
                 }
+                $index++;
             }
         }
         $qb->orWhere('q.id = :searchid')
