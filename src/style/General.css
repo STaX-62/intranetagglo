@@ -230,7 +230,7 @@ body {
 
 .Settings.hidden {
     opacity: 0;
-    transform: translateX(300px);
+    transform: translateX(340px);
 }
 
 .settings-box {
@@ -261,8 +261,6 @@ body {
 
 .settings-title {
     color: var(--color-mode-contrast-1);
-    justify-content: center;
-    display: flex;
     text-align: center;
     grid-area: Title;
     margin: 0;
@@ -348,6 +346,31 @@ input[type="checkbox"].checkbox+label::before {
     display: none;
 }
 
+@media (max-width: 1350px) {
+    .Settings {
+        display: block;
+        position: absolute;
+        width: 180px;
+        height: auto;
+        border-radius: 15px;
+        background: url("../patterns/brilliant.png"),
+            var(--color-mode-2);
+        box-shadow: 2px 2px 3px rgb(55 84 170 / 15%),
+            0px 0px 4px rgb(255 255 255 / 0%), 7px 7px 15px rgb(55 84 170 / 15%),
+            -7px -7px 20px rgb(0 0 0 / 10%), 0px 0px 4px rgb(255 255 255 / 20%) !important;
+        transition: 0.5s;
+    }
+
+    .settings-title {
+        text-align: start;
+        padding-left: 10px;
+        margin-top: 10px;
+    }
+
+    .settings-close {
+        top: 0;
+    }
+}
 
 @media (max-width: 780px) {
     .Navbar {
