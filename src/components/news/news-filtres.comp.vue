@@ -1,7 +1,7 @@
 <template>
   <b-popover target="news-filtres" placement="bottomleft" triggers="hover focus" :dark="darkmode">
     <template #title>Filtres</template>
-    <div style="display:flex;justify-content:space-between;align-items:center">
+    <b-form-group label="Filtrer par Date">
       <b-form-datepicker
         id="picker-début"
         v-model="value"
@@ -20,14 +20,16 @@
         size="sm"
         placeholder="Date de Fin"
       ></b-form-datepicker>
-    </div>
-    <b-form-checkbox-group v-model="categoryfilter" name="categories">
-      <b-form-checkbox
-        :value="category"
-        v-for="(category,index) in categoryoptions"
-        :key="index"
-      >{{category}}</b-form-checkbox>
-    </b-form-checkbox-group>
+    </b-form-group>
+    <b-form-group label="Filtrer par catégorie">
+      <b-form-checkbox-group v-model="categoryfilter" name="categories">
+        <b-form-checkbox
+          :value="category"
+          v-for="(category,index) in categoryoptions"
+          :key="index"
+        >{{category}}</b-form-checkbox>
+      </b-form-checkbox-group>
+    </b-form-group>
   </b-popover>
 </template>
 
