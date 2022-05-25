@@ -55,8 +55,7 @@ class PageController extends Controller
 	public function userIsAdmin()
 	{
 		$user = $this->session->getUser();
-		$userinfo = $this->groupmanager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupmanager->isInGroup($user->getUID(), 'admin');
-		return new DataResponse($userinfo);
+		return new DataResponse($this->groupmanager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupmanager->isInGroup($user->getUID(), 'admin'));
 	}
 
 

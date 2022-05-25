@@ -66,7 +66,7 @@ class NewsController extends Controller
     public function index(int $id, string $search, string $categories): DataResponse
     {
         $user = $this->session->getUser();
-        if ($this->groupManager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupManager->isInGroup($user->getUID(), 'admin')) {
+        if ($this->isAdmin()) {
             return (new DataResponse($this->service->findAll($id, $search, $categories)));
         }
         return (new DataResponse($this->service->findByGroups($id, $this->groupManager->getUserGroupIds($user), $search, $categories)));
@@ -75,24 +75,34 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
+    public function isAdmin()
+    {
+        $user = $this->session->getUser();
+        return $this->groupmanager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupmanager->isInGroup($user->getUID(), 'admin');
+    }
+
+    /**
+     * @NoAdminRequired
+     */
     public function create(string $title, string $subtitle, string $text,  string $category,  string $groups)
     {
         $user = $this->session->getUser();
-        $photourl = '';
-        if (isset($_FILES['photo'])) {
-            if (file_exists($_FILES['photo']['tmp_name'])) {
-                if ($_FILES['photo']['error'] == 0) {
-                    $fileInfos = pathinfo($_FILES['photo']['name']);
-                    $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+        if ($this->isAdmin()) {
+            $photourl = '';
+            if (isset($_FILES['photo'])) {
+                if (file_exists($_FILES['photo']['tmp_name'])) {
+                    if ($_FILES['photo']['error'] == 0) {
+                        $fileInfos = pathinfo($_FILES['photo']['name']);
+                        $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
-                    move_uploaded_file($_FILES['photo']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
-                    $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                        move_uploaded_file($_FILES['photo']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
+                        $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                    }
                 }
             }
+            return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $this->timeFactory->getTime(), 0, 0);
         }
-
-
-        return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $this->timeFactory->getTime(), 0, 0);
+        return 'User is not admin';
     }
 
     /**
@@ -100,24 +110,27 @@ class NewsController extends Controller
      */
     public function update(int $id, string $title, string $subtitle, string $text,  string $photolink,  string $category,  string $groups)
     {
-        return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups) {
-            $photourl = $photolink;
-            if (isset($_FILES['photo_upd'])) {
-                if (file_exists($_FILES['photo_upd']['tmp_name'])) {
-                    if ($_FILES['photo_upd']['error'] == 0) {
-                        unlink(substr($photourl, 11));
+        if ($this->isAdmin()) {
+            return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups) {
+                $photourl = $photolink;
+                if (isset($_FILES['photo_upd'])) {
+                    if (file_exists($_FILES['photo_upd']['tmp_name'])) {
+                        if ($_FILES['photo_upd']['error'] == 0) {
+                            unlink(substr($photourl, 11));
 
-                        $fileInfos = pathinfo($_FILES['photo_upd']['name']);
-                        $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+                            $fileInfos = pathinfo($_FILES['photo_upd']['name']);
+                            $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
-                        move_uploaded_file($_FILES['photo_upd']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
-                        $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                            move_uploaded_file($_FILES['photo_upd']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
+                            $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                        }
                     }
                 }
-            }
 
-            return $this->service->update($id, $title, $subtitle, $text, $photourl, $category, $groups);
-        });
+                return $this->service->update($id, $title, $subtitle, $text, $photourl, $category, $groups);
+            });
+        }
+        return 'User is not admin';
     }
 
     /**
