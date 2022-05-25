@@ -111,10 +111,10 @@ class NewsMapper extends QBMapper
             $index = 0;
             foreach ($categoryArray as $category) {
                 if ($index == 0) {
-                    $qb->andWhere('q.category = :category' . $index)
+                    $qb2->andWhere('q.category = :category' . $index)
                         ->setParameter('category' . $index, $category);
                 } else {
-                    $qb->orWhere('q.category = :category' . $index)
+                    $qb2->orWhere('q.category = :category' . $index)
                         ->setParameter('category' . $index, $category);
                 }
                 $index++;
@@ -128,7 +128,7 @@ class NewsMapper extends QBMapper
         $row = $cursor->fetch();
         $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count'], $qb2->getSql(), $categoryArray];
+        return [$this->findEntities($qb), $row['count']];
     }
 
     /**
@@ -150,7 +150,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
-        if ($categoryArray[0] != '') {
+        if ($categories != '') {
             $index = 0;
             foreach ($categoryArray  as $category) {
                 if ($index == 0) {
@@ -185,20 +185,20 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
-        if ($categoryArray[0] != '') {
+        if ($categories != '') {
             $index = 0;
             foreach ($categoryArray  as $category) {
                 if ($index == 0) {
-                    $qb->andWhere('q.category = :category' . $index)
+                    $qb2->andWhere('q.category = :category' . $index)
                         ->setParameter('category' . $index, $category);
                 } else {
-                    $qb->orWhere('q.category = :category' . $index)
+                    $qb2->orWhere('q.category = :category' . $index)
                         ->setParameter('category' . $index, $category);
                 }
                 $index++;
             }
         }
-        $qb->orWhere('q.id = :searchid')
+        $qb2->orWhere('q.id = :searchid')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
@@ -210,7 +210,7 @@ class NewsMapper extends QBMapper
         $row = $cursor->fetch();
         $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count'], $categoryArray];
+        return [$this->findEntities($qb), $row['count']];
     }
 
 
