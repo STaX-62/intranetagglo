@@ -27,6 +27,9 @@ class AppsController extends Controller
         $this->session = $session;
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function index(): DataResponse
     {
         return (new DataResponse($this->service->findAll()));
@@ -41,11 +44,17 @@ class AppsController extends Controller
         return (new DataResponse($this->service->findByGroups($this->groupmanager->getUserGroupIds($user))));
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function create(string $title, string $icon, string $link, string $groups)
     {
         return $this->service->create($title, $icon, $link, $groups);
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function update(int $id, string $title, string $icon, string $link, string $groups)
     {
         return $this->handleNotFound(function () use ($id, $title, $icon, $link, $groups) {
@@ -53,6 +62,9 @@ class AppsController extends Controller
         });
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function destroy(int $id)
     {
         return $this->handleNotFound(function () use ($id) {

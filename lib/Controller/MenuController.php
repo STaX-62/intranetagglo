@@ -40,7 +40,9 @@ class MenuController extends Controller
         $this->urlGenerator = $urlGenerator;
         $this->timeFactory = $timeFactory;
     }
-
+    /**
+     * @NoAdminRequired
+     */
     public function index(): DataResponse
     {
         return (new DataResponse($this->service->findAll()));
@@ -54,7 +56,10 @@ class MenuController extends Controller
         $user = $this->session->getUser();
         return (new DataResponse($this->service->findByGroups($this->groupmanager->getUserGroupIds($user))));
     }
-
+    
+    /**
+     * @NoAdminRequired
+     */
     public function create(string $title, string $icon, string $link, string $groups, int $sectionid, int $menuid, int $level)
     {
         $fileurl = $link;
@@ -83,6 +88,9 @@ class MenuController extends Controller
         return $this->service->findAll();
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function update(int $id, string $title, string $icon, string $link, string $groups)
     {
         return $this->handleNotFound(function () use ($id, $title, $icon, $link, $groups) {
@@ -106,6 +114,9 @@ class MenuController extends Controller
         });
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function changeOrder(string $actualPosition, string $newPosition, $sectionpos, $menupos)
     {
         $oldIds = explode('-', $actualPosition);
@@ -193,6 +204,9 @@ class MenuController extends Controller
         return $this->service->findAll();
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function destroy(int $id)
     {
         return $this->handleNotFound(function () use ($id) {

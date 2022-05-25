@@ -80,7 +80,7 @@ export default {
       return this.$store.state.menuupdating
     },
     isAdmin() {
-      return this.$store.state.usergroups.includes('admin')
+      return this.$store.state.isAdmin
     },
     MenuToDisplay() {
       var sectionArray = this.menuInBDD[0]

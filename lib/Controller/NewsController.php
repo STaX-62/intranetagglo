@@ -72,7 +72,9 @@ class NewsController extends Controller
         return (new DataResponse($this->service->findByGroups($id, $this->groupManager->getUserGroupIds($user), $search, $categories)));
     }
 
-
+    /**
+     * @NoAdminRequired
+     */
     public function create(string $title, string $subtitle, string $text,  string $category,  string $groups)
     {
         $user = $this->session->getUser();
@@ -93,6 +95,9 @@ class NewsController extends Controller
         return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $this->timeFactory->getTime(), 0, 0);
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function update(int $id, string $title, string $subtitle, string $text,  string $photolink,  string $category,  string $groups)
     {
         return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups) {
@@ -115,6 +120,9 @@ class NewsController extends Controller
         });
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function pinNews(int $id)
     {
         $lastPinned = $this->service->getLastPinned();
@@ -132,6 +140,9 @@ class NewsController extends Controller
         });
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function publication(int $id, int $visible)
     {
         return $this->handleNotFound(function () use ($id, $visible) {
@@ -189,6 +200,7 @@ class NewsController extends Controller
     }
 
     /**
+     * @NoAdminRequired
      * @param string $authorId
      * @param INotification $notification
      */
@@ -218,11 +230,17 @@ class NewsController extends Controller
         $this->NotificationManager->markProcessed($notification);
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function getCategory()
     {
         return new DataResponse($this->service->category());
     }
 
+    /**
+     * @NoAdminRequired
+     */
     public function destroy(int $id)
     {
         return $this->handleNotFound(function () use ($id) {

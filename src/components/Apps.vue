@@ -51,7 +51,7 @@ export default {
       return this.$store.state.appsupdating
     },
     isAdmin() {
-      return this.$store.state.usergroups.includes('admin')
+      return this.$store.state.isAdmin
     },
     UserGroups() {
       return this.$store.state.usergroups
