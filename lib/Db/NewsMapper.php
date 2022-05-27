@@ -69,10 +69,22 @@ class NewsMapper extends QBMapper
      */
     public function findAll($firstresult, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
     {
+
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('time')
+            ->from($this->getTableName(), 'q')
+            ->addOrderBy('q.time', 'ASC')
+            ->setMaxResults(1);
+
+        $cursor = $qb->execute();
+        $time = $cursor->fetch();
+        $cursor->closeCursor();
+
+
         $categoryArray = explode(';', $categories);
         /* @var $qb IQueryBuilder */
-        $qb = $this->db->getQueryBuilder();
-        $qb->select('*')
+        $qb2 = $this->db->getQueryBuilder();
+        $qb2->select('*')
             ->from($this->getTableName(), 'q')
             ->where('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
@@ -81,35 +93,6 @@ class NewsMapper extends QBMapper
         if ($categories != '') {
             $index = 0;
             foreach ($categoryArray  as $category) {
-                if ($index == 0) {
-                    $qb->andWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                } else {
-                    $qb->orWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                }
-                $index++;
-            }
-        }
-        $qb->orWhere('q.id = :searchid')
-            ->setParameter('searchid', $searchid)
-            ->addOrderBy('q.pinned', 'DESC')
-            ->addOrderBy('q.time', 'DESC')
-            ->setFirstResult($firstresult)
-            ->setMaxResults(3);
-
-
-        $qb2 = $this->db->getQueryBuilder();
-
-        $qb2->selectAlias($qb2->createFunction('COUNT(*)'), 'count')
-            ->from($this->getTableName(), 'q')
-            ->where('LOWER(q.title) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
-            ->setParameter('search', '%' . $search . '%');
-        if ($categories != '') {
-            $index = 0;
-            foreach ($categoryArray as $category) {
                 if ($index == 0) {
                     $qb2->andWhere('q.category = :category' . $index)
                         ->setParameter('category' . $index, $category);
@@ -120,26 +103,63 @@ class NewsMapper extends QBMapper
                 $index++;
             }
         }
+        if ($startDate != "") {
+            $qb2->andWhere('q.time >= :startdate')
+                ->setParameter('startdate', $time['time']);
+        } else {
+            $qb2->andWhere('q.time >= :startdate')
+                ->setParameter('startdate', strtotime($startDate));
+        }
+
+        if ($endDate != "") {
+            $qb2->andWhere('q.time >= :enddate')
+                ->setParameter('enddate', $time['time']);
+        } else {
+            $qb2->andWhere('q.time >= :enddate')
+                ->setParameter('enddate', strtotime($endDate));
+        }
 
         $qb2->orWhere('q.id = :searchid')
+            ->setParameter('searchid', $searchid)
+            ->addOrderBy('q.pinned', 'DESC')
+            ->addOrderBy('q.time', 'DESC')
+            ->setFirstResult($firstresult)
+            ->setMaxResults(3);
+
+
+        $qb3 = $this->db->getQueryBuilder();
+
+        $qb3->selectAlias($qb3->createFunction('COUNT(*)'), 'count')
+            ->from($this->getTableName(), 'q')
+            ->where('LOWER(q.title) LIKE LOWER(:search)')
+            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
+            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
+            ->setParameter('search', '%' . $search . '%');
+        if ($categories != '') {
+            $index = 0;
+            foreach ($categoryArray as $category) {
+                if ($index == 0) {
+                    $qb3->andWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                } else {
+                    $qb3->orWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                }
+                $index++;
+            }
+        }
+
+        $qb3->orWhere('q.id = :searchid')
             ->setParameter('searchid', $searchid);
 
 
-        $cursor = $qb2->execute();
+        $cursor = $qb3->execute();
         $row = $cursor->fetch();
         $cursor->closeCursor();
 
-        $qb3 = $this->db->getQueryBuilder();
-        $qb3->select('time')
-            ->from($this->getTableName(), 'q')
-            ->addOrderBy('q.time', 'ASC')
-            ->setMaxResults(1);
 
-        $cursor = $qb3->execute();
-        $time = $cursor->fetch();
-        $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count'], $time, strtotime($startDate), strtotime($endDate)];
+        return [$this->findEntities($qb2), $row['count'], $time];
     }
 
     /**
