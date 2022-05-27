@@ -64,7 +64,7 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function index(int $id, string $search, string $categories, ArrayObject $dateFilter): DataResponse
+    public function index(int $id, string $search, string $categories, array $dateFilter): DataResponse
     {
         $user = $this->session->getUser();
         if ($this->isAdmin()) {
