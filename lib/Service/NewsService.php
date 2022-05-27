@@ -60,7 +60,7 @@ class NewsService
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
 			$qb = $this->mapper->findAll($firstresult, $search, '', substr($search, 1));
 		} else {
-			$qb = $this->mapper->findAll($firstresult, $search, $categories, '', $dateFilter->getStart(), $dateFilter->getEnd());
+			$qb = $this->mapper->findAll($firstresult, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
 		}
 
 		return $qb;
@@ -73,7 +73,7 @@ class NewsService
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
 			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', substr($search, 1));
 		} else {
-			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, $categories, '', $dateFilter->getStart(), $dateFilter->getEnd());
+			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
 		}
 
 		return $qb;
