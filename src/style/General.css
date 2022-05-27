@@ -220,8 +220,7 @@ body {
     width: 280px;
     height: auto;
     border-radius: 15px;
-    background: url("../patterns/brilliant.png"),
-        var(--color-mode-2);
+    background: var(--color-mode-2);
     box-shadow: 2px 2px 3px rgb(55 84 170 / 15%),
         0px 0px 4px rgb(255 255 255 / 0%), 7px 7px 15px rgb(55 84 170 / 15%),
         -7px -7px 20px rgb(0 0 0 / 10%), 0px 0px 4px rgb(255 255 255 / 20%) !important;
