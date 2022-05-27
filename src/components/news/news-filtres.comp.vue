@@ -55,8 +55,8 @@ export default {
     },
     minEndDate() {
       console.log(this.datefilter)
-      var min = new Date(this.datefilter.start)
-      min.setDate(min.getDate() + 1)
+      var min = new Date(this.datefilter.end)
+      min.setDate(min.getDate() - 1)
       return min
     },
     datefilter: {
@@ -94,7 +94,7 @@ export default {
 
     return {
       selected: [],
-      minStartDate: new Date(this.minDate),
+      minStartDate: new Date(this.minDate * 1000),
       maxStartDate: maxStart,
       defaultStartDate: defaultStart,
       maxEndDate: today
