@@ -125,7 +125,7 @@
     }
 }
 
-#Home:not([isonsite]) #apps {
+#App:not([isonsite]) #apps {
     display: none;
 }
 

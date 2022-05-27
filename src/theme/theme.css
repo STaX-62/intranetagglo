@@ -109,7 +109,7 @@
   --color-mode-contrast-4: rgb(0 0 0 / 60%);
 }
 
-#Home.dark {
+#App.dark {
   /** darkmode **/
   --color-background-1: linear-gradient(to right top,
       #2F3136,
@@ -143,7 +143,7 @@
   --color-mode-contrast-4: rgb(255 255 255 / 70%);
 }
 
-#Home.dark modal {
+#App.dark modal {
   --background-color: var(--color-step-100);
   --toolbar-background: var(--color-step-150);
   --toolbar-border-color: var(--color-step-250);
@@ -154,7 +154,7 @@
      * -------------------------------------------
      */
 
-.md #Home.dark {
+.md #App.dark {
   --background-color: #121212;
   --background-color-rgb: 18, 18, 18;
   --text-color: #ffffff;
