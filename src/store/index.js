@@ -44,6 +44,8 @@ export default new Vuex.Store({
       state.search = search;
     },
     updateCategories(state, categoryfilter) {
+      console.log("here2", categoryfilter)
+      state.newsupdating = true
       state.categoryfilter = categoryfilter;
     },
     updateDateFilter(state, dates) {
