@@ -139,7 +139,7 @@ class NewsMapper extends QBMapper
         $time = $cursor->fetch();
         $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count'], $time, $startDate, $endDate];
+        return [$this->findEntities($qb), $row['count'], $time, strtotime($startDate), strtotime($endDate)];
     }
 
     /**
