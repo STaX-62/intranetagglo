@@ -114,7 +114,7 @@ class NewsMapper extends QBMapper
                 ->setParameter('enddate', time());
         } else {
             $qb2->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', strtotime($endDate));
+                ->setParameter('enddate', strtotime($endDate) + (60 * 60 * 24));
         }
 
         $qb2->orWhere('q.id = :searchid')
