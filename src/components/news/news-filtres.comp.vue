@@ -55,7 +55,7 @@ export default {
       return this.$store.state.categoryoptions
     },
     minEndDate() {
-      var min = new Date(this.datefilter.start)
+      var min = new Date(this.startDate)
       min.setDate(min.getDate() + 1)
       return min
     },
