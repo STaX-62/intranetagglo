@@ -67,7 +67,7 @@ export default {
         return this.$store.state.datefilter.start
       },
       set(value) {
-        this.$store.commit('updateEndDate', value)
+        this.$store.commit('updateStartDate', value)
       }
     },
     endDate: {
@@ -75,7 +75,7 @@ export default {
         return this.$store.state.datefilter.end
       },
       set(value) {
-        this.$store.commit('updateStartDate', value)
+        this.$store.commit('updateEndDate', value)
       }
     },
     categoryfilter: {
