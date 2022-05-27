@@ -47,7 +47,19 @@ import store from '@/store/index.js'
 export default {
   name: 'Filtres',
   store: store,
+  watch: {
+    // whenever question changes, this function will run
+    datefilter(newsDateFilter, oldDateFilter) {
+      if (newsDateFilter != oldDateFilter) {
+        this.$store.commit('setNewsUpdating', true)
+        this.$store.commit('updateDateFilter', newsDateFilter)
+      }
+    }
+  },
   computed: {
+    datefilter() {
+      return this.$store.state.datefilter
+    },
     darkmode() {
       return this.$store.state.darkmode
     },
@@ -61,15 +73,6 @@ export default {
     },
     minStartDate() {
       return new Date(this.minDate * 1000)
-    },
-    datefilter: {
-      get() {
-        return this.$store.state.datefilter
-      },
-      set(value) {
-        this.$store.commit('setNewsUpdating', true)
-        this.$store.commit('updateDateFilter', value)
-      }
     },
     categoryfilter: {
       get() {
