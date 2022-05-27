@@ -67,7 +67,7 @@ export default {
         return this.$store.state.datefilter
       },
       set(value) {
-        console.log(value)
+        this.$store.commit('setNewsUpdating', true)
         this.$store.commit('updateDateFilter', value)
       }
     },
