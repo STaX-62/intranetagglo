@@ -47,6 +47,7 @@ export default new Vuex.Store({
       state.categoryfilter = categoryfilter;
     },
     updateDateFilter(state, dates) {
+      state.newsupdating = true
       state.datefilter = dates
     },
     setUser(state, user) {
