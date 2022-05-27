@@ -1,15 +1,14 @@
 <template>
   <div
-    id="Home"
-    v-bind:class="darkmodestring"
-    ref="Home"
-    v-bind:pattern="patterns"
-    v-bind:variant="backgroundcolor"
-    v-bind:isonsite="isOnSite"
+    id="App"
+    :class="darkmode ? 'dark' : ''"
+    :pattern="patterns"
+    :variant="backgroundColor"
+    :isonsite="isOnSite"
   >
     <div id="settings-box" class="settings-box hidden">
       <b-icon id="cog" name="cog" class="cog" icon="gear"></b-icon>
-      <label id="cog-label" for="cog" style="position:absolute">Paramètres</label>
+      <label id="cog-label" for="cog">Paramètres</label>
       <input type="checkbox" class="checkbox" id="checkbox" v-model="darkmode" />
       <label for="checkbox" class="label">
         <b-icon icon="moon" style="color: #f1c40f;"></b-icon>
@@ -32,38 +31,35 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 
 export default {
-  name: 'Home',
+  name: 'App',
   components: {
     Navigation,
     Settings,
     News
   },
-  data: function () {
+  data() {
     return {
-      darkmodestring: null,
-      darkmode: null,
+      darkmode: false,
       patterns: '6',
-      backgroundcolor: '2',
+      backgroundColor: '2',
       isOnSite: false
     }
   },
   watch: {
     darkmode: function (val) {
       if (val) {
-        localStorage.setItem('color_scheme', 'dark');
-        this.darkmodestring = 'dark'
-        this.darkmode = 'dark'
-        this.$store.commit('setDarkmode', true)
+        localStorage.setItem('intranetagglo_color_scheme', 'dark');
+        this.$store.commit('setDarkmode', this.darkmode)
       }
       else {
-        localStorage.setItem('color_scheme', 'light');
-        this.darkmodestring = ''
-        this.$store.commit('setDarkmode', false)
+        localStorage.setItem('intranetagglo_color_scheme', 'light');
+        this.$store.commit('setDarkmode', this.darkmode)
       }
     }
   },
   mounted: function () {
     axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => this.isOnSite = response.data)
+
     document.getElementById('cog').addEventListener("click", () => {
       document.getElementById('Settings').classList.toggle('hidden')
       document.getElementById('apps-container').classList.toggle('hidden')
@@ -71,25 +67,21 @@ export default {
     });
   },
   created: function () {
-    var current_scheme = localStorage.getItem('color_scheme');
-    var patterns = localStorage.getItem('patterns');
-    var variant = localStorage.getItem('variant');
+    var current_scheme = localStorage.getItem('intranetagglo_color_scheme');
+    var patterns = localStorage.getItem('intranetagglo_patterns');
+    var variant = localStorage.getItem('intranetagglo_variant');
 
     if (current_scheme) {
       if (current_scheme === 'dark') {
-        this.darkmodestring = 'dark';
-        this.darkmode = true
-        this.$store.commit('setDarkmode', true)
-      }
-      else {
-        this.darkmodestring = '';
+        this.darkmode = !this.darkmode;
+        this.$store.commit('setDarkmode', this.darkmode)
       }
     }
     if (patterns) {
       this.patterns = patterns;
     }
     if (variant) {
-      this.backgroundcolor = variant;
+      this.backgroundColor = variant;
     }
   }
 }

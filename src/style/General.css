@@ -400,6 +400,7 @@ input[type="checkbox"].checkbox+label::before {
 
     .settings-box #cog-label {
         display: none;
+        position:absolute
     }
 
     .cog {

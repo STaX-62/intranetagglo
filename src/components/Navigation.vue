@@ -137,7 +137,7 @@ export default {
   height: 100%;
   width: 250px;
   z-index: 1;
-  background: url("../patterns/brilliant.png"), var(--color-mode-3);
+  background: var(--color-mode-3);
   box-shadow: var(--color-mode-shadow-1) 3px 0px 3px 0px,
     var(--color-mode-shadow-2) 0px 0px 2px 0px,
     var(--color-mode-shadow-3) 0px 0px 5px 2px;

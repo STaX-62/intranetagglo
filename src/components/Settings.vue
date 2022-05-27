@@ -43,15 +43,15 @@ export default {
     function Pattern(e) {
       var pattern = document.createAttribute("pattern");
       pattern.value = e.target.value;
-      localStorage.setItem('patterns', e.target.value);
-      document.getElementById('Home').attributes.setNamedItem(pattern)
+      localStorage.setItem('intranetagglo_patterns', e.target.value);
+      document.getElementById('App').attributes.setNamedItem(pattern)
     }
 
     function Variant(e) {
       var variant = document.createAttribute("variant");
       variant.value = e.target.value;
-      localStorage.setItem('variant', e.target.value);
-      document.getElementById('Home').attributes.setNamedItem(variant)
+      localStorage.setItem('intranetagglo_variant', e.target.value);
+      document.getElementById('App').attributes.setNamedItem(variant)
     }
 
     document.getElementById('close').addEventListener("click", () => {
@@ -63,8 +63,8 @@ export default {
     document.getElementById('variant-select').addEventListener("change", Variant);
   },
   created: function () {
-    var patterns = localStorage.getItem('patterns');
-    var variant = localStorage.getItem('variant');
+    var patterns = localStorage.getItem('intranetagglo_patterns');
+    var variant = localStorage.getItem('intranetagglo_variant');
 
     if (patterns) {
       this.patterns = patterns;
