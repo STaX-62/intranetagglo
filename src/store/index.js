@@ -44,14 +44,16 @@ export default new Vuex.Store({
       state.search = search;
     },
     updateCategories(state, categoryfilter) {
-      console.log("here2", categoryfilter)
       state.newsupdating = true
       state.categoryfilter = categoryfilter;
     },
-    updateDateFilter(state, dates) {
-      console.log("here", dates)
+    updateStartDate(state, date) {
       state.newsupdating = true
-      state.datefilter = dates
+      state.datefilter.start = date
+    },
+    updateEndDate(state, date) {
+      state.newsupdating = true
+      state.datefilter.end = date
     },
     setUser(state, user) {
       state.username = user[0]

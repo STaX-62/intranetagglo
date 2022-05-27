@@ -4,7 +4,7 @@
     <b-form-group label="Par Date">
       <b-form-datepicker
         id="picker-début"
-        v-model="datefilter.start"
+        v-model="startDate"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
@@ -18,7 +18,7 @@
       ></b-form-datepicker>
       <b-form-datepicker
         id="picker-fin"
-        v-model="datefilter.end"
+        v-model="endDate"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         :min="minEndDate"
         :max="maxEndDate"
@@ -62,12 +62,20 @@ export default {
     minStartDate() {
       return new Date(this.minDate * 1000)
     },
-    datefilter: {
+    startDate: {
       get() {
-        return this.$store.state.datefilter
+        return this.$store.state.datefilter.start
       },
       set(value) {
-        this.$store.commit('updateDateFilter', value)
+        this.$store.commit('updateEndDate', value)
+      }
+    },
+    endDate: {
+      get() {
+        return this.$store.state.datefilter.end
+      },
+      set(value) {
+        this.$store.commit('updateStartDate', value)
       }
     },
     categoryfilter: {
