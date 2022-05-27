@@ -103,7 +103,7 @@ class NewsMapper extends QBMapper
                 $index++;
             }
         }
-        if ($startDate != "") {
+        if ($startDate == "") {
             $qb2->andWhere('q.time >= :startdate')
                 ->setParameter('startdate', $time['time']);
         } else {
@@ -111,7 +111,7 @@ class NewsMapper extends QBMapper
                 ->setParameter('startdate', strtotime($startDate));
         }
 
-        if ($endDate != "") {
+        if ($endDate == "") {
             $qb2->andWhere('q.time <= :enddate')
                 ->setParameter('enddate', time());
         } else {
@@ -159,7 +159,7 @@ class NewsMapper extends QBMapper
 
 
 
-        return [$this->findEntities($qb2), $row['count'], $time];
+        return [$this->findEntities($qb2), $row['count'], $time , time()];
     }
 
     /**
