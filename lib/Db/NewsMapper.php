@@ -132,7 +132,7 @@ class NewsMapper extends QBMapper
         $qb3 = $this->db->getQueryBuilder();
         $qb3->select('time')
             ->from($this->getTableName(), 'q')
-            ->addOrderBy('q.time', 'DESC')
+            ->addOrderBy('q.time', 'ASC')
             ->setMaxResults(1);
 
         $cursor = $qb3->execute();
