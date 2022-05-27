@@ -67,9 +67,13 @@ export default {
       }
     }
   },
+  props: {
+    minDate: Number
+  },
   data: function () {
     return {
-      selected: []
+      selected: [],
+      max: new Date()
     }
   }
 }

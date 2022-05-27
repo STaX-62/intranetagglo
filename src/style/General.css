@@ -398,8 +398,7 @@ input[type="checkbox"].checkbox+label::before {
         width: 80px;
     }
 
-    .settings-box #cog-label {
-        display: none;
+    #cog-label {
         position: fixed;
     }
 

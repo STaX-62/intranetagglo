@@ -7,7 +7,7 @@
         <button id="news-filtres">
           <b-icon icon="filter"></b-icon>
         </button>
-        <Filtres />
+        <Filtres :minDate="minDate" />
         <NewsAdd v-if="isAdmin" />
       </div>
       <div id="news-row" class="news-row" :focus="newfocus">
@@ -77,7 +77,7 @@ export default {
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
-            console.log(response.data)
+            this.minDate = response.data[2];
             this.$store.commit('setNewsUpdating', false)
           })
       }
@@ -91,7 +91,8 @@ export default {
       page: 1,
       rows: 0,
       focus: "",
-      timer: undefined
+      timer: undefined,
+      minDate: 0
     }
   },
   computed: {
@@ -175,6 +176,7 @@ export default {
       .then((response) => {
         this.news = response.data[0];
         this.rows = response.data[1];
+        this.minDate = response.data[2];
       })
   },
   destroyed() {

@@ -124,11 +124,22 @@ class NewsMapper extends QBMapper
         $qb2->orWhere('q.id = :searchid')
             ->setParameter('searchid', $searchid);
 
+
         $cursor = $qb2->execute();
         $row = $cursor->fetch();
         $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count']];
+        $qb3 = $this->db->getQueryBuilder();
+        $qb3->select('time')
+            ->from($this->getTableName(), 'q')
+            ->addOrderBy('q.time', 'DESC')
+            ->setMaxResults(1);
+
+        $cursor = $qb3->execute();
+        $time = $cursor->fetch();
+        $cursor->closeCursor();
+
+        return [$this->findEntities($qb), $row['count'], $time];
     }
 
     /**
@@ -210,7 +221,17 @@ class NewsMapper extends QBMapper
         $row = $cursor->fetch();
         $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count']];
+        $qb3 = $this->db->getQueryBuilder();
+        $qb3->select('time')
+            ->from($this->getTableName(), 'q')
+            ->addOrderBy('q.time', 'ASC')
+            ->setMaxResults(1);
+
+        $cursor = $qb3->execute();
+        $time = $cursor->fetch();
+        $cursor->closeCursor();
+
+        return [$this->findEntities($qb), $row['count'], $time];
     }
 
 
