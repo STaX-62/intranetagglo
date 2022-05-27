@@ -73,7 +73,7 @@ export default {
     updating: function (val) {
       if (val) {
         var url = `apps/intranetagglo/news/${this.currentPage - 1}`
-        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter.join(';') }, { type: 'application/json' })
+        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter.join(';'), dateFilter: this.dateFilter }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
@@ -126,6 +126,11 @@ export default {
         return this.$store.state.categoryfilter
       },
     },
+    dateFilter: {
+      get() {
+        return this.$store.state.datefilter
+      },
+    },
     currentPage: {
       get() {
         return this.page
@@ -172,7 +177,7 @@ export default {
       this.$store.commit('setUser', response.data)
     })
     var url = `apps/intranetagglo/news/${this.currentPage - 1}`
-    axios.post(generateUrl(url), { 'id': 0, 'search': this.search, 'categories': '' }, { type: 'application/json' })
+    axios.post(generateUrl(url), { 'id': 0, 'search': this.search, 'categories': '', dateFilter: this.dateFilter }, { type: 'application/json' })
       .then((response) => {
         this.news = response.data[0];
         this.rows = response.data[1];

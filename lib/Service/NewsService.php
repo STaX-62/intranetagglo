@@ -53,27 +53,27 @@ class NewsService
 		return $this->mapper->getLastPinned();
 	}
 
-	public function findAll($firstresult, $search, $categories): array
+	public function findAll($firstresult, $search, $categories, $dateFilter): array
 	{
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
 			$qb = $this->mapper->findAll($firstresult, $search, '', substr($search, 1));
 		} else {
-			$qb = $this->mapper->findAll($firstresult, $search, $categories, '');
+			$qb = $this->mapper->findAll($firstresult, $search, $categories, '', $dateFilter->getStart(), $dateFilter->getEnd());
 		}
 
 		return $qb;
 	}
 
-	public function findByGroups(int $firstresult, array $groups, string $search, string $categories): array
+	public function findByGroups(int $firstresult, array $groups, string $search, string $categories, $dateFilter): array
 	{
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
 			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', substr($search, 1));
 		} else {
-			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, $categories, '');
+			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, $categories, '', $dateFilter->getStart(), $dateFilter->getEnd());
 		}
 
 		return $qb;

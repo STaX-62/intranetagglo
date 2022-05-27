@@ -67,7 +67,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAll($firstresult, string $search, string $categories, string $searchid): array
+    public function findAll($firstresult, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
     {
         $categoryArray = explode(';', $categories);
         /* @var $qb IQueryBuilder */
@@ -139,7 +139,7 @@ class NewsMapper extends QBMapper
         $time = $cursor->fetch();
         $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count'], $time];
+        return [$this->findEntities($qb), $row['count'], $time, $startDate, $endDate];
     }
 
     /**

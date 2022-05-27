@@ -2,6 +2,7 @@
 
 namespace OCA\IntranetAgglo\Controller;
 
+use ArrayObject;
 use OCA\IntranetAgglo\AppInfo\Application;
 
 use OCP\IRequest;
@@ -63,13 +64,13 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function index(int $id, string $search, string $categories): DataResponse
+    public function index(int $id, string $search, string $categories, ArrayObject $dateFilter): DataResponse
     {
         $user = $this->session->getUser();
         if ($this->isAdmin()) {
-            return (new DataResponse($this->service->findAll($id, $search, $categories)));
+            return (new DataResponse($this->service->findAll($id, $search, $categories, $dateFilter)));
         }
-        return (new DataResponse($this->service->findByGroups($id, $this->groupManager->getUserGroupIds($user), $search, $categories)));
+        return (new DataResponse($this->service->findByGroups($id, $this->groupManager->getUserGroupIds($user), $search, $categories, $dateFilter)));
     }
 
     /**

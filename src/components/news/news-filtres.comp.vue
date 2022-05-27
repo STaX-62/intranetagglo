@@ -22,6 +22,7 @@
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         :min="minEndDate"
         :max="maxEndDate"
+        :initial-date="maxEndDate"
         locale="fr-FR"
         hide-header="true"
         size="sm"
@@ -54,13 +55,11 @@ export default {
       return this.$store.state.categoryoptions
     },
     minEndDate() {
-      console.log(this.datefilter)
       var min = new Date(this.datefilter.start)
-      min.setDate(min.getDate() - 1)
+      min.setDate(min.getDate() + 1)
       return min
     },
     minStartDate() {
-      console.log(new Date(this.minDate * 1000))
       return new Date(this.minDate * 1000)
     },
     datefilter: {
