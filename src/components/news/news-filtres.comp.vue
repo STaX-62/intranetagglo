@@ -9,16 +9,23 @@
         locale="fr-FR"
         hide-header="true"
         size="sm"
+        :value="defaultStartDate"
+        :min="minDate"
+        :maxStartDate="max"
         placeholder="Date de Début"
+        value-as-date
       ></b-form-datepicker>
       <b-form-datepicker
         id="picker-fin"
         v-model="datefilter.end"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+        :min="minEndDate"
+        :max="maxEndDate"
         locale="fr-FR"
         hide-header="true"
         size="sm"
         placeholder="Date de Fin"
+        value-as-date
       ></b-form-datepicker>
     </b-form-group>
     <b-form-group label="Par catégorie">
@@ -44,6 +51,12 @@ export default {
     },
     categoryoptions() {
       return this.$store.state.categoryoptions
+    },
+    minEndDate() {
+      console.log(this.datefilter)
+      var min = new Date(this.datefilter.start)
+      min.setDate(min.getDate() + 1)
+      return min
     },
     datefilter: {
       get() {
@@ -71,9 +84,18 @@ export default {
     minDate: Number
   },
   data: function () {
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const maxStart = new Date(today)
+    maxStart.setDate(maxStart.getDate() - 1)
+    const defaultStart = new Date(today)
+    defaultStart.setMonth(defaultStart.getMonth() - 3)
+
     return {
       selected: [],
-      max: new Date()
+      maxStartDate: maxStart,
+      defaultStartDate: defaultStart,
+      maxEndDate: today
     }
   }
 }

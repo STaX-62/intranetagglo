@@ -77,7 +77,7 @@ export default {
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
-            this.minDate = response.data[2];
+            this.minDate = response.data[2].time;
             this.$store.commit('setNewsUpdating', false)
           })
       }
@@ -176,7 +176,7 @@ export default {
       .then((response) => {
         this.news = response.data[0];
         this.rows = response.data[1];
-        this.minDate = response.data[2];
+        this.minDate = response.data[2].time;
       })
   },
   destroyed() {
