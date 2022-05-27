@@ -112,10 +112,10 @@ class NewsMapper extends QBMapper
         }
 
         if ($endDate != "") {
-            $qb2->andWhere('q.time >= :enddate')
+            $qb2->andWhere('q.time <= :enddate')
                 ->setParameter('enddate', time());
         } else {
-            $qb2->andWhere('q.time >= :enddate')
+            $qb2->andWhere('q.time <= :enddate')
                 ->setParameter('enddate', strtotime($endDate));
         }
 
