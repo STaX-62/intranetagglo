@@ -10,8 +10,9 @@
         hide-header="true"
         size="sm"
         :value="defaultStartDate"
-        :min="minDate"
-        :maxStartDate="max"
+        :min="minStartDate"
+        :max="maxStartDate"
+        :initial-date="minStartDate"
         placeholder="Date de Début"
         value-as-date
       ></b-form-datepicker>
@@ -93,6 +94,7 @@ export default {
 
     return {
       selected: [],
+      minStartDate: new Date(this.minDate),
       maxStartDate: maxStart,
       defaultStartDate: defaultStart,
       maxEndDate: today
