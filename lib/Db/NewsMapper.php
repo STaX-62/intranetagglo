@@ -69,6 +69,7 @@ class NewsMapper extends QBMapper
      */
     public function findAll($firstresult, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
     {
+        $categoryArray = explode(';', $categories);
 
         $qb = $this->db->getQueryBuilder();
         $qb->select('time')
@@ -80,9 +81,6 @@ class NewsMapper extends QBMapper
         $time = $cursor->fetch();
         $cursor->closeCursor();
 
-
-        $categoryArray = explode(';', $categories);
-        /* @var $qb IQueryBuilder */
         $qb2 = $this->db->getQueryBuilder();
         $qb2->select('*')
             ->from($this->getTableName(), 'q')
@@ -165,7 +163,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findByGroups(int $firstresult, array $groupsArray, string $search, string $categories, string $searchid): array
+    public function findByGroups(int $firstresult, array $groupsArray, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
     {
         $groups = '%';
         foreach ($groupsArray as $group) {
@@ -173,44 +171,18 @@ class NewsMapper extends QBMapper
         }
         $categoryArray = explode(';', $categories);
 
-        /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
-        $qb->select('*')
+        $qb->select('time')
             ->from($this->getTableName(), 'q')
-            ->where('LOWER(q.title) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
-            ->setParameter('search', '%' . $search . '%');
-        if ($categories != '') {
-            $index = 0;
-            foreach ($categoryArray  as $category) {
-                if ($index == 0) {
-                    $qb->andWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                } else {
-                    $qb->orWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                }
-                $index++;
-            }
-        }
-        $qb->orWhere('q.id = :searchid')
-            ->andWhere("q.groups = ''")
-            ->orWhere("q.groups LIKE :groups")
-            ->andWhere("q.visible = '1'")
-            ->setParameter('groups', $groups)
+            ->addOrderBy('q.time', 'ASC')
+            ->setMaxResults(1);
 
-            ->setParameter('searchid', $searchid)
-
-            ->addOrderBy('q.pinned', 'DESC')
-            ->addOrderBy('q.time', 'DESC')
-            ->setFirstResult($firstresult)
-            ->setMaxResults(3);
-
+        $cursor = $qb->execute();
+        $time = $cursor->fetch();
+        $cursor->closeCursor();
 
         $qb2 = $this->db->getQueryBuilder();
-
-        $qb2->selectAlias($qb2->createFunction('COUNT(*)'), 'count')
+        $qb2->select('*')
             ->from($this->getTableName(), 'q')
             ->where('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
@@ -229,7 +201,57 @@ class NewsMapper extends QBMapper
                 $index++;
             }
         }
+        if ($startDate == "") {
+            $qb2->andWhere('q.time >= :startdate')
+                ->setParameter('startdate', $time['time']);
+        } else {
+            $qb2->andWhere('q.time >= :startdate')
+                ->setParameter('startdate', strtotime($startDate));
+        }
+
+        if ($endDate == "") {
+            $qb2->andWhere('q.time <= :enddate')
+                ->setParameter('enddate', time());
+        } else {
+            $qb2->andWhere('q.time <= :enddate')
+                ->setParameter('enddate', strtotime($endDate));
+        }
         $qb2->orWhere('q.id = :searchid')
+            ->andWhere("q.groups = ''")
+            ->orWhere("q.groups LIKE :groups")
+            ->andWhere("q.visible = '1'")
+            ->setParameter('groups', $groups)
+
+            ->setParameter('searchid', $searchid)
+
+            ->addOrderBy('q.pinned', 'DESC')
+            ->addOrderBy('q.time', 'DESC')
+            ->setFirstResult($firstresult)
+            ->setMaxResults(3);
+
+
+        $qb3 = $this->db->getQueryBuilder();
+
+        $qb3->selectAlias($qb3->createFunction('COUNT(*)'), 'count')
+            ->from($this->getTableName(), 'q')
+            ->where('LOWER(q.title) LIKE LOWER(:search)')
+            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
+            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
+            ->setParameter('search', '%' . $search . '%');
+        if ($categories != '') {
+            $index = 0;
+            foreach ($categoryArray  as $category) {
+                if ($index == 0) {
+                    $qb3->andWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                } else {
+                    $qb3->orWhere('q.category = :category' . $index)
+                        ->setParameter('category' . $index, $category);
+                }
+                $index++;
+            }
+        }
+        $qb3->orWhere('q.id = :searchid')
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
@@ -237,21 +259,13 @@ class NewsMapper extends QBMapper
 
             ->setParameter('searchid', $searchid);
 
-        $cursor = $qb2->execute();
+        $cursor = $qb3->execute();
         $row = $cursor->fetch();
         $cursor->closeCursor();
 
-        $qb3 = $this->db->getQueryBuilder();
-        $qb3->select('time')
-            ->from($this->getTableName(), 'q')
-            ->addOrderBy('q.time', 'ASC')
-            ->setMaxResults(1);
 
-        $cursor = $qb3->execute();
-        $time = $cursor->fetch();
-        $cursor->closeCursor();
 
-        return [$this->findEntities($qb), $row['count'], $time];
+        return [$this->findEntities($qb2), $row['count'], $time];
     }
 
 
