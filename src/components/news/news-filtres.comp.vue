@@ -55,9 +55,13 @@ export default {
     },
     minEndDate() {
       console.log(this.datefilter)
-      var min = new Date(this.datefilter.end)
+      var min = new Date(this.datefilter.start)
       min.setDate(min.getDate() - 1)
       return min
+    },
+    minStartDate() {
+      console.log(new Date(this.minDate * 1000))
+      return new Date(this.minDate * 1000)
     },
     datefilter: {
       get() {
@@ -91,10 +95,8 @@ export default {
     maxStart.setDate(maxStart.getDate() - 1)
     const defaultStart = new Date(today)
     defaultStart.setMonth(defaultStart.getMonth() - 3)
-
     return {
       selected: [],
-      minStartDate: new Date(this.minDate * 1000),
       maxStartDate: maxStart,
       defaultStartDate: defaultStart,
       maxEndDate: today
