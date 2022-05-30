@@ -226,6 +226,7 @@ export default {
       if (menu.menuid == 0 && menu.submenuid == 0) {
         this.modifying.icon = null;
       }
+      console.log(this.modifying)
       this.detailed = !this.detailed;
     },
     AddSubmenu(Sindex, Mindex) {

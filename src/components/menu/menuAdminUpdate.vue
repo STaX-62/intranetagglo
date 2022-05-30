@@ -6,12 +6,12 @@
         <label for="title">Titre</label>
         <b-form-input name="title" type="text" v-model="newMenu.title" />
       </div>
-      <div v-if="menuToUpdate.haschild != true && !redirectToFile">
+      <div v-if="newMenu.haschild != true && !redirectToFile">
         <label for="link">Lien URL</label>
         <b-form-input name="link" type="text" v-model="newMenu.link" />
         <button @click="redirectToFile = !redirectToFile">Rediriger vers un fichier</button>
       </div>
-      <div v-if="menuToUpdate.haschild != true && redirectToFile">
+      <div v-if="newMenu.haschild != true && redirectToFile">
         <label for="file">Redirection vers Un fichier (Remplace le lien)</label>
         <b-form-file
           name="file"
@@ -22,7 +22,7 @@
         ></b-form-file>
         <button @click="redirectToFile = !redirectToFile">Rediriger vers une URL</button>
       </div>
-      <div v-if="menuToUpdate.icon != null">
+      <div v-if="newMenu.icon != null">
         <label for="icon">icon</label>
         <b-form-input name="icon" type="text" v-model="newMenu.icon" />
       </div>
@@ -80,6 +80,7 @@ export default {
     menu: {
       handler(val) {
         this.newMenu = this.menu
+        console.log(this.newMenu)
       },
       deep: true
     },
