@@ -82,8 +82,11 @@ export default {
       }
     },
     OpenNews() {
-      if (this.$store.state.newsfocus == '') {
+      if (this.$store.state.newsfocus == '' && this.news.link != "") {
         this.$store.commit('updateNewsFocus', this.arrayid)
+      }
+      if (this.news.link != "") {
+        window.open(this.news.link, '_blank');
       }
     },
   },

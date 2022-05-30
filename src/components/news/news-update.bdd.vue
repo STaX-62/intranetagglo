@@ -75,6 +75,11 @@
               </b-th>
             </b-tr>
             <b-tr>
+              <b-th>
+                <b-button @click="link = !link" variant="light"></b-button>
+              </b-th>
+            </b-tr>
+            <b-tr v-if="!link">
               <b-th colspan="4">
                 <label for="text">Contenu de l'actualité</label>
                 <VueTrix
@@ -83,6 +88,12 @@
                   v-model="autocomplete.text"
                   placeholder="Contenu de l'actualité une fois étendue..."
                 />
+              </b-th>
+            </b-tr>
+            <b-tr v-else>
+              <b-th colspan="4">
+                <label for="link">Lien de redirection de L'actualité</label>
+                <b-form-input name="link" v-model="autocomplete.link"></b-form-input>
               </b-th>
             </b-tr>
             <b-tr>
@@ -144,6 +155,9 @@ export default {
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
       this.autocomplete.groups = this.autocomplete.groups.join(';')
+      if (link) {
+        this.autocomplete.text = ""
+      }
       this.updateNews(this.autocomplete, this.newimage)
     },
     async updateNews(news, newimage) {
@@ -158,6 +172,8 @@ export default {
       data.append('photolink', news.photo);
       data.append('category', news.category);
       data.append('groups', news.groups);
+      data.append('link', news.link);
+
 
       axios.post(generateUrl(`apps/intranetagglo/news/update/${news.id}`), data, {
         headers: {
@@ -203,7 +219,8 @@ export default {
       newcategory: "",
       categoryoptions: [],
       test: "",
-      newimage: null
+      newimage: null,
+      link: false
     }
   }
 }

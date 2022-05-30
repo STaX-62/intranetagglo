@@ -85,7 +85,7 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function create(string $title, string $subtitle, string $text,  string $category,  string $groups)
+    public function create(string $title, string $subtitle, string $text,  string $category,  string $groups, string $link)
     {
         $user = $this->session->getUser();
         if ($this->isAdmin()) {
@@ -101,7 +101,7 @@ class NewsController extends Controller
                     }
                 }
             }
-            return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $this->timeFactory->getTime(), 0, 0);
+            return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $link, $this->timeFactory->getTime(), 0, 0);
         }
         return 'User is not admin';
     }
@@ -109,10 +109,10 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function update(int $id, string $title, string $subtitle, string $text,  string $photolink,  string $category,  string $groups)
+    public function update(int $id, string $title, string $subtitle, string $text,  string $photolink,  string $category,  string $groups, string $link)
     {
         if ($this->isAdmin()) {
-            return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups) {
+            return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups, $link) {
                 $photourl = $photolink;
                 if (isset($_FILES['photo_upd'])) {
                     if (file_exists($_FILES['photo_upd']['tmp_name'])) {
@@ -128,7 +128,7 @@ class NewsController extends Controller
                     }
                 }
 
-                return $this->service->update($id, $title, $subtitle, $text, $photourl, $category, $groups);
+                return $this->service->update($id, $title, $subtitle, $text, $photourl, $category, $groups, $link);
             });
         }
         return 'User is not admin';

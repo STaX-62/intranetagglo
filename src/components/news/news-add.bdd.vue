@@ -65,6 +65,11 @@
               </b-th>
             </b-tr>
             <b-tr>
+              <b-th>
+                <b-button @click="link = !link" variant="light"></b-button>
+              </b-th>
+            </b-tr>
+            <b-tr v-if="!link">
               <b-th colspan="4">
                 <label for="text">Contenu de l'actualité</label>
                 <VueTrix
@@ -73,6 +78,12 @@
                   v-model="news.text"
                   placeholder="Contenu de l'actualité une fois étendue..."
                 />
+              </b-th>
+            </b-tr>
+            <b-tr v-else>
+              <b-th colspan="4">
+                <label for="link">Lien de redirection de L'actualité</label>
+                <b-form-input name="link" v-model="news.link"></b-form-input>
               </b-th>
             </b-tr>
             <b-tr>
@@ -131,6 +142,9 @@ export default {
     AddNews() {
       this.news.author = this.$store.state.username
       this.news.groups = this.news.groups.join(';')
+      if (link) {
+        this.news.text = ""
+      }
       this.createNews(this.news)
       this.news = {
         title: "",
@@ -138,7 +152,8 @@ export default {
         text: "",
         photo: null,
         category: "",
-        groups: []
+        groups: [],
+        link: ""
       }
     },
     async createNews(news) {
@@ -151,6 +166,7 @@ export default {
       }
       data.append('category', news.category);
       data.append('groups', news.groups);
+      data.append('link', news.link);
 
       axios.post(generateUrl(`apps/intranetagglo/news`), data, {
         headers: {
@@ -196,8 +212,10 @@ export default {
         text: "",
         photo: null,
         category: "",
-        groups: []
+        groups: [],
+        link: ""
       },
+      link: false
     }
   }
 }

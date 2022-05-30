@@ -1,5 +1,5 @@
 <?php
-script('intranetagglo', 'intranetagglo216');
+script('intranetagglo', 'intranetagglo217');
 style('intranetagglo', 'intranetagglo216');
 ?>
 

@@ -515,6 +515,7 @@
 .news-title {
     font-family: "Voces", "Open Sans", arial, sans-serif;
     font-size: 24px;
+    font-weight: bold;
     color: var(--color-mode-contrast-1);
 }
 
@@ -830,6 +831,13 @@
 }
 
 @media (max-width: 1100px) {
+    .news-row[focus=""] .news {
+        max-height: unset;
+    }
+
+    .news-row[focus=""] .news-textbox-block:after {
+        background: transparent;
+    }
 
     #news0,
     #news1 {

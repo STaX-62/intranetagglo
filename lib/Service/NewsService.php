@@ -79,7 +79,7 @@ class NewsService
 		return $qb;
 	}
 
-	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $time, $visible, $pinned)
+	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $link, $time, $visible, $pinned)
 	{
 		$news = new News();
 		$news->setAuthor($author);
@@ -89,13 +89,14 @@ class NewsService
 		$news->setPhoto($photo);
 		$news->setCategory($category);
 		$news->setGroups($groups);
+		$news->setLink($link);
 		$news->setTime($time);
 		$news->setVisible($visible);
 		$news->setPinned($pinned);
 		return $this->mapper->insert($news);
 	}
 
-	public function update($id, $title, $subtitle, $text, $photo, $category, $groups)
+	public function update($id, $title, $subtitle, $text, $photo, $category, $groups, $link)
 	{
 		try {
 			$news = $this->mapper->find($id);
@@ -105,6 +106,7 @@ class NewsService
 			$news->setPhoto($photo);
 			$news->setCategory($category);
 			$news->setGroups($groups);
+			$news->setLink($link);
 			return $this->mapper->update($news);
 		} catch (Exception $e) {
 			$this->handleException($e);
