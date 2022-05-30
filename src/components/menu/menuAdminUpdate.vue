@@ -87,7 +87,7 @@ export default {
   },
   computed: {
     availableOptions() {
-      return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
+      return this.$store.state.groupsoptions.filter(opt => this.newMenu.groups.indexOf(opt) === -1)
     },
     MenuToDisplay() {
       var sectionArray = this.menuInBDD[0]
