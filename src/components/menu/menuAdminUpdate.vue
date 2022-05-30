@@ -4,14 +4,14 @@
     <div class="menu-form">
       <div>
         <label for="title">Titre</label>
-        <b-form-input name="title" type="text" v-model="newMenu.title" :value="menu.title" />
+        <b-form-input name="title" type="text" v-model="newMenu.title" :value="menuToUpdate.title" />
       </div>
-      <div v-if="menu.haschild != true && !redirectToFile">
+      <div v-if="menuToUpdate.haschild != true && !redirectToFile">
         <label for="link">Lien URL</label>
-        <b-form-input name="link" type="text" v-model="newMenu.link" :value="menu.link" />
+        <b-form-input name="link" type="text" v-model="newMenu.link" :value="menuToUpdate.link" />
         <button @click="redirectToFile = !redirectToFile">Rediriger vers un fichier</button>
       </div>
-      <div v-if="menu.haschild != true && redirectToFile">
+      <div v-if="menuToUpdate.haschild != true && redirectToFile">
         <label for="file">Redirection vers Un fichier (Remplace le lien)</label>
         <b-form-file
           name="file"
@@ -19,20 +19,20 @@
           placeholder="Choisir le fichier..."
           drop-placeholder="Placer l'image ici ..."
           v-model="newMenu.file"
-          :value="menu.file"
+          :value="menuToUpdate.file"
         ></b-form-file>
         <button @click="redirectToFile = !redirectToFile">Rediriger vers une URL</button>
       </div>
-      <div v-if="menu.icon != null">
+      <div v-if="menuToUpdate.icon != null">
         <label for="icon">icon</label>
-        <b-form-input name="icon" type="text" v-model="newMenu.icon" :value="menu.icon" />
+        <b-form-input name="icon" type="text" v-model="newMenu.icon" :value="menuToUpdate.icon" />
       </div>
       <label for="groups">Groupes</label>
       <b-form-tags
         id="tags-component-select"
         name="groups"
         v-model="newMenu.groups"
-        :value="menu.groups"
+        :value="menuToUpdate.groups"
         size="lg"
         class="mb-2"
         add-on-change
@@ -79,6 +79,9 @@ export default {
     detailed: Boolean
   },
   computed: {
+    menuToUpdate() {
+      return menu
+    },
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
