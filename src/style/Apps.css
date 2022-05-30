@@ -3,7 +3,6 @@
     padding-top: 80px;
     height: 100%;
     justify-content: center;
-    overflow: hidden;
 }
 
 .apps-container {
@@ -16,9 +15,16 @@
     width: 100%;
     border-radius: 15px;
     background: var(--color-mode-2);
-    box-shadow: 0 4px 21px -12px var(--color-mode-shadow-4);
+    box-shadow: 2px 2px 3px rgb(55 84 170 / 15%),
+        2px 2px 3px rgb(55 84 170 / 15%),
+        7px 7px 15px rgb(55 84 170 / 15%),
+        -7px -7px 20px rgb(0 0 0 / 10%);
     transition: 0.5s;
     border: 2px solid var(--color-mode-4);
+}
+
+#App.dark .apps-container {
+    box-shadow: 0 -5px 5px hsl(0deg 0% 100% / 5%);
 }
 
 .apps-container.hidden {

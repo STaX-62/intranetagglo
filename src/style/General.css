@@ -225,6 +225,11 @@ body {
         0px 0px 4px rgb(255 255 255 / 0%), 7px 7px 15px rgb(55 84 170 / 15%),
         -7px -7px 20px rgb(0 0 0 / 10%), 0px 0px 4px rgb(255 255 255 / 20%) !important;
     transition: 0.5s;
+    border: 2px solid var(--color-mode-4) !important;
+}
+
+#App.dark .Settings {
+    box-shadow: 0 -5px 5px hsl(0deg 0% 100% / 5%);
 }
 
 .Settings.hidden {
@@ -250,12 +255,21 @@ body {
     align-items: center;
     margin: auto;
     right: 25px;
-    width: 88px;
-    height: 30px;
+    width: 95px;
+    height: 34px;
     margin-bottom: 8px;
     border-radius: 15px;
     z-index: 1;
     background: var(--color-mode-2);
+    box-shadow: 2px 2px 3px rgb(55 84 170 / 15%),
+        2px 2px 3px rgb(55 84 170 / 15%),
+        7px 7px 15px rgb(55 84 170 / 15%),
+        -7px -7px 20px rgb(0 0 0 / 10%);
+    border: 2px solid var(--color-mode-4) !important;
+}
+
+#App.dark .settings-box::before {
+    box-shadow: 0 -5px 5px hsl(0deg 0% 100% / 5%);
 }
 
 .settings-title {
@@ -394,7 +408,7 @@ input[type="checkbox"].checkbox+label::before {
 
     .settings-box::before {
         right: 8px;
-        width: 80px;
+        width: 90px;
     }
 
     #cog-label {

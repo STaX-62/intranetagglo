@@ -138,9 +138,9 @@ export default {
   width: 250px;
   z-index: 1;
   background: var(--color-mode-3);
-  box-shadow: var(--color-mode-shadow-1) 3px 0px 3px 0px,
-    var(--color-mode-shadow-2) 0px 0px 2px 0px,
-    var(--color-mode-shadow-3) 0px 0px 5px 2px;
+  border-right: 2px solid var(--color-mode-4) !important;
+  box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
+    7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%);
   display: grid;
   grid-template-columns: 100%;
   grid-auto-rows: 130px auto max-content;
@@ -148,6 +148,9 @@ export default {
     "Logo"
     "Menu"
     "Buttons";
+}
+#App.dark .sidenav {
+  box-shadow: 0 -5px 5px hsl(0deg 0% 100% / 5%);
 }
 
 /* Some media queries for responsiveness */

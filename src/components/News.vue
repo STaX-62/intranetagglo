@@ -217,7 +217,7 @@ export default {
 }
 @media (max-width: 1100px) {
   .searchbar {
-    flex: 0 0 95%;
+    flex: 0 0 90%;
   }
 }
 </style>

@@ -66,7 +66,10 @@
             </b-tr>
             <b-tr>
               <b-th>
-                <b-button @click="link = !link" variant="light"></b-button>
+                <b-button
+                  @click="link = !link"
+                  variant="light"
+                >{{link ? "Remplacer par un lien" : "Remplacer par du Texte"}}</b-button>
               </b-th>
             </b-tr>
             <b-tr v-if="!link">
