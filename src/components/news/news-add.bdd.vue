@@ -76,13 +76,13 @@
                 <VueTrix
                   name="text"
                   inputId="editor1"
-                  v-model="autocomplete.text"
+                  v-model="news.text"
                   placeholder="Contenu de l'actualité une fois étendue..."
                 />
               </b-td>
               <b-td colspan="4" v-else>
                 <label for="link">Lien de redirection de L'actualité</label>
-                <b-form-input name="link" v-model="autocomplete.link"></b-form-input>
+                <b-form-input name="link" v-model="news.link"></b-form-input>
               </b-td>
             </b-tr>
             <b-tr>

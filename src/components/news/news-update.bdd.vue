@@ -209,9 +209,6 @@ export default {
       return tpdf.push(null)
     },
   },
-  mounted() {
-    this.autocomplete.groups = this.autocomplete.groups.split(';')
-  },
   data: function () {
     return {
       modal: false,
