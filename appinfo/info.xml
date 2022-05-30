@@ -5,7 +5,7 @@
     <name>Intranet Agglo</name>
     <summary>Application Intranet de la CA2BM pour Nextcloud</summary>
     <description><![CDATA[Application Intranet de la CA2BM pour Nextcloud]]></description>
-    <version>0.8.2</version>
+    <version>0.8.3</version>
     <licence>agpl</licence>
     <author mail="clement.mouronval@gmail.com">cmouronval</author>
     <namespace>IntranetAgglo</namespace>
