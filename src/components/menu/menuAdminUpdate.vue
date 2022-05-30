@@ -150,7 +150,8 @@ export default {
         link: "",
         file: null,
         icon: null,
-        groups: ""
+        groups: "",
+        haschild: false
       },
       redirectToFile: false
     }
