@@ -80,7 +80,7 @@ export default {
   },
   computed: {
     menuToUpdate() {
-      return menu
+      return this.menu
     },
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
