@@ -121,8 +121,8 @@
       </div>
     </b-modal>
     <menu-admin-update
-      :menu="modifying"
-      :detailed="detailed"
+      :menu.sync="modifying"
+      :detailed.sync="detailed"
       @navigation-updated="UpdateNavigation"
     />
   </div>
