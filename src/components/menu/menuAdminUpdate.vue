@@ -1,12 +1,5 @@
 <template>
-  <b-modal
-    id="menumodal2"
-    size="xl"
-    v-model="detailed"
-    ref="modal"
-    @ok="Save"
-    @abort="detailed = !detailed"
-  >
+  <b-modal id="menumodal2" size="xl" v-model="detailed" ref="modal" @ok="Save">
     <template #modal-title>Modification du Menu de navigation</template>
     <div class="menu-form">
       <div>
@@ -80,17 +73,17 @@ import FormData from 'form-data'
 export default {
   name: 'menuAdminOverview',
   props: {
-    menu: Object,
-    detailed: Boolean
+    menu: Object
   },
   watch: {
     menu: {
       handler(val) {
         this.newMenu = this.menu
+        this.detailed = !this.detailed
         console.log(this.newMenu)
       },
       deep: true
-    },
+    }
   },
   computed: {
     availableOptions() {
@@ -161,7 +154,8 @@ export default {
         groups: "",
         haschild: false
       },
-      redirectToFile: false
+      redirectToFile: false,
+      detailed: false
     }
   }
 }

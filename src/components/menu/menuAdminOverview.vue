@@ -122,7 +122,6 @@
     </b-modal>
     <menu-admin-update
       :menu="modifying"
-      :detailed.sync="detailed"
       @navigation-updated="UpdateNavigation"
     />
   </div>
@@ -226,7 +225,6 @@ export default {
       if (menu.menuid != 0) {
         this.modifying.icon = null;
       }
-      this.detailed = !this.detailed;
     },
     AddSubmenu(Sindex, Mindex) {
       this.createMenu({
@@ -310,7 +308,6 @@ export default {
   data: function () {
     return {
       global: false,
-      detailed: false,
       updating: false,
       menuInBDD: [[], [], []],
       modifying: {
