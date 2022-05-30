@@ -1,5 +1,12 @@
 <template>
-  <b-modal id="menumodal2" size="xl" v-model="detailed" ref="modal" @ok="Save">
+  <b-modal
+    id="menumodal2"
+    size="xl"
+    v-model="detailed"
+    ref="modal"
+    @ok="Save"
+    @abort="detailed = !detailed"
+  >
     <template #modal-title>Modification du Menu de navigation</template>
     <div class="menu-form">
       <div>
