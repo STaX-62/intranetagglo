@@ -80,12 +80,18 @@ export default {
     menu: {
       handler(val) {
         this.newMenu = this.menu
-        this.detailed = !this.detailed
       },
       deep: true
     },
+    active: {
+      handler(val) {
+        if (val)
+          this.detailed = !this.detailed
+      }
+    },
     detailed: {
       handler(val) {
+        console.log(val)
         if (!val)
           this.$emit('close');
       }
