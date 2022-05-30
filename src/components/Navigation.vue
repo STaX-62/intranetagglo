@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="Raccourcis">
-      <MenuUpdate v-if="isAdmin" />
+      <menu-admin-overview v-if="isAdmin" />
       <a class="Files" href="https://cloud.ca2bm.fr/index.php/f/1183804">
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
@@ -50,15 +50,15 @@
 <script>
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import MenuUpdate from './menu/menu-update.bdd.vue'
+import menuAdminOverview from './menu/menuAdminOverview.vue'
 export default {
   name: 'Navigation',
   components: {
-    MenuUpdate
+    menuAdminOverview
   },
   data: function () {
     return {
-      image: '/nextcloud/apps/intranetagglo/img/LogoCA2BM.png', // require('../assets/LogoCA2BM.png'),//'/nextcloud/apps/intranetca/src/assets/LogoCA2BM.png'
+      image: '/nextcloud/apps/intranetagglo/img/LogoCA2BM.png',
       user: [],
       lastOpenedContainer: null,
       menuInBDD: [[], [], []]
