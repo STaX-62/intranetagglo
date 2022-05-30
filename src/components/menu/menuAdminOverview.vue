@@ -120,7 +120,12 @@
         </div>
       </div>
     </b-modal>
-    <menu-admin-update v-model="active" :menu="modifying" @navigation-updated="UpdateNavigation" />
+    <menu-admin-update
+      :active="active"
+      :menu="modifying"
+      @close="active = !active"
+      @navigation-updated="UpdateNavigation"
+    />
   </div>
 </template>
 
