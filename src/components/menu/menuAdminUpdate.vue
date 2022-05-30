@@ -4,11 +4,11 @@
     <div class="menu-form">
       <div>
         <label for="title">Titre</label>
-        <b-form-input name="title" type="text" v-model="newMenu.title" :value="menuToUpdate.title" />
+        <b-form-input name="title" type="text" v-model="newMenu.title" />
       </div>
       <div v-if="menuToUpdate.haschild != true && !redirectToFile">
         <label for="link">Lien URL</label>
-        <b-form-input name="link" type="text" v-model="newMenu.link" :value="menuToUpdate.link" />
+        <b-form-input name="link" type="text" v-model="newMenu.link" />
         <button @click="redirectToFile = !redirectToFile">Rediriger vers un fichier</button>
       </div>
       <div v-if="menuToUpdate.haschild != true && redirectToFile">
@@ -19,20 +19,18 @@
           placeholder="Choisir le fichier..."
           drop-placeholder="Placer l'image ici ..."
           v-model="newMenu.file"
-          :value="menuToUpdate.file"
         ></b-form-file>
         <button @click="redirectToFile = !redirectToFile">Rediriger vers une URL</button>
       </div>
       <div v-if="menuToUpdate.icon != null">
         <label for="icon">icon</label>
-        <b-form-input name="icon" type="text" v-model="newMenu.icon" :value="menuToUpdate.icon" />
+        <b-form-input name="icon" type="text" v-model="newMenu.icon" />
       </div>
       <label for="groups">Groupes</label>
       <b-form-tags
         id="tags-component-select"
         name="groups"
         v-model="newMenu.groups"
-        :value="menuToUpdate.groups"
         size="lg"
         class="mb-2"
         add-on-change
@@ -78,11 +76,15 @@ export default {
     menu: Object,
     detailed: Boolean
   },
-  computed: {
-    menuToUpdate() {
-      console.log(this.menu)
-      return this.menu
+  watch: {
+    menu: {
+      handler(val) {
+        this.newMenu = this.menu
+      },
+      deep: true
     },
+  },
+  computed: {
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.modifying.groups.indexOf(opt) === -1)
     },
