@@ -65,29 +65,25 @@
               </b-th>
             </b-tr>
             <b-tr>
-              <b-th>
+              <b-th colspan="4">
                 <b-button
                   @click="link = !link"
                   variant="light"
                 >{{link ? "Remplacer par un lien" : "Remplacer par du Texte"}}</b-button>
               </b-th>
-            </b-tr>
-            <b-tr v-if="!link">
-              <b-th colspan="4">
+              <b-td colspan="4" v-if="!link">
                 <label for="text">Contenu de l'actualité</label>
                 <VueTrix
                   name="text"
                   inputId="editor1"
-                  v-model="news.text"
+                  v-model="autocomplete.text"
                   placeholder="Contenu de l'actualité une fois étendue..."
                 />
-              </b-th>
-            </b-tr>
-            <b-tr v-else>
-              <b-th colspan="4">
+              </b-td>
+              <b-td colspan="4" v-else>
                 <label for="link">Lien de redirection de L'actualité</label>
-                <b-form-input name="link" v-model="news.link"></b-form-input>
-              </b-th>
+                <b-form-input name="link" v-model="autocomplete.link"></b-form-input>
+              </b-td>
             </b-tr>
             <b-tr>
               <b-th>
