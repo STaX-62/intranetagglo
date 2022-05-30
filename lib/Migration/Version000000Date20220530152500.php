@@ -24,7 +24,6 @@ class Version000000Date20220530152500 extends SimpleMigrationStep
         if ($schema->hasTable('intranetagglonews')) {
             $table = $schema->getTable('intranetagglonews');
             $table->addColumn('link', 'string', [
-                'notnull' => true,
                 'default' => ''
             ]);
         }
