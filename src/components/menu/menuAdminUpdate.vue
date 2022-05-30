@@ -80,6 +80,7 @@ export default {
   },
   computed: {
     menuToUpdate() {
+      console.log(this.menu)
       return this.menu
     },
     availableOptions() {
