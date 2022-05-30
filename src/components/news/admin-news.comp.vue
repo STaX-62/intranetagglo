@@ -56,7 +56,7 @@
                   :icon="news.visible == 1 ? 'eye' : 'eye-slash'"
                 />
               </button>
-              <NewsUpdate :autocomplete="news" />
+              <NewsUpdate :autocomplete="autocompleteForUpdate" />
               <button type="button" class="news-del-button" @click="DeleteVerification(news)">
                 <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
               </button>
@@ -84,6 +84,11 @@ export default {
     arrayid: Number
   },
   computed: {
+    autocompleteForUpdate() {
+      var news = this.news;
+      news.groups = news.groups.split(';');
+      return news
+    },
     categoryfilter: {
       get() {
         return this.$store.state.categoryfilter
@@ -134,7 +139,7 @@ export default {
       }
     },
     OpenNews() {
-      if (this.$store.state.newsfocus == '' && this.news.link != "") {
+      if (this.$store.state.newsfocus == '' && this.news.link == "") {
         this.$store.commit('updateNewsFocus', this.arrayid)
       }
       if (this.news.link != "") {

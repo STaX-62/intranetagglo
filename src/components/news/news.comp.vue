@@ -82,7 +82,7 @@ export default {
       }
     },
     OpenNews() {
-      if (this.$store.state.newsfocus == '' && this.news.link != "") {
+      if (this.$store.state.newsfocus == '' && this.news.link == "") {
         this.$store.commit('updateNewsFocus', this.arrayid)
       }
       if (this.news.link != "") {
