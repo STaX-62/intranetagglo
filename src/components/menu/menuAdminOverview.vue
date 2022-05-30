@@ -120,10 +120,7 @@
         </div>
       </div>
     </b-modal>
-    <menu-admin-update
-      :menu="modifying"
-      @navigation-updated="UpdateNavigation"
-    />
+    <menu-admin-update v-model="active" :menu="modifying" @navigation-updated="UpdateNavigation" />
   </div>
 </template>
 
@@ -225,6 +222,7 @@ export default {
       if (menu.menuid != 0) {
         this.modifying.icon = null;
       }
+      this.active = !this.active
     },
     AddSubmenu(Sindex, Mindex) {
       this.createMenu({
@@ -310,6 +308,7 @@ export default {
       global: false,
       updating: false,
       menuInBDD: [[], [], []],
+      active: false,
       modifying: {
         title: "",
         link: "",

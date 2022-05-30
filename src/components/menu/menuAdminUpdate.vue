@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="menumodal2" size="xl" v-model="detailed" ref="modal" @ok="Save">
+  <b-modal id="menumodal2" size="xl" v-model="modelValue" ref="modal" @ok="Save">
     <template #modal-title>Modification du Menu de navigation</template>
     <div class="menu-form">
       <div>
@@ -73,14 +73,14 @@ import FormData from 'form-data'
 export default {
   name: 'menuAdminOverview',
   props: {
-    menu: Object
+    menu: Object,
+    modelValue: Boolean
   },
+  emits: ['update:modelValue'],
   watch: {
     menu: {
       handler(val) {
         this.newMenu = this.menu
-        this.detailed = !this.detailed
-        console.log(this.newMenu)
       },
       deep: true
     }
@@ -154,8 +154,7 @@ export default {
         groups: "",
         haschild: false
       },
-      redirectToFile: false,
-      detailed: false
+      redirectToFile: false
     }
   }
 }
