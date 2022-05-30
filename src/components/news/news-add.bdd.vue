@@ -142,7 +142,7 @@ export default {
     AddNews() {
       this.news.author = this.$store.state.username
       this.news.groups = this.news.groups.join(';')
-      if (link) {
+      if (this.link) {
         this.news.text = ""
       }
       this.createNews(this.news)

@@ -155,7 +155,7 @@ export default {
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
       this.autocomplete.groups = this.autocomplete.groups.join(';')
-      if (link) {
+      if (this.link) {
         this.autocomplete.text = ""
       }
       this.updateNews(this.autocomplete, this.newimage)
