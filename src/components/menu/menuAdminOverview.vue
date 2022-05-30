@@ -122,7 +122,7 @@
     </b-modal>
     <menu-admin-update
       :menu="modifying"
-      :detailed="detailed"
+      :detailed.sync="detailed"
       @navigation-updated="UpdateNavigation"
     />
   </div>
@@ -223,10 +223,9 @@ export default {
       else {
         this.modifying.haschild = false;
       }
-      if (menu.menuid == 0 && menu.submenuid == 0) {
+      if (menu.menuid != 0) {
         this.modifying.icon = null;
       }
-      console.log(this.modifying.haschild)
       this.detailed = !this.detailed;
     },
     AddSubmenu(Sindex, Mindex) {
