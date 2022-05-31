@@ -102,9 +102,8 @@ export default {
     Tooltips(e, title) {
       const element = e.target
       console.log(element)
-      if (element.offsetWidth < element.scrollWidth)
-        element.setAttribute('Title', title)
-      else element.setAttribute('Title', "")
+      if (element.offsetWidth < element.scrollWidth && !element.hasAttribute('title'))
+        element.setAttribute('title', title)
     },
     isEmpty(array) {
       if (array.length > 0) {
