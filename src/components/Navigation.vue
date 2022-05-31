@@ -34,7 +34,7 @@
             >
               <span
                 v-b-tooltip.hover.bottom
-                :title="Tooltips($event, submenu.title)"
+                @mouseover="Tooltips($event,submenu.title)"
                 class="submenu d-sm-inline"
               >{{ submenu.title }}</span>
             </a>
@@ -101,9 +101,10 @@ export default {
   methods: {
     Tooltips(e, title) {
       const element = e.target
+      console.log(element)
       if (element.offsetWidth < element.scrollWidth)
-        return title
-      else return ""
+        element.setAttribute('Title', title)
+      else element.setAttribute('Title', "")
     },
     isEmpty(array) {
       if (array.length > 0) {
