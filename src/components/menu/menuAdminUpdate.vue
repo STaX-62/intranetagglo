@@ -127,7 +127,7 @@ export default {
         this.newMenu = ""
       }
       if (this.newMenu.icon == null) {
-        menu.icon = ""
+        this.newMenu.icon = ""
       }
       this.newMenu.groups = this.newMenu.groups.join(';')
 

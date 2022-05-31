@@ -214,10 +214,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin-bottom: 10px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .section-block {
   padding-bottom: 10px;
+  padding-right: 5px;
 }
 
 .section-icon {
@@ -245,6 +248,10 @@ export default {
   -webkit-user-select: none; /* Chrome, Safari, Opéra depuis la version 15 */
   -ms-user-select: none; /* Internet explorer depuis la version 10 et Edge */
   user-select: none; /* Propriété standard */
+}
+
+.section-title{
+  font-weight: 500;
 }
 
 .menu {
