@@ -139,19 +139,22 @@ class NewsController extends Controller
      */
     public function pinNews(int $id)
     {
-        $lastPinned = $this->service->getLastPinned();
-        return $this->handleNotFound(function () use ($id, $lastPinned) {
-            if (count($lastPinned) != 0) {
-                if ($lastPinned[0] == $id) {
-                    return $this->service->pinNewsById($lastPinned[0], 0);
+        if ($this->isAdmin()) {
+            $lastPinned = $this->service->getLastPinned();
+            return $this->handleNotFound(function () use ($id, $lastPinned) {
+                if (count($lastPinned) != 0) {
+                    if ($lastPinned[0] == $id) {
+                        return $this->service->pinNewsById($lastPinned[0], 0);
+                    } else {
+                        $this->service->pinNewsById($lastPinned[0], 0);
+                        return $this->service->pinNewsById($id, 1);
+                    }
                 } else {
-                    $this->service->pinNewsById($lastPinned[0], 0);
                     return $this->service->pinNewsById($id, 1);
                 }
-            } else {
-                return $this->service->pinNewsById($id, 1);
-            }
-        });
+            });
+        }
+        return 'User is not admin';
     }
 
     /**
@@ -159,58 +162,61 @@ class NewsController extends Controller
      */
     public function publication(int $id, int $visible)
     {
-        return $this->handleNotFound(function () use ($id, $visible) {
-            $rq = $this->service->publication($id, $visible, $this->timeFactory->getTime());
+        if ($this->isAdmin()) {
+            return $this->handleNotFound(function () use ($id, $visible) {
+                $rq = $this->service->publication($id, $visible, $this->timeFactory->getTime());
 
-            $groups = explode(";", $rq->getGroups());
+                $groups = explode(";", $rq->getGroups());
 
-            if ($visible == 1) {
-                $notification = $this->NotificationManager->createNotification();
+                if ($visible == 1) {
+                    $notification = $this->NotificationManager->createNotification();
 
-                $action = $notification->createAction();
-                $notification->setApp(Application::APP_ID)
-                    ->setDateTime(new \DateTime())
-                    ->setObject('news', (string)$rq->getId())
-                    ->setSubject($rq->getTitle(), [
-                        'author' =>  $rq->getAuthor()
-                    ])
-                    ->setMessage($rq->getSubtitle());
+                    $action = $notification->createAction();
+                    $notification->setApp(Application::APP_ID)
+                        ->setDateTime(new \DateTime())
+                        ->setObject('news', (string)$rq->getId())
+                        ->setSubject($rq->getTitle(), [
+                            'author' =>  $rq->getAuthor()
+                        ])
+                        ->setMessage($rq->getSubtitle());
 
 
-                if ($groups[0] == "") {
-                    $this->createNotificationEveryone($rq->getAuthor(), $notification);
-                } else {
-                    foreach ($groups as $gid) {
-                        $group = $this->groupManager->get($gid);
-                        if (!($group instanceof IGroup)) {
-                            continue;
-                        }
-
-                        $users = $group->getUsers();
-                        foreach ($users as $user) {
-
-                            $uid = $user->getUID();
-                            if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
+                    if ($groups[0] == "") {
+                        $this->createNotificationEveryone($rq->getAuthor(), $notification);
+                    } else {
+                        foreach ($groups as $gid) {
+                            $group = $this->groupManager->get($gid);
+                            if (!($group instanceof IGroup)) {
                                 continue;
                             }
 
-                            if ($uid !== $rq->getAuthor()) {
-                                $notification->setUser($uid);
-                                $this->NotificationManager->notify($notification);
-                            }
+                            $users = $group->getUsers();
+                            foreach ($users as $user) {
 
-                            $this->notifiedUsers[$uid] = true;
+                                $uid = $user->getUID();
+                                if (isset($this->notifiedUsers[$uid]) || $user->getLastLogin() === 0) {
+                                    continue;
+                                }
+
+                                if ($uid !== $rq->getAuthor()) {
+                                    $notification->setUser($uid);
+                                    $this->NotificationManager->notify($notification);
+                                }
+
+                                $this->notifiedUsers[$uid] = true;
+                            }
                         }
                     }
+                } else {
+                    $notification = $this->NotificationManager->createNotification();
+                    $notification->setApp(Application::APP_ID)
+                        ->setObject('news', $rq->getId());
+                    $this->NotificationManager->markProcessed($notification);
                 }
-            } else {
-                $notification = $this->NotificationManager->createNotification();
-                $notification->setApp(Application::APP_ID)
-                    ->setObject('news', $rq->getId());
-                $this->NotificationManager->markProcessed($notification);
-            }
-            return $rq;
-        });
+                return $rq;
+            });
+        }
+        return 'User is not admin';
     }
 
     /**
@@ -257,10 +263,13 @@ class NewsController extends Controller
      */
     public function destroy(int $id)
     {
-        return $this->handleNotFound(function () use ($id) {
-            $rq = $this->service->find($id);
-            unlink(substr($rq->getPhoto(), 11));
-            return $this->service->delete($id);
-        });
+        if ($this->isAdmin()) {
+            return $this->handleNotFound(function () use ($id) {
+                $rq = $this->service->find($id);
+                unlink(substr($rq->getPhoto(), 11));
+                return $this->service->delete($id);
+            });
+        }
+        return 'User is not admin';
     }
 }

@@ -30,9 +30,21 @@ class AppsController extends Controller
     /**
      * @NoAdminRequired
      */
+    public function isAdmin()
+    {
+        $user = $this->session->getUser();
+        return $this->groupmanager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupmanager->isInGroup($user->getUID(), 'admin');
+    }
+
+    /**
+     * @NoAdminRequired
+     */
     public function index(): DataResponse
     {
-        return (new DataResponse($this->service->findAll()));
+        if ($this->isAdmin()) {
+            return (new DataResponse($this->service->findAll()));
+        }
+        return 'User is not admin';
     }
 
     /**
@@ -49,7 +61,10 @@ class AppsController extends Controller
      */
     public function create(string $title, string $icon, string $link, string $groups)
     {
-        return $this->service->create($title, $icon, $link, $groups);
+        if ($this->isAdmin()) {
+            return $this->service->create($title, $icon, $link, $groups);
+        }
+        return 'User is not admin';
     }
 
     /**
@@ -57,9 +72,12 @@ class AppsController extends Controller
      */
     public function update(int $id, string $title, string $icon, string $link, string $groups)
     {
-        return $this->handleNotFound(function () use ($id, $title, $icon, $link, $groups) {
-            return $this->service->update($id, $title, $icon, $link, $groups);
-        });
+        if ($this->isAdmin()) {
+            return $this->handleNotFound(function () use ($id, $title, $icon, $link, $groups) {
+                return $this->service->update($id, $title, $icon, $link, $groups);
+            });
+        }
+        return 'User is not admin';
     }
 
     /**
@@ -67,8 +85,11 @@ class AppsController extends Controller
      */
     public function destroy(int $id)
     {
-        return $this->handleNotFound(function () use ($id) {
-            return $this->service->delete($id);
-        });
+        if ($this->isAdmin()) {
+            return $this->handleNotFound(function () use ($id) {
+                return $this->service->delete($id);
+            });
+        }
+        return 'User is not admin';
     }
 }
