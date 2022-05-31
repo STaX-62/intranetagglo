@@ -32,7 +32,11 @@
               :key="'B'+subsubindex"
               v-bind:href="submenu.link"
             >
-              <span class="d-sm-inline">{{ submenu.title }}</span>
+              <span
+                v-b-tooltip.hover.bottom
+                :title="Tooltips($event, submenu.title)"
+                class="submenu d-sm-inline"
+              >{{ submenu.title }}</span>
             </a>
           </div>
         </div>
@@ -95,6 +99,12 @@ export default {
     },
   },
   methods: {
+    Tooltips(e, title) {
+      const element = e.target
+      if (element.offsetWidth < element.scrollWidth)
+        return title
+      else return ""
+    },
     isEmpty(array) {
       if (array.length > 0) {
         return false
@@ -250,7 +260,7 @@ export default {
   user-select: none; /* Propriété standard */
 }
 
-.section-title{
+.section-title {
   font-weight: 500;
 }
 
@@ -335,6 +345,11 @@ export default {
   font-family: PetitaMedium;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.nav-link span {
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
 }
 
 .Raccourcis {
