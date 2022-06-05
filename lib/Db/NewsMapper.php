@@ -74,6 +74,7 @@ class NewsMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('time')
             ->from($this->getTableName(), 'q')
+            ->where("q.expiration = 0")
             ->addOrderBy('q.time', 'ASC')
             ->setMaxResults(1);
 
@@ -84,7 +85,8 @@ class NewsMapper extends QBMapper
         $qb2 = $this->db->getQueryBuilder();
         $qb2->select('*')
             ->from($this->getTableName(), 'q')
-            ->where('LOWER(q.title) LIKE LOWER(:search)')
+            ->where("q.expiration = 0")
+            ->andWhere('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
@@ -129,7 +131,8 @@ class NewsMapper extends QBMapper
 
         $qb3->selectAlias($qb3->createFunction('COUNT(*)'), 'count')
             ->from($this->getTableName(), 'q')
-            ->where('LOWER(q.title) LIKE LOWER(:search)')
+            ->where("q.expiration = 0")
+            ->andWhere('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
@@ -174,6 +177,7 @@ class NewsMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('time')
             ->from($this->getTableName(), 'q')
+            ->where("q.expiration = 0")
             ->addOrderBy('q.time', 'ASC')
             ->setMaxResults(1);
 
@@ -184,7 +188,8 @@ class NewsMapper extends QBMapper
         $qb2 = $this->db->getQueryBuilder();
         $qb2->select('*')
             ->from($this->getTableName(), 'q')
-            ->where('LOWER(q.title) LIKE LOWER(:search)')
+            ->where("q.expiration = 0")
+            ->andWhere('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
@@ -234,7 +239,8 @@ class NewsMapper extends QBMapper
 
         $qb3->selectAlias($qb3->createFunction('COUNT(*)'), 'count')
             ->from($this->getTableName(), 'q')
-            ->where('LOWER(q.title) LIKE LOWER(:search)')
+            ->where("q.expiration = 0")
+            ->andWhere('LOWER(q.title) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
@@ -282,6 +288,7 @@ class NewsMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
+            ->where("q.expiration = 0")
             ->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")

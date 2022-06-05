@@ -56,8 +56,6 @@ class Version000000Date20220530153300 extends SimpleMigrationStep
                 'default' => ''
             ]);
             $table->addColumn('time', 'integer', [
-                'notnull' => true,
-                'length' => 4,
                 'default' => 0,
             ]);
             $table->addColumn('visible', 'boolean', [

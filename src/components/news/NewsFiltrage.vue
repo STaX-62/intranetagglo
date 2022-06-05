@@ -45,7 +45,7 @@
 <script>
 import store from '@/store/index.js'
 export default {
-  name: 'Filtres',
+  name: 'NewsFiltrage',
   store: store,
   computed: {
     darkmode() {
@@ -57,6 +57,7 @@ export default {
     minEndDate() {
       var min = new Date(this.startDate)
       min.setDate(min.getDate() + 1)
+      console.log(min)
       return min
     },
     minStartDate() {

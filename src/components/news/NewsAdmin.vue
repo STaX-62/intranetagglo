@@ -56,7 +56,7 @@
                   :icon="news.visible == 1 ? 'eye' : 'eye-slash'"
                 />
               </button>
-              <NewsUpdate :autocomplete="autocompleteForUpdate" />
+              <news-admin-update :autocomplete="autocompleteForUpdate" />
               <button type="button" class="news-del-button" @click="DeleteVerification(news)">
                 <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
               </button>
@@ -69,15 +69,15 @@
 </template>
 
 <script>
-import NewsUpdate from './news-update.bdd'
+import NewsAdminUpdate from './NewsAdminUpdate'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import moment from '@nextcloud/moment'
 
 export default {
-  name: 'NewsCompAdmin',
+  name: 'NewsAdmin',
   components: {
-    NewsUpdate
+    NewsAdminUpdate,
   },
   props: {
     news: Object,

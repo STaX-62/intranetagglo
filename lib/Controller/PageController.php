@@ -58,6 +58,7 @@ class PageController extends Controller
 		return new DataResponse($this->groupmanager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupmanager->isInGroup($user->getUID(), 'admin'));
 	}
 
+	
 
 	/**
 	 * @NoAdminRequired
@@ -83,7 +84,7 @@ class PageController extends Controller
 	 */
 	public function index()
 	{
-		$this->newscontroller->removeNotifications();
+		// $this->newscontroller->removeNotifications();
 		return new TemplateResponse(Application::APP_ID, 'index');  // templates/index.php
 	}
 }

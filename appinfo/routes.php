@@ -96,6 +96,11 @@ return [
             'requirements' => ['id' => '\d+']
         ],
         [
+            'name' => 'news#removeNotifications',
+            'url' => '/news/notifications',
+            'verb' => 'GET'
+        ],
+        [
             'name' => 'news#getCategory',
             'url' => '/news/category',
             'verb' => 'GET',

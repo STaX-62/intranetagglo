@@ -8,11 +8,11 @@
           <b-icon icon="filter"></b-icon>
         </button>
         <Filtres :minDate="minDate" />
-        <NewsAdd v-if="isAdmin" />
+        <news-admin-create v-if="isAdmin" />
       </div>
       <div id="news-row" class="news-row" :focus="newfocus">
         <div class="news-wrapper" v-if="isAdmin">
-          <NewsCompAdmin
+          <news-admin
             :id="'news'+index"
             v-for="(n,index) in getNews"
             :key="index"
@@ -21,7 +21,7 @@
           />
         </div>
         <div class="news-wrapper" v-else>
-          <NewsComp
+          <news
             :id="'news'+index"
             v-for="(n,index) in getNews"
             :key="index"
@@ -49,11 +49,11 @@
 </template>
 
 <script>
-import NewsCompAdmin from './news/admin-news.comp'
-import NewsComp from './news/news.comp'
+import NewsAdmin from './news/NewsAdmin'
+import News from './news/News'
 import Apps from './Apps'
-import NewsAdd from './news/news-add.bdd'
-import Filtres from './news/news-filtres.comp.vue'
+import NewsAdminCreate from './news/NewsAdminCreate'
+import NewsFiltrage from './news/NewsFiltrage'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 
@@ -63,11 +63,12 @@ export default {
     msg: String
   },
   components: {
-    NewsCompAdmin,
-    NewsComp,
+    NewsAdmin,
+    News,
     Apps,
-    NewsAdd,
-    Filtres
+    NewsAdminCreate,
+    NewsFiltrage,
+    NewsAdmin
   },
   watch: {
     updating: function (val) {

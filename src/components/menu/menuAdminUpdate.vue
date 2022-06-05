@@ -71,7 +71,7 @@ import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
 
 export default {
-  name: 'menuAdminOverview',
+  name: 'MenuAdminOverview',
   props: {
     menu: Object,
     active: Boolean

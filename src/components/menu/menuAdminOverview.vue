@@ -135,13 +135,13 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
 import draggable from 'vuedraggable'
-import menuAdminUpdate from './menuAdminUpdate.vue'
+import MenuAdminUpdate from './MenuAdminUpdate'
 
 export default {
-  name: 'menuAdminOverview',
+  name: 'MenuAdminOverview',
   components: {
     draggable,
-    menuAdminUpdate
+    MenuAdminUpdate
   },
   computed: {
     MenuToDisplay() {

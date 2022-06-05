@@ -4,7 +4,7 @@
       <h2 class="apps-header">
         Applications
         <div id="apps-update-btn" v-if="isAdmin">
-          <AppsUpdate />
+          <apps-update />
         </div>
       </h2>
       <div class="apps-block">
@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import AppsUpdate from '@/components/apps/apps-update.bdd.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import AppsUpdate from './apps/AppsUpdate'
 
 export default {
   name: 'Apps',

@@ -39,7 +39,7 @@
 import moment from '@nextcloud/moment'
 
 export default {
-  name: 'NewsComp',
+  name: 'News',
   props: {
     news: Object,
     arrayid: Number
