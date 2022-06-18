@@ -225,13 +225,12 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin-bottom: 10px;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .section-block {
   padding-bottom: 10px;
-  padding-right: 5px;
 }
 
 .section-icon {
