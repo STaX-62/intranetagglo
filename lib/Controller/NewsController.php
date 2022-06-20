@@ -259,13 +259,13 @@ class NewsController extends Controller
         $user = $this->session->getUser();
         $uid = $user->getUID();
         $notificationNb = $this->notificationService->findNotificationByUser($uid);
-        if ($notificationNb > 0) {
-            $notification = $this->NotificationManager->createNotification();
-            $notification->setApp(Application::APP_ID)->setUser($uid);
-            $this->NotificationManager->markProcessed($notification);
-        }
+        // if ($notificationNb > 0) {
+        //     $notification = $this->NotificationManager->createNotification();
+        //     $notification->setApp(Application::APP_ID)->setUser($uid);
+        //     $this->NotificationManager->markProcessed($notification);
+        // }
 
-        return  new DataResponse($notificationNb);
+        // return  new DataResponse($notificationNb);
     }
 
     /**
