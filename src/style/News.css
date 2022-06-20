@@ -129,7 +129,6 @@
 
 .news-header {
     display: flex;
-    flex-wrap: wrap;
     grid-area: Titre;
 }
 
@@ -159,7 +158,7 @@
 .news-header-title {
     margin: 0;
     align-items: center;
-    flex: 0 0 32%;
+    flex-grow: 1;
     color: var(--color-mode-contrast-1);
     border: 2px solid var(--color-mode-4) !important;
     justify-content: center;
@@ -186,8 +185,9 @@
 }
 
 .news-row {
+    display: flex;
     position: relative;
-    padding-top: 10px;
+    /* padding-top: 10px; */
     grid-area: NewsRow;
 }
 
@@ -895,10 +895,6 @@
 
     .news-header-title {
         display: none;
-    }
-
-    .admin-view .searchbar {
-        flex: 0 0 65% !important;
     }
 
     .add-news-button {

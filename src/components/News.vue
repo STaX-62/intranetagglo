@@ -21,10 +21,6 @@
           <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
             <alert :alert="alerts[index]" />
           </div>
-          <div>
-            <button>précédent</button>
-            <button>suivant</button>
-          </div>
         </div>
         <div class="news-wrapper" v-if="isAdmin">
           <news-admin
@@ -235,7 +231,7 @@ export default {
 
 <style scoped>
 .searchbar {
-  flex: 0 0 61%;
+  flex-grow: 1;
   border-top-left-radius: 10px !important;
   border-bottom-left-radius: 10px !important;
   border: 2px solid var(--color-mode-4) !important;
