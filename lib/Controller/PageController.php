@@ -2,7 +2,6 @@
 
 namespace OCA\IntranetAgglo\Controller;
 
-use OCP\IntranetAgglo\Controller\NewsController;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
@@ -15,12 +14,11 @@ use OCP\IUser;
 
 class PageController extends Controller
 {
-	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session, NewsController $newscontroller)
+	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session)
 	{
 		parent::__construct(Application::APP_ID, $request);
 		$this->groupmanager = $groupmanager;
 		$this->session = $session;
-		$this->newscontroller = $newscontroller;
 	}
 
 	/**
