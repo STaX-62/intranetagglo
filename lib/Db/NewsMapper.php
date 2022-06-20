@@ -173,11 +173,7 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.expiration != 0")
             ->andWhere("q.expiration >= :today")
-            ->setParameter('today', strtotime('today'))
-            ->andWhere('LOWER(q.title) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
-            ->setParameter('search', '%' . $search . '%');
+            ->setParameter('today', strtotime('today'));
 
         $qb->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
@@ -190,11 +186,7 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.expiration != 0")
             ->andWhere("q.expiration >= :today")
-            ->setParameter('today', strtotime('today'))
-            ->andWhere('LOWER(q.title) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
-            ->setParameter('search', '%' . $search . '%');
+            ->setParameter('today', strtotime('today'));
 
 
         $cursor = $qb2->execute();
