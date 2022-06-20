@@ -20,7 +20,7 @@ use OCP\IURLGenerator;
 use OCP\Notification\INotification;
 use OCP\IntranetAgglo\Service\NotificationService;
 
-class newscontroller extends Controller
+class NewsController extends Controller
 {
     /** @var NewsService */
     private $service;
