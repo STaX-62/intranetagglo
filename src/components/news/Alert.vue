@@ -1,6 +1,28 @@
 <template>
   <div class="alert">
-    <h5>{{alert.title}}</h5>
+    <div style="display:flex;align-items: center;justify-content:space-between">
+      <svg
+        width="23"
+        height="23"
+        viewBox="0 0 23 23"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="11.2826" cy="11.5007" r="11" fill="#D9D9D9" />
+        <circle cx="11.2826" cy="11.5007" r="8" fill="#919191" />
+      </svg>
+      <h5>{{alert.title}}</h5>
+      <svg
+        width="23"
+        height="23"
+        viewBox="0 0 23 23"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="11.2826" cy="11.5007" r="11" fill="#D9D9D9" />
+        <circle cx="11.2826" cy="11.5007" r="8" fill="#919191" />
+      </svg>
+    </div>
     <p>{{alert.text}}</p>
   </div>
 </template>
@@ -50,13 +72,23 @@ export default {
 .alert::before {
   content: " ";
   position: absolute;
-  background: #f0f0f0;
+  background: #dbdbdb;
   transform: rotate(2.26deg);
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 .alert::after {
   content: " ";
   position: absolute;
-  background: #f0f0f0;
+  background: #dbdbdb;
   transform: matrix(-1, 0.04, 0.04, 1, 0, 0);
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 </style>

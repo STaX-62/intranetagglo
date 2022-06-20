@@ -17,7 +17,7 @@
         <!-- <news-admin-create v-if="isAdmin" /> -->
       </div>
       <div id="news-row" class="news-row" :focus="newfocus">
-        <div style="display:flex;flex-direction:column; height:100%">
+        <div class="news-alerts">
           <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
             <alert :alert="alerts[index]" />
           </div>
@@ -233,8 +233,19 @@ export default {
 
 
 <style scoped>
+.news-alerts {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  z-index: 2;
+  flex: 0 0 32%;
+  margin: 0 1%;
+  background-color: #0eb4ed !important;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
 .searchbar {
-  flex-grow: 1;
+  flex: 0 0 27%;
   border-top-left-radius: 10px !important;
   border-bottom-left-radius: 10px !important;
   border: 2px solid var(--color-mode-4) !important;
