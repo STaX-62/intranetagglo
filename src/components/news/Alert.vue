@@ -65,7 +65,8 @@ export default {
 
 <style scoped>
 .alert {
-  margin: 20px;
+  margin: 5%;
+  padding: 5px 10px;
   position: relative;
   background: var(--color-mode-2);
 }

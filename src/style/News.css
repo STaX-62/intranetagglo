@@ -139,7 +139,6 @@
     flex: 0 0 32%;
     margin-right: 1%;
     color: var(--color-mode-contrast-1);
-    border: 2px solid var(--color-mode-4) !important;
     border-bottom: 0px;
     justify-content: center;
     display: flex;
