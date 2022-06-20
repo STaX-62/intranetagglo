@@ -70,26 +70,22 @@ export default {
   position: relative;
   background: var(--color-mode-2);
 }
+.alert::after,
 .alert::before {
   content: " ";
   position: absolute;
-  background: #dbdbdb;
-  transform: rotate(2.26deg);
+  background-color: var(--color-mode-4);
   z-index: -1;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
 }
+
+.alert::before {
+  transform: rotate(2.26deg);
+}
 .alert::after {
-  content: " ";
-  position: absolute;
-  background: #dbdbdb;
   transform: matrix(-1, 0.04, 0.04, 1, 0, 0);
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
 }
 </style>
