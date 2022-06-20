@@ -28,6 +28,12 @@
             :arrayid="index"
             :news="news[index]"
           />
+          <b-icon
+            class="news-return"
+            icon="arrow-return-left"
+            @click="closeNews()"
+            v-if="newfocus != ''"
+          ></b-icon>
         </div>
         <div class="news-wrapper" v-else>
           <news
@@ -37,13 +43,13 @@
             :arrayid="index"
             :news="news[index]"
           />
+          <b-icon
+            class="news-return"
+            icon="arrow-return-left"
+            @click="closeNews()"
+            v-if="newfocus != ''"
+          ></b-icon>
         </div>
-        <b-icon
-          class="news-return"
-          icon="arrow-return-left"
-          @click="closeNews()"
-          v-if="newfocus != ''"
-        ></b-icon>
       </div>
       <b-pagination
         class="news-pagination"

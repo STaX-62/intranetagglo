@@ -11,7 +11,7 @@
         <circle cx="11.2826" cy="11.5007" r="11" fill="#D9D9D9" />
         <circle cx="11.2826" cy="11.5007" r="8" fill="#919191" />
       </svg>
-      <h5>{{alert.title}}</h5>
+      <h5 style="color: var(--color-mode-contrast-1);">{{alert.title}}</h5>
       <svg
         width="23"
         height="23"
@@ -23,7 +23,7 @@
         <circle cx="11.2826" cy="11.5007" r="8" fill="#919191" />
       </svg>
     </div>
-    <p>{{alert.text}}</p>
+    <p style="color: var(--color-mode-contrast-4);">{{alert.text}}</p>
   </div>
 </template>
 
