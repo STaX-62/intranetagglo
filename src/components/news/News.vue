@@ -25,7 +25,7 @@
         <div class="news-tagbox-button" v-if="news.pinned == 1">
           <b-icon class="sidebar-item-icon" variant="dark" icon="shift-fill" />
         </div>
-        <div class="flip-tagbox" :adminopt="adminopt">
+        <div class="flip-tagbox">
           <div class="flip-tagbox-inner">
             <div class="news-tag-date">{{ getFormatedDate }}</div>
           </div>

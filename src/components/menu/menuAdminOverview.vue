@@ -135,7 +135,7 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
 import draggable from 'vuedraggable'
-import MenuAdminUpdate from './MenuAdminUpdate'
+import MenuAdminUpdate from './menuAdminUpdate'
 
 export default {
   name: 'MenuAdminOverview',

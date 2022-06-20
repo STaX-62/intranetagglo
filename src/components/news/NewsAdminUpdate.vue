@@ -1,6 +1,8 @@
 <template>
-  <div class="add-news-button" @click="modal = !modal">
-    Ajouter une actualité
+  <div>
+    <button type="button" class="news-update-button" @click="modal = !modal">
+      <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
+    </button>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="UpdNews">
       <template #modal-title>
         Modifier une
@@ -129,7 +131,7 @@ import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
 
 export default {
-  name: 'NewsAdminCreate',
+  name: 'NewsAdminUpdate',
   components: {
     VueTrix
   },

@@ -54,7 +54,7 @@
 <script>
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import MenuAdminOverview from './menu/MenuAdminOverview'
+import MenuAdminOverview from './menu/menuAdminOverview.vue'
 export default {
   name: 'Navigation',
   components: {
