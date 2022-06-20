@@ -68,6 +68,11 @@ return [
             'verb' => 'POST'
         ],
         [
+            'name' => 'news#alerts',
+            'url' => '/alerts/{id}',
+            'verb' => 'POST'
+        ],
+        [
             'name' => 'news#dashboard',
             'url' => '/news/dashboard',
             'verb' => 'GET',

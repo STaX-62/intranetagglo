@@ -82,6 +82,14 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
+    public function alerts(int $id, string $search, array $dateFilter): DataResponse
+    {
+        return (new DataResponse($this->service->findAlerts($id, $search, $dateFilter)));
+    }
+
+    /**
+     * @NoAdminRequired
+     */
     public function isAdmin()
     {
         $user = $this->session->getUser();

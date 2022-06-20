@@ -2,15 +2,30 @@
   <div id="news-frame">
     <div id="news-container" class="news-container">
       <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
+        <h2 class="news-header-title">
+          Alertes
+          <button id="news-header-title-button">
+            <b-icon icon="plus-lg"></b-icon>
+          </button>
+        </h2>
         <h2 class="news-header-title">Actualités</h2>
         <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
         <button id="news-filtres">
           <b-icon icon="filter"></b-icon>
         </button>
-        <Filtres :minDate="minDate" />
-        <news-admin-create v-if="isAdmin" />
+        <NewsFiltrage :minDate="minDate" />
+        <!-- <news-admin-create v-if="isAdmin" /> -->
       </div>
       <div id="news-row" class="news-row" :focus="newfocus">
+        <div style="display:flex;flex-direction:column; height:100%">
+          <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
+            <alert :alert="alerts[index]" />
+          </div>
+          <div>
+            <button>précédent</button>
+            <button>suivant</button>
+          </div>
+        </div>
         <div class="news-wrapper" v-if="isAdmin">
           <news-admin
             :id="'news'+index"
@@ -38,10 +53,10 @@
       </div>
       <b-pagination
         class="news-pagination"
-        v-model="currentPage"
+        v-model="currentNewsPage"
         pills
         :total-rows="rows"
-        :per-page="3"
+        :per-page="2"
       ></b-pagination>
     </div>
     <Apps class="Apps" />
@@ -51,8 +66,9 @@
 <script>
 import NewsAdmin from './news/NewsAdmin'
 import News from './news/News'
+import Alert from './news/Alert'
 import Apps from './Apps'
-import NewsAdminCreate from './news/NewsAdminCreate'
+// import NewsAdminCreate from './news/NewsAdminCreate'
 import NewsFiltrage from './news/NewsFiltrage'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
@@ -65,21 +81,27 @@ export default {
   components: {
     NewsAdmin,
     News,
+    Alert,
     Apps,
-    NewsAdminCreate,
-    NewsFiltrage,
-    NewsAdmin
+    // NewsAdminCreate,
+    NewsFiltrage
   },
   watch: {
     updating: function (val) {
       if (val) {
-        var url = `apps/intranetagglo/news/${this.currentPage - 1}`
-        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter.join(';'), dateFilter: this.dateFilter }, { type: 'application/json' })
+        var url = `apps/intranetagglo/news/${this.currentNewsPage - 1}`
+        axios.post(generateUrl(url), { 'id': (this.currentNewsPage - 1) * 2, 'search': this.search, 'categories': this.categoryfilter.join(';'), dateFilter: this.dateFilter }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
             this.minDate = response.data[2].time;
             this.$store.commit('setNewsUpdating', false)
+          })
+        url = `apps/intranetagglo/alerts/${this.currentAlertsPage - 1}`
+        axios.post(generateUrl(url), { 'id': (this.currentAlertsPage - 1) * 2, 'search': this.search, dateFilter: this.dateFilter }, { type: 'application/json' })
+          .then((response) => {
+            this.alerts = response.data[0];
+            this.rows = response.data[1];
           })
       }
     },
@@ -89,7 +111,9 @@ export default {
       addNews: false,
       AddNewsModal: false,
       news: [],
-      page: 1,
+      alerts: [],
+      newsPage: 1,
+      alertsPage: 1,
       rows: 0,
       focus: "",
       timer: undefined,
@@ -132,12 +156,21 @@ export default {
         return this.$store.state.datefilter
       },
     },
-    currentPage: {
+    currentNewsPage: {
       get() {
-        return this.page
+        return this.newsPage
       },
       set(value) {
-        this.page = value
+        this.newsPage = value
+        this.$store.commit('setNewsUpdating', true)
+      }
+    },
+    currentAlertsPage: {
+      get() {
+        return this.alertsPage
+      },
+      set(value) {
+        this.alertsPage = value
         this.$store.commit('setNewsUpdating', true)
       }
     },
@@ -177,12 +210,18 @@ export default {
     axios.get(generateUrl(`apps/intranetagglo/user`)).then(response => {
       this.$store.commit('setUser', response.data)
     })
-    var url = `apps/intranetagglo/news/${this.currentPage - 1}`
+    var url = `apps/intranetagglo/news/${this.currentNewsPage - 1}`
     axios.post(generateUrl(url), { 'id': 0, 'search': this.search, 'categories': '', dateFilter: this.dateFilter }, { type: 'application/json' })
       .then((response) => {
         this.news = response.data[0];
         this.rows = response.data[1];
         this.minDate = response.data[2].time;
+      })
+    url = `apps/intranetagglo/alerts/${this.currentAlertsPage - 1}`
+    axios.post(generateUrl(url), { 'id': 0, 'search': this.search, dateFilter: this.dateFilter }, { type: 'application/json' })
+      .then((response) => {
+        this.news = response.data[0];
+        this.rows = response.data[1];
       })
   },
   destroyed() {
