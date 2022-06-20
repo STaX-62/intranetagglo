@@ -1,6 +1,6 @@
 <template>
   <div class="alert">
-    <div style="display:flex;align-items: center;justify-content:space-between">
+    <div style="display:flex;justify-content:space-between">
       <svg
         width="23"
         height="23"

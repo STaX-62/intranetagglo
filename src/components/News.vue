@@ -2,10 +2,11 @@
   <div id="news-frame">
     <div id="news-container" class="news-container">
       <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
-        <h2 class="news-header-title">
-          Événements
-        </h2>
-        <h2 class="news-header-title">Actualités</h2>
+        <h2 class="news-header-title" style="border-top: solid 2px #0eb4ed;">Événements</h2>
+        <h2
+          class="news-header-title"
+          style="border-top: 2px solid var(--color-primary-category);"
+        >Actualités</h2>
         <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
         <button id="news-filtres">
           <b-icon icon="filter"></b-icon>
@@ -190,7 +191,7 @@ export default {
       })
     },
     closeNews() {
-      this.$store.commit('updateNewsFocus', 3)
+      this.$store.commit('updateNewsFocus', 2)
     }
   },
   mounted() {
@@ -236,8 +237,8 @@ export default {
   height: 100%;
   z-index: 2;
   flex: 0 0 32%;
-  margin: 0 1%;
-  background-color: #0eb4ed !important;
+  margin-right: 1%;
+  background-color: #0eb4eda1 !important;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -255,7 +256,7 @@ export default {
   padding: 5px 15px !important;
   outline: none !important;
   color: #535d74 !important;
-  height: auto !important;
+  height: 50px !important;
   margin: 0 !important;
   font-size: 16px !important;
 }
