@@ -153,12 +153,14 @@
     margin-right: 1%;
     color: var(--color-mode-contrast-1);
     border: 2px solid var(--color-mode-4) !important;
+    border-bottom: 0px;
     justify-content: center;
     display: flex;
     text-align: center;
     background: url("../patterns/brilliant.png"),
         var(--color-mode-2);
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
         7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%);
 }
@@ -179,6 +181,7 @@
 .news-row {
     display: flex;
     position: relative;
+    justify-content: center;
     /* padding-top: 10px; */
     grid-area: NewsRow;
 }
