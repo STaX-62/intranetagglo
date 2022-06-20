@@ -70,13 +70,13 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function index(int $id, string $search, string $categories, array $dateFilter): DataResponse
+    public function index(int $id, int $limit, string $search, string $categories, array $dateFilter): DataResponse
     {
         $user = $this->session->getUser();
         if ($this->isAdmin()) {
-            return (new DataResponse($this->service->findAll($id, $search, $categories, $dateFilter)));
+            return (new DataResponse($this->service->findAll($id, $limit, $search, $categories, $dateFilter)));
         }
-        return (new DataResponse($this->service->findByGroups($id, $this->groupManager->getUserGroupIds($user), $search, $categories, $dateFilter)));
+        return (new DataResponse($this->service->findByGroups($id, $limit, $this->groupManager->getUserGroupIds($user), $search, $categories, $dateFilter)));
     }
 
     /**

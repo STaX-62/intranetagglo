@@ -90,7 +90,7 @@ export default {
     updating: function (val) {
       if (val) {
         var url = `apps/intranetagglo/news/${this.currentNewsPage - 1}`
-        axios.post(generateUrl(url), { 'id': (this.currentNewsPage - 1) * 2, 'search': this.search, 'categories': this.categoryfilter.join(';'), dateFilter: this.dateFilter }, { type: 'application/json' })
+        axios.post(generateUrl(url), { 'id': (this.currentNewsPage - 1) * this.newsperpage, 'limit': this.newsperpage, 'search': this.search, 'categories': this.categoryfilter.join(';'), dateFilter: this.dateFilter }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
@@ -98,7 +98,7 @@ export default {
             this.$store.commit('setNewsUpdating', false)
           })
         url = `apps/intranetagglo/alerts/${this.currentAlertsPage - 1}`
-        axios.post(generateUrl(url), { 'id': (this.currentAlertsPage - 1) * 2, 'search': this.search, dateFilter: this.dateFilter }, { type: 'application/json' })
+        axios.post(generateUrl(url), { 'id': (this.currentAlertsPage - 1) * this.newsperpage, 'limit': this.newsperpage, 'search': this.search, dateFilter: this.dateFilter }, { type: 'application/json' })
           .then((response) => {
             this.alerts = response.data[0];
             this.rows = response.data[1];
@@ -114,6 +114,7 @@ export default {
       alerts: [],
       newsPage: 1,
       alertsPage: 1,
+      newsperpage: 2,
       rows: 0,
       focus: "",
       timer: undefined,
@@ -211,14 +212,14 @@ export default {
       this.$store.commit('setUser', response.data)
     })
     var url = `apps/intranetagglo/news/${this.currentNewsPage - 1}`
-    axios.post(generateUrl(url), { 'id': 0, 'search': this.search, 'categories': '', dateFilter: this.dateFilter }, { type: 'application/json' })
+    axios.post(generateUrl(url), { 'id': 0, 'limit': this.newsperpage, 'search': this.search, 'categories': '', dateFilter: this.dateFilter }, { type: 'application/json' })
       .then((response) => {
         this.news = response.data[0];
         this.rows = response.data[1];
         this.minDate = response.data[2].time;
       })
     url = `apps/intranetagglo/alerts/${this.currentAlertsPage - 1}`
-    axios.post(generateUrl(url), { 'id': 0, 'search': this.search, dateFilter: this.dateFilter }, { type: 'application/json' })
+    axios.post(generateUrl(url), { 'id': 0, 'limit': this.newsperpage, 'search': this.search, dateFilter: this.dateFilter }, { type: 'application/json' })
       .then((response) => {
         this.news = response.data[0];
         this.rows = response.data[1];

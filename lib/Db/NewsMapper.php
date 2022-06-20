@@ -67,7 +67,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAll($firstresult, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
+    public function findAll($firstresult, $limit, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
     {
         $categoryArray = explode(';', $categories);
 
@@ -124,7 +124,7 @@ class NewsMapper extends QBMapper
             ->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
-            ->setMaxResults(3);
+            ->setMaxResults($limit);
 
 
         $qb3 = $this->db->getQueryBuilder();
@@ -230,7 +230,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findByGroups(int $firstresult, array $groupsArray, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
+    public function findByGroups(int $firstresult, $limit, array $groupsArray, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
     {
         $groups = '%';
         foreach ($groupsArray as $group) {
@@ -296,7 +296,7 @@ class NewsMapper extends QBMapper
             ->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
-            ->setMaxResults(3);
+            ->setMaxResults($limit);
 
 
         $qb3 = $this->db->getQueryBuilder();

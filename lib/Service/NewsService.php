@@ -53,14 +53,14 @@ class NewsService
 		return $this->mapper->getLastPinned();
 	}
 
-	public function findAll($firstresult, $search, $categories, $dateFilter): array
+	public function findAll($firstresult, $limit, $search, $categories, $dateFilter): array
 	{
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
-			$qb = $this->mapper->findAll($firstresult, $search, '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
+			$qb = $this->mapper->findAll($firstresult, $limit, $search, '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
 		} else {
-			$qb = $this->mapper->findAll($firstresult, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
+			$qb = $this->mapper->findAll($firstresult, $limit, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
 		}
 
 		return $qb;
@@ -79,14 +79,14 @@ class NewsService
 		return $qb;
 	}
 
-	public function findByGroups(int $firstresult, array $groups, string $search, string $categories, $dateFilter): array
+	public function findByGroups(int $firstresult, $limit, array $groups, string $search, string $categories, $dateFilter): array
 	{
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
-			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
+			$qb = $this->mapper->findByGroups($firstresult, $limit, $groups, $search, '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
 		} else {
-			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
+			$qb = $this->mapper->findByGroups($firstresult, $limit, $groups, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
 		}
 
 		return $qb;
