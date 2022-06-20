@@ -82,9 +82,9 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function alerts(int $id, string $search, array $dateFilter): DataResponse
+    public function alerts(int $id, string $search): DataResponse
     {
-        return (new DataResponse($this->service->findAlerts($id, $search, $dateFilter)));
+        return (new DataResponse($this->service->findAlerts($id, $search)));
     }
 
     /**

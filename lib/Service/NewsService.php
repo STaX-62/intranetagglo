@@ -66,15 +66,10 @@ class NewsService
 		return $qb;
 	}
 
-	public function findAlerts($firstresult, $search, $dateFilter): array
+	public function findAlerts($firstresult, $search): array
 	{
 		$search = trim($search, " \n\r\t\v");
-
-		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
-			$qb = $this->mapper->findAlerts($firstresult, $search, '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
-		} else {
-			$qb = $this->mapper->findAlerts($firstresult, $search, '', $dateFilter['start'], $dateFilter['end']);
-		}
+		$qb = $this->mapper->findAlerts($firstresult, $search);
 
 		return $qb;
 	}

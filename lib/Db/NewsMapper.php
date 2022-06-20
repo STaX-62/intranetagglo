@@ -166,7 +166,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAlerts($firstresult, string $search, string $searchid, string $startDate, string $endDate): array
+    public function findAlerts($firstresult, string $search): array
     {
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
@@ -178,26 +178,8 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
-        if ($startDate == "") {
-            $qb->andWhere('q.time >= :startdate')
-                ->setParameter('startdate', $time['time']);
-        } else {
-            $qb->andWhere('q.time >= :startdate')
-                ->setParameter('startdate', strtotime($startDate));
-        }
 
-        if ($endDate == "") {
-            $qb->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', time());
-        } else {
-            $qb->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', strtotime($endDate) + (60 * 60 * 24));
-        }
-
-        $qb->orWhere('q.id = :searchid')
-            ->setParameter('searchid', $searchid)
-            ->addOrderBy('q.pinned', 'DESC')
-            ->addOrderBy('q.time', 'DESC')
+        $qb->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
             ->setMaxResults(3);
 
@@ -213,9 +195,6 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
-
-        $qb2->orWhere('q.id = :searchid')
-            ->setParameter('searchid', $searchid);
 
 
         $cursor = $qb2->execute();

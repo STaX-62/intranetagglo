@@ -94,7 +94,7 @@ export default {
             this.$store.commit('setNewsUpdating', false)
           })
         url = `apps/intranetagglo/alerts/${this.currentAlertsPage - 1}`
-        axios.post(generateUrl(url), { 'id': (this.currentAlertsPage - 1) * this.newsperpage, 'limit': this.newsperpage, 'search': this.search, dateFilter: this.dateFilter }, { type: 'application/json' })
+        axios.post(generateUrl(url), { 'id': (this.currentAlertsPage - 1) * this.newsperpage, 'search': this.search }, { type: 'application/json' })
           .then((response) => {
             this.alerts = response.data[0];
             this.rows = response.data[1];
@@ -215,7 +215,7 @@ export default {
         this.minDate = response.data[2].time;
       })
     url = `apps/intranetagglo/alerts/${this.currentAlertsPage - 1}`
-    axios.post(generateUrl(url), { 'id': 0, 'limit': this.newsperpage, 'search': this.search, dateFilter: this.dateFilter }, { type: 'application/json' })
+    axios.post(generateUrl(url), { 'id': 0, 'search': this.search }, { type: 'application/json' })
       .then((response) => {
         this.news = response.data[0];
         this.rows = response.data[1];
