@@ -128,6 +128,9 @@ export default {
     getNews() {
       return this.news
     },
+    getAlerts() {
+      return this.alerts
+    },
     isAdmin() {
       return this.$store.state.isAdmin
     },
@@ -247,14 +250,5 @@ export default {
   height: auto !important;
   margin: 0 !important;
   font-size: 16px !important;
-}
-
-.admin-view .searchbar {
-  flex: 0 0 50%;
-}
-@media (max-width: 1100px) {
-  .searchbar {
-    flex: 0 0 90%;
-  }
 }
 </style>

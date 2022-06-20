@@ -1,5 +1,5 @@
 <template>
-  <div class="alert" v-bind:style="'--news-color: ' + newscolor">
+  <div class="alert">
     <h5>{{alert.title}}</h5>
     <p>{{alert.text}}</p>
   </div>
