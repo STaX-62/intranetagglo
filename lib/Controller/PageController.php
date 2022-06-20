@@ -2,7 +2,7 @@
 
 namespace OCA\IntranetAgglo\Controller;
 
-use OCA\IntranetAgglo\Controller\NewsController;
+use OCP\IntranetAgglo\Controller\NewsController;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
