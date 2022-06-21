@@ -99,8 +99,9 @@ class NewsService
 		$news->setGroups($groups);
 		$news->setLink($link);
 		$news->setTime($time);
+		$expiration = strtotime($expiration);
 		if ($expiration != 0) {
-			$news->setExpiration(strtotime($expiration));
+			$news->setExpiration($expiration);
 		} else {
 			$news->setExpiration(0);
 		}
