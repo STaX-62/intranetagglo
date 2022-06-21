@@ -87,6 +87,10 @@ export default {
     VueTrix
   },
   computed: {
+    datechange() {
+      console.log(this.news.expiration)
+      return this.news.expiration
+    },
     categoryoptions() {
       return this.$store.state.categoryoptions;
     },
