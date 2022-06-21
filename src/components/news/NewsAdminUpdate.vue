@@ -194,8 +194,8 @@ export default {
     },
   },
   mounted() {
-    console.log(news)
-    console.log(defaultenws)
+    console.log(this.news)
+    console.log(this.defaultenws)
   },
   data: function () {
     const now = new Date()
