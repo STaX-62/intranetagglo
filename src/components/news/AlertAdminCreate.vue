@@ -48,7 +48,7 @@
       <label for="expidationDatepicker">Date d'expiration de l'évènement : {{news.expiration}}</label>
       <b-form-datepicker
         name="expirationDatepicker"
-        v-model="news.expiration"
+        v-model="expiration"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
@@ -101,20 +101,21 @@ export default {
     AddNews() {
       this.news.author = this.$store.state.username
       this.news.groups = this.news.groups.join(';')
-      this.createNews(this.news)
-      this.news = {
-        title: "",
-        subtitle: "",
-        text: "",
-        photo: null,
-        category: "",
-        groups: [],
-        link: "",
-        expiration: 0
+      if (this.expiration != null) {
+        this.createNews(this.news, this.expiration);
+        this.news = {
+          title: "",
+          subtitle: "",
+          text: "",
+          photo: null,
+          category: "",
+          groups: [],
+          link: "",
+          expiration: 0
+        }
       }
-      this.step = 1
     },
-    async createNews(news) {
+    async createNews(news, expiration) {
       let data = new FormData();
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
@@ -122,7 +123,7 @@ export default {
       data.append('category', news.category);
       data.append('groups', news.groups);
       data.append('link', news.link);
-      data.append('expiration', news.expiration);
+      data.append('expiration', expiration);
 
       axios.post(generateUrl(`apps/intranetagglo/news`), data, {
         headers: {
@@ -174,6 +175,7 @@ export default {
         link: "",
         expiration: 0
       },
+      expiration: null,
       step: 1,
       minDate: today
     }
