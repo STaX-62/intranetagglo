@@ -1,6 +1,14 @@
 <template>
   <div class="add-news-button" @click="modal = !modal">
-    <b-icon icon="pencil-square" style="fill: var(--color-mode-contrast-1); transition: color .2s;padding: 5px;"></b-icon>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 448 512"
+      style="fill: var(--color-mode-contrast-1); transition: color .2s;padding: 5px;font-size:20px"
+    >
+      <path
+        d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"
+      />
+    </svg>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="AddNews">
       <template #modal-title>
         Ajouter un

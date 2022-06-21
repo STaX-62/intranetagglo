@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button type="button" class="news-update-button" @click="modal = !modal">
+    <button type="button" class="news-update-button" @click="modal = !modal;autocomplete = news ">
       <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
     </button>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="UpdNews">
@@ -51,25 +51,6 @@
             </b-form-select>
           </template>
         </b-form-tags>
-        <b-form-checkbox v-model="status" size="lg">Créer en tant qu'évènement</b-form-checkbox>
-        <div v-if="status">
-          <div style="font-weight:bold">
-            Cette actualité ne s'affichera dans le pop-up "Evènements",
-            qui s'ouvre automatiquement lorsque l'utilisateur a un évènement non lu
-          </div>
-          <label for="expidationDatepicker">Date d'expiration de l'évènement</label>
-          <b-form-datepicker
-            name="expirationDatepicker"
-            v-model="autocomplete.expiration"
-            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-            locale="fr-FR"
-            hide-header="true"
-            :min="minDate"
-            :initial-date="minDate"
-            placeholder="Date d'expiration"
-            value-as-date
-          ></b-form-datepicker>
-        </div>
       </div>
       <div v-if="step == 2 && !link" style="height:50vh">
         <label for="text">Contenu de l'actualité</label>
@@ -135,6 +116,9 @@ export default {
   components: {
     VueTrix
   },
+  props: {
+    news: Object,
+  },
   computed: {
     categoryoptions() {
       return this.$store.state.categoryoptions;
@@ -153,20 +137,8 @@ export default {
       if (this.link) {
         this.autocomplete.text = ""
       }
-      if (!this.status) {
-        this.autocomplete.expiration = 0
-      }
+      this.autocomplete.expiration = 0
       this.updateNews(this.autocomplete, this.newimage)
-      this.news = {
-        title: "",
-        subtitle: "",
-        text: "",
-        photo: null,
-        category: "",
-        groups: [],
-        link: "",
-        expiration: 0
-      }
       this.step = 1
     },
     async updateNews(news, newimage) {
@@ -222,20 +194,9 @@ export default {
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
     return {
       modal: false,
-      news: {
-        title: "",
-        subtitle: "",
-        text: "",
-        photo: null,
-        category: "",
-        groups: [],
-        link: "",
-        expiration: 0
-      },
       step: 0,
       link: false,
       minDate: today,
-      status: false,
       newimage: null
     }
   }
