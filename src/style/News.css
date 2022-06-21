@@ -140,6 +140,7 @@
     display: flex;
     flex-wrap: wrap;
     position: relative;
+    height: calc(100% - 40px);
 }
 
 #news-frame {
@@ -173,7 +174,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 100%;
-    grid-auto-rows: 60px calc(100% - 60px);
+    grid-auto-rows: 60px calc(100% - 70px);
     grid-auto-flow: dense;
     grid-gap: 0 15px;
     justify-content: center;
@@ -287,15 +288,6 @@
 .news-textbox-block[img="yes"] {
     flex: 0 0 calc(40% - 20px);
     height: 100%;
-    /* display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: max-content auto max-content max-content auto;
-    grid-template-areas:
-      "."
-      "."
-      "."
-      "."
-      "."; */
 }
 
 .news-textbox-block {
