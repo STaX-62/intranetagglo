@@ -86,22 +86,11 @@ class NewsMapper extends QBMapper
         $qb2->select('*')
             ->from($this->getTableName(), 'q')
             ->where("q.expiration = 0")
-            ->andWhere('LOWER(q.title) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
+            ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
-            $index = 0;
-            foreach ($categoryArray  as $category) {
-                if ($index == 0) {
-                    $qb2->andWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                } else {
-                    $qb2->orWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                }
-                $index++;
-            }
+            $qb2->andWhere('q.category IN (:categories)')
+                ->setParameter('categories', $categoryArray);;
         }
         if ($startDate == "") {
             $qb2->andWhere('q.time >= :startdate')
@@ -118,10 +107,11 @@ class NewsMapper extends QBMapper
             $qb2->andWhere('q.time <= :enddate')
                 ->setParameter('enddate', strtotime($endDate) + (60 * 60 * 24));
         }
-
-        $qb2->orWhere('q.id = :searchid')
-            ->setParameter('searchid', $searchid)
-            ->addOrderBy('q.pinned', 'DESC')
+        if ($searchid != '') {
+            $qb2->andWhere('q.id = :searchid')
+                ->setParameter('searchid', $searchid);
+        }
+        $qb2->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
             ->setMaxResults($limit);
@@ -137,21 +127,14 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
-            $index = 0;
-            foreach ($categoryArray as $category) {
-                if ($index == 0) {
-                    $qb3->andWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                } else {
-                    $qb3->orWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                }
-                $index++;
-            }
+            $qb3->andWhere('q.category IN (:categories)')
+                ->setParameter('categories', $categoryArray);;
         }
 
-        $qb3->orWhere('q.id = :searchid')
-            ->setParameter('searchid', $searchid);
+        if ($searchid != '') {
+            $qb3->orWhere('q.id = :searchid')
+                ->setParameter('searchid', $searchid);
+        }
 
 
         $cursor = $qb3->execute();
@@ -229,17 +212,8 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
-            $index = 0;
-            foreach ($categoryArray  as $category) {
-                if ($index == 0) {
-                    $qb2->andWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                } else {
-                    $qb2->orWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                }
-                $index++;
-            }
+            $qb2->andWhere('q.category IN (:categories)')
+                ->setParameter('categories', $categoryArray);;
         }
         if ($startDate == "") {
             $qb2->andWhere('q.time >= :startdate')
@@ -256,14 +230,14 @@ class NewsMapper extends QBMapper
             $qb2->andWhere('q.time <= :enddate')
                 ->setParameter('enddate', strtotime($endDate));
         }
-        $qb2->orWhere('q.id = :searchid')
-            ->andWhere("q.groups = ''")
+        if ($searchid != '') {
+            $qb2->andWhere('q.id = :searchid')
+                ->setParameter('searchid', $searchid);
+        }
+        $qb2->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
-
-            ->setParameter('searchid', $searchid)
-
             ->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
@@ -280,25 +254,17 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
-            $index = 0;
-            foreach ($categoryArray  as $category) {
-                if ($index == 0) {
-                    $qb3->andWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                } else {
-                    $qb3->orWhere('q.category = :category' . $index)
-                        ->setParameter('category' . $index, $category);
-                }
-                $index++;
-            }
+            $qb3->andWhere('q.category IN (:categories)')
+                ->setParameter('categories', $categoryArray);;
         }
-        $qb3->orWhere('q.id = :searchid')
-            ->andWhere("q.groups = ''")
+        if ($searchid != '') {
+            $qb3->andWhere('q.id = :searchid')
+                ->setParameter('searchid', $searchid);
+        }
+        $qb3->andWhere("q.groups = ''")
             ->orWhere("q.groups LIKE :groups")
             ->andWhere("q.visible = '1'")
-            ->setParameter('groups', $groups)
-
-            ->setParameter('searchid', $searchid);
+            ->setParameter('groups', $groups);
 
         $cursor = $qb3->execute();
         $row = $cursor->fetch();
