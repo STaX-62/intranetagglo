@@ -101,9 +101,6 @@ export default {
     AddNews() {
       this.news.author = this.$store.state.username
       this.news.groups = this.news.groups.join(';')
-      if (!this.status) {
-        this.news.expiration = 0
-      }
       this.createNews(this.news)
       this.news = {
         title: "",
@@ -181,8 +178,7 @@ export default {
         expiration: 0
       },
       step: 1,
-      minDate: today,
-      status: false
+      minDate: today
     }
   }
 }
