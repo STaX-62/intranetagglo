@@ -102,7 +102,7 @@ class NewsService
 		if ($expiration != 0) {
 			$news->setExpiration(strtotime($expiration));
 		} else {
-			$news->setExpiration($expiration);
+			$news->setExpiration(0);
 		}
 		$news->setVisible(0);
 		$news->setPinned(0);
@@ -123,7 +123,7 @@ class NewsService
 			if ($expiration != 0) {
 				$news->setExpiration(strtotime($expiration));
 			} else {
-				$news->setExpiration($expiration);
+				$news->setExpiration(0);
 			}
 			return $this->mapper->update($news);
 		} catch (Exception $e) {
