@@ -1,6 +1,6 @@
 <template>
   <div class="add-news-button" @click="modal = !modal">
-    <b-icon icon="plus-lg"></b-icon>
+    <b-icon icon="plus-lg" style="fill: var(--color-mode-contrast-1); transition: color .2s;"></b-icon>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="AddNews">
       <template #modal-title>
         Ajouter un
@@ -183,8 +183,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.add-news-button {
-  color: var(--color-mode-contrast-1);
-}
-</style>F
