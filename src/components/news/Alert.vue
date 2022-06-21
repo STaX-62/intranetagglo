@@ -24,6 +24,11 @@
       </svg>
     </div>
     <p style="color: var(--color-mode-contrast-4);" v-html="alert.text"></p>
+    <div class="expiration-block">
+      <div class="expiration-inner">
+        <div class="expiration-date">{{ getFormatedDate }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -50,7 +55,7 @@ export default {
       }
     },
     getFormatedDate() {
-      return moment((this.news.time * 1000)).format('LL')
+      return moment((this.news.expiration * 1000)).locale('fr').diff(moment(), 'days');
     },
   },
   data: function () {
@@ -87,5 +92,28 @@ export default {
 }
 .alert::after {
   transform: matrix(-1, 0.04, 0.04, 1, 0, 0);
+}
+
+.expiration-block {
+  position: relative;
+  background-color: transparent;
+}
+.expiration-inner {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.expiration-date {
+  width: fit-content;
+  margin-left: auto;
+  background: var(--color-mode-6);
+  border-radius: 10px;
+  padding: 0 10px 0 10px;
+  position: relative;
+  height: 100%;
+  font-size: 13px;
+  color: var(--color-mode-5);
+  line-height: 26px;
 }
 </style>
