@@ -1,6 +1,6 @@
 <template>
   <div class="add-news-button" @click="modal = !modal">
-    <b-icon icon="x-circle-fill" style="fill: var(--color-mode-contrast-1); transition: color .2s;"></b-icon>
+    <b-icon icon="pencil-square" style="fill: var(--color-mode-contrast-1); transition: color .2s;padding: 5px;"></b-icon>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="AddNews">
       <template #modal-title>
         Ajouter un
