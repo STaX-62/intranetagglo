@@ -174,7 +174,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 100%;
-    grid-auto-rows: 60px calc(100% - 70px);
+    grid-auto-rows: 60px calc(100% - 80px);
     grid-auto-flow: dense;
     grid-gap: 0 15px;
     justify-content: center;

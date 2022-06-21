@@ -15,8 +15,10 @@
           v-bind:href="app.link"
           target="_blank"
         >
-          <b-icon class="apps-icon" v-bind:icon="app.icon"></b-icon>
-          <div class="apps-title">{{app.title}}</div>
+          <div style="position: relative;top: 50%;transform: perspective(1px) translateY(-50%);">
+            <b-icon class="apps-icon" v-bind:icon="app.icon"></b-icon>
+            <div class="apps-title">{{app.title}}</div>
+          </div>
         </a>
       </div>
     </div>
