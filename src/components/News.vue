@@ -22,44 +22,55 @@
             <alert :alert="alerts[index]" />
           </div>
         </div>
-        <div class="news-wrapper" v-if="isAdmin">
-          <news-admin
-            :id="'news'+index"
-            v-for="(n,index) in getNews"
-            :key="index"
-            :arrayid="index"
-            :news="news[index]"
-          />
-          <b-icon
-            class="news-return"
-            icon="arrow-return-left"
-            @click="closeNews()"
-            v-if="newfocus != ''"
-          ></b-icon>
+        <div class="news-block" v-if="isAdmin">
+          <div class="news-wrapper">
+            <news-admin
+              :id="'news'+index"
+              v-for="(n,index) in getNews"
+              :key="index"
+              :arrayid="index"
+              :news="news[index]"
+            />
+            <b-icon
+              class="news-return"
+              icon="arrow-return-left"
+              @click="closeNews()"
+              v-if="newfocus != ''"
+            ></b-icon>
+          </div>
+          <b-pagination
+            class="news-pagination"
+            v-model="currentNewsPage"
+            pills
+            :total-rows="rows"
+            :per-page="2"
+          ></b-pagination>
         </div>
-        <div class="news-wrapper" v-else>
-          <news
-            :id="'news'+index"
-            v-for="(n,index) in getNews"
-            :key="index"
-            :arrayid="index"
-            :news="news[index]"
-          />
-          <b-icon
-            class="news-return"
-            icon="arrow-return-left"
-            @click="closeNews()"
-            v-if="newfocus != ''"
-          ></b-icon>
+        <div class="news-block" v-else>
+          <div class="news-wrapper">
+            <news
+              :id="'news'+index"
+              v-for="(n,index) in getNews"
+              :key="index"
+              :arrayid="index"
+              :news="news[index]"
+            />
+            <b-icon
+              class="news-return"
+              icon="arrow-return-left"
+              @click="closeNews()"
+              v-if="newfocus != ''"
+            ></b-icon>
+          </div>
+          <b-pagination
+            class="news-pagination"
+            v-model="currentNewsPage"
+            pills
+            :total-rows="rows"
+            :per-page="2"
+          ></b-pagination>
         </div>
       </div>
-      <b-pagination
-        class="news-pagination"
-        v-model="currentNewsPage"
-        pills
-        :total-rows="rows"
-        :per-page="2"
-      ></b-pagination>
     </div>
     <Apps class="Apps" />
   </div>

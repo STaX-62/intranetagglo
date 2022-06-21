@@ -111,11 +111,10 @@
 }
 
 .news-pagination {
-    margin-top: 10px;
+    margin: 0 auto;
     justify-content: center;
     display: flex;
     text-align: center;
-    grid-area: Pagination;
     filter: drop-shadow(0 0 1px var(--color-mode-contrast-2));
 }
 
@@ -127,15 +126,19 @@
     grid-area: NewsRow;
 }
 
-.news-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    height: 100%;
+.news-block {
+    position: relative;
     flex: 0 0 65%;
+    height: 100%;
     background-color: #9ecd4399;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
+}
+
+.news-wrapper {
+    display: flex;
+    flex-wrap: wrap;
     position: relative;
 }
 
@@ -170,7 +173,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 100%;
-    grid-auto-rows: 60px calc(100% - 120px) 60px;
+    grid-auto-rows: 60px calc(100% - 60px);
     grid-auto-flow: dense;
     grid-gap: 0 15px;
     justify-content: center;
@@ -179,8 +182,7 @@
     height: calc(100vh - 50px);
     grid-template-areas:
         "Titre"
-        "NewsRow"
-        "Pagination";
+        "NewsRow";
     padding-top: 10px;
 }
 
@@ -698,10 +700,6 @@
     right: calc(2.5% + 270px);
 }
 
-#App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-pagination {
-    width: calc(100% - 270px);
-}
-
 @media (max-width: 780px) {
 
     .news-header:not(.admin-view) {
@@ -742,10 +740,6 @@
 
     #App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-return {
         right: 2.5%;
-    }
-
-    #App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-pagination {
-        width: 100%;
     }
 
 }
@@ -823,14 +817,6 @@
         overflow: auto;
         margin-left: 7px;
         margin-right: 7px;
-    }
-
-
-    .news-row[focus='left'] .news-wrapper,
-    .news-row[focus='center'] .news-wrapper,
-    .news-row[focus="right"] .news-wrapper {
-        display: flex;
-        overflow: unset;
     }
 
     .news-row:not([focus="right"]):not([focus='center']):not([focus='left']) .news {
