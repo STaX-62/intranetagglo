@@ -57,8 +57,12 @@ export default {
     getFormatedDate() {
       var expiration = moment((this.alert.expiration * 1000))
       var diff = expiration.diff(moment(), 'days');
+      console.log(expiration)
+      console.log(diff)
+      console.log(moment())
+      console.log(expiration - moment())
       if (diff == 0)
-        return expiration.diff(moment(), 'hours'); + "heures";
+        return expiration.diff(moment(), 'hours') + "heures";
       if (diff == 1)
         return diff + "jour";
       return diff + "jours";
