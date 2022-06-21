@@ -115,7 +115,7 @@ class NewsController extends Controller
                     }
                 }
             }
-            return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $link, $this->timeFactory->getTime(), $expiration);
+            return [$this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $link, $this->timeFactory->getTime(), $expiration), $expiration, strtotime($expiration)];
         }
         return 'User is not admin';
     }

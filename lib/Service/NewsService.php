@@ -107,7 +107,7 @@ class NewsService
 		}
 		$news->setVisible(0);
 		$news->setPinned(0);
-		return [$this->mapper->insert($news), $expiration, strtotime($expiration), var_dump(strtotime($expiration))];
+		return $this->mapper->insert($news);
 	}
 
 	public function update($id, $title, $subtitle, $text, $photo, $category, $groups, $link, $expiration)
