@@ -45,7 +45,7 @@
           </b-form-select>
         </template>
       </b-form-tags>
-      <label for="expidationDatepicker">Date d'expiration de l'évènement</label>
+      <label for="expidationDatepicker">Date d'expiration de l'évènement : {{news.expiration}}</label>
       <b-form-datepicker
         name="expirationDatepicker"
         v-model="news.expiration"
@@ -87,10 +87,6 @@ export default {
     VueTrix
   },
   computed: {
-    datechange() {
-      console.log(this.news.expiration)
-      return this.news.expiration
-    },
     categoryoptions() {
       return this.$store.state.categoryoptions;
     },
