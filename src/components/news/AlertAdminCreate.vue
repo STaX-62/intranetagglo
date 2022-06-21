@@ -45,10 +45,10 @@
           </b-form-select>
         </template>
       </b-form-tags>
-      <label for="expidationDatepicker">Date d'expiration de l'évènement : {{expiration}}</label>
+      <label for="expidationDatepicker">Date d'expiration de l'évènement : {{news.expiration}}</label>
       <b-form-datepicker
         name="expirationDatepicker"
-        v-model="expiration"
+        v-model="news.expiration"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
@@ -101,21 +101,20 @@ export default {
     AddNews() {
       this.news.author = this.$store.state.username
       this.news.groups = this.news.groups.join(';')
-      if (this.expiration != null) {
-        this.createNews(this.news, this.expiration);
-        this.news = {
-          title: "",
-          subtitle: "",
-          text: "",
-          photo: null,
-          category: "",
-          groups: [],
-          link: "",
-          expiration: 0
-        }
+      if (this.expiration != null)
+        this.createNews(this.news)
+      this.news = {
+        title: "",
+        subtitle: "",
+        text: "",
+        photo: null,
+        category: "",
+        groups: [],
+        link: "",
+        expiration: 0
       }
     },
-    async createNews(news, expiration) {
+    async createNews(news) {
       let data = new FormData();
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
@@ -123,7 +122,7 @@ export default {
       data.append('category', news.category);
       data.append('groups', news.groups);
       data.append('link', news.link);
-      data.append('expiration', expiration);
+      data.append('expiration', news.expiration.toISOString());
 
       axios.post(generateUrl(`apps/intranetagglo/news`), data, {
         headers: {
@@ -173,10 +172,8 @@ export default {
         category: "",
         groups: [],
         link: "",
-        expiration: 0
+        expiration: ""
       },
-      expiration: null,
-      step: 1,
       minDate: today
     }
   }
