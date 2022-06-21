@@ -55,6 +55,9 @@ export default {
       }
     },
     getFormatedDate() {
+      console.log("this.alert.expiration * 1000:" + this.alert.expiration * 1000)
+      console.log("moment():" + moment())
+      console.log(moment((this.alert.expiration * 1000)).diff(moment(), 'days'))
       return moment((this.alert.expiration * 1000)).locale('fr').diff(moment(), 'days');
     },
   },
