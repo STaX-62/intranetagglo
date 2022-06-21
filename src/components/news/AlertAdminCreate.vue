@@ -101,8 +101,7 @@ export default {
     AddNews() {
       this.news.author = this.$store.state.username
       this.news.groups = this.news.groups.join(';')
-      if (this.expiration != null)
-        this.createNews(this.news)
+      this.createNews(this.news)
       this.news = {
         title: "",
         subtitle: "",
@@ -111,7 +110,7 @@ export default {
         category: "",
         groups: [],
         link: "",
-        expiration: 0
+        expiration: null
       }
     },
     async createNews(news) {
@@ -172,7 +171,7 @@ export default {
         category: "",
         groups: [],
         link: "",
-        expiration: ""
+        expiration: null
       },
       minDate: today
     }
