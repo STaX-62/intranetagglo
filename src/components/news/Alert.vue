@@ -55,7 +55,7 @@ export default {
       }
     },
     getFormatedDate() {
-      return moment((this.news.expiration * 1000)).locale('fr').diff(moment(), 'days');
+      return moment((this.alert.expiration * 1000)).locale('fr').diff(moment(), 'days');
     },
   },
   data: function () {
