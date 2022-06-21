@@ -193,6 +193,10 @@ export default {
       return tpdf.push(null)
     },
   },
+  mounted() {
+    console.log(news)
+    console.log(defaultenws)
+  },
   data: function () {
     const now = new Date()
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
