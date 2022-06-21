@@ -1,10 +1,6 @@
 <template>
   <div>
-    <button
-      type="button"
-      class="news-update-button"
-      @click="modal = !modal;autocomplete = news || defaultnews "
-    >
+    <button type="button" class="news-update-button" @click="UpdateButton()">
       <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
     </button>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="UpdNews">
@@ -135,6 +131,11 @@ export default {
     },
   },
   methods: {
+    UpdateButton() {
+      this.modal = !this.modal;
+      this.autocomplete = this.news;
+      this.autocomplete.groups = this.news.groups.split(';')
+    },
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
       this.autocomplete.groups = this.news.groups.join(';')
@@ -193,10 +194,6 @@ export default {
       return tpdf.push(null)
     },
   },
-  mounted() {
-    console.log(this.news)
-    console.log(this.defaultenws)
-  },
   data: function () {
     const now = new Date()
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
@@ -206,7 +203,7 @@ export default {
       link: false,
       minDate: today,
       newimage: null,
-      defaultnews: {
+      autocomplete: {
         title: "",
         subtitle: "",
         text: "",
