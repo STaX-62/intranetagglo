@@ -154,6 +154,7 @@ export default {
       if (newimage != null) {
         data.append('photo_upd', newimage, newimage.name);
       }
+      data.append('photolink', news.photo);
       data.append('category', news.category);
       data.append('groups', news.groups);
       data.append('link', news.link);
