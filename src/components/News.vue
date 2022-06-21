@@ -3,16 +3,15 @@
     <div id="news-container" class="news-container">
       <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
         <h2 class="news-header-title" style="border-top: solid 2px #0eb4ed;">Événements</h2>
-        <h2
-          class="news-header-title"
-          style="border-top: 2px solid var(--color-primary-category);"
-        >Actualités</h2>
+        <h2 class="news-header-title" style="border-top: 2px solid var(--color-primary-category);">
+          Actualités
+          <news-admin-create v-if="isAdmin" />
+        </h2>
         <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
         <button id="news-filtres">
           <b-icon icon="filter"></b-icon>
         </button>
         <NewsFiltrage :minDate="minDate" />
-        <!-- <news-admin-create v-if="isAdmin" /> -->
       </div>
       <div id="news-row" class="news-row" :focus="newfocus">
         <div class="news-alerts">
@@ -68,7 +67,7 @@ import NewsAdmin from './news/NewsAdmin'
 import News from './news/News'
 import Alert from './news/Alert'
 import Apps from './Apps'
-// import NewsAdminCreate from './news/NewsAdminCreate'
+import NewsAdminCreate from './news/NewsAdminCreate'
 import NewsFiltrage from './news/NewsFiltrage'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
@@ -83,7 +82,7 @@ export default {
     News,
     Alert,
     Apps,
-    // NewsAdminCreate,
+    NewsAdminCreate,
     NewsFiltrage
   },
   watch: {
