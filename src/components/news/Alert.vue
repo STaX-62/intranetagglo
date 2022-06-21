@@ -26,7 +26,7 @@
     <p style="color: var(--color-mode-contrast-4);" v-html="alert.text"></p>
     <div class="expiration-block">
       <div class="expiration-inner">
-        <div class="expiration-date">{{ getFormatedDate }}</div>
+        <div class="expiration-date">Expire dans {{ getFormatedDate }}</div>
       </div>
     </div>
   </div>
@@ -55,10 +55,12 @@ export default {
       }
     },
     getFormatedDate() {
-      console.log("this.alert.expiration * 1000:" + this.alert.expiration * 1000)
-      console.log("moment():" + moment())
-      console.log(moment((this.alert.expiration * 1000)).diff(moment(), 'days'))
-      return moment((this.alert.expiration * 1000)).locale('fr').diff(moment(), 'days');
+      var diff = moment().diff((this.alert.expiration * 1000), 'days');
+      if (diff == 0)
+        return moment().diff((this.alert.expiration * 1000), 'hours') + "heures";
+      if (diff == 1)
+        return diff + "jour";
+      return diff + "jours";
     },
   },
   data: function () {
