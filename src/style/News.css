@@ -190,6 +190,10 @@
     box-sizing: border-box;
 }
 
+trix-editor.trix-content {
+    max-height: 40vh;
+    overflow-y: auto;
+}
 
 
 /* .add-news {
