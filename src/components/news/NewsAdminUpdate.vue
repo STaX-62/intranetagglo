@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button type="button" class="news-update-button" @click="modal = !modal;autocomplete = news ">
+    <button
+      type="button"
+      class="news-update-button"
+      @click="modal = !modal;autocomplete = news || defaultnews "
+    >
       <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
     </button>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="UpdNews">
@@ -197,7 +201,17 @@ export default {
       step: 1,
       link: false,
       minDate: today,
-      newimage: null
+      newimage: null,
+      defaultnews: {
+        title: "",
+        subtitle: "",
+        text: "",
+        photo: null,
+        category: "",
+        groups: [],
+        link: "",
+        expiration: 0
+      },
     }
   }
 }
