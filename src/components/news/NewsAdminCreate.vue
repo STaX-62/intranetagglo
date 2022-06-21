@@ -49,25 +49,6 @@
             </b-form-select>
           </template>
         </b-form-tags>
-        <b-form-checkbox v-model="status" size="lg">Créer en tant qu'évènement</b-form-checkbox>
-        <div v-if="status">
-          <div style="font-weight:bold">
-            Cette actualité ne s'affichera dans le pop-up "Evènements",
-            qui s'ouvre automatiquement lorsque l'utilisateur a un évènement non lu
-          </div>
-          <label for="expidationDatepicker">Date d'expiration de l'évènement</label>
-          <b-form-datepicker
-            name="expirationDatepicker"
-            v-model="news.expiration"
-            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-            locale="fr-FR"
-            hide-header="true"
-            :min="minDate"
-            :initial-date="minDate"
-            placeholder="Date d'expiration"
-            value-as-date
-          ></b-form-datepicker>
-        </div>
       </div>
       <div v-if="step == 2 && !link" style="height:50vh">
         <label for="text">Contenu de l'actualité</label>
@@ -151,9 +132,7 @@ export default {
       if (this.link) {
         this.news.text = ""
       }
-      if (!this.status) {
-        this.news.expiration = 0
-      }
+      this.news.expiration = 0
       this.createNews(this.news)
       this.news = {
         title: "",
@@ -230,11 +209,15 @@ export default {
         link: "",
         expiration: 0
       },
-      step: 0,
+      step: 1,
       link: false,
-      minDate: today,
-      status: false
+      minDate: today
     }
   }
 }
 </script>
+<style scoped>
+.add-news-button {
+  color: var(--color-mode-contrast-1);
+}
+</style>

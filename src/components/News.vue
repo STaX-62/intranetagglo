@@ -2,7 +2,10 @@
   <div id="news-frame">
     <div id="news-container" class="news-container">
       <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
-        <h2 class="news-header-title" style="border-top: solid 2px #0eb4ed;">Événements</h2>
+        <h2 class="news-header-title" style="border-top: solid 2px #0eb4ed;">
+          Événements
+          <alert-admin-create v-if="isAdmin" />
+        </h2>
         <h2 class="news-header-title" style="border-top: 2px solid var(--color-primary-category);">
           Actualités
           <news-admin-create v-if="isAdmin" />
@@ -68,6 +71,7 @@ import News from './news/News'
 import Alert from './news/Alert'
 import Apps from './Apps'
 import NewsAdminCreate from './news/NewsAdminCreate'
+import AlertAdminCreate from './news/AlertAdminCreate'
 import NewsFiltrage from './news/NewsFiltrage'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
@@ -83,6 +87,7 @@ export default {
     Alert,
     Apps,
     NewsAdminCreate,
+    AlertAdminCreate,
     NewsFiltrage
   },
   watch: {
