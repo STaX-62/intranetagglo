@@ -194,7 +194,7 @@ export default {
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
     return {
       modal: false,
-      step: 0,
+      step: 1,
       link: false,
       minDate: today,
       newimage: null
