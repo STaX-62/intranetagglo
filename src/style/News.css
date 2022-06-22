@@ -62,19 +62,6 @@
 }
 
 
-.news-header.admin-view {
-    justify-content: center;
-}
-
-.news-header {
-    display: flex;
-    grid-area: Titre;
-}
-
-.news-header:not(.admin-view) {
-    margin: 0 2.5%;
-    justify-content: center;
-}
 
 #Update-settings svg {
     cursor: pointer;
@@ -127,10 +114,10 @@
     position: relative;
     flex: 0 0 65%;
     height: 100%;
-    background-color: #9ecd4399;
+    /* background-color: #9ecd4399;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-right-radius: 10px; */
 }
 
 .news-wrapper {
@@ -138,6 +125,10 @@
     flex-wrap: wrap;
     position: relative;
     height: calc(100% - 40px);
+    background-color: #9ecd4399;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 #news-frame {
@@ -166,7 +157,7 @@
 }
 
 .news-container {
-    padding-top: 20px 0;
+    padding: 20px 0;
     height: 100%;
     width: 100%;
 }
@@ -662,11 +653,6 @@ trix-editor.trix-content {
     display: block;
 }
 
-#App:not([isonsite]) .news-header {
-    width: calc(100% - 250px);
-    margin-left: 2.5%;
-    justify-content: left;
-}
 
 #App:not([isonsite]) .news-return {
     right: 2.5%;
@@ -682,23 +668,8 @@ trix-editor.trix-content {
 
 @media (max-width: 780px) {
 
-    .news-header:not(.admin-view) {
-        margin: 0 1%;
-        justify-content: left;
-    }
-
     #news-frame {
         display: block;
-    }
-
-    #App:not([isonsite]) .news-header {
-        width: calc(100% - 125px) !important;
-        margin-left: 1%;
-    }
-
-    .news-header {
-        width: calc(100% - 125px);
-        margin-left: unset;
     }
 
     .news-row:not([focus="right"]):not([focus='center']):not([focus='left']) .news {
@@ -775,10 +746,6 @@ trix-editor.trix-content {
         background: transparent;
     }
 
-    #App:not([isonsite]) .news-header {
-        width: calc(95% - 250px);
-        margin-left: 5%;
-    }
 
     .news-return {
         right: 7px;

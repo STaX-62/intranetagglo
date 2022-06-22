@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="news-block" v-if="isAdmin">
-          <div>
+          <div class="news-header">
             <h2
               class="news-header-title"
               style="border-top: 2px solid var(--color-primary-category);"
@@ -50,7 +50,7 @@
           ></b-pagination>
         </div>
         <div class="news-block" v-else>
-          <div>
+          <div class="news-header">
             <h2
               class="news-header-title"
               style="border-top: 2px solid var(--color-primary-category);"
@@ -269,6 +269,9 @@ export default {
 
 
 <style scoped>
+.news-header {
+  display: flex;
+}
 .news-alerts {
   display: flex;
   flex-direction: column;
@@ -277,8 +280,7 @@ export default {
   flex: 0 0 32%;
   margin-right: 1%;
   background-color: #0eb4eda1 !important;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-radius: 10px;
 }
 .searchbar {
   flex: 0 0 27%;
