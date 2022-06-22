@@ -122,7 +122,7 @@
     </b-modal>
     <menu-admin-update
       :active="active"
-      :menu="modifying"
+      :autocomplete="modifying"
       @close="active = !active"
       @navigation-updated="UpdateNavigation"
     />

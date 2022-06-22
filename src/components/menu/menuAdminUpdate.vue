@@ -73,7 +73,7 @@ import FormData from 'form-data'
 export default {
   name: 'MenuAdminUpdate',
   props: {
-    menu: Object,
+    autocomplete: Object,
     active: Boolean
   },
   watch: {

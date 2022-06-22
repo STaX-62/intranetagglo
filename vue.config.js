@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 
 module.exports = {
     pages: {
-        intranetagglo268: {
+        intranetagglo269: {
             // entry for the page
             entry: 'src/main.js',
         },
