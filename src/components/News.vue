@@ -4,8 +4,8 @@
       <div id="news-row" class="news-row" :focus="newfocus">
         <div class="news-alerts">
           <div class="alert-header">
-            <h2 class="news-header-title" style="border-top: solid 2px #0eb4ed;">
-              Événements
+            <h2 class="alert-header-title" style="border-top: solid 2px #0eb4ed;">
+              Alertes
               <alert-admin-create v-if="isAdmin" />
             </h2>
           </div>
@@ -271,11 +271,26 @@ export default {
 
 
 <style scoped>
+.alert-header-title {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  color: var(--color-mode-contrast-1);
+  justify-content: center;
+  text-align: center;
+  background: url("../patterns/brilliant.png"), var(--color-mode-2);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
+    7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%);
+}
+
 .news-header,
 .alert-header {
   display: flex;
   height: 60px;
 }
+
 .news-alerts {
   display: flex;
   flex-direction: column;
@@ -286,6 +301,7 @@ export default {
   background-color: #0eb4eda1 !important;
   border-radius: 10px;
 }
+
 .searchbar {
   flex: 0 0 27%;
   border-top-left-radius: 10px !important;
