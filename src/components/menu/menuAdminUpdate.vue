@@ -77,7 +77,7 @@ export default {
     active: Boolean
   },
   watch: {
-    menu: {
+    autocomplete: {
       handler(val) {
         this.newMenu = this.autocomplete
         console.log("autocomplete 1:" + this.autocomplete)
@@ -86,9 +86,10 @@ export default {
     },
     active: {
       handler(val) {
-        if (val)
+        if (val) {
           this.detailed = !this.detailed
-        console.log("autocomplete 2:" + this.autocomplete)
+          console.log("autocomplete 2:" + this.autocomplete)
+        }
       }
     },
     detailed: {
