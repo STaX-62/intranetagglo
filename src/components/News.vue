@@ -131,10 +131,10 @@ export default {
             this.minDate = response.data[2].time;
             this.$store.commit('setNewsUpdating', false)
           })
-        url = `apps/intranetagglo/alerts/${this.currentAlertsPage - 1}`
-        axios.post(generateUrl(url), { 'id': (this.currentAlertsPage - 1) * this.newsperpage, 'search': this.search }, { type: 'application/json' })
+        url = `apps/intranetagglo/alerts`
+        axios.post(generateUrl(url), { 'search': this.search }, { type: 'application/json' })
           .then((response) => {
-            this.alerts = response.data[0];
+            this.alerts = response.data;
           })
       }
     },
@@ -201,16 +201,7 @@ export default {
         this.newsPage = value
         this.$store.commit('setNewsUpdating', true)
       }
-    },
-    currentAlertsPage: {
-      get() {
-        return this.alertsPage
-      },
-      set(value) {
-        this.alertsPage = value
-        this.$store.commit('setNewsUpdating', true)
-      }
-    },
+    }
   },
   methods: {
     handleScroll() {
@@ -254,10 +245,10 @@ export default {
         this.rows = response.data[1];
         this.minDate = response.data[2].time;
       })
-    url = `apps/intranetagglo/alerts/${this.currentAlertsPage - 1}`
-    axios.post(generateUrl(url), { 'id': 0, 'search': this.search }, { type: 'application/json' })
+    url = `apps/intranetagglo/alerts`
+    axios.post(generateUrl(url), { 'search': this.search }, { type: 'application/json' })
       .then((response) => {
-        this.news = response.data[0];
+        this.news = response.data;
       })
   },
   destroyed() {

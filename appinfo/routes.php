@@ -69,7 +69,7 @@ return [
         ],
         [
             'name' => 'news#alerts',
-            'url' => '/alerts/{id}',
+            'url' => '/alerts',
             'verb' => 'POST'
         ],
         [

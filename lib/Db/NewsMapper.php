@@ -123,9 +123,7 @@ class NewsMapper extends QBMapper
         $qb3->selectAlias($qb3->createFunction('COUNT(*)'), 'count')
             ->from($this->getTableName(), 'q')
             ->where("q.expiration = 0")
-            ->andWhere('LOWER(q.title) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
+            ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
 
         if ($categories != '') {
@@ -150,36 +148,19 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAlerts($firstresult, string $search): array
+    public function findAlerts(string $search): array
     {
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
             ->where("q.expiration != 0")
             ->andWhere("q.expiration >= :today")
+            ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
+            ->setParameter('search', '%' . $search . '%')
             ->setParameter('today', strtotime('today'));
 
-        $qb->addOrderBy('q.time', 'DESC')
-            ->setFirstResult($firstresult)
-            ->setMaxResults(3);
-
-
-        $qb2 = $this->db->getQueryBuilder();
-
-        $qb2->selectAlias($qb2->createFunction('COUNT(*)'), 'count')
-            ->from($this->getTableName(), 'q')
-            ->where("q.expiration != 0")
-            ->andWhere("q.expiration >= :today")
-            ->setParameter('today', strtotime('today'));
-
-
-        $cursor = $qb2->execute();
-        $row = $cursor->fetch();
-        $cursor->closeCursor();
-
-
-
-        return [$this->findEntities($qb), $row['count']];
+        $qb->addOrderBy('q.time', 'DESC');
+        return $this->findEntities($qb);
     }
 
     /**
@@ -208,9 +189,7 @@ class NewsMapper extends QBMapper
         $qb2->select('*')
             ->from($this->getTableName(), 'q')
             ->where("q.expiration = 0")
-            ->andWhere('LOWER(q.title) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
+            ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
             $qb2->andWhere('q.category IN (:categories)')
@@ -250,9 +229,7 @@ class NewsMapper extends QBMapper
         $qb3->selectAlias($qb3->createFunction('COUNT(*)'), 'count')
             ->from($this->getTableName(), 'q')
             ->where("q.expiration = 0")
-            ->andWhere('LOWER(q.title) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.subtitle) LIKE LOWER(:search)')
-            ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
+            ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
             $qb3->andWhere('q.category IN (:categories)')
