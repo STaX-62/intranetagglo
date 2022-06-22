@@ -80,6 +80,7 @@ export default {
     menu: {
       handler(val) {
         this.newMenu = this.autocomplete
+        console.log("autocomplete 1:" + this.autocomplete)
       },
       deep: true
     },
@@ -87,6 +88,7 @@ export default {
       handler(val) {
         if (val)
           this.detailed = !this.detailed
+        console.log("autocomplete 2:" + this.autocomplete)
       }
     },
     detailed: {
