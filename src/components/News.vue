@@ -3,10 +3,12 @@
     <div id="news-container" class="news-container">
       <div id="news-row" class="news-row" :focus="newfocus">
         <div class="news-alerts">
-          <h2 class="news-header-title" style="border-top: solid 2px #0eb4ed;">
-            Événements
-            <alert-admin-create v-if="isAdmin" />
-          </h2>
+          <div class="alert-header">
+            <h2 class="news-header-title" style="border-top: solid 2px #0eb4ed;">
+              Événements
+              <alert-admin-create v-if="isAdmin" />
+            </h2>
+          </div>
           <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
             <alert :alert="alerts[index]" />
           </div>
@@ -269,8 +271,10 @@ export default {
 
 
 <style scoped>
-.news-header {
+.news-header,
+.alert-header {
   display: flex;
+  height: 60px;
 }
 .news-alerts {
   display: flex;
