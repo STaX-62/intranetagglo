@@ -135,7 +135,6 @@ export default {
         axios.post(generateUrl(url), { 'id': (this.currentAlertsPage - 1) * this.newsperpage, 'search': this.search }, { type: 'application/json' })
           .then((response) => {
             this.alerts = response.data[0];
-            this.rows = response.data[1];
           })
       }
     },
@@ -259,7 +258,6 @@ export default {
     axios.post(generateUrl(url), { 'id': 0, 'search': this.search }, { type: 'application/json' })
       .then((response) => {
         this.news = response.data[0];
-        this.rows = response.data[1];
       })
   },
   destroyed() {
