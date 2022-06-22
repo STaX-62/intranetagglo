@@ -6,12 +6,12 @@
         <label for="title">Titre</label>
         <b-form-input name="title" type="text" v-model="newMenu.title" />
       </div>
-      <div v-if="newMenu.haschild != true && !redirectToFile">
+      <div v-if="!newMenu.haschild  && !redirectToFile">
         <label for="link">Lien URL</label>
         <b-form-input name="link" type="text" v-model="newMenu.link" />
         <button @click="redirectToFile = !redirectToFile">Rediriger vers un fichier</button>
       </div>
-      <div v-if="newMenu.haschild != true && redirectToFile">
+      <div v-if="!newMenu.haschild && redirectToFile">
         <label for="file">Redirection vers Un fichier (Remplace le lien)</label>
         <b-form-file
           name="file"
@@ -73,7 +73,7 @@ import FormData from 'form-data'
 export default {
   name: 'MenuAdminUpdate',
   props: {
-    autocomplete: Object,
+    menu: Object,
     active: Boolean
   },
   watch: {
