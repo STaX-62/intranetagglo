@@ -144,9 +144,8 @@ class NewsMapper extends QBMapper
 
 
 
-        return [$this->findEntities($qb2), $row['count'], $time, $qb2->getSql()];
+        return [$this->findEntities($qb2), $row['count'], implode(",", $categoryArray)];
     }
-
     /**
      * @return array
      */
