@@ -272,6 +272,7 @@ export default {
 
 <style scoped>
 .alert-header-title {
+  width: 100%;
   margin: 0;
   display: flex;
   align-items: center;
@@ -303,7 +304,7 @@ export default {
 }
 
 .searchbar {
-  flex: 0 0 27%;
+  flex: 0 0 39%;
   border-top-left-radius: 10px !important;
   border-bottom-left-radius: 10px !important;
   border: 2px solid var(--color-mode-4) !important;
