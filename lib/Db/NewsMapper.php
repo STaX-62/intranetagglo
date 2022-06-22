@@ -130,7 +130,7 @@ class NewsMapper extends QBMapper
 
         if ($categories != '') {
             $qb3->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', implode(',',$categoryArray));
+                ->setParameter('categories', implode(',', $categoryArray));
         }
 
         if ($searchid != '') {
@@ -145,7 +145,7 @@ class NewsMapper extends QBMapper
 
 
 
-        return [$this->findEntities($qb2), $row['count']];
+        return [$this->findEntities($qb2), $row['count'], $time];
     }
     /**
      * @return array
