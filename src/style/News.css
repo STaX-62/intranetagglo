@@ -166,22 +166,9 @@
 }
 
 .news-container {
-    position: relative;
-    margin-right: auto;
+    padding-top: 20px 0;
+    height: 100%;
     width: 100%;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-auto-rows: 60px calc(100% - 80px);
-    grid-auto-flow: dense;
-    grid-gap: 0 15px;
-    justify-content: center;
-    vertical-align: middle;
-    width: 100%;
-    height: calc(100vh - 50px);
-    grid-template-areas:
-        "Titre"
-        "NewsRow";
-    padding-top: 10px;
 }
 
 /* Actual Code: */
@@ -723,10 +710,6 @@ trix-editor.trix-content {
         height: calc(100% - 260px);
     }
 
-    .Settings:not(.hidden)+div+#news-frame .news-container {
-        height: 100%;
-    }
-
     #App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-wrapper {
         width: auto;
     }
@@ -795,10 +778,6 @@ trix-editor.trix-content {
     #App:not([isonsite]) .news-header {
         width: calc(95% - 250px);
         margin-left: 5%;
-    }
-
-    .news-container {
-        grid-template-rows: 60px calc(100% - 120px);
     }
 
     .news-return {

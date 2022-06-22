@@ -215,7 +215,6 @@ export default {
         })
     },
     Modify(menu) {
-      console.log(menu)
       this.modifying = menu;
       if (typeof menu.childs !== 'undefined') {
         if (menu.childs.length == 0) this.modifying.haschild = false;

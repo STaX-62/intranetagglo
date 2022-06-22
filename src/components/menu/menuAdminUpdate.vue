@@ -80,7 +80,7 @@ export default {
     autocomplete: {
       handler(val) {
         this.newMenu = this.autocomplete
-        console.log("autocomplete 1:" + this.autocomplete)
+        this.newMenu.groups = this.autocomplete.groups.split(';')
       },
       deep: true
     },
@@ -88,13 +88,11 @@ export default {
       handler(val) {
         if (val) {
           this.detailed = !this.detailed
-          console.log("autocomplete 2:" + this.autocomplete)
         }
       }
     },
     detailed: {
       handler(val) {
-        console.log(val)
         if (!val)
           this.$emit('close');
       }

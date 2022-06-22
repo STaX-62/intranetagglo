@@ -1,28 +1,31 @@
 <template>
   <div id="news-frame">
     <div id="news-container" class="news-container">
-      <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
-        <h2 class="news-header-title" style="border-top: solid 2px #0eb4ed;">
-          Événements
-          <alert-admin-create v-if="isAdmin" />
-        </h2>
-        <h2 class="news-header-title" style="border-top: 2px solid var(--color-primary-category);">
-          Actualités
-          <news-admin-create v-if="isAdmin" />
-        </h2>
-        <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
-        <button id="news-filtres">
-          <b-icon icon="filter"></b-icon>
-        </button>
-        <NewsFiltrage :minDate="minDate" />
-      </div>
       <div id="news-row" class="news-row" :focus="newfocus">
         <div class="news-alerts">
+          <h2 class="news-header-title" style="border-top: solid 2px #0eb4ed;">
+            Événements
+            <alert-admin-create v-if="isAdmin" />
+          </h2>
           <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
             <alert :alert="alerts[index]" />
           </div>
         </div>
         <div class="news-block" v-if="isAdmin">
+          <div>
+            <h2
+              class="news-header-title"
+              style="border-top: 2px solid var(--color-primary-category);"
+            >
+              Actualités
+              <news-admin-create v-if="isAdmin" />
+            </h2>
+            <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
+            <button id="news-filtres">
+              <b-icon icon="filter"></b-icon>
+            </button>
+            <NewsFiltrage :minDate="minDate" />
+          </div>
           <div class="news-wrapper">
             <news-admin
               :id="'news'+index"
@@ -47,6 +50,20 @@
           ></b-pagination>
         </div>
         <div class="news-block" v-else>
+          <div>
+            <h2
+              class="news-header-title"
+              style="border-top: 2px solid var(--color-primary-category);"
+            >
+              Actualités
+              <news-admin-create v-if="isAdmin" />
+            </h2>
+            <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
+            <button id="news-filtres">
+              <b-icon icon="filter"></b-icon>
+            </button>
+            <NewsFiltrage :minDate="minDate" />
+          </div>
           <div class="news-wrapper">
             <news
               :id="'news'+index"
