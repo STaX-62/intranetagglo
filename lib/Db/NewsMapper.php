@@ -91,7 +91,7 @@ class NewsMapper extends QBMapper
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
             $qb2->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', $categoryArray);;
+                ->setParameter('categories', implode(",", $categoryArray));
         }
         if ($startDate == "") {
             $qb2->andWhere('q.time >= :startdate')
@@ -129,7 +129,7 @@ class NewsMapper extends QBMapper
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
             $qb3->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', $categoryArray);;
+                ->setParameter('categories', implode(",", $categoryArray));
         }
 
         if ($searchid != '') {
@@ -214,7 +214,7 @@ class NewsMapper extends QBMapper
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
             $qb2->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', $categoryArray);;
+                ->setParameter('categories', implode(",", $categoryArray));
         }
         if ($startDate == "") {
             $qb2->andWhere('q.time >= :startdate')
@@ -256,7 +256,7 @@ class NewsMapper extends QBMapper
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
             $qb3->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', $categoryArray);;
+                ->setParameter('categories', implode(",", $categoryArray));
         }
         if ($searchid != '') {
             $qb3->andWhere('q.id = :searchid')
