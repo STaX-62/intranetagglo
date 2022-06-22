@@ -128,8 +128,7 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
-            $qb3->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', $categoryArray, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+            $qb3->andWhere($qb3->expr()->in('q.category', $categoryArray));
         }
 
         if ($searchid != '') {
@@ -144,7 +143,7 @@ class NewsMapper extends QBMapper
 
 
 
-        return [$this->findEntities($qb2), $row['count'], implode(",", $categoryArray)];
+        return [$this->findEntities($qb2), $row['count'], $qb3->getSql()];
     }
     /**
      * @return array
