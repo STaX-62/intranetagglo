@@ -56,6 +56,7 @@ class NewsMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
 
         $qb->selectDistinct('category')
+            ->where('category != ""')
             ->from($this->getTableName());
 
         $cursor = $qb->execute();
