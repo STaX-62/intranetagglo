@@ -129,7 +129,7 @@ class NewsMapper extends QBMapper
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
             $qb3->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', implode(",", $categoryArray));
+                ->setParameter('categories', $categoryArray, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
 
         if ($searchid != '') {
