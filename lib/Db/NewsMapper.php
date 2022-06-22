@@ -128,7 +128,8 @@ class NewsMapper extends QBMapper
             ->orWhere('LOWER(q.text) LIKE LOWER(:search)')
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
-            $qb3->andWhere($qb3->expr()->in('q.category', $categoryArray));
+            // $qb3->andWhere($qb3->expr()->in('q.category', $categoryArray));
+            $qb3->add('where', $qb3->expr()->in('q.category', $categoryArray));
         }
 
         if ($searchid != '') {
