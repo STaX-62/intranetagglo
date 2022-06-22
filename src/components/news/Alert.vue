@@ -11,7 +11,7 @@
         <circle cx="11.2826" cy="11.5007" r="11" fill="#D9D9D9" />
         <circle cx="11.2826" cy="11.5007" r="8" fill="#919191" />
       </svg>
-      <h5 style="color: var(--color-mode-contrast-1);">{{alert.title}}</h5>
+      <h5 style="color: var(--color-mode-contrast-1);text-align:center">{{alert.title}}</h5>
       <svg
         width="23"
         height="23"
@@ -58,10 +58,10 @@ export default {
       var expiration = moment((this.alert.expiration * 1000))
       var diff = expiration.diff(moment(), 'days');
       if (diff == 0)
-        return expiration.diff(moment(), 'hours') + "heures";
+        return expiration.diff(moment(), 'hours') + " heures";
       if (diff == 1)
-        return diff + "jour";
-      return diff + "jours";
+        return diff + " jour";
+      return diff + " jours";
     },
   },
   data: function () {
