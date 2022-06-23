@@ -64,7 +64,7 @@
             <NewsFiltrage :minDate="minDate" />
           </div>
           <div class="news-wrapper">
-            <news
+            <news-comp
               :id="'news'+index"
               v-for="(n,index) in getNews"
               :key="index"
@@ -94,7 +94,7 @@
 
 <script>
 import NewsAdmin from './news/NewsAdmin'
-// import News from './news/News'
+import NewsComp from './news/NewsComp'
 import Alert from './news/Alert'
 import Apps from './Apps'
 import NewsAdminCreate from './news/NewsAdminCreate'
@@ -110,7 +110,7 @@ export default {
   },
   components: {
     NewsAdmin,
-    // News,
+    NewsComp,
     Alert,
     Apps,
     NewsAdminCreate,
