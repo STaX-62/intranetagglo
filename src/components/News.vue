@@ -64,13 +64,13 @@
             <NewsFiltrage :minDate="minDate" />
           </div>
           <div class="news-wrapper">
-            <!-- <news
+            <news
               :id="'news'+index"
               v-for="(n,index) in getNews"
               :key="index"
               :arrayid="index"
               :news="news[index]"
-            /> -->
+            />
             <b-icon
               class="news-return"
               icon="arrow-return-left"

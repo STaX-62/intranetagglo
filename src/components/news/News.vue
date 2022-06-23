@@ -50,10 +50,12 @@ export default {
         return this.$store.state.categoryfilter
       },
       set(value) {
-        this.$store.commit('updateFilter', value)
+        clearTimeout(this.timer)
         this.timer = setTimeout(() => {
           this.$store.commit('setNewsUpdating', true)
         }, 250)
+        console.log(value)
+        this.$store.commit('updateFilter', value)
       }
     },
     search: {
