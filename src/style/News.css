@@ -653,7 +653,28 @@ trix-editor.trix-content {
 }
 
 @media (max-width: 780px) {
+
+    .news-row[focus="right"] .news-return,
+    .news-row[focus="left"] .news-return {
+        border: none;
+    }
+
+    .news-row[focus="right"] .news-pagination,
+    .news-row[focus="left"] .news-pagination {
+        display: none;
+    }
+
+    .news-row[focus="right"] .news-wrapper,
+    .news-row[focus="left"] .news-wrapper {
+        height: calc(100% - 65px);
+    }
+
+    .news-container {
+        padding-bottom: 0 !important;
+    }
+
     .news {
+        width: 95%;
         height: 95%;
     }
 
