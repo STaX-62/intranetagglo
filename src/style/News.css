@@ -100,6 +100,7 @@
     display: flex;
     text-align: center;
     background-color: #9ecd4399;
+    border-radius: 0;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding-bottom: 5px;
@@ -803,5 +804,9 @@ trix-editor.trix-content {
 
     .news-wrapper {
         overflow: auto;
+    }
+
+    .news-header {
+        margin: 0 2%;
     }
 }

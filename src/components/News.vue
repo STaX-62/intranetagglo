@@ -324,7 +324,7 @@ export default {
     margin: 0 2%;
   }
   .searchbar {
-    margin-left: 2%;
+    margin-left: 2% !important;
   }
 }
 </style>
