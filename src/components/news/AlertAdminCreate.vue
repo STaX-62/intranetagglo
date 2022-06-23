@@ -7,8 +7,8 @@
     </svg>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="AddNews">
       <template #modal-title>
-        Ajouter un
-        <code style="font-size: 1.25rem;">Evenement</code>
+        Ajouter une
+        <code style="font-size: 1.25rem;">Alerte</code>
       </template>
       <label for="titre">Titre</label>
       <b-form-input name="titre" v-model="news.title" required></b-form-input>
