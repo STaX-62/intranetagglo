@@ -51,7 +51,7 @@
             :per-page="2"
           ></b-pagination>
         </div>
-        <div class="news-block" v-else>
+        <!-- <div class="news-block" v-else>
           <div class="news-header">
             <h2
               class="news-header-title"
@@ -88,7 +88,7 @@
             :total-rows="rows"
             :per-page="2"
           ></b-pagination>
-        </div>
+        </div> -->
       </div>
     </div>
     <Apps class="Apps" />
@@ -97,7 +97,7 @@
 
 <script>
 import NewsAdmin from './news/NewsAdmin'
-import News from './news/News'
+// import News from './news/News'
 import Alert from './news/Alert'
 import Apps from './Apps'
 import NewsAdminCreate from './news/NewsAdminCreate'
@@ -113,7 +113,7 @@ export default {
   },
   components: {
     NewsAdmin,
-    News,
+    // News,
     Alert,
     Apps,
     NewsAdminCreate,
@@ -160,19 +160,19 @@ export default {
       return this.$store.state.newsfocus;
     },
     updating() {
-      console.log('updating : ' +this.newsupdating)
+      console.log('updating : ' + this.$store.state.newsupdating)
       return this.$store.state.newsupdating
     },
     getNews() {
-      console.log('getNews : ' +this.news)
+      console.log(this.news)
       return this.news
     },
     getAlerts() {
-      console.log('getAlerts : ' +this.alert)
+      console.log('getAlerts : ' + this.alerts)
       return this.alerts
     },
     isAdmin() {
-      console.log('isAdmin: ' +this.$store.state.isAdmin)
+      console.log('isAdmin: ' + this.$store.state.isAdmin)
       return this.$store.state.isAdmin
     },
     search: {
