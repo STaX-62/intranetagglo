@@ -315,6 +315,16 @@ export default {
 @media (max-width: 1100px) {
   .news-alerts {
     display: none;
+    margin: 0 2%;
+  }
+  .news-wrapper {
+    margin: 0 2%;
+  }
+  .news-pagination {
+    margin: 0 2%;
+  }
+  .searchbar {
+    margin-left: 2%;
   }
 }
 </style>
