@@ -20,7 +20,7 @@
               style="border-top: 2px solid var(--color-primary-category);"
             >
               Actualités
-              <news-admin-create v-if="isAdmin" />
+              <news-admin-create />
             </h2>
             <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
             <button id="news-filtres">
@@ -51,15 +51,12 @@
             :per-page="2"
           ></b-pagination>
         </div>
-        <!-- <div class="news-block" v-else>
+        <div class="news-block" v-else>
           <div class="news-header">
             <h2
               class="news-header-title"
               style="border-top: 2px solid var(--color-primary-category);"
-            >
-              Actualités
-              <news-admin-create v-if="isAdmin" />
-            </h2>
+            >Actualités</h2>
             <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
             <button id="news-filtres">
               <b-icon icon="filter"></b-icon>
@@ -67,13 +64,13 @@
             <NewsFiltrage :minDate="minDate" />
           </div>
           <div class="news-wrapper">
-            <news
+            <!-- <news
               :id="'news'+index"
               v-for="(n,index) in getNews"
               :key="index"
               :arrayid="index"
               :news="news[index]"
-            />
+            /> -->
             <b-icon
               class="news-return"
               icon="arrow-return-left"
@@ -88,7 +85,7 @@
             :total-rows="rows"
             :per-page="2"
           ></b-pagination>
-        </div> -->
+        </div>
       </div>
     </div>
     <Apps class="Apps" />
