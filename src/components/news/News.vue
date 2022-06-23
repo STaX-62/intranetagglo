@@ -36,7 +36,7 @@
 </template>
 
 <script>
-// import moment from '@nextcloud/moment'
+import moment from '@nextcloud/moment'
 
 export default {
   name: 'News',
@@ -69,8 +69,7 @@ export default {
       }
     },
     getFormatedDate() {
-      return "test"
-      // return moment((this.news.time * 1000)).format('LL')
+      return moment((this.news.time * 1000)).format('LL')
     },
     newfocus() {
       return this.$store.state.newsfocus;

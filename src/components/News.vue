@@ -160,15 +160,19 @@ export default {
       return this.$store.state.newsfocus;
     },
     updating() {
+      console.log('updating : ' +this.newsupdating)
       return this.$store.state.newsupdating
     },
     getNews() {
+      console.log('getNews : ' +this.news)
       return this.news
     },
     getAlerts() {
+      console.log('getAlerts : ' +this.alert)
       return this.alerts
     },
     isAdmin() {
+      console.log('isAdmin: ' +this.$store.state.isAdmin)
       return this.$store.state.isAdmin
     },
     search: {
