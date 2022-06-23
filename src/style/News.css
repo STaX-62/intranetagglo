@@ -137,13 +137,14 @@
     grid-auto-rows: auto;
     grid-auto-flow: dense;
     grid-gap: 15px 0;
+    grid-template-areas: "NewsGrid Apps";
     justify-content: center;
     vertical-align: middle;
     overflow-y: auto;
     overflow-x: hidden;
     width: 100%;
     height: 100%;
-    grid-template-areas: "NewsGrid Apps";
+
 }
 
 .news-delete {
@@ -652,13 +653,42 @@ trix-editor.trix-content {
 }
 
 @media (max-width: 780px) {
+    .news {
+        height: 95%;
+    }
 
     #news-frame {
         display: block;
     }
 
-    .news-row:not([focus="right"]):not([focus='left']) .news {
-        width: 100% !important;
+    .news-row {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-auto-rows: 70% 30%;
+        grid-template-areas:
+            "Actualites"
+            "Alertes";
+    }
+
+    .searchbar {
+        margin-left: 5px !important;
+        flex: 0 0 60% !important;
+    }
+
+    .news-header-title {
+        display: none;
+    }
+
+    .alert-header {
+        display: none
+    }
+
+    .news-block {
+        grid-area: Actualites;
+    }
+
+    .news-alerts {
+        grid-area: Alertes;
     }
 
     .Settings:not(.hidden)+div+#news-frame {
@@ -739,10 +769,5 @@ trix-editor.trix-content {
     .news-wrapper {
         display: block;
         overflow: auto;
-    }
-
-    .news-row:not([focus="right"]):not([focus='left']) .news {
-        width: 90%;
-        margin: 0 auto 10px auto;
     }
 }
