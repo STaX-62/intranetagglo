@@ -1,6 +1,6 @@
 <?php
-script('intranetagglo', 'intranetagglo284');
-style('intranetagglo', 'intranetagglo284');
+script('intranetagglo', 'intranetagglo285');
+style('intranetagglo', 'intranetagglo285');
 ?>
 
 <div id="app">

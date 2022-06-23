@@ -310,4 +310,10 @@ export default {
   margin: 0 !important;
   font-size: 16px !important;
 }
+
+@media (max-width: 1100px) {
+  .news-alerts {
+    display: none;
+  }
+}
 </style>

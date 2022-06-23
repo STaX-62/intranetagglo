@@ -783,12 +783,9 @@ trix-editor.trix-content {
 }
 
 @media (max-width: 1100px) {
-
-    .news-alerts {
-        display: none;
+    .news-block {
+        flex: 0 0 100%;
     }
-
-
 
     .alert h5 {
         font-size: 1em;
