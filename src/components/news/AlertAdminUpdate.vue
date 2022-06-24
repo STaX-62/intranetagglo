@@ -41,7 +41,7 @@
           </b-form-select>
         </template>
       </b-form-tags>
-      <label for="expidationDatepicker">Date d'expiration de l'alerte : {{autocomplete.expiration}}</label>
+      <label for="expidationDatepicker">Date d'expiration de l'alerte:</label>
       <b-form-datepicker
         name="expirationDatepicker"
         v-model="autocomplete.expiration"
@@ -96,7 +96,9 @@ export default {
     Modify() {
       this.modal = !this.modal;
       this.autocomplete = this.alert;
-      this.autocomplete.expiration = new Date(this.alert.expiration * 1000)
+      console.log(this.alert)
+      var date = this.alert.expiration
+      this.autocomplete.expiration = new Date(date * 1000)
       this.autocomplete.groups = this.alert.groups.split(';')
     },
     UpdateAlert() {
@@ -112,6 +114,33 @@ export default {
         link: "",
         expiration: null
       }
+    },
+    DeleteAlert() {
+      this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer cette actualité : ${this.autocomplete.title}`, {
+        title: 'Cette action est irréversible',
+        id: 'menumodal3',
+        size: 'sm',
+        buttonSize: 'sm',
+        okVariant: 'danger',
+        okTitle: 'Supprimer',
+        cancelTitle: 'Retour',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.deleteNews()
+          }
+        })
+    },
+    AddToast(title, subject, variant) {
+      this.$bvToast.toast(subject, {
+        title: title,
+        variant: variant,
+        autoHideDelay: 10000,
+        appendToast: false
+      })
     },
     async updateNews(news) {
       let data = new FormData();
@@ -146,9 +175,9 @@ export default {
         })
       })
     },
-    async DeleteAlert() {
+    async DeleteNews() {
       var url = `apps/intranetagglo/news/${this.autocomplete.id}`
-      await axios.delete(generateUrl(url)).then(() => {
+      await axios.delete(generateUrl(url), { id: this.autocomplete.id }).then(() => {
         this.AddToast('Suppression de news', `L'actualité '${this.autocomplete.title.length > 60 ? title.substring(0, 60) + '...' : this.autocomplete.title}' a bien été supprimée`, 'success')
       }).catch((error) => {
         this.AddToast('Erreur durant la suppression de l\'actualité', error.message, 'danger')

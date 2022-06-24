@@ -224,7 +224,7 @@ export default {
     },
     async deleteNews(id, title) {
       var url = `apps/intranetagglo/news/${id}`
-      await axios.delete(generateUrl(url, { id })).then(() => {
+      await axios.delete(generateUrl(url, { id: id })).then(() => {
         this.AddToast('Suppression de news', `L'actualité '${title.length > 60 ? title.substring(0, 60) + '...' : title}' a bien été supprimée`, 'success')
       }).catch((error) => {
         this.AddToast('Erreur durant la suppression de l\'actualité', error.message, 'danger')
