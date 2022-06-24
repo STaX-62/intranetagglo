@@ -26,8 +26,8 @@
     <p style="color: var(--color-mode-contrast-4);" v-html="alert.text"></p>
     <div class="expiration-block">
       <div class="expiration-inner">
-        <alert-admin-update :alert="alert" />
         <div class="expiration-date">Expire dans {{ getFormatedDate }}</div>
+        <alert-admin-update :alert="alert" />
       </div>
     </div>
   </div>

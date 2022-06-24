@@ -1,9 +1,9 @@
 <template>
-  <div class="news-update-button" @click="Modify()">
-    <b-icon class="sidebar-item-icon" variant="danger" icon="gear" />
+  <div class="alert-update-button" @click="Modify()">
+    <b-icon class="sidebar-item-icon" icon="pencil-square" />
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="UpdateAlert">
       <template #modal-title>
-        Ajouter une
+        Modifier une
         <code style="font-size: 1.25rem;">Alerte</code>
       </template>
       <label for="titre">Titre</label>
@@ -233,8 +233,22 @@ export default {
   position: relative;
   margin-left: 10px;
 }
-.add-news-button svg {
+.alert-update-button svg {
   fill: var(--color-mode-contrast-1);
-  transition: color 0.2s;
+}
+.alert-update-button {
+  position: relative;
+  font-size: 1.25rem !important;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: transparent;
+  border: 0;
+  color: #343a40;
+  border-color: #343a40;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  padding: 7px 6px;
 }
 </style>
