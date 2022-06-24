@@ -9,8 +9,7 @@
               <alert-admin-create v-if="isAdmin" />
             </h2>
           </div>
-          <div class="alert-wrapper">
-            <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index"></div>
+          <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
             <alert :alert="alerts[index]" />
           </div>
         </div>
@@ -270,10 +269,6 @@ export default {
   border-top-right-radius: 10px;
   box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
     7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%);
-}
-.alert-wrapper {
-  height: calc(100% - 62px);
-  overflow-y: auto;
 }
 
 .news-header,

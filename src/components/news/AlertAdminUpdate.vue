@@ -183,7 +183,7 @@ export default {
         })
       })
     },
-    async deleteNews() {
+    async DeleteNews() {
       var url = `apps/intranetagglo/news/${this.autocomplete.id}`
       await axios.delete(generateUrl(url), { id: this.autocomplete.id }).then(() => {
         this.AddToast('Suppression de news', `L'actualité '${this.autocomplete.title.length > 60 ? title.substring(0, 60) + '...' : this.autocomplete.title}' a bien été supprimée`, 'success')
