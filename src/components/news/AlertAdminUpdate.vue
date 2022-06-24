@@ -93,12 +93,11 @@ export default {
     },
   },
   methods: {
-
     Modify() {
+      this.autocomplete = null
       this.modal = !this.modal;
       this.autocomplete = this.alert;
-      console.log(this.alert)
-      this.autocomplete = new Date(this.autocomplete.expiration)
+      this.autocomplete.expiration = new Date(this.autocomplete.expiration * 1000)
       this.autocomplete.groups = this.alert.groups.split(';')
     },
     UpdateAlert() {
