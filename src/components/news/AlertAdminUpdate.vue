@@ -11,7 +11,7 @@
       <label for="groups-component-select">Restrictions de Groupes d'utilisateurs</label>
       <b-form-tags
         name="groups-component-select"
-        v-model="autocomplete.groups"
+        v-model="getFormatedGroups"
         size="lg"
         class="mb-2"
         add-on-change
@@ -44,7 +44,7 @@
       <label for="expidationDatepicker">Date d'expiration de l'alerte:</label>
       <b-form-datepicker
         name="expirationDatepicker"
-        v-model="autocomplete.expiration"
+        v-model="getFormatedDate"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
