@@ -45,7 +45,7 @@
           </b-form-select>
         </template>
       </b-form-tags>
-      <label for="expidationDatepicker">Date d'expiration de l'évènement : {{news.expiration}}</label>
+      <label for="expidationDatepicker">Date d'expiration de l'alert : {{news.expiration}}</label>
       <b-form-datepicker
         name="expirationDatepicker"
         v-model="news.expiration"
@@ -57,12 +57,12 @@
         placeholder="Date d'expiration"
         value-as-date
       ></b-form-datepicker>
-      <label for="text">Contenu de l'actualité</label>
+      <label for="text">Contenu de l'alerte</label>
       <VueTrix
         name="text"
         inputId="editor1"
         v-model="news.text"
-        placeholder="Contenu de l'actualité une fois étendue..."
+        placeholder="..."
       />
       <template #modal-footer="{ ok }">
         <b-button size="md" variant="success" @click="ok()">Ajouter</b-button>

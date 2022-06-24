@@ -26,6 +26,7 @@
     <p style="color: var(--color-mode-contrast-4);" v-html="alert.text"></p>
     <div class="expiration-block">
       <div class="expiration-inner">
+        <alert-admin-update :alert="alert" />
         <div class="expiration-date">Expire dans {{ getFormatedDate }}</div>
       </div>
     </div>
@@ -34,9 +35,13 @@
 
 <script>
 import moment from '@nextcloud/moment'
+import AlertAdminUpdate from './AlertAdminUpdate'
 
 export default {
   name: 'News',
+  components: {
+    AlertAdminUpdate
+  },
   props: {
     alert: Object,
     arrayid: Number
