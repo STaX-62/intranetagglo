@@ -27,7 +27,7 @@
     <div class="expiration-block">
       <div class="expiration-inner">
         <div class="expiration-date">Expire dans {{ getFormatedDate }}</div>
-        <alert-admin-update :alert="alert" />
+        <alert-admin-update :alert="alert" v-if="isAdmin" />
       </div>
     </div>
   </div>
@@ -47,6 +47,9 @@ export default {
     arrayid: Number
   },
   computed: {
+    isAdmin() {
+      return this.$store.state.isAdmin
+    },
     search: {
       get() {
         return this.$store.state.search
