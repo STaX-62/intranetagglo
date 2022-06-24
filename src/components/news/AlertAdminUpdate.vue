@@ -98,6 +98,7 @@ export default {
       this.modal = !this.modal;
       this.autocomplete = this.alert;
       console.log(this.alert)
+      this.autocomplete = new Date(this.autocomplete.expiration)
       this.autocomplete.groups = this.alert.groups.split(';')
     },
     UpdateAlert() {
