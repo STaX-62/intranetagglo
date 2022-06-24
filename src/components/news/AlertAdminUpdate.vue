@@ -101,6 +101,7 @@ export default {
       }
     },
     initialDate() {
+      console.log(new Date(this.autocomplete.expiration * 1000))
       return new Date(this.autocomplete.expiration * 1000)
     }
   },
