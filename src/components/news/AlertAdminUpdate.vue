@@ -93,9 +93,10 @@ export default {
     },
     getFormatedDate: {
       get() {
-        return new Date(this.alert.expiration * 1000)
+        return new Date(this.alert.expiration)
       },
       set(value) {
+        console.log(value)
         this.autocomplete.expiration = value.getTime()
       }
     },
