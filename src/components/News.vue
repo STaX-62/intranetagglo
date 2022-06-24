@@ -9,8 +9,10 @@
               <alert-admin-create v-if="isAdmin" />
             </h2>
           </div>
-          <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
-            <alert :alert="alerts[index]" />
+          <div class="alert-wrapper">
+            <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
+              <alert :alert="alerts[index]" />
+            </div>
           </div>
         </div>
         <div class="news-block" v-if="isAdmin">
@@ -286,6 +288,10 @@ export default {
   margin-right: 1%;
   background-color: #0eb4eda1 !important;
   border-radius: 10px;
+}
+.alert-wrapper {
+  height: calc(100% - 62px);
+  overflow-y: auto;
 }
 
 .searchbar {
