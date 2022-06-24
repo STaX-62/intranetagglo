@@ -110,7 +110,7 @@ export default {
       this.autocomplete = this.alert;
     },
     UpdateAlert() {
-      this.updateNews(this.autocomplete)
+      this.updateNews(this.autocomplete, this.newexpiration)
       this.autocomplete = {
         title: "",
         subtitle: "",
@@ -149,7 +149,7 @@ export default {
         appendToast: false
       })
     },
-    async updateNews(news) {
+    async updateNews(news, newexpiration) {
       let data = new FormData();
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
@@ -158,7 +158,7 @@ export default {
       data.append('category', news.category);
       data.append('groups', news.groups);
       data.append('link', news.link);
-      data.append('expiration', news.expiration);
+      data.append('expiration', newexpiration.toISOString());
 
       axios.post(generateUrl(`apps/intranetagglo/news/update/${news.id}`), data, {
         headers: {
