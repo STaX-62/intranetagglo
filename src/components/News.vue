@@ -327,5 +327,9 @@ export default {
   .searchbar {
     margin-left: 2% !important;
   }
+  .alert-wrapper {
+    height: 100%;
+    overflow-y: auto;
+  }
 }
 </style>

@@ -92,7 +92,7 @@
           @click="link = !link"
           variant="dark"
           v-if="step == 2"
-        >{{link ? "Remplacer par un lien" : "Remplacer par du Texte"}}</b-button>
+        >{{link ? "Remplacer par un Texte" : "Remplacer par un lien"}}</b-button>
         <b-button size="md" variant="secondary" @click="step--" v-if="step > 1">Précédent</b-button>
         <b-button size="md" variant="secondary" @click="step = step +1" v-if="step < 3">Suivant</b-button>
         <b-button size="md" variant="success" @click="ok()" v-if="step == 3">Modifier</b-button>

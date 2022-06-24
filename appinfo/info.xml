@@ -5,14 +5,14 @@
     <name>Intranet Agglo</name>
     <summary>Application Intranet de la CA2BM pour Nextcloud</summary>
     <description><![CDATA[Application Intranet de la CA2BM pour Nextcloud]]></description>
-    <version>0.9.0</version>
+    <version>0.9.5</version>
     <licence>agpl</licence>
     <author mail="clement.mouronval@gmail.com">cmouronval</author>
     <namespace>IntranetAgglo</namespace>
     <category>tools</category>
     <bugs>https://localhost/nextcloud</bugs>
     <dependencies>
-        <nextcloud min-version="15" max-version="15"/>
+        <nextcloud min-version="15" max-version="30"/>
     </dependencies>
     <navigations>
         <navigation>
