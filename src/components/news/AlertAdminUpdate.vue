@@ -186,7 +186,7 @@ export default {
     async deleteNews() {
       var url = `apps/intranetagglo/news/${this.autocomplete.id}`
       await axios.delete(generateUrl(url), { id: this.autocomplete.id }).then(() => {
-        this.AddToast('Suppression de news', `L'actualité '${this.autocomplete.title.length > 60 ? this.autocomplete.title.substring(0, 60) + '...' : this.autocomplete.title}' a bien été supprimée`, 'success')
+        this.AddToast('Suppression de news', `L'actualité '${this.autocomplete.title.length > 60 ? title.substring(0, 60) + '...' : this.autocomplete.title}' a bien été supprimée`, 'success')
       }).catch((error) => {
         this.AddToast('Erreur durant la suppression de l\'actualité', error.message, 'danger')
       })
