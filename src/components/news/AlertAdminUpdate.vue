@@ -44,12 +44,12 @@
       <label for="expidationDatepicker">Date d'expiration de l'alerte:</label>
       <b-form-datepicker
         name="expirationDatepicker"
-        v-model="getFormatedDate"
+        v-model="newexpiration"
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         locale="fr-FR"
         hide-header="true"
         :min="minDate"
-        :initial-date="minDate"
+        :initial-date="initialDate"
         placeholder="Date d'expiration"
         value-as-date
       ></b-form-datepicker>
@@ -91,15 +91,6 @@ export default {
     shortdesccount() {
       return (190 - this.shortdesc.length)
     },
-    getFormatedDate: {
-      get() {
-        return new Date(this.alert.expiration * 1000)
-      },
-      set(value) {
-        console.log(value)
-        this.autocomplete.expiration = value.getTime()
-      }
-    },
     getFormatedGroups: {
       get() {
         console.log(this.autocomplete)
@@ -108,6 +99,9 @@ export default {
       set(value) {
         this.autocomplete.groups = value.join(';')
       }
+    },
+    initialDate() {
+      return new Date(autocomplete.expiration * 1000)
     }
   },
   methods: {
@@ -225,6 +219,7 @@ export default {
         link: "",
         expiration: null
       },
+      newexpiration: null,
       minDate: today
     }
   }
