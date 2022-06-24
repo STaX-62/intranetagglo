@@ -122,7 +122,7 @@ export default {
         text: "",
         photo: null,
         category: "",
-        groups: [],
+        groups: "",
         link: "",
         expiration: null
       }
@@ -220,7 +220,7 @@ export default {
         text: "",
         photo: null,
         category: "",
-        groups: [],
+        groups: "",
         link: "",
         expiration: null
       },
