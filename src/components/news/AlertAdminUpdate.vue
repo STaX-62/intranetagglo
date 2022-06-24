@@ -101,6 +101,7 @@ export default {
     },
     getFormatedGroups: {
       get() {
+        console.log(this.autocomplete)
         return this.autocomplete.groups.split(';')
       },
       set(value) {
