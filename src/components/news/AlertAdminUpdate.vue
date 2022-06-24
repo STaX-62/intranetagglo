@@ -93,7 +93,7 @@ export default {
     },
     getFormatedDate: {
       get() {
-        return new Date(this.alert.expiration)
+        return new Date(this.alert.expiration * 1000)
       },
       set(value) {
         console.log(value)
