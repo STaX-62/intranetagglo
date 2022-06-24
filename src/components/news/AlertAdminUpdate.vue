@@ -91,17 +91,29 @@ export default {
     shortdesccount() {
       return (190 - this.shortdesc.length)
     },
+    getFormatedDate: {
+      get() {
+        return new Date(this.alert.expiration * 1000)
+      },
+      set(value) {
+        this.autocomplete.expiration = value.getTime()
+      }
+    },
+    getFormatedGroups: {
+      get() {
+        return this.autocomplete.groups.split(';')
+      },
+      set(value) {
+        this.autocomplete.groups = value.join(';')
+      }
+    }
   },
   methods: {
     Modify() {
-      this.autocomplete = null
       this.modal = !this.modal;
       this.autocomplete = this.alert;
-      this.autocomplete.expiration = new Date(this.autocomplete.expiration * 1000)
-      this.autocomplete.groups = this.alert.groups.split(';')
     },
     UpdateAlert() {
-      this.autocomplete.groups = this.autocomplete.groups.join(';')
       this.updateNews(this.autocomplete)
       this.autocomplete = {
         title: "",

@@ -153,23 +153,18 @@ export default {
   },
   computed: {
     newfocus() {
-      console.log('focus change : ' + this.$store.state.newsfocus)
       return this.$store.state.newsfocus;
     },
     updating() {
-      console.log('updating : ' + this.$store.state.newsupdating)
       return this.$store.state.newsupdating
     },
     getNews() {
-      console.log(this.news)
       return this.news
     },
     getAlerts() {
-      console.log('getAlerts : ' + this.alerts)
       return this.alerts
     },
     isAdmin() {
-      console.log('isAdmin: ' + this.$store.state.isAdmin)
       return this.$store.state.isAdmin
     },
     search: {
