@@ -784,6 +784,7 @@ trix-editor.trix-content {
 
 @media (max-width: 1350px) {
 
+    .alert-header-title,
     .news-header-title {
         font-size: 1.5em;
     }
