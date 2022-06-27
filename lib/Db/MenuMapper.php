@@ -78,9 +78,9 @@ class MenuMapper extends QBMapper
     {
         $groupsRQ = "(q.groups = '' ";
         foreach ($groupsArray as $group) {
-            $groupsRQ .= "OR q.groups = '%". $group . "%' s"
+            $groupsRQ .= "OR q.groups = '%" . $group . "%' s";
         }
-        $groupsRQ .= ")"
+        $groupsRQ .= ")";
 
         /* @var $qb IQueryBuilder */
         $qbSection = $this->db->getQueryBuilder();
