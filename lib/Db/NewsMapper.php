@@ -57,7 +57,7 @@ class NewsMapper extends QBMapper
 
         $qb->selectDistinct('category')
             ->where('category != ""')
-            ->andWhere("expiration == 0")
+            ->andWhere("expiration = 0")
             ->from($this->getTableName());
 
         $cursor = $qb->execute();
