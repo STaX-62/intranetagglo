@@ -77,7 +77,7 @@ class NewsService
 	public function findAlertsByGroups($search, $groups): array
 	{
 		$search = trim($search, " \n\r\t\v");
-		$qb = $this->mapper->findAlerts($search, $groups);
+		$qb = $this->mapper->findAlertsByGroup($search, $groups);
 
 		return $qb;
 	}
