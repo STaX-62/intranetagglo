@@ -12,6 +12,7 @@
           <div class="alert-wrapper">
             <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
               <alert :alert="alerts[index]" />
+              <div class="alert-empty" v-if="Empty_Alerts != ''">{{Empty_Alerts}}</div>
             </div>
           </div>
         </div>
@@ -165,6 +166,9 @@ export default {
     },
     getAlerts() {
       return this.alerts
+    },
+    Empty_Alerts() {
+      return this.alerts.length > 0 ? "" : "pas de nouvelle alerte"
     },
     isAdmin() {
       return this.$store.state.isAdmin
