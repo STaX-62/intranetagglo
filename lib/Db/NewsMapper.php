@@ -169,9 +169,9 @@ class NewsMapper extends QBMapper
      */
     public function findByGroups(int $firstresult, $limit, array $groupsArray, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
     {
-        $groups = '%';
+        $groups = '';
         foreach ($groupsArray as $group) {
-            $groups .= $group . '%';
+            $groups .= ' OR q.groups LIKE "%' . $group . '%" ';
         }
         $categoryArray = explode(';', $categories);
 
@@ -215,10 +215,8 @@ class NewsMapper extends QBMapper
             $qb2->andWhere('q.id = :searchid')
                 ->setParameter('searchid', $searchid);
         }
-        $qb2->andWhere("q.groups = ''")
-            ->orWhere("q.groups LIKE :groups")
+        $qb2->andWhere("(q.groups = ''"  . $groups . ")")
             ->andWhere("q.visible = '1'")
-            ->setParameter('groups', $groups)
             ->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')
             ->setFirstResult($firstresult)
@@ -240,10 +238,8 @@ class NewsMapper extends QBMapper
             $qb3->andWhere('q.id = :searchid')
                 ->setParameter('searchid', $searchid);
         }
-        $qb3->andWhere("q.groups = ''")
-            ->orWhere("q.groups LIKE :groups")
-            ->andWhere("q.visible = '1'")
-            ->setParameter('groups', $groups);
+        $qb3->andWhere("(q.groups = ''"  . $groups . ")")
+            ->andWhere("q.visible = '1'");
 
         $cursor = $qb3->execute();
         $row = $cursor->fetch();
@@ -260,16 +256,16 @@ class NewsMapper extends QBMapper
      */
     public function dashboard(array $groupsArray): array
     {
-        $groups = '%';
+        $groups = '';
         foreach ($groupsArray as $group) {
-            $groups .= $group . '%';
+            $groups .= ' OR q.groups LIKE "%' . $group . '%" ';
         }
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
             ->where("(q.expiration = 0 OR q.expiration >= :today)")
-            ->andWhere("(q.groups = '' OR q.groups LIKE :groups)")
+            ->andWhere("(q.groups = ''"  . $groups . ")")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
             ->setParameter('today', strtotime('today'))
