@@ -36,25 +36,23 @@
 }
 
 #news-filtres {
-    position: relative;
-    flex: 0 0 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: var(--color-mode-contrast-1);
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAQAAAD8IX00AAAAE0lEQVR4AWNgYNgsvRlCgCgwBAA6YQXPi9F1OAAAAABJRU5ErkJggg==), var(--color-mode-2);
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    position: relative !important;
+    flex: 0 0 10% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    color: var(--color-mode-contrast-1) !important;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAQAAAD8IX00AAAAE0lEQVR4AWNgYNgsvRlCgCgwBAA6YQXPi9F1OAAAAABJRU5ErkJggg==), var(--color-mode-2) !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
     box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
         7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%);
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s;
-    padding: 0;
-    font-size: 1.25em;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    transition: 0.2s !important;
     border: 2px solid var(--color-mode-4) !important;
-    height: 50px;
+    height: 50px !important;
 }
 
 #App.dark #news-filtres {
@@ -197,10 +195,25 @@ trix-editor.trix-content {
 .news-tagbox-button,
 .news-admin-button {
     padding: 0.313rem 0.3rem !important;
+    font-size: 20px !important;
 }
 
 .btn {
     font-size: 1.5rem !important;
+}
+
+.popover button {
+    position: relative !important;
+    font-size: 1.25rem !important;
+    width: auto !important;
+    height: auto !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    user-select: none !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    margin: 0 !important;
+    border-radius: none !important;
 }
 
 #App button {
@@ -215,7 +228,6 @@ trix-editor.trix-content {
     border: 0;
     margin: 0;
     border-radius: none;
-
 }
 
 #App button {
