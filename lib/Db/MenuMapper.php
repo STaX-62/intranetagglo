@@ -85,7 +85,7 @@ class MenuMapper extends QBMapper
         $qbSection = $this->db->getQueryBuilder();
         $qbSection->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("(q.groups = " . $groups . ")")
+            ->where("(q.groups = '' "  . $groups . ")")
             ->andWhere("q.menuid = 0")
             ->andWhere("q.submenuid = 0")
             ->addOrderBy('q.sectionid', 'ASC');
@@ -94,7 +94,7 @@ class MenuMapper extends QBMapper
         $qbMenu = $this->db->getQueryBuilder();
         $qbMenu->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("(q.groups = " . $groups . ")")
+            ->where("(q.groups = '' " . $groups . ")")
             ->andWhere("q.menuid > 0")
             ->andWhere("q.submenuid = 0")
             ->addOrderBy('q.menuid', 'ASC');
@@ -103,7 +103,7 @@ class MenuMapper extends QBMapper
         $qbSubmenu = $this->db->getQueryBuilder();
         $qbSubmenu->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("(q.groups = " . $groups . ")")
+            ->where("(q.groups = '' " . $groups . ")")
             ->andWhere("q.submenuid > 0")
             ->addOrderBy('q.submenuid', 'ASC');
 
