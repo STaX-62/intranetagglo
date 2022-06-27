@@ -12,8 +12,8 @@
           <div class="alert-wrapper">
             <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
               <alert :alert="alerts[index]" />
-              <div class="alert-empty" v-if="Empty_Alerts != ''">{{Empty_Alerts}}</div>
             </div>
+            <div class="alert-empty" v-if="Empty_Alerts != ''">{{Empty_Alerts}}</div>
           </div>
         </div>
         <div class="news-block" v-if="isAdmin">
