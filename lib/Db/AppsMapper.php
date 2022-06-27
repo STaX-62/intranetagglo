@@ -55,18 +55,15 @@ class AppsMapper extends QBMapper
      */
     public function findByGroups(array $groupsArray): array
     {
-        $groups = '%';
+        $groups = '';
         foreach ($groupsArray as $group) {
-            $groups .= $group . '%';
+            $groups .= ' OR q.groups LIKE "%' . $group . '%" ';
         }
-
         /* @var $qb IQueryBuilder */
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
-            ->andWhere("q.groups = ''")
-            ->orWhere("q.groups LIKE :groups")
-            ->setParameter('groups', $groups);
+            ->andWhere("(q.groups = ''"  . $groups . ")");
 
         return $this->findEntities($qb);
     }
