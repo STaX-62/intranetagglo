@@ -94,7 +94,7 @@
           @click="link = !link"
           variant="dark"
           v-if="step == 2"
-        >{{link ? "Remplacer par un lien" : "Remplacer par du Texte"}}</b-button>
+        >{{link ? "Remplacer par un Texte" : "Remplacer par un lien"}}</b-button>
         <b-button size="md" variant="secondary" @click="step--" v-if="step > 1">Précédent</b-button>
         <b-button size="md" variant="secondary" @click="step = step +1" v-if="step < 3">Suivant</b-button>
         <b-button size="md" variant="success" @click="ok()" v-if="step == 3">Ajouter</b-button>
@@ -222,10 +222,10 @@ export default {
 </script>
 <style scoped>
 .add-news-button {
-  width: 20px;
-  height: auto;
-  position: relative;
-  margin-left: 10px;
+  width: 20px !important;
+  height: auto !important;
+  position: relative !important;
+  margin-left: 10px !important;
 }
 .add-news-button svg {
   fill: var(--color-mode-contrast-1);

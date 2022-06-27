@@ -196,18 +196,28 @@ trix-editor.trix-content {
 
 .news-tagbox-button,
 .news-admin-button {
-    position: relative;
+    padding: 0.313rem 0.3rem !important;
+}
+
+.btn {
+    font-size: 1.5rem !important;
+}
+
+.news-visibility-button,
+.news-update-button,
+.news-del-button,
+.news-tagbox-button,
+.news-admin-button {
+    position: relative !important;
     font-size: 1.25rem !important;
-    width: max-content;
-    height: max-content;
-    text-align: center;
-    vertical-align: middle;
-    user-select: none;
-    background-color: transparent;
-    border: 0;
-    padding: 0.313rem 0.3rem;
-    color: #343a40;
-    border-color: #343a40;
+    width: max-content !important;
+    height: max-content !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    user-select: none !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    margin: 0 !important;
 }
 
 .news-admin-button,
@@ -221,22 +231,11 @@ trix-editor.trix-content {
 .news-visibility-button,
 .news-update-button,
 .news-del-button {
-    position: relative;
-    font-size: 1.25rem !important;
-    width: max-content;
-    height: max-content;
-    text-align: center;
-    vertical-align: middle;
-    user-select: none;
-    background-color: transparent;
-    border: 0;
-    color: #343a40;
-    border-color: #343a40;
-    height: 26px;
-    min-height: 26px;
-    display: flex;
-    align-items: center;
-    padding: 7px 6px;
+    height: 26px !important;
+    min-height: 26px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 7px 6px !important;
 }
 
 .news {
