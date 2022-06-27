@@ -208,25 +208,25 @@ export default {
 
 .section {
   z-index: 100;
-  padding: 0 8px 0 0;
-  text-decoration: none;
-  font-size: 20px;
-  display: flex;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
-  transition: 0.5s;
-  border-radius: 0px;
-  box-shadow: rgb(0 178 255 / 20%) 1px 1px 0px 1px;
+  padding: 0 8px 0 0 !important;
+  text-decoration: none !important;
+  font-size: 20px !important;
+  display: flex !important;
+  border: none !important;
+  background: none !important;
+  width: 100% !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: 0.5s !important;
+  border-radius: 0px !important;
+  box-shadow: rgb(0 178 255 / 20%) 1px 1px 0px 1px !important;
   font-family: PetitaBold;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin-bottom: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  margin-bottom: 10px !important;
+  border-top-right-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
 }
 
 .section-block {

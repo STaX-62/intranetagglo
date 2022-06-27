@@ -44,6 +44,7 @@
     text-align: center !important;
     color: var(--color-mode-contrast-1) !important;
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAQAAAD8IX00AAAAE0lEQVR4AWNgYNgsvRlCgCgwBAA6YQXPi9F1OAAAAABJRU5ErkJggg==), var(--color-mode-2) !important;
+    border-radius: unset;
     border-top-right-radius: 10px !important;
     border-bottom-right-radius: 10px !important;
     box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
@@ -59,6 +60,10 @@
     box-shadow: 0 -5px 5px hsl(0deg 0% 100% / 5%);
 }
 
+.page-item.active .page-link {
+    background-color: var(--color-secondary) !important;
+    border-color: var(--color-secondary) !important;
+}
 
 
 #Update-settings svg {
@@ -199,7 +204,7 @@ trix-editor.trix-content {
 }
 
 .btn {
-    font-size: 1.5rem !important;
+    font-size: 1rem !important;
 }
 
 .popover button {
