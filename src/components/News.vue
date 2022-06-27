@@ -298,6 +298,12 @@ export default {
   overflow-y: auto;
 }
 
+.alert-empty {
+  color: var(--color-light);
+  text-align: center;
+  margin-top: 20px;
+}
+
 .searchbar {
   flex: 0 0 39%;
   border-top-left-radius: 10px !important;

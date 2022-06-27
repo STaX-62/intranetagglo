@@ -268,11 +268,11 @@ class NewsMapper extends QBMapper
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("q.expiration = 0")
-            ->andWhere("q.groups = ''")
-            ->orWhere("q.groups LIKE :groups")
+            ->where("(q.expiration = 0 OR q.expiration >= :today)")
+            ->andWhere("(q.groups = '' OR q.groups LIKE :groups)")
             ->andWhere("q.visible = '1'")
             ->setParameter('groups', $groups)
+            ->setParameter('today', strtotime('today'))
             ->addOrderBy('q.time', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(7);
