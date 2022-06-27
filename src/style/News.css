@@ -61,10 +61,19 @@
 }
 
 .page-item.active .page-link {
+    position: relative !important;
+    display: block !important;
+    padding: 0.5rem 0.75rem !important;
+    margin-left: 0.25rem !important;
+    line-height: 1.25 !important;
+    border: 1px solid #dee2e6 !important;
     background-color: var(--color-secondary) !important;
     border-color: var(--color-secondary) !important;
 }
 
+.close {
+    font-size: 1.5rem !important;
+}
 
 #Update-settings svg {
     cursor: pointer;

@@ -359,6 +359,10 @@ input[type="checkbox"].checkbox+label::before {
     display: none;
 }
 
+.avatardiv img {
+    vertical-align: unset;
+}
+
 @media (max-width: 1350px) {
     .Settings {
         width: 180px;
