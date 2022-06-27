@@ -76,26 +76,25 @@ class MenuMapper extends QBMapper
      */
     public function findByGroups(array $groupsArray): array
     {
-        $groups = '%';
+        $groups = '';
         foreach ($groupsArray as $group) {
-            $groups .= $group . '%';
+            $groups .= 'OR q.groups LIKE %' . $group . '%';
         }
 
         /* @var $qb IQueryBuilder */
         $qbSection = $this->db->getQueryBuilder();
         $qbSection->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("(q.groups = '' OR q.groups LIKE :groups)")
+            ->where("(q.groups = ''" . $groups . ")")
             ->andWhere("q.menuid = 0")
             ->andWhere("q.submenuid = 0")
-            ->addOrderBy('q.sectionid', 'ASC')
-            ->setParameter('groups', $groups);
+            ->addOrderBy('q.sectionid', 'ASC');
 
         /* @var $qb IQueryBuilder */
         $qbMenu = $this->db->getQueryBuilder();
         $qbMenu->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("(q.groups = '' OR q.groups LIKE :groups)")
+            ->where("(q.groups = ''" . $groups . ")")
             ->andWhere("q.menuid > 0")
             ->andWhere("q.submenuid = 0")
             ->addOrderBy('q.menuid', 'ASC')
@@ -105,7 +104,7 @@ class MenuMapper extends QBMapper
         $qbSubmenu = $this->db->getQueryBuilder();
         $qbSubmenu->select('*')
             ->from($this->getTableName(), 'q')
-            ->where("(q.groups = '' OR q.groups LIKE :groups)")
+            ->where("(q.groups = ''" . $groups . ")")
             ->andWhere("q.submenuid > 0")
             ->addOrderBy('q.submenuid', 'ASC')
             ->setParameter('groups', $groups);
