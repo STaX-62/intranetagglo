@@ -78,7 +78,7 @@ class MenuMapper extends QBMapper
     {
         $groups = '';
         foreach ($groupsArray as $group) {
-            $groups .= 'OR q.groups LIKE "%' . $group . '%" ';
+            $groups .= 'OR q.groups LIKE %' . $group . '% ';
         }
 
         /* @var $qb IQueryBuilder */
