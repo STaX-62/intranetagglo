@@ -110,7 +110,7 @@ class MenuMapper extends QBMapper
             ->addOrderBy('q.submenuid', 'ASC')
             ->setParameter('groups', $groups);
 
-        return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu)];
+        return [$this->findEntities($qbSection), $this->findEntities($qbMenu), $this->findEntities($qbSubmenu), $groups ,$groupsArray];
     }
 
     /**
