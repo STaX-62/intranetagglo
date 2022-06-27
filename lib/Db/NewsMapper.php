@@ -164,6 +164,30 @@ class NewsMapper extends QBMapper
         return $this->findEntities($qb);
     }
 
+
+    /**
+     * @return array
+     */
+    public function findAlertsByGroup(string $search, array $groupsArray): array
+    {
+        $groups = '';
+        foreach ($groupsArray as $group) {
+            $groups .= ' OR q.groups LIKE "%' . $group . '%" ';
+        }
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('*')
+            ->from($this->getTableName(), 'q')
+            ->where("q.expiration != 0")
+            ->andWhere("q.expiration >= :today")
+            ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
+            ->andWhere("(q.groups = ''"  . $groups . ")")
+            ->setParameter('search', '%' . $search . '%')
+            ->setParameter('today', strtotime('today'));
+
+        $qb->addOrderBy('q.time', 'DESC');
+        return $this->findEntities($qb);
+    }
+
     /**
      * @return array
      */

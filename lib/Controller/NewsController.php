@@ -84,7 +84,11 @@ class NewsController extends Controller
      */
     public function alerts(string $search): DataResponse
     {
-        return (new DataResponse($this->service->findAlerts($search)));
+        $user = $this->session->getUser();
+        if ($this->isAdmin()) {
+            return (new DataResponse($this->service->findAlerts($search)));
+        }
+        return (new DataResponse($this->service->findAlertsByGroups($search, $this->groupManager->getUserGroupIds($user))));
     }
 
     /**
