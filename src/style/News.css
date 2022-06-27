@@ -204,20 +204,22 @@ trix-editor.trix-content {
 }
 
 #App button {
-    position: relative !important;
-    font-size: 1.25rem !important;
-    width: max-content !important;
-    height: max-content !important;
-    text-align: center !important;
-    vertical-align: middle !important;
-    user-select: none !important;
-    background-color: transparent !important;
-    border: 0 !important;
-    margin: 0 !important;
+    position: relative;
+    font-size: 1.25rem;
+    width: auto;
+    height: auto;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: transparent;
+    border: 0;
+    margin: 0;
+    border-radius: none;
+
 }
 
-#App button:focus {
-    outline: none !important;
+#App button {
+    outline: none;
 }
 
 .news-visibility-button,
