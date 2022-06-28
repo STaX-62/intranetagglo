@@ -113,7 +113,7 @@ class MenuController extends Controller
                 $snapshot = $this->service->findById($id);
                 $fileurl = $link;
                 if ($fileurl != $snapshot->getLink() || isset($_FILES['file_upd'])) {
-                    if (str_starts_with($snapshot->getLink(), '/'))
+                    if (str_starts_with($snapshot->getLink(), '/nextcloud/apps/intranetagglo/img/uploads/'))
                         unlink(substr($snapshot->getLink(), 11));
                 }
                 if (isset($_FILES['file_upd'])) {
