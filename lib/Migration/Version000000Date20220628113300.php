@@ -7,7 +7,7 @@ use OCP\DB\ISchemaWrapper;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
 
-class Version000000Date20220628103300 extends SimpleMigrationStep
+class Version000000Date20220628113300 extends SimpleMigrationStep
 {
 
     /**
@@ -28,42 +28,33 @@ class Version000000Date20220628103300 extends SimpleMigrationStep
                 'notnull' => true,
             ]);
             $table->addColumn('author', 'string', [
-                'notnull' => true,
                 'length' => 200,
             ]);
             $table->addColumn('title', 'text', [
-                'notnull' => true,
                 'default' => ''
             ]);
             $table->addColumn('subtitle', 'text', [
-                'notnull' => true,
                 'default' => ''
             ]);
             $table->addColumn('text', 'text', [
-                'notnull' => true,
                 'default' => ''
             ]);
             $table->addColumn('photo', 'text', [
-                'notnull' => true,
                 'default' => ''
             ]);
             $table->addColumn('category', 'string', [
-                'notnull' => true,
                 'length' => 300,
             ]);
             $table->addColumn('groups', 'text', [
-                'notnull' => true,
                 'default' => ''
             ]);
             $table->addColumn('time', 'integer', [
                 'default' => 0,
             ]);
             $table->addColumn('visible', 'boolean', [
-                'notnull' => true,
                 'default' => false
             ]);
             $table->addColumn('pinned', 'boolean', [
-                'notnull' => true,
                 'default' => false
             ]);
             $table->setPrimaryKey(['id']);
