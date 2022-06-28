@@ -7,7 +7,7 @@ use OCP\DB\ISchemaWrapper;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
 
-class Version000000Date20220628113300 extends SimpleMigrationStep
+class Version000000Date20220628120000 extends SimpleMigrationStep
 {
 
     /**
@@ -56,6 +56,12 @@ class Version000000Date20220628113300 extends SimpleMigrationStep
             ]);
             $table->addColumn('pinned', 'boolean', [
                 'default' => false
+            ]);
+            $table->addColumn('link', 'string', [
+                'default' => ''
+            ]);
+            $table->addColumn('expiration', 'integer', [
+                'default' => 0
             ]);
             $table->setPrimaryKey(['id']);
         }

@@ -656,6 +656,10 @@ trix-editor.trix-content {
     transition: color 0.2s;
 }
 
+#App:not([isonsite]) .news-header {
+    width: calc(100% - 210px);
+}
+
 #App:not([isonsite]) #news-frame {
     display: block;
 }
