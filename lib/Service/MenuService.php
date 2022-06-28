@@ -20,6 +20,11 @@ class MenuService
 		$this->mapper = $mapper;
 	}
 
+	public function findById($id)
+	{
+		return $this->mapper->find($id);
+	}
+
 	public function findAll(): array
 	{
 		return $this->mapper->findAll();

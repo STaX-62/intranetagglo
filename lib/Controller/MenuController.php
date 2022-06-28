@@ -110,13 +110,14 @@ class MenuController extends Controller
     {
         if ($this->isAdmin()) {
             return $this->handleNotFound(function () use ($id, $title, $icon, $link, $groups) {
-
+                $snapshot = $this->service->findById($id);
                 $fileurl = $link;
+                if ($fileurl != $snapshot->getLink() || isset($_FILES['file_upd'])) {
+                    unlink(substr($snapshot->getLink(), 11));
+                }
                 if (isset($_FILES['file_upd'])) {
                     if (file_exists($_FILES['file_upd']['tmp_name'])) {
                         if ($_FILES['file_upd']['error'] == 0) {
-                            unlink(substr($fileurl, 11));
-
                             $fileInfos = pathinfo($_FILES['file_upd']['name']);
                             $file = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
