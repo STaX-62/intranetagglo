@@ -7,7 +7,7 @@ use OCP\DB\ISchemaWrapper;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
 
-class Version000000Date20220530153400 extends SimpleMigrationStep
+class Version000000Date20220628103500 extends SimpleMigrationStep
 {
 
     /**
@@ -23,8 +23,8 @@ class Version000000Date20220530153400 extends SimpleMigrationStep
 
         if ($schema->hasTable('intranetagglonews')) {
             $table = $schema->getTable('intranetagglonews');
-            $table->addColumn('link', 'string', [
-                'default' => ''
+            $table->addColumn('expiration', 'integer', [
+                'default' => 0
             ]);
         }
         return $schema;
