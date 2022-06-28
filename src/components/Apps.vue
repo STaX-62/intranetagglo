@@ -4,7 +4,7 @@
       <h2 class="apps-header">
         Applications
         <div id="apps-update-btn" v-if="isAdmin">
-          <AppsUpdate />
+          <apps-update />
         </div>
       </h2>
       <div class="apps-block">
@@ -15,8 +15,10 @@
           v-bind:href="app.link"
           target="_blank"
         >
-          <b-icon class="apps-icon" v-bind:icon="app.icon"></b-icon>
-          <div class="apps-title">{{app.title}}</div>
+          <div style="position: relative;top: 50%;transform: perspective(1px) translateY(-50%);">
+            <b-icon class="apps-icon" v-bind:icon="app.icon"></b-icon>
+            <div class="apps-title">{{app.title}}</div>
+          </div>
         </a>
       </div>
     </div>
@@ -24,9 +26,9 @@
 </template>
 
 <script>
-import AppsUpdate from '@/components/apps/apps-update.bdd.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import AppsUpdate from './apps/AppsUpdate'
 
 export default {
   name: 'Apps',

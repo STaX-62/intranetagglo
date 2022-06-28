@@ -122,7 +122,7 @@
     </b-modal>
     <menu-admin-update
       :active="active"
-      :menu="modifying"
+      :autocomplete="modifying"
       @close="active = !active"
       @navigation-updated="UpdateNavigation"
     />
@@ -135,13 +135,13 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
 import draggable from 'vuedraggable'
-import menuAdminUpdate from './menuAdminUpdate.vue'
+import MenuAdminUpdate from './menuAdminUpdate'
 
 export default {
-  name: 'menuAdminOverview',
+  name: 'MenuAdminOverview',
   components: {
     draggable,
-    menuAdminUpdate
+    MenuAdminUpdate
   },
   computed: {
     MenuToDisplay() {
@@ -215,7 +215,6 @@ export default {
         })
     },
     Modify(menu) {
-      console.log(menu)
       this.modifying = menu;
       if (typeof menu.childs !== 'undefined') {
         if (menu.childs.length == 0) this.modifying.haschild = false;

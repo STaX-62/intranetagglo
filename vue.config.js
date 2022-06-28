@@ -2,14 +2,9 @@ const { defineConfig } = require('@vue/cli-service')
 
 module.exports = {
     pages: {
-        intranetagglo227: {
-            // entry for the page
+        intranetagglo326: {
             entry: 'src/main.js',
         },
-        // when using the entry-only string format,
-        // template is inferred to be `public/subpage.html`
-        // and falls back to `public/index.html` if not found.
-        // Output filename is inferred to be `subpage.html`.
         'intranetagglo-dashboard': 'src/dashboard.js'
     },
     chainWebpack: config => {

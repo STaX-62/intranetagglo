@@ -6,12 +6,12 @@
         <label for="title">Titre</label>
         <b-form-input name="title" type="text" v-model="newMenu.title" />
       </div>
-      <div v-if="newMenu.haschild != true && !redirectToFile">
+      <div v-if="!newMenu.haschild  && !redirectToFile">
         <label for="link">Lien URL</label>
         <b-form-input name="link" type="text" v-model="newMenu.link" />
         <button @click="redirectToFile = !redirectToFile">Rediriger vers un fichier</button>
       </div>
-      <div v-if="newMenu.haschild != true && redirectToFile">
+      <div v-if="!newMenu.haschild && redirectToFile">
         <label for="file">Redirection vers Un fichier (Remplace le lien)</label>
         <b-form-file
           name="file"
@@ -71,27 +71,28 @@ import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
 
 export default {
-  name: 'menuAdminOverview',
+  name: 'MenuAdminUpdate',
   props: {
-    menu: Object,
+    autocomplete: Object,
     active: Boolean
   },
   watch: {
-    menu: {
+    autocomplete: {
       handler(val) {
-        this.newMenu = this.menu
+        this.newMenu = this.autocomplete
+        this.newMenu.groups = this.autocomplete.groups.split(';')
       },
       deep: true
     },
     active: {
       handler(val) {
-        if (val)
+        if (val) {
           this.detailed = !this.detailed
+        }
       }
     },
     detailed: {
       handler(val) {
-        console.log(val)
         if (!val)
           this.$emit('close');
       }

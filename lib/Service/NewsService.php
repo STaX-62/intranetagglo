@@ -53,33 +53,49 @@ class NewsService
 		return $this->mapper->getLastPinned();
 	}
 
-	public function findAll($firstresult, $search, $categories, $dateFilter): array
+	public function findAll($firstresult, $limit, $search, $categories, $dateFilter): array
 	{
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
-			$qb = $this->mapper->findAll($firstresult, $search, '', substr($search, 1));
+			$qb = $this->mapper->findAll($firstresult, $limit, $search, '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
 		} else {
-			$qb = $this->mapper->findAll($firstresult, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
+			$qb = $this->mapper->findAll($firstresult, $limit, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
 		}
 
 		return $qb;
 	}
 
-	public function findByGroups(int $firstresult, array $groups, string $search, string $categories, $dateFilter): array
+	public function findAlerts($search): array
+	{
+		$search = trim($search, " \n\r\t\v");
+		$qb = $this->mapper->findAlerts($search);
+
+		return $qb;
+	}
+
+	public function findAlertsByGroups($search, $groups): array
+	{
+		$search = trim($search, " \n\r\t\v");
+		$qb = $this->mapper->findAlertsByGroup($search, $groups);
+
+		return $qb;
+	}
+
+	public function findByGroups(int $firstresult, $limit, array $groups, string $search, string $categories, $dateFilter): array
 	{
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
-			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, '', substr($search, 1));
+			$qb = $this->mapper->findByGroups($firstresult, $limit, $groups, $search, '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
 		} else {
-			$qb = $this->mapper->findByGroups($firstresult, $groups, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
+			$qb = $this->mapper->findByGroups($firstresult, $limit, $groups, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
 		}
 
 		return $qb;
 	}
 
-	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $link, $time, $visible, $pinned)
+	public function create($author, $title, $subtitle, $text, $photo, $category, $groups, $link, $time, $expiration)
 	{
 		$news = new News();
 		$news->setAuthor($author);
@@ -91,12 +107,18 @@ class NewsService
 		$news->setGroups($groups);
 		$news->setLink($link);
 		$news->setTime($time);
-		$news->setVisible($visible);
-		$news->setPinned($pinned);
+		$expiration = strtotime($expiration);
+		if ($expiration != 0) {
+			$news->setExpiration($expiration);
+		} else {
+			$news->setExpiration(0);
+		}
+		$news->setVisible(0);
+		$news->setPinned(0);
 		return $this->mapper->insert($news);
 	}
 
-	public function update($id, $title, $subtitle, $text, $photo, $category, $groups, $link)
+	public function update($id, $title, $subtitle, $text, $photo, $category, $groups, $link, $expiration)
 	{
 		try {
 			$news = $this->mapper->find($id);
@@ -107,6 +129,11 @@ class NewsService
 			$news->setCategory($category);
 			$news->setGroups($groups);
 			$news->setLink($link);
+			if ($expiration != 0) {
+				$news->setExpiration(strtotime($expiration));
+			} else {
+				$news->setExpiration(0);
+			}
 			return $this->mapper->update($news);
 		} catch (Exception $e) {
 			$this->handleException($e);

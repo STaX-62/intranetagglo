@@ -68,6 +68,11 @@ return [
             'verb' => 'POST'
         ],
         [
+            'name' => 'news#alerts',
+            'url' => '/alerts',
+            'verb' => 'POST'
+        ],
+        [
             'name' => 'news#dashboard',
             'url' => '/news/dashboard',
             'verb' => 'GET',
@@ -94,6 +99,11 @@ return [
             'url' => '/news/pin/{id}',
             'verb' => 'POST',
             'requirements' => ['id' => '\d+']
+        ],
+        [
+            'name' => 'news#removeNotifications',
+            'url' => '/news/notifications',
+            'verb' => 'GET'
         ],
         [
             'name' => 'news#getCategory',

@@ -217,7 +217,7 @@ body {
     width: auto;
     right: 20px;
     top: 130px;
-    width: 280px;
+    width: 300px;
     height: auto;
     border-radius: 15px;
     background: var(--color-mode-2);
@@ -357,6 +357,10 @@ input[type="checkbox"].checkbox+label::before {
 
 #App:not([isonsite]) .Navbar {
     display: none;
+}
+
+.avatardiv img {
+    vertical-align: unset;
 }
 
 @media (max-width: 1350px) {

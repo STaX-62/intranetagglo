@@ -18,11 +18,15 @@ use OCP\Notification\IManager;
 use OCA\IntranetAgglo\Service\NewsService;
 use OCP\IURLGenerator;
 use OCP\Notification\INotification;
+use OCA\IntranetAgglo\Service\NotificationService;
 
 class NewsController extends Controller
 {
     /** @var NewsService */
     private $service;
+
+    /** @var NotificationService */
+    private $notificationService;
 
     /** @var IUserManager */
     private $userManager;
@@ -49,7 +53,8 @@ class NewsController extends Controller
         IManager $NotificationManager,
         IUsermanager $userManager,
         IURLGenerator $urlGenerator,
-        ITimeFactory $timeFactory
+        ITimeFactory $timeFactory,
+        NotificationService $notificationService
     ) {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
@@ -59,18 +64,31 @@ class NewsController extends Controller
         $this->NotificationManager = $NotificationManager;
         $this->urlGenerator = $urlGenerator;
         $this->timeFactory = $timeFactory;
+        $this->notificationService = $notificationService;
     }
 
     /**
      * @NoAdminRequired
      */
-    public function index(int $id, string $search, string $categories, array $dateFilter): DataResponse
+    public function index(int $id, int $limit, string $search, string $categories, array $dateFilter): DataResponse
     {
         $user = $this->session->getUser();
         if ($this->isAdmin()) {
-            return (new DataResponse($this->service->findAll($id, $search, $categories, $dateFilter)));
+            return (new DataResponse($this->service->findAll($id, $limit, $search, $categories, $dateFilter)));
         }
-        return (new DataResponse($this->service->findByGroups($id, $this->groupManager->getUserGroupIds($user), $search, $categories, $dateFilter)));
+        return (new DataResponse($this->service->findByGroups($id, $limit, $this->groupManager->getUserGroupIds($user), $search, $categories, $dateFilter)));
+    }
+
+    /**
+     * @NoAdminRequired
+     */
+    public function alerts(string $search): DataResponse
+    {
+        $user = $this->session->getUser();
+        if ($this->isAdmin()) {
+            return (new DataResponse($this->service->findAlerts($search)));
+        }
+        return (new DataResponse($this->service->findAlertsByGroups($search, $this->groupManager->getUserGroupIds($user))));
     }
 
     /**
@@ -85,7 +103,7 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function create(string $title, string $subtitle, string $text,  string $category,  string $groups, string $link)
+    public function create(string $title, string $subtitle, string $text,  string $category,  string $groups, string $link, $expiration)
     {
         $user = $this->session->getUser();
         if ($this->isAdmin()) {
@@ -101,7 +119,7 @@ class NewsController extends Controller
                     }
                 }
             }
-            return $this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $link, $this->timeFactory->getTime(), 0, 0);
+            return [$this->service->create($user->getDisplayName(), $title, $subtitle, $text, $photourl, $category, $groups, $link, $this->timeFactory->getTime(), $expiration), $expiration, strtotime($expiration)];
         }
         return 'User is not admin';
     }
@@ -109,10 +127,10 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function update(int $id, string $title, string $subtitle, string $text,  string $photolink,  string $category,  string $groups, string $link)
+    public function update(int $id, string $title, string $subtitle, string $text,  string $photolink,  string $category,  string $groups, string $link, $expiration)
     {
         if ($this->isAdmin()) {
-            return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups, $link) {
+            return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups, $link, $expiration) {
                 $photourl = $photolink;
                 if (isset($_FILES['photo_upd'])) {
                     if (file_exists($_FILES['photo_upd']['tmp_name'])) {
@@ -128,7 +146,7 @@ class NewsController extends Controller
                     }
                 }
 
-                return $this->service->update($id, $title, $subtitle, $text, $photourl, $category, $groups, $link);
+                return $this->service->update($id, $title, $subtitle, $text, $photourl, $category, $groups, $link, $expiration);
             });
         }
         return 'User is not admin';
@@ -177,8 +195,11 @@ class NewsController extends Controller
                         ->setObject('news', (string)$rq->getId())
                         ->setSubject($rq->getTitle(), [
                             'author' =>  $rq->getAuthor()
-                        ])
-                        ->setMessage($rq->getSubtitle());
+                        ]);
+                    if ($rq->getSubtitle() != "") {
+                        $notification->setMessage($rq->getSubtitle());
+                    }
+
 
 
                     if ($groups[0] == "") {
@@ -236,18 +257,19 @@ class NewsController extends Controller
 
     /**
      * @NoAdminRequired
-     *
-     * @param int $id
-     * @return DataResponse
      */
     public function removeNotifications()
     {
         $user = $this->session->getUser();
         $uid = $user->getUID();
-        $notification = $this->NotificationManager->createNotification();
-        $notification->setApp(Application::APP_ID)
-            ->setUser($uid);
-        $this->NotificationManager->markProcessed($notification);
+        $notificationNb = $this->notificationService->findNotificationByUser($uid);
+        if ($notificationNb > 0) {
+            $notification = $this->NotificationManager->createNotification();
+            $notification->setApp(Application::APP_ID)->setUser($uid);
+            $this->NotificationManager->markProcessed($notification);
+        }
+
+        return  new DataResponse($notificationNb);
     }
 
     /**

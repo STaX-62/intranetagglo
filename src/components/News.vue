@@ -1,59 +1,108 @@
 <template>
   <div id="news-frame">
     <div id="news-container" class="news-container">
-      <div v-bind:class="isAdmin ? 'news-header admin-view' : 'news-header'">
-        <h2 class="news-header-title">Actualités</h2>
-        <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
-        <button id="news-filtres">
-          <b-icon icon="filter"></b-icon>
-        </button>
-        <Filtres :minDate="minDate" />
-        <NewsAdd v-if="isAdmin" />
-      </div>
       <div id="news-row" class="news-row" :focus="newfocus">
-        <div class="news-wrapper" v-if="isAdmin">
-          <NewsCompAdmin
-            :id="'news'+index"
-            v-for="(n,index) in getNews"
-            :key="index"
-            :arrayid="index"
-            :news="news[index]"
-          />
+        <div class="news-alerts">
+          <div class="alert-header">
+            <h2 class="alert-header-title" style="border-top: solid 2px #0eb4ed;">
+              Alertes
+              <alert-admin-create v-if="isAdmin" />
+            </h2>
+          </div>
+          <div class="alert-wrapper">
+            <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
+              <alert :alert="alerts[index]" />
+            </div>
+            <div class="alert-empty" v-if="Empty_Alerts != ''">{{Empty_Alerts}}</div>
+          </div>
         </div>
-        <div class="news-wrapper" v-else>
-          <NewsComp
-            :id="'news'+index"
-            v-for="(n,index) in getNews"
-            :key="index"
-            :arrayid="index"
-            :news="news[index]"
-          />
+        <div class="news-block" v-if="isAdmin">
+          <div class="news-header">
+            <h2
+              class="news-header-title"
+              style="border-top: 2px solid var(--color-primary-category);"
+            >
+              Actualités
+              <news-admin-create />
+            </h2>
+            <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
+            <button id="news-filtres">
+              <b-icon icon="filter"></b-icon>
+            </button>
+            <NewsFiltrage :minDate="minDate" />
+          </div>
+          <div class="news-wrapper">
+            <news-admin
+              :id="'news'+index"
+              v-for="(n,index) in getNews"
+              :key="index"
+              :arrayid="index"
+              :news="news[index]"
+            />
+            <b-icon
+              class="news-return"
+              icon="arrow-return-left"
+              @click="closeNews()"
+              v-if="newfocus != ''"
+            ></b-icon>
+          </div>
+          <b-pagination
+            class="news-pagination"
+            v-model="currentNewsPage"
+            pills
+            :total-rows="rows"
+            :per-page="2"
+          ></b-pagination>
         </div>
-        <b-icon
-          class="news-return"
-          icon="arrow-return-left"
-          @click="closeNews()"
-          v-if="newfocus != ''"
-        ></b-icon>
+        <div class="news-block" v-else>
+          <div class="news-header">
+            <h2
+              class="news-header-title"
+              style="border-top: 2px solid var(--color-primary-category);"
+            >Actualités</h2>
+            <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
+            <button id="news-filtres">
+              <b-icon icon="filter"></b-icon>
+            </button>
+            <NewsFiltrage :minDate="minDate" />
+          </div>
+          <div class="news-wrapper">
+            <news-comp
+              :id="'news'+index"
+              v-for="(n,index) in getNews"
+              :key="index"
+              :arrayid="index"
+              :news="news[index]"
+            />
+            <b-icon
+              class="news-return"
+              icon="arrow-return-left"
+              @click="closeNews()"
+              v-if="newfocus != ''"
+            ></b-icon>
+          </div>
+          <b-pagination
+            class="news-pagination"
+            v-model="currentNewsPage"
+            pills
+            :total-rows="rows"
+            :per-page="2"
+          ></b-pagination>
+        </div>
       </div>
-      <b-pagination
-        class="news-pagination"
-        v-model="currentPage"
-        pills
-        :total-rows="rows"
-        :per-page="3"
-      ></b-pagination>
     </div>
     <Apps class="Apps" />
   </div>
 </template>
 
 <script>
-import NewsCompAdmin from './news/admin-news.comp'
-import NewsComp from './news/news.comp'
+import NewsAdmin from './news/NewsAdmin'
+import NewsComp from './news/NewsComp'
+import Alert from './news/Alert'
 import Apps from './Apps'
-import NewsAdd from './news/news-add.bdd'
-import Filtres from './news/news-filtres.comp.vue'
+import NewsAdminCreate from './news/NewsAdminCreate'
+import AlertAdminCreate from './news/AlertAdminCreate'
+import NewsFiltrage from './news/NewsFiltrage'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 
@@ -63,22 +112,29 @@ export default {
     msg: String
   },
   components: {
-    NewsCompAdmin,
+    NewsAdmin,
     NewsComp,
+    Alert,
     Apps,
-    NewsAdd,
-    Filtres
+    NewsAdminCreate,
+    AlertAdminCreate,
+    NewsFiltrage
   },
   watch: {
     updating: function (val) {
       if (val) {
-        var url = `apps/intranetagglo/news/${this.currentPage - 1}`
-        axios.post(generateUrl(url), { 'id': (this.currentPage - 1) * 3, 'search': this.search, 'categories': this.categoryfilter.join(';'), dateFilter: this.dateFilter }, { type: 'application/json' })
+        var url = `apps/intranetagglo/news/${this.currentNewsPage - 1}`
+        axios.post(generateUrl(url), { 'id': (this.currentNewsPage - 1) * this.newsperpage, 'limit': this.newsperpage, 'search': this.search, 'categories': this.categoryfilter.join(';'), dateFilter: this.dateFilter }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
             this.rows = response.data[1];
             this.minDate = response.data[2].time;
             this.$store.commit('setNewsUpdating', false)
+          })
+        url = `apps/intranetagglo/alerts`
+        axios.post(generateUrl(url), { 'search': this.search }, { type: 'application/json' })
+          .then((response) => {
+            this.alerts = response.data;
           })
       }
     },
@@ -88,7 +144,10 @@ export default {
       addNews: false,
       AddNewsModal: false,
       news: [],
-      page: 1,
+      alerts: [],
+      newsPage: 1,
+      alertsPage: 1,
+      newsperpage: 2,
       rows: 0,
       focus: "",
       timer: undefined,
@@ -97,7 +156,6 @@ export default {
   },
   computed: {
     newfocus() {
-      console.log('focus change : ' + this.$store.state.newsfocus)
       return this.$store.state.newsfocus;
     },
     updating() {
@@ -105,6 +163,12 @@ export default {
     },
     getNews() {
       return this.news
+    },
+    getAlerts() {
+      return this.alerts
+    },
+    Empty_Alerts() {
+      return this.alerts.length > 0 ? "" : "pas de nouvelle alerte"
     },
     isAdmin() {
       return this.$store.state.isAdmin
@@ -131,15 +195,15 @@ export default {
         return this.$store.state.datefilter
       },
     },
-    currentPage: {
+    currentNewsPage: {
       get() {
-        return this.page
+        return this.newsPage
       },
       set(value) {
-        this.page = value
+        this.newsPage = value
         this.$store.commit('setNewsUpdating', true)
       }
-    },
+    }
   },
   methods: {
     handleScroll() {
@@ -159,7 +223,7 @@ export default {
       })
     },
     closeNews() {
-      this.$store.commit('updateNewsFocus', 3)
+      this.$store.commit('updateNewsFocus', 2)
     }
   },
   mounted() {
@@ -176,12 +240,17 @@ export default {
     axios.get(generateUrl(`apps/intranetagglo/user`)).then(response => {
       this.$store.commit('setUser', response.data)
     })
-    var url = `apps/intranetagglo/news/${this.currentPage - 1}`
-    axios.post(generateUrl(url), { 'id': 0, 'search': this.search, 'categories': '', dateFilter: this.dateFilter }, { type: 'application/json' })
+    var url = `apps/intranetagglo/news/${this.currentNewsPage - 1}`
+    axios.post(generateUrl(url), { 'id': 0, 'limit': this.newsperpage, 'search': this.search, 'categories': '', dateFilter: this.dateFilter }, { type: 'application/json' })
       .then((response) => {
         this.news = response.data[0];
         this.rows = response.data[1];
         this.minDate = response.data[2].time;
+      })
+    url = `apps/intranetagglo/alerts`
+    axios.post(generateUrl(url), { 'search': this.search }, { type: 'application/json' })
+      .then((response) => {
+        this.news = response.data;
       })
   },
   destroyed() {
@@ -193,8 +262,50 @@ export default {
 
 
 <style scoped>
+.alert-header-title {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  color: var(--color-mode-contrast-1);
+  justify-content: center;
+  text-align: center;
+  background: url("../patterns/brilliant.png"), var(--color-mode-2);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
+    7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%);
+}
+
+.news-header,
+.alert-header {
+  display: flex;
+  height: 60px;
+}
+
+.news-alerts {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  z-index: 2;
+  flex: 0 0 32%;
+  margin-right: 1%;
+  background-color: #0eb4eda1 !important;
+  border-radius: 10px;
+}
+.alert-wrapper {
+  height: calc(100% - 62px);
+  overflow-y: auto;
+}
+
+.alert-empty {
+  color: var(--color-light);
+  text-align: center;
+  margin-top: 20px;
+}
+
 .searchbar {
-  flex: 0 0 61%;
+  flex: 0 0 39%;
   border-top-left-radius: 10px !important;
   border-bottom-left-radius: 10px !important;
   border: 2px solid var(--color-mode-4) !important;
@@ -207,17 +318,28 @@ export default {
   padding: 5px 15px !important;
   outline: none !important;
   color: #535d74 !important;
-  height: auto !important;
+  height: 50px !important;
   margin: 0 !important;
   font-size: 16px !important;
 }
 
-.admin-view .searchbar {
-  flex: 0 0 50%;
-}
 @media (max-width: 1100px) {
+  .news-alerts {
+    display: none;
+    margin: 0 2%;
+  }
+  .news-wrapper {
+    margin: 0 2%;
+  }
+  .news-pagination {
+    margin: 0 2%;
+  }
   .searchbar {
-    flex: 0 0 90%;
+    margin-left: 2% !important;
+  }
+  .alert-wrapper {
+    height: 100%;
+    overflow-y: auto;
   }
 }
 </style>

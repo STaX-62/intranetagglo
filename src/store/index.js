@@ -33,9 +33,8 @@ export default new Vuex.Store({
   mutations: {
     updateNewsFocus(state, value) {
       if (value == 0) state.newsfocus = 'left';
-      if (value == 1) state.newsfocus = 'center';
-      if (value == 2) state.newsfocus = 'right';
-      if (value == 3) state.newsfocus = '';
+      if (value == 1) state.newsfocus = 'right';
+      if (value == 2) state.newsfocus = '';
     },
     updateAdminMenus(state, adminMenus) {
       state.adminMenus = adminMenus;

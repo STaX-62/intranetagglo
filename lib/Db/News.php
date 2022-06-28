@@ -18,6 +18,7 @@ class News extends Entity implements JsonSerializable
     protected $groups;
     protected $link;
     protected $time;
+    protected $expiration;
     protected $visible;
     protected $expiration;
     protected $pinned;
@@ -35,6 +36,7 @@ class News extends Entity implements JsonSerializable
             'groups' => $this->groups,
             'link' => $this->link,
             'time' => $this->time,
+            'expiration' => $this->expiration,
             'visible' => $this->visible,
             'expiration' => $this->expiration,
             'pinned' => $this->pinned
