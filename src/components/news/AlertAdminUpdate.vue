@@ -53,6 +53,7 @@
         placeholder="Date d'expiration"
         value-as-date
       ></b-form-datepicker>
+      <b-form-invalid-feedback :state="validation">Veuillez re-valider la date d'expiration</b-form-invalid-feedback>
       <label for="text">Contenu de l'alerte</label>
       <VueTrix name="text" inputId="editor1" v-model="autocomplete.text" placeholder="..." />
       <template #modal-footer="{ ok }">
@@ -91,6 +92,9 @@ export default {
     shortdesccount() {
       return (190 - this.shortdesc.length)
     },
+    verification() {
+      return this.newexpiration != null
+    },
     getFormatedGroups: {
       get() {
         console.log(this.autocomplete)
@@ -111,16 +115,19 @@ export default {
       this.autocomplete = this.alert;
     },
     UpdateAlert() {
-      this.updateNews(this.autocomplete, this.newexpiration)
-      this.autocomplete = {
-        title: "",
-        subtitle: "",
-        text: "",
-        photo: null,
-        category: "",
-        groups: "",
-        link: "",
-        expiration: null
+      if (this.verification) {
+        this.updateNews(this.autocomplete, this.newexpiration)
+        this.autocomplete = {
+          title: "",
+          subtitle: "",
+          text: "",
+          photo: null,
+          category: "",
+          groups: "",
+          link: "",
+          expiration: null
+        }
+        this.newexpiration = null
       }
     },
     DeleteAlert() {
