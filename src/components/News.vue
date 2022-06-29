@@ -4,7 +4,7 @@
       <div id="news-row" class="news-row" :focus="newfocus">
         <div class="news-alerts">
           <div class="alert-header">
-            <h2 class="alert-header-title" style="border-top: solid 2px #0eb4ed;">
+            <h2 class="alert-header-title" style="border-top: solid 2px var(--color-secondary);">
               Alertes
               <alert-admin-create v-if="isAdmin" />
             </h2>
@@ -290,7 +290,7 @@ export default {
   z-index: 2;
   flex: 0 0 32%;
   margin-right: 1%;
-  background-color: #0eb4eda1 !important;
+  background-color: var(--color-secondary-transparency) !important;
   border-radius: 10px;
 }
 .alert-wrapper {

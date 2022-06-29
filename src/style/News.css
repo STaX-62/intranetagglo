@@ -139,7 +139,7 @@
     flex-wrap: wrap;
     position: relative;
     height: calc(100% - 99px);
-    background-color: #9ecd4399;
+    background-color: var(--color-primary-transparency);
     border-top-right-radius: 10px;
 }
 

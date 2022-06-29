@@ -17,22 +17,16 @@
 :root {
   /** primary **/
   --color-primary-intra: #9FC737;
-  --color-primary-contrast: #122200;
-  --color-primary-shade: #214B00;
   --color-primary-tint: #86AE19;
   --color-primary-category: #9ECD43;
+  --color-primary-transparency: #9ecd4399;
   /** secondary **/
   --color-secondary: #0eb4edff;
   --color-secondary-contrast: #001950;
   --color-secondary-shade: #003B7A;
   --color-secondary-tint: #008DD7;
   --color-secondary-category: #287dae;
-  /** tertiary **/
-  --color-tertiary: #FF5C54;
-  --color-tertiary-contrast: #590000;
-  --color-tertiary-shade: #670000;
-  --color-tertiary-tint: #D83737;
-  --color-tertiary-category: #F65757;
+  --color-secondary-transparency: #0eb4eda1;
   /** success **/
   --color-success: #2dd36f;
   --color-success-rgb: 45, 211, 111;
@@ -98,7 +92,7 @@
   --color-mode-5: #777;
   --color-mode-6: #e0e0e0;
   --color-mode-7: #f0f0f082;
-   --color-mode-shadow-1: rgb(0 0 0 / 20%);
+  --color-mode-shadow-1: rgb(0 0 0 / 20%);
   --color-mode-shadow-2: rgb(0 0 0 / 14%);
   --color-mode-shadow-3: rgb(0 0 0 / 12%);
   --color-mode-shadow-4: rgba(0, 0, 0, 0.66);

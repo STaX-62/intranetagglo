@@ -74,33 +74,10 @@ body {
     background: url("../patterns/cutcube.png");
 }
 
-#App[pattern="1"][variant="1"] {
-    background: url("../patterns/axiom-pattern.png"), var(--color-background-1);
+#App[variant="1"] {
+    background-color: var(--color-background-1);
 }
 
-#App[pattern="2"][variant="1"] {
-    background: url("../patterns/batthern.png"), var(--color-background-1);
-}
-
-#App[pattern="3"][variant="1"] {
-    background: url("../patterns/brick-wall-dark.png"), var(--color-background-1);
-}
-
-#App[pattern="4"][variant="1"] {
-    background: url("../patterns/brilliant.png"), var(--color-background-1);
-}
-
-#App[pattern="5"][variant="1"] {
-    background: url("../patterns/cartographer.png"), var(--color-background-1);
-}
-
-#App[pattern="6"][variant="1"] {
-    background: url("../patterns/cubes.png"), var(--color-background-1);
-}
-
-#App[pattern="7"][variant="1"] {
-    background: url("../patterns/cutcube.png"), var(--color-background-1);
-}
 
 #App[variant="2"] {
     background-color: var(--color-background-2);

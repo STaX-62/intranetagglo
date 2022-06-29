@@ -20,7 +20,6 @@ class News extends Entity implements JsonSerializable
     protected $time;
     protected $expiration;
     protected $visible;
-    protected $expiration;
     protected $pinned;
 
     public function jsonSerialize()
@@ -38,7 +37,6 @@ class News extends Entity implements JsonSerializable
             'time' => $this->time,
             'expiration' => $this->expiration,
             'visible' => $this->visible,
-            'expiration' => $this->expiration,
             'pinned' => $this->pinned
         ];
     }
