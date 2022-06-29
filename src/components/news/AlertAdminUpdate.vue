@@ -53,7 +53,7 @@
         placeholder="Date d'expiration"
         value-as-date
       ></b-form-datepicker>
-      <b-form-invalid-feedback :state="validation">Veuillez re-valider la date d'expiration</b-form-invalid-feedback>
+      <b-form-invalid-feedback :state="verification">Veuillez re-valider la date d'expiration</b-form-invalid-feedback>
       <label for="text">Contenu de l'alerte</label>
       <VueTrix name="text" inputId="editor1" v-model="autocomplete.text" placeholder="..." />
       <template #modal-footer="{ ok }">
