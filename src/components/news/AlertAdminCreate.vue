@@ -54,16 +54,13 @@
         hide-header="true"
         :min="minDate"
         :initial-date="minDate"
+        :state="verification"
         placeholder="Date d'expiration"
         value-as-date
       ></b-form-datepicker>
+      <b-form-invalid-feedback :state="verification">Veuillez valider une date d'expiration</b-form-invalid-feedback>
       <label for="text">Contenu de l'alerte</label>
-      <VueTrix
-        name="text"
-        inputId="editor1"
-        v-model="news.text"
-        placeholder="..."
-      />
+      <VueTrix name="text" inputId="editor1" v-model="news.text" placeholder="..." />
       <template #modal-footer="{ ok }">
         <b-button size="md" variant="success" @click="ok()">Ajouter</b-button>
       </template>
@@ -95,6 +92,9 @@ export default {
     },
     shortdesccount() {
       return (190 - this.shortdesc.length)
+    },
+    verification() {
+      return this.news.expiration != null
     },
   },
   methods: {

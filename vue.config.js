@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 
 module.exports = {
     pages: {
-        intranetagglo331: {
+        intranetagglo332: {
             entry: 'src/main.js',
         },
         'intranetagglo-dashboard': 'src/dashboard.js'

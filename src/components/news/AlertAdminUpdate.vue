@@ -49,6 +49,7 @@
         locale="fr-FR"
         hide-header="true"
         :min="minDate"
+        :state="verification"
         :initial-date="initialDate"
         placeholder="Date d'expiration"
         value-as-date
