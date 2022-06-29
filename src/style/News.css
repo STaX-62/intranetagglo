@@ -538,6 +538,7 @@ trix-editor.trix-content {
     font-size: 15px;
     text-overflow: ellipsis;
     margin: 5px;
+    word-break: break-word;
 }
 
 .news-textbox-block[img="no"] .news-description {

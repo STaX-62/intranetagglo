@@ -23,7 +23,7 @@
         <circle cx="11.2826" cy="11.5007" r="8" fill="#919191" />
       </svg>
     </div>
-    <p style="color: var(--color-mode-contrast-4);" v-html="alert.text"></p>
+    <p style="color: var(--color-mode-contrast-4);word-break: break-word;" v-html="alert.text"></p>
     <div class="expiration-block">
       <div class="expiration-inner">
         <div class="expiration-date">Expire dans {{ getFormatedDate }}</div>
