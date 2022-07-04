@@ -666,7 +666,7 @@ trix-editor.trix-content {
 
 
 #App:not([isonsite]) .news-return {
-    right: 2.5%;
+    right: 0;
 }
 
 #App:not([isonsite]) .searchbar {
@@ -678,7 +678,7 @@ trix-editor.trix-content {
 }
 
 #App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-return {
-    right: calc(2.5% + 270px);
+    right: 0;
 }
 
 @media (max-width: 780px) {
