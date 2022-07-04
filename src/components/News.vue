@@ -342,4 +342,9 @@ export default {
     overflow-y: auto;
   }
 }
+@media (max-width: 780px) {
+  .searchbar {
+    margin-left: 0 !important;
+  }
+}
 </style>
