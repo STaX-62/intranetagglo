@@ -47,40 +47,40 @@ body {
 }
 
 #App[pattern="1"] {
-    background: url("../patterns/axiom-pattern.png");
+    --intra-background-image: url("../patterns/axiom-pattern.png");
 }
 
 #App[pattern="2"] {
-    background: url("../patterns/batthern.png");
+    --intra-background-image: url("../patterns/batthern.png");
 }
 
 #App[pattern="3"] {
-    background: url("../patterns/brick-wall-dark.png");
+    --intra-background-image: url("../patterns/brick-wall-dark.png");
 }
 
 #App[pattern="4"] {
-    background: url("../patterns/brilliant.png");
+    --intra-background-image: url("../patterns/bright-squares.png");
 }
 
 #App[pattern="5"] {
-    background: url("../patterns/cartographer.png");
+    --intra-background-image: url("../patterns/cartographer.png");
 }
 
 #App[pattern="6"] {
-    background: url("../patterns/cubes.png");
+    --intra-background-image: url("../patterns/cubes.png");
 }
 
 #App[pattern="7"] {
-    background: url("../patterns/cutcube.png");
+    --intra-background-image: url("../patterns/cutcube.png");
 }
 
 #App[variant="1"] {
-    background-color: var(--color-background-1);
+    background: var(--intra-background-image), var(--color-background-1);
 }
 
 
 #App[variant="2"] {
-    background-color: var(--color-background-2);
+    background: var(--intra-background-image), var(--color-background-2);
 }
 
 #App.dark .searchbar {

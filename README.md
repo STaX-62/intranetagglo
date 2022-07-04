@@ -14,7 +14,7 @@ sudo chown nextcloud-user:nextcloud-user -R intranetagglo
 sudo chown nextcloud-user:nextcloud-user -R intranetagglo/*
 ```
 
-## Building the app
+## Développement
 
 ```
 npm install

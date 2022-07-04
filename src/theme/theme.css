@@ -72,18 +72,9 @@
 
   /** lightmode **/
   --color-background-1: linear-gradient(to right top,
-      #9fc737ff,
-      #91c549ff,
-      #82c35bff,
-      #74c16eff,
-      #65bf80ff,
-      #57bd92ff,
-      #48bca4ff,
-      #3abab6ff,
-      #2bb8c8ff,
-      #1db6dbff,
-      #0eb4edff,
-      #00b2ffff);
+      #BBE9FF,
+      #DDF4FF,
+      #EEFAFF,);
   --color-background-2: #eeeeee;
   --color-mode-1: #eeeeee;
   --color-mode-2: #f6f9fc;
@@ -106,18 +97,9 @@
 #App.dark {
   /** darkmode **/
   --color-background-1: linear-gradient(to right top,
-      #2F3136,
-      #2C3D47,
-      #294957,
-      #265568,
-      #236179,
-      #206D89,
-      #1D789A,
-      #1A84AA,
-      #1790BB,
-      #149CCC,
-      #11A8DC,
-      #0EB4ED);
+      #004261,
+      #00354D,
+      #00283A);
   --color-background-2: #202225;
   --color-mode-1: #27282b;
   --color-mode-2: #2f3136;

@@ -669,6 +669,10 @@ trix-editor.trix-content {
     right: 2.5%;
 }
 
+#App:not([isonsite]) .searchbar {
+    flex: 0 0 27% !important;
+}
+
 #App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-wrapper {
     width: calc(95% - 270px);
 }
