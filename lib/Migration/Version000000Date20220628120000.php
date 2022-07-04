@@ -52,10 +52,12 @@ class Version000000Date20220628120000 extends SimpleMigrationStep
                 'default' => 0,
             ]);
             $table->addColumn('visible', 'boolean', [
-                'default' => false
+                'default' => false,
+                'notnull' => false,
             ]);
             $table->addColumn('pinned', 'boolean', [
-                'default' => false
+                'default' => false,
+                'notnull' => false,
             ]);
             $table->addColumn('link', 'string', [
                 'default' => ''
