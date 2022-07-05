@@ -133,6 +133,20 @@ body {
     z-index: 100;
 }
 
+.helpintra {
+    display: block;
+    font-size: 30px;
+    margin-bottom: 8px;
+    margin-right: 10px;
+    padding: 4px;
+    color: var(--color-mode-contrast-1);
+    background: var(--color-mode-2);
+    border-radius: 20px;
+    transition: 1s;
+    outline: none;
+    z-index: 100;
+}
+
 .cog:hover {
     animation: 1s rotate;
 }
@@ -220,7 +234,7 @@ body {
     align-items: center;
     margin: auto;
     right: 0;
-    width: 118px;
+    width: 154px;
     height: 88px;
     z-index: 300;
 }
@@ -231,8 +245,8 @@ body {
     display: flex;
     align-items: center;
     margin: auto;
-    right: 25px;
-    width: 95px;
+    right: 20px;
+    width: 137px;
     height: 34px;
     margin-bottom: 8px;
     border-radius: 15px;
@@ -389,6 +403,10 @@ input[type="checkbox"].checkbox+label::before {
     }
 
     .cog {
+        margin-right: 5px;
+    }
+
+    .helpintra {
         margin-right: 5px;
     }
 
