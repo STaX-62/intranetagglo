@@ -3,7 +3,7 @@
     <div
       id="apps-container"
       class="apps-container"
-      data-intro="'retrouver également les applications les plus utiles dans cette section'"
+      data-intro="retrouver également les applications les plus utiles dans cette section"
     >
       <h2 class="apps-header">
         Applications
