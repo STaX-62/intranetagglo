@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     Intro() {
-      this.$introJs.start()
+      this.$introJs.refresh().start()
     }
   },
   watch: {
