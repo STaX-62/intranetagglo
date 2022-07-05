@@ -742,21 +742,19 @@ trix-editor.trix-content {
             "Alertes";
     }
 
-    .Settings:not(.hidden)+div .news-alerts,
+    .Settings:not(.hidden)+div+div .news-alerts,
     .news-row[focus="right"] .news-alerts,
     .news-row[focus="left"] .news-alerts {
         display: none !important;
     }
 
-    .Settings:not(.hidden)+div .news-row,
+    .Settings:not(.hidden)+div+div .news-row {
+        grid-auto-rows: calc(100% - 270px) !important;
+    }
+
     .news-row[focus="right"],
     .news-row[focus="left"] {
-        display: grid;
-        grid-template-columns: 100%;
-        grid-auto-rows: calc(100% - 270px);
-        grid-template-areas:
-            "Actualites"
-            "Alertes";
+        grid-auto-rows: 100%;
     }
 
 
