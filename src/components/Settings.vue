@@ -6,13 +6,13 @@
       <div class="settings-block">
         <h5 class="settings-label">motifs du fond</h5>
         <select id="pattern-select" class="settings-pattern-select">
-          <option value="1">modele 1</option>
-          <option value="2">modele 2</option>
-          <option value="3">modele 3</option>
-          <option value="4">modele 4</option>
-          <option value="5">modele 5</option>
-          <option value="6">modele 6</option>
-          <option value="7">modele 7</option>
+          <option value="1">axiome</option>
+          <option value="2">carrelé</option>
+          <option value="3">briques</option>
+          <option value="4">carrés</option>
+          <option value="5">reliefs</option>
+          <option value="6">cubes</option>
+          <option value="7">cubes coupés</option>
         </select>
         <h5 class="settings-label">couleur du fond</h5>
         <select id="variant-select" class="settings-pattern-select">

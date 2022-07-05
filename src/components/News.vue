@@ -2,7 +2,7 @@
   <div id="news-frame">
     <div id="news-container" class="news-container">
       <div id="news-row" class="news-row" :focus="newfocus">
-        <div class="news-alerts">
+        <div class="news-alerts" v-intro="'Ici vous seront partagé les informations temporaires'">
           <div class="alert-header">
             <h2 class="alert-header-title" style="border-top: solid 2px var(--color-secondary);">
               Alertes
@@ -16,7 +16,7 @@
             <div class="alert-empty" v-if="Empty_Alerts != ''">{{Empty_Alerts}}</div>
           </div>
         </div>
-        <div class="news-block" v-if="isAdmin">
+        <div class="news-block" v-if="isAdmin" v-intro="'Ici vous seront partagé les actualités'">
           <div class="news-header">
             <h2
               class="news-header-title"
@@ -25,8 +25,14 @@
               Actualités
               <news-admin-create />
             </h2>
-            <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
-            <button id="news-filtres">
+            <input
+              type="text"
+              class="searchbar"
+              v-model="search"
+              placeholder="Rechercher.."
+              v-intro="'Vous pouvez rechercher des actualités et alertes'"
+            />
+            <button id="news-filtres" v-intro="'ainsi qu\'utiliser divers filtres ici'">
               <b-icon icon="filter"></b-icon>
             </button>
             <NewsFiltrage :minDate="minDate" />

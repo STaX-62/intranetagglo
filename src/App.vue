@@ -9,6 +9,7 @@
     <div id="settings-box" class="settings-box hidden">
       <b-icon id="cog" name="cog" class="cog" icon="gear"></b-icon>
       <label id="cog-label" for="cog" style="position:absolute;">Paramètres</label>
+      <b-icon class="helpintra" icon="info-circle" @click="Intro()"></b-icon>
       <input type="checkbox" class="checkbox" id="checkbox" v-model="darkmode" />
       <label for="checkbox" class="label">
         <b-icon icon="moon" style="color: #f1c40f;"></b-icon>
@@ -43,6 +44,11 @@ export default {
       patterns: '6',
       backgroundColor: '2',
       isOnSite: false
+    }
+  },
+  methods: {
+    Intro() {
+      this.$intro().start();
     }
   },
   watch: {

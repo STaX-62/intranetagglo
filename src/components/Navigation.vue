@@ -3,7 +3,7 @@
     <div class="sidenav-logo">
       <img v-bind:src="image" />
     </div>
-    <div class="sidenav-menu">
+    <div class="sidenav-menu" v-intro="'Retrouvez ici les liens utiles de la CA2BM'">
       <div class="section-block" v-for="(section,index) in MenuToDisplay" :key="'B'+index">
         <button class="section">
           <div class="section-icon">
@@ -44,7 +44,11 @@
     </div>
     <div class="Raccourcis">
       <menu-admin-overview v-if="isAdmin" />
-      <a class="Files" href="https://cloud.ca2bm.fr/index.php/f/1183804">
+      <a
+        class="Files"
+        href="https://cloud.ca2bm.fr/index.php/f/1183804"
+        v-intro="'Retrouvez ici Les documents partagés'"
+      >
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
       </a>

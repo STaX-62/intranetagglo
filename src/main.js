@@ -4,6 +4,9 @@ import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import VueIntro from 'vue-introjs'
+Vue.use(VueIntro)
+import 'intro.js/introjs.css';
 
 import './style/Apps.css';
 import './style/General.css';
