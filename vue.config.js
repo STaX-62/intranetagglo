@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
     pages: {
-        intranetagglo343: {
+        intranetagglo344: {
             entry: 'src/main.js',
         },
         'intranetagglo-dashboard': 'src/dashboard.js'

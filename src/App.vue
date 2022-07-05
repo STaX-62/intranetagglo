@@ -48,6 +48,7 @@ export default {
   },
   methods: {
     Intro() {
+      this.$intro().setOptions({ nextLabel: "Suivant", prevLabel: "Précédent", skipLabel: "Passer", doneLabel: "Terminer" })
       this.$intro().start();
     }
   },
