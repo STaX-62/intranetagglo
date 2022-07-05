@@ -1,8 +1,9 @@
 const { defineConfig } = require('@vue/cli-service')
+const webpack = require('webpack');
 
 module.exports = {
     pages: {
-        intranetagglo341: {
+        intranetagglo342: {
             entry: 'src/main.js',
         },
         'intranetagglo-dashboard': 'src/dashboard.js'
@@ -21,6 +22,11 @@ module.exports = {
         },
         optimization: {
             splitChunks: false
-        }
+        },
+        plugins: [
+            new webpack.ProvidePlugin({
+                'introJs': ['intro.js']
+            })
+        ]
     }
 }
