@@ -6,8 +6,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import introJs from 'intro.js'
 
-Vue.prototype.$introJs = introJs().addStep({ title: "Tutoriel", intro: "Ce tutoriel permet de situer les parties importantes de l'intranet de la CA2BM" })
-  .setOptions({ nextLabel: "Suivant", prevLabel: "Précédent", skipLabel: "Passer", doneLabel: "Terminer" });
+Vue.prototype.$introJs = introJs().setOptions({ nextLabel: "Suivant", prevLabel: "Précédent", skipLabel: "Passer", doneLabel: "Terminer" });
 
 import 'intro.js/introjs.css';
 
