@@ -1,7 +1,7 @@
 <template>
   <div
     id="apps"
-    v-intro="'retrouver également les applications les plus utiles dans cette section'"
+    data-intro="'retrouver également les applications les plus utiles dans cette section'"
   >
     <div id="apps-container" class="apps-container">
       <h2 class="apps-header">
