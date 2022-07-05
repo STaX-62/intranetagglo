@@ -14,7 +14,6 @@ import './style/Apps.css';
 import './style/General.css';
 import './style/News.css';
 import './theme/theme.css';
-import vueConfig from '../vue.config'
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
