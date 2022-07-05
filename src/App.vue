@@ -48,6 +48,7 @@ export default {
   },
   methods: {
     Intro() {
+      this.$intro().setOptions({ nextLabel: "Suivant", prevLabel: "Précédent", skipLabel: "Passer", doneLabel: "Terminer" })
       this.$intro().start();
     }
   },
@@ -64,7 +65,6 @@ export default {
     }
   },
   mounted: function () {
-    this.$intro().setOptions({ nextLabel: "Suivant", prevLabel: "Précédent", skipLabel: "Passer", doneLabel: "Terminer" })
     axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => this.isOnSite = response.data)
 
     document.getElementById('cog').addEventListener("click", () => {
