@@ -62,7 +62,7 @@ export default {
   },
   data: function () {
     return {
-      image: '/nextcloud/apps/intranetagglo/img/LogoCA2BM.png',
+      image: '/apps/intranetagglo/img/LogoCA2BM.png',
       user: [],
       lastOpenedContainer: null,
       menuInBDD: [[], [], []]

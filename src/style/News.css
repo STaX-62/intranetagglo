@@ -153,8 +153,8 @@
     grid-template-areas: "NewsGrid Apps";
     justify-content: center;
     vertical-align: middle;
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* overflow-y: auto;
+    overflow-x: hidden; */
     width: 100%;
     height: 100%;
 
@@ -687,6 +687,7 @@ trix-editor.trix-content {
 @media (max-width: 780px) {
     .news-wrapper {
         display: block;
+        border-top-left-radius: 10px;
     }
 
     .news-title {
@@ -740,6 +741,24 @@ trix-editor.trix-content {
             "Actualites"
             "Alertes";
     }
+
+    .Settings:not(.hidden)+div .news-alerts,
+    .news-row[focus="right"],
+    .news-row[focus="left"] {
+        display: none !important;
+    }
+
+    .Settings:not(.hidden)+div .news-row,
+    .news-row[focus="right"],
+    .news-row[focus="left"] {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-auto-rows: calc(100% - 270px);
+        grid-template-areas:
+            "Actualites"
+            "Alertes";
+    }
+
 
     .searchbar {
         flex: 0 0 60% !important;
