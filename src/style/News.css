@@ -743,8 +743,8 @@ trix-editor.trix-content {
     }
 
     .Settings:not(.hidden)+div .news-alerts,
-    .news-row[focus="right"],
-    .news-row[focus="left"] {
+    .news-row[focus="right"] .news-alerts,
+    .news-row[focus="left"] .news-alerts {
         display: none !important;
     }
 
