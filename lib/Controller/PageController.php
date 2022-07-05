@@ -56,7 +56,7 @@ class PageController extends Controller
 		return new DataResponse($this->groupmanager->isInGroup($user->getUID(), 'intranet-admin') || $this->groupmanager->isInGroup($user->getUID(), 'admin'));
 	}
 
-	
+
 
 	/**
 	 * @NoAdminRequired
@@ -72,7 +72,7 @@ class PageController extends Controller
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
 
-		return str_starts_with($ip, '10.');
+		return str_starts_with($ip, '192.') || str_starts_with($ip, '10.');
 	}
 
 
