@@ -6,6 +6,7 @@
           class="news-alerts"
           data-intro="Ici vous retrouverez les informations/alertes temporaires, celle-ci expireront au bout d'une certaine période"
           data-title="Alertes"
+          data-step="3"
         >
           <div class="alert-header">
             <h2 class="alert-header-title" style="border-top: solid 2px var(--color-secondary);">
@@ -26,6 +27,7 @@
           data-intro="Dans cette section vous seront partagé les actualités de la CA2BM, 
           cliquez simplement sur une actualité pour avoir agrandir ou être redirigé vers le contenu"
           data-title="Actualités"
+          data-step="4"
         >
           <div class="news-header">
             <h2
@@ -42,11 +44,13 @@
               placeholder="Rechercher.."
               data-intro="Vous pouvez rechercher des actualités et alertes"
               data-title="Barre de Recherche"
+              data-step="5"
             />
             <button
               id="news-filtres"
               data-intro="ainsi que filtrer les actualités par date de parution ou catégorie"
               data-title="Filtres"
+              data-step="6"
             >
               <b-icon icon="filter"></b-icon>
             </button>

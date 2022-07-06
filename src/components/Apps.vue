@@ -3,8 +3,9 @@
     <div
       id="apps-container"
       class="apps-container"
-      data-intro="retrouver également les applications les plus utiles dans cette section"
-      data-title="Tutoriel"
+      data-intro="Retrouvez également les applications les plus utiles dans cette section"
+      data-title="Applications"
+      data-step="7"
     >
       <h2 class="apps-header">
         Applications

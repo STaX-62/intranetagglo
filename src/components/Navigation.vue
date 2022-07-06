@@ -7,6 +7,7 @@
       class="sidenav-menu"
       data-intro="Les liens utiles adapter à vos besoins trier en fonction de votre service"
       data-title="Menu de Navigation"
+      data-step="1"
     >
       <div class="section-block" v-for="(section,index) in MenuToDisplay" :key="'B'+index">
         <button class="section">
@@ -53,6 +54,7 @@
         href="https://cloud.ca2bm.fr/index.php/f/1183804"
         data-intro="Retrouvez ici le dossier des documents partagés pour tous les services"
         data-title="Documents Partagés"
+        data-step="2"
       >
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
