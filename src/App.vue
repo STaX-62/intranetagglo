@@ -30,6 +30,7 @@ import Settings from '@/components/Settings.vue'
 import News from '@/components/News.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import moment from '@nextcloud/moment'
 
 export default {
   name: 'App',
@@ -46,11 +47,6 @@ export default {
       isOnSite: false
     }
   },
-  userlastlogin: function (val) {
-    if (val) {
-      console.log("userlastlogin:" + val)
-    }
-  },
   computed: {
     userlastlogin() {
       return this.$store.state.userlastlogin
@@ -58,10 +54,17 @@ export default {
   },
   methods: {
     Intro() {
-      this.$introJs.refresh().start()
+      this.$introJs.start()
     }
   },
   watch: {
+    userlastlogin: function (val) {
+      if (val) {
+        var uploaddate = moment("2022-07-18").utc();
+        if (uploaddate > val)
+          this.$introJs.start()
+      }
+    },
     darkmode: function (val) {
       if (val) {
         localStorage.setItem('intranetagglo_color_scheme', 'dark');
