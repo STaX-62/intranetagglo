@@ -3,11 +3,7 @@
     <div class="sidenav-logo">
       <img v-bind:src="image" />
     </div>
-    <div
-      class="sidenav-menu"
-      data-intro="Les liens utiles adapter à vos besoins trier en fonction de votre service"
-      data-title="Menu de Navigation"
-    >
+    <div class="sidenav-menu">
       <div class="section-block" v-for="(section,index) in MenuToDisplay" :key="'B'+index">
         <button class="section">
           <div class="section-icon">
@@ -48,12 +44,7 @@
     </div>
     <div class="Raccourcis">
       <menu-admin-overview v-if="isAdmin" />
-      <a
-        class="Files"
-        href="https://cloud.ca2bm.fr/index.php/f/1183804"
-        data-intro="Retrouvez ici le dossier des documents partagés pour tous les services"
-        data-title="Documents Partagés"
-      >
+      <a class="Files" href="https://cloud.ca2bm.fr/index.php/f/1183804">
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
       </a>
