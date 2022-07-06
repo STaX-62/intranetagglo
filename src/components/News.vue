@@ -4,8 +4,8 @@
       <div id="news-row" class="news-row" :focus="newfocus">
         <div
           class="news-alerts"
-          data-intro="Ici vous seront partagé les informations temporaires"
-          data-title="Tutoriel"
+          data-intro="Ici vous retrouverez les informations/alertes temporaires, celle-ci expireront au bout d'une certaine période"
+          data-title="Alertes"
         >
           <div class="alert-header">
             <h2 class="alert-header-title" style="border-top: solid 2px var(--color-secondary);">
@@ -20,7 +20,13 @@
             <div class="alert-empty" v-if="Empty_Alerts != ''">{{Empty_Alerts}}</div>
           </div>
         </div>
-        <div class="news-block" v-if="isAdmin" data-intro="Ici vous seront partagé les actualités">
+        <div
+          class="news-block"
+          v-if="isAdmin"
+          data-intro="Dans cette section vous seront partagé les actualités de la CA2BM, 
+          cliquez simplement sur une actualité pour avoir agrandir ou être redirigé vers le contenu"
+          data-title="Actualités"
+        >
           <div class="news-header">
             <h2
               class="news-header-title"
@@ -35,12 +41,12 @@
               v-model="search"
               placeholder="Rechercher.."
               data-intro="Vous pouvez rechercher des actualités et alertes"
-              data-title="Tutoriel"
+              data-title="Barre de Recherche"
             />
             <button
               id="news-filtres"
-              data-intro="ainsi qu'utiliser divers filtres ici"
-              data-title="Tutoriel"
+              data-intro="ainsi que filtrer les actualités par date de parution ou catégorie"
+              data-title="Filtres"
             >
               <b-icon icon="filter"></b-icon>
             </button>

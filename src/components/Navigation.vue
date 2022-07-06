@@ -5,8 +5,8 @@
     </div>
     <div
       class="sidenav-menu"
-      data-intro="Retrouvez ici les liens utiles de la CA2BM"
-      data-title="Tutoriel"
+      data-intro="Les liens utiles adapter à vos besoins trier en fonction de votre service"
+      data-title="Menu de Navigation"
     >
       <div class="section-block" v-for="(section,index) in MenuToDisplay" :key="'B'+index">
         <button class="section">
@@ -51,8 +51,8 @@
       <a
         class="Files"
         href="https://cloud.ca2bm.fr/index.php/f/1183804"
-        data-intro="Retrouvez ici Les documents partagés"
-        data-title="Tutoriel"
+        data-intro="Retrouvez ici le dossier des documents partagés pour tous les services"
+        data-title="Documents Partagés"
       >
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
