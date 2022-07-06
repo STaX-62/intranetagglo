@@ -4,7 +4,11 @@ import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
-import './plugins/introJs'
+import introJs from 'intro.js'
+
+Vue.prototype.$introJs = introJs().setOptions({ nextLabel: "Suivant", prevLabel: "Précédent", skipLabel: "Passer", doneLabel: "Terminer" });
+
+import 'intro.js/introjs.css';
 
 import './style/Apps.css';
 import './style/General.css';
