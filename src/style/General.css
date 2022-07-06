@@ -18,6 +18,10 @@
     }
 }
 
+.introjs-tooltiptext {
+    font-weight: 600;
+}
+
 body {
     overflow: hidden;
 }

@@ -2,7 +2,11 @@
   <div id="news-frame">
     <div id="news-container" class="news-container">
       <div id="news-row" class="news-row" :focus="newfocus">
-        <div class="news-alerts" data-intro="Ici vous seront partagé les informations temporaires">
+        <div
+          class="news-alerts"
+          data-intro="Ici vous seront partagé les informations temporaires"
+          data-title="Tutoriel"
+        >
           <div class="alert-header">
             <h2 class="alert-header-title" style="border-top: solid 2px var(--color-secondary);">
               Alertes
@@ -31,8 +35,13 @@
               v-model="search"
               placeholder="Rechercher.."
               data-intro="Vous pouvez rechercher des actualités et alertes"
+              data-title="Tutoriel"
             />
-            <button id="news-filtres" data-intro="ainsi qu'utiliser divers filtres ici">
+            <button
+              id="news-filtres"
+              data-intro="ainsi qu'utiliser divers filtres ici"
+              data-title="Tutoriel"
+            >
               <b-icon icon="filter"></b-icon>
             </button>
             <NewsFiltrage :minDate="minDate" />
