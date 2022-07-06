@@ -10,7 +10,6 @@ Vue.prototype.$introJs = introJs()
   .setOptions({
     nextLabel: "Suivant",
     prevLabel: "Précédent",
-    skipLabel: "Passer",
     doneLabel: "Terminer",
     showBullets: false,
     showProgress: true,
