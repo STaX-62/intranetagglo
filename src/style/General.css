@@ -201,7 +201,7 @@ body {
     z-index: 100;
 }
 
-.Navbar {
+.sidenav {
     grid-area: Navbar;
 }
 
@@ -350,10 +350,6 @@ input[type="checkbox"].checkbox+label::before {
     display: block;
 }
 
-#App:not([isonsite]) .Navbar {
-    display: none;
-}
-
 .avatardiv img {
     vertical-align: unset;
 }
@@ -385,7 +381,7 @@ input[type="checkbox"].checkbox+label::before {
         font-size: 2rem;
     }
 
-    .Navbar {
+    .sidenav {
         display: none !important;
     }
 

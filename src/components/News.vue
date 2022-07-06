@@ -116,7 +116,7 @@
         </div>
       </div>
     </div>
-    <Apps class="Apps" />
+    <Apps class="Apps" v-if="location" />
   </div>
 </template>
 
@@ -197,6 +197,9 @@ export default {
     },
     isAdmin() {
       return this.$store.state.isAdmin
+    },
+    location() {
+      return this.$store.state.location
     },
     search: {
       get() {

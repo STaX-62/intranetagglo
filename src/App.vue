@@ -18,7 +18,7 @@
       </label>
     </div>
     <Settings id="Settings" class="Settings hidden" />
-    <Navigation class="Navbar" />
+    <Navigation class="Navbar" v-if="isOnSite" />
     <News />
   </div>
 </template>
@@ -28,7 +28,6 @@
 import Navigation from '@/components/Navigation.vue'
 import Settings from '@/components/Settings.vue'
 import News from '@/components/News.vue'
-import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import moment from '@nextcloud/moment'
 
@@ -81,7 +80,10 @@ export default {
     }
   },
   mounted: function () {
-    axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => this.isOnSite = response.data)
+    this.$axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => {
+      this.isOnSite = response.data
+      this.$store.commit('setLocation', this.isOnSite)
+    })
 
     document.getElementById('cog').addEventListener("click", () => {
       document.getElementById('Settings').classList.toggle('hidden')

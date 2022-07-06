@@ -11,6 +11,7 @@ export default new Vuex.Store({
     username: "",
     usergroups: [],
     userlastlogin: undefined,
+    location: false,
     isAdmin: false,
     groupsoptions: [],
     categoryoptions: [],
@@ -59,6 +60,9 @@ export default new Vuex.Store({
       state.username = user[0]
       state.usergroups = user[1]
       state.userlastlogin = user[2]
+    },
+    setLocation(state, value) {
+      state.location = value;
     },
     setDarmode(state, value) {
       state.darkmode = value;

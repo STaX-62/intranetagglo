@@ -130,10 +130,6 @@
     }
 }
 
-#App:not([isonsite]) #apps {
-    display: none;
-}
-
 @media (max-width: 780px) {
     #apps {
         display: none;
