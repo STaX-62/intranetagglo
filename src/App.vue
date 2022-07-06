@@ -62,7 +62,10 @@ export default {
       if (val) {
         var uploaddate = moment("2022-07-18").utc();
         if (uploaddate > val)
-          this.$introJs.start()
+          setTimeout(() => {
+            this.$introJs.start()
+          }, 3000)
+
       }
     },
     darkmode: function (val) {
