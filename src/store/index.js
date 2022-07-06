@@ -10,6 +10,7 @@ export default new Vuex.Store({
     search: "",
     username: "",
     usergroups: [],
+    userlastlogin: undefined,
     isAdmin: false,
     groupsoptions: [],
     categoryoptions: [],
@@ -57,6 +58,7 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.username = user[0]
       state.usergroups = user[1]
+      state.userlastlogin = user[2]
     },
     setDarmode(state, value) {
       state.darkmode = value;

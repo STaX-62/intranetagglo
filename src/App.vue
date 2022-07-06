@@ -46,6 +46,16 @@ export default {
       isOnSite: false
     }
   },
+  userlastlogin: function (val) {
+    if (val) {
+      console.log("userlastlogin:" + val)
+    }
+  },
+  computed: {
+    userlastlogin() {
+      return this.$store.state.userlastlogin
+    }
+  },
   methods: {
     Intro() {
       this.$introJs.refresh().start()
