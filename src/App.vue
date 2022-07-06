@@ -61,8 +61,9 @@ export default {
     userlastlogin: function (val) {
       if (val) {
         var uploaddate = moment("2022-07-18").utc();
-        if (uploaddate > val)
+        if (uploaddate > val && !localStorage.getItem('intranetagglo_firsttime'))
           setTimeout(() => {
+            localStorage.setItem('intranetagglo_firsttime', val);
             this.$introJs.start()
           }, 2000)
 

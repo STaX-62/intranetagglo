@@ -397,14 +397,6 @@ input[type="checkbox"].checkbox+label::before {
         display: none;
     }
 
-    .cog {
-        margin-right: 5px;
-    }
-
-    .helpintra {
-        margin-right: 5px;
-    }
-
     .Settings {
         position: absolute;
         width: 95%;
