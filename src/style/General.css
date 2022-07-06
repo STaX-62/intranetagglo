@@ -393,15 +393,6 @@ input[type="checkbox"].checkbox+label::before {
         display: block;
     }
 
-    .settings-box {
-        width: 95px;
-    }
-
-    .settings-box::before {
-        right: 8px;
-        width: 90px;
-    }
-
     #cog-label {
         display: none;
     }
