@@ -98,6 +98,10 @@
 }
 
 @media (max-width: 1350px) {
+    .tableappsupd .table-th {
+        padding: 0;
+    }
+
     .apps-title {
         line-height: 1.25;
     }

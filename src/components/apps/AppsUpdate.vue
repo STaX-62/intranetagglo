@@ -9,7 +9,7 @@
       style="justify-content:center"
     >
       <template #modal-title>Modification des raccourcis d'application :</template>
-      <b-table-simple>
+      <b-table-simple class="tableappsupd">
         <b-thead>
           <b-tr>
             <b-th>Titre</b-th>
