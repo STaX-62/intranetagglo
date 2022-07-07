@@ -21,18 +21,18 @@
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="(app,index) in UpdatedApps" :key="index">
+          <b-tr v-for="(app,index) in apps" :key="index">
             <b-th>{{app.title}}</b-th>
             <b-td>{{app.link}}</b-td>
             <b-td>{{app.icon}}</b-td>
             <b-td>{{app.groups}}</b-td>
             <b-td>
-              <button type="button" class="apps-update-button" @click="Modify(app,index)">
+              <button type="button" class="apps-update-button" @click="Modify(app)">
                 <b-icon class="sidebar-item-icon" variant="info" icon="pencil-square" />
               </button>
             </b-td>
             <b-td>
-              <button type="button" class="apps-del-button" @click="DeleteVerification(app,index)">
+              <button type="button" class="apps-del-button" @click="DeleteVerification(app)">
                 <b-icon class="sidebar-item-icon" variant="danger" icon="trash" />
               </button>
             </b-td>
@@ -40,7 +40,7 @@
         </b-tbody>
       </b-table-simple>
       <div style="width:100%;display:flex">
-        <button class="apps-add" @click="Create()">+</button>
+        <button class="apps-add" @click="this.updateapp = !this.updateapp">+</button>
       </div>
     </b-modal>
 
@@ -104,17 +104,27 @@ import { generateUrl } from '@nextcloud/router'
 
 export default {
   name: 'AppsUpdate',
+  watch: {
+    updating: function (val) {
+      if (val) {
+        axios.get(generateUrl(`apps/intranetagglo/apps`))
+          .then((response) => {
+            this.apps = response.data;
+            this.$store.commit('setAppsUpdating', false)
+          })
+      }
+    },
+  },
   computed: {
-    UpdatedApps() {
-      return this.apps;
+    updating() {
+      return this.$store.state.appsupdating
     },
     availableOptions() {
       return this.$store.state.groupsoptions.filter(opt => this.apptoupdate.groups.indexOf(opt) === -1)
     },
   },
   mounted() {
-    var url = `apps/intranetagglo/apps`
-    axios.get(generateUrl(url))
+    axios.get(generateUrl(`apps/intranetagglo/apps`))
       .then(response => (this.apps = response.data))
   },
   methods: {
@@ -127,21 +137,22 @@ export default {
       })
     },
     Save() {
-      if (this.apptoupdate.id == null) {
-        this.apptoupdate.groups = this.apptoupdate.groups.join(';')
-        this.apps.push(this.apptoupdate)
-        this.createApps(this.apps[this.arrayindex])
-      }
-      else {
-        this.apptoupdate.groups = this.apptoupdate.groups.join(';')
-        this.apps[this.arrayindex].title = this.apptoupdate.title;
-        this.apps[this.arrayindex].icon = this.apptoupdate.icon;
-        this.apps[this.arrayindex].link = this.apptoupdate.link;
-        this.apps[this.arrayindex].groups = this.apptoupdate.groups;
-        this.updateApps(this.apps[this.arrayindex])
+      this.apptoupdate.groups = this.apptoupdate.groups.join(';')
+
+      if (this.apptoupdate.id == null)
+        this.createApps(this.apptoupdate);
+      else
+        this.updateApps(this.apptoupdate);
+
+      this.apptoupdate = {
+        id: null,
+        title: "",
+        link: "",
+        icon: "",
+        groups: []
       }
     },
-    DeleteVerification(app, index) {
+    DeleteVerification(app) {
       this.$bvModal.msgBoxConfirm(`Êtes-vous sûr de vouloir supprimer cette application : ${app.title}`, {
         title: 'Confirmation',
         id: 'appmodal3',
@@ -156,28 +167,16 @@ export default {
       })
         .then(value => {
           if (value) {
-            this.apps.splice(index, 1)
             this.deleteApps(app.id, app.title)
           }
         })
     },
-    Create() {
-      this.arrayindex = this.apps.length;
-      this.apptoupdate.id = null;
-      this.apptoupdate.title = "";
-      this.apptoupdate.link = "";
-      this.apptoupdate.icon = "";
-      this.apptoupdate.groups = [];
-      this.updateapp = !this.updateapp;
-    },
-    Modify(apps, index) {
-      this.arrayindex = index;
+    Modify(apps) {
       this.apptoupdate.id = apps.id;
       this.apptoupdate.title = apps.title;
       this.apptoupdate.link = apps.link;
       this.apptoupdate.icon = apps.icon;
       this.apptoupdate.groups = apps.groups.split(';');
-
       this.updateapp = !this.updateapp;
     },
     async createApps(apps) {
@@ -212,11 +211,9 @@ export default {
   },
   data: function () {
     return {
-      LastModifiedID: null,
       appsmodal: false,
       updateapp: false,
       apps: [],
-      arrayindex: null,
       apptoupdate: {
         id: null,
         title: "",

@@ -111,7 +111,7 @@ class NewsMapper extends QBMapper
         }
         if ($searchid != '') {
             $qb2->andWhere('q.id = :searchid')
-                ->setParameter('searchid', intval($searchid));
+                ->setParameter('searchid', $searchid);
         }
         $qb2->addOrderBy('q.pinned', 'DESC')
             ->addOrderBy('q.time', 'DESC')
