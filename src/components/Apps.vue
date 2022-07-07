@@ -45,7 +45,7 @@ export default {
   watch: {
     updating: function (val) {
       if (val) {
-        var url = `apps/intranetagglo${'/apps'}`
+        var url = `apps/intranetagglo/appsG`
         axios.get(generateUrl(url))
           .then((response) => {
             this.apps = response.data;
@@ -80,7 +80,7 @@ export default {
     }
   },
   mounted() {
-    axios.get(generateUrl(`apps/intranetagglo${'/appsG'}`))
+    axios.get(generateUrl(`apps/intranetagglo/appsG`))
       .then(response => (this.apps = response.data))
   },
   data: function () {

@@ -40,7 +40,7 @@
         </b-tbody>
       </b-table-simple>
       <div style="width:100%;display:flex">
-        <button class="apps-add" @click="this.updateapp = !this.updateapp">+</button>
+        <button class="apps-add" @click="updateapp = !updateapp">+</button>
       </div>
     </b-modal>
 
