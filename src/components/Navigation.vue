@@ -10,7 +10,10 @@
       data-step="1"
     >
       <div class="section-block" v-for="(section,index) in MenuToDisplay" :key="'B'+index">
-        <button class="section">
+        <button
+          class="section"
+          @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))"
+        >
           <div class="section-icon">
             <b-icon v-bind:icon="section.icon"></b-icon>
           </div>
