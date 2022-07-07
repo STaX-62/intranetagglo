@@ -98,7 +98,9 @@
 }
 
 @media (max-width: 1350px) {
-    .tableappsupd .table-th {
+
+    .tableappsupd th,
+    .tableappsupd td {
         padding: 0;
     }
 
