@@ -58,7 +58,7 @@ class NewsService
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
-			$qb = $this->mapper->findAll($firstresult, $limit, $search, '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
+			$qb = $this->mapper->findAll($firstresult, $limit, '', '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
 		} else {
 			$qb = $this->mapper->findAll($firstresult, $limit, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
 		}
@@ -87,7 +87,7 @@ class NewsService
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
-			$qb = $this->mapper->findByGroups($firstresult, $limit, $groups, $search, '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
+			$qb = $this->mapper->findByGroups($firstresult, $limit, $groups, '', '', substr($search, 1), $dateFilter['start'], $dateFilter['end']);
 		} else {
 			$qb = $this->mapper->findByGroups($firstresult, $limit, $groups, $search, $categories, '', $dateFilter['start'], $dateFilter['end']);
 		}
