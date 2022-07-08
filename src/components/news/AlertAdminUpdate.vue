@@ -147,6 +147,7 @@ export default {
         .then(value => {
           if (value) {
             this.deleteNews()
+            this.modal = !this.modal;
           }
         })
     },
