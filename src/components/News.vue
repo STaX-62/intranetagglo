@@ -4,7 +4,7 @@
       <div id="news-row" class="news-row" :focus="newfocus">
         <div
           class="news-alerts"
-          data-intro="Ici vous retrouverez les informations/alertes temporaires, celle-ci expireront au bout d'une certaine période"
+          data-intro="Ici sont disponibles les informations/alertes temporaires, celles-ci expireront au bout d'une certaine période"
           data-title="Alertes"
           data-step="3"
         >

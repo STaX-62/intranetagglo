@@ -5,7 +5,7 @@
     </div>
     <div
       class="sidenav-menu"
-      data-intro="Les liens utiles adapter à vos besoins trier en fonction de votre service"
+      data-intro="Les liens utiles adaptés à vos besoins triés en fonction de votre service"
       data-title="Menu de Navigation"
       data-step="1"
     >
