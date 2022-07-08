@@ -73,6 +73,7 @@
 }
 
 .page-item .page-link {
+    color: var(--color-mode-contrast-1);
     font-size: 0.80rem !important;
     position: relative !important;
     display: block !important;

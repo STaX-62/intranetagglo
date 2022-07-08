@@ -73,6 +73,7 @@ class NewsController extends Controller
     public function index(int $id, int $limit, string $search, string $categories, array $dateFilter): DataResponse
     {
         $user = $this->session->getUser();
+        $this->removeNotifications();
         if ($this->isAdmin()) {
             return (new DataResponse($this->service->findAll($id, $limit, $search, $categories, $dateFilter)));
         }

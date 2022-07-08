@@ -82,7 +82,6 @@ class PageController extends Controller
 	 */
 	public function index()
 	{
-		// $this->newscontroller->removeNotifications();
 		return new TemplateResponse(Application::APP_ID, 'index');  // templates/index.php
 	}
 }

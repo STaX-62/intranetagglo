@@ -6,7 +6,7 @@
       <div class="settings-block">
         <h5 class="settings-label">motifs du fond</h5>
         <select id="pattern-select" class="settings-pattern-select">
-          <option value="1">axiome</option>
+          <option value="1">axiom pattern</option>
           <option value="2">carrelé</option>
           <option value="3">briques</option>
           <option value="4">carrés</option>
