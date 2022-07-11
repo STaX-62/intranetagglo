@@ -218,7 +218,7 @@ export default {
         link: "",
         expiration: 0
       },
-      localredirection: falsed
+      localredirection: false
     }
   }
 }
