@@ -30,7 +30,7 @@
           :visible="visible"
           :imgs="news.photo"
           index="0"
-          @hide="this.visible = !this.visible"
+          @hide="visible = !visible"
         ></vue-easy-lightbox>
       </div>
       <div class="news-tagbox">
