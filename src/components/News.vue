@@ -25,7 +25,7 @@
           class="news-block"
           v-if="isAdmin"
           data-intro="Dans cette section vous seront partagé les actualités de la CA2BM, 
-          cliquez simplement sur une actualité pour avoir agrandir ou être redirigé vers le contenu"
+          cliquez simplement sur une actualité pour agrandir ou être redirigé vers le contenu"
           data-title="Actualités"
           data-step="4"
         >

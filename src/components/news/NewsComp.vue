@@ -18,7 +18,20 @@
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
-        <img class="news-img" v-bind:src="news.photo" v-if="news.photo != ''" />
+        <img
+          class="news-img"
+          v-bind:src="news.photo"
+          v-if="news.photo != ''"
+          @click="visible = !visible"
+        />
+        <vue-easy-lightbox
+          escDisabled
+          moveDisabled
+          :visible="visible"
+          :imgs="news.photo"
+          index="0"
+          @hide="this.visible = !this.visible"
+        ></vue-easy-lightbox>
       </div>
       <div class="news-tagbox">
         <span class="news-tag" @click="addFilter(news.category)">{{ news.category }}</span>
@@ -96,6 +109,7 @@ export default {
       newscolor: '#00B2FF',
       focus: '',
       timer: undefined,
+      visible: false
     }
   }
 }
