@@ -6,6 +6,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import introJs from 'intro.js'
 import axios from '@nextcloud/axios'
+import VueEasyLightbox from 'vue-easy-lightbox'
+Vue.use(VueEasyLightbox)
 
 Vue.prototype.$introJs = introJs()
   .setOptions({
@@ -15,7 +17,7 @@ Vue.prototype.$introJs = introJs()
     showBullets: false,
     showProgress: true,
   });
-  
+
 Vue.prototype.$axios = axios;
 
 import 'intro.js/introjs.css';
