@@ -143,7 +143,7 @@ export default {
       if (this.link) {
         this.autocomplete.text = ""
       }
-      if (localredirection) {
+      if (this.localredirection) {
         this.link = "local"
       }
       this.autocomplete.expiration = 0

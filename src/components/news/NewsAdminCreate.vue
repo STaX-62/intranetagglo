@@ -137,7 +137,7 @@ export default {
       if (this.link) {
         this.news.text = ""
       }
-      if (localredirection) {
+      if (this.localredirection) {
         this.link = "local"
       }
       this.news.expiration = 0
