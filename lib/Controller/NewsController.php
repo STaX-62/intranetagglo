@@ -116,6 +116,8 @@ class NewsController extends Controller
 
                         move_uploaded_file($_FILES['photo']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
                         $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                        if ($link == "local")
+                            $link = $photourl;
                     }
                 }
             }
@@ -142,8 +144,13 @@ class NewsController extends Controller
 
                             move_uploaded_file($_FILES['photo_upd']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
                             $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                            if ($link == "local")
+                                $link = $photourl;
                         }
                     }
+                } else {
+                    if ($link == "local")
+                        $link = $photolink;
                 }
 
                 return $this->service->update($id, $title, $subtitle, $text, $photourl, $category, $groups, $link, $expiration);

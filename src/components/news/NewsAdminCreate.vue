@@ -65,7 +65,8 @@
       </div>
       <div v-if="step == 2 && link" style="height:50vh">
         <label for="link">Lien de redirection de L'actualité</label>
-        <b-form-input name="link" v-model="news.link"></b-form-input>
+        <b-form-input name="link" v-model="news.link" :disabled="localredirection"></b-form-input>
+        <b-form-checkbox v-model="localredirection">Rediriger vers la photo de l'actualité</b-form-checkbox>
       </div>
       <div v-if="step == 3" style="height:50vh">
         <label for="photo">Image d'illustration / Photo</label>
@@ -135,6 +136,9 @@ export default {
       this.news.groups = this.news.groups.join(';')
       if (this.link) {
         this.news.text = ""
+      }
+      if (localredirection) {
+        this.link = "local"
       }
       this.news.expiration = 0
       this.createNews(this.news)
@@ -215,7 +219,8 @@ export default {
       },
       step: 1,
       link: false,
-      minDate: today
+      minDate: today,
+      localredirection: false
     }
   }
 }

@@ -63,7 +63,8 @@
       </div>
       <div v-if="step == 2 && link" style="height:50vh">
         <label for="link">Lien de redirection de L'actualité</label>
-        <b-form-input name="link" v-model="autocomplete.link"></b-form-input>
+        <b-form-input name="link" v-model="news.link" :disabled="localredirection"></b-form-input>
+        <b-form-checkbox v-model="localredirection">Rediriger vers la photo de l'actualité</b-form-checkbox>
       </div>
       <div v-if="step == 3" style="height:50vh">
         <label for="photo">Image d'illustration / Photo</label>
@@ -142,6 +143,9 @@ export default {
       if (this.link) {
         this.autocomplete.text = ""
       }
+      if (localredirection) {
+        this.link = "local"
+      }
       this.autocomplete.expiration = 0
       this.updateNews(this.autocomplete, this.newimage)
       this.step = 1
@@ -214,6 +218,7 @@ export default {
         link: "",
         expiration: 0
       },
+      localredirection: falsed
     }
   }
 }
