@@ -54,7 +54,6 @@ export default {
         this.timer = setTimeout(() => {
           this.$store.commit('setNewsUpdating', true)
         }, 250)
-        console.log(value)
         this.$store.commit('updateFilter', value)
       }
     },

@@ -173,7 +173,6 @@ export default {
     },
     UpdateOrder() {
       var event = this.newposition;
-      console.log([event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid])
       if (event.relatedContext.component.$attrs.menuid != null) {
 
         this.changeOrder(event.dragged.getAttribute("position"), event.related.getAttribute("position"), event.relatedContext.component.$attrs.sectionid, event.relatedContext.component.$attrs.menuid)

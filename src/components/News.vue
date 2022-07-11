@@ -258,7 +258,6 @@ export default {
     this.search = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
     axios.get(generateUrl(`apps/intranetagglo/isadmin`))
       .then(response => {
-        console.log('isAdmin:', response.data)
         this.$store.commit('setisAdmin', response.data)
         if (response.data) {
           this.$store.dispatch("getGroupsOptions");

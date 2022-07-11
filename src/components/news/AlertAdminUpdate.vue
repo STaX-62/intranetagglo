@@ -98,7 +98,6 @@ export default {
     },
     getFormatedGroups: {
       get() {
-        console.log(this.autocomplete)
         return this.autocomplete.groups.split(';')
       },
       set(value) {
@@ -106,7 +105,6 @@ export default {
       }
     },
     initialDate() {
-      console.log(new Date(this.autocomplete.expiration * 1000))
       return new Date(this.autocomplete.expiration * 1000)
     }
   },
