@@ -18,15 +18,11 @@ use OCP\Notification\IManager;
 use OCA\IntranetAgglo\Service\NewsService;
 use OCP\IURLGenerator;
 use OCP\Notification\INotification;
-use OCA\IntranetAgglo\Service\NotificationService;
 
 class NewsController extends Controller
 {
     /** @var NewsService */
     private $service;
-
-    /** @var NotificationService */
-    private $notificationService;
 
     /** @var IUserManager */
     private $userManager;
@@ -53,8 +49,7 @@ class NewsController extends Controller
         IManager $NotificationManager,
         IUsermanager $userManager,
         IURLGenerator $urlGenerator,
-        ITimeFactory $timeFactory,
-        NotificationService $notificationService
+        ITimeFactory $timeFactory
     ) {
         parent::__construct(Application::APP_ID, $request);
         $this->service = $service;
@@ -64,13 +59,12 @@ class NewsController extends Controller
         $this->NotificationManager = $NotificationManager;
         $this->urlGenerator = $urlGenerator;
         $this->timeFactory = $timeFactory;
-        $this->notificationService = $notificationService;
     }
 
     /**
      * @NoAdminRequired
      */
-    public function index(int $id, int $limit, string $search, string $categories, array $dateFilter): DataResponse
+    public function index(int $startid, int $limit, string $search, string $categories, array $dateFilter): DataResponse
     {
         $user = $this->session->getUser();
         if ($this->isAdmin()) {
@@ -196,7 +190,6 @@ class NewsController extends Controller
                 if ($visible == 1) {
                     $notification = $this->NotificationManager->createNotification();
 
-                    $action = $notification->createAction();
                     $notification->setApp(Application::APP_ID)
                         ->setDateTime(new \DateTime())
                         ->setObject('news', (string)$rq->getId())
@@ -262,20 +255,6 @@ class NewsController extends Controller
         });
     }
 
-    /**
-     * @NoAdminRequired
-     */
-    public function removeNotifications()
-    {
-        $user = $this->session->getUser();
-        $uid = $user->getUID();
-        $notificationNb = $this->notificationService->findNotificationByUser($uid);
-        if ($notificationNb > 0) {
-            $notification = $this->NotificationManager->createNotification();
-            $notification->setApp(Application::APP_ID)->setUser($uid);
-            $this->NotificationManager->markProcessed($notification);
-        }
-    }
 
     /**
      * @NoAdminRequired

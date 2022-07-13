@@ -45,7 +45,7 @@
           </b-form-select>
         </template>
       </b-form-tags>
-      <label for="expidationDatepicker">Date d'expiration de l'alert:</label>
+      <label for="expidationDatepicker">Date d'expiration de l'alerte:</label>
       <b-form-datepicker
         name="expirationDatepicker"
         v-model="news.expiration"

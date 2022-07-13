@@ -18,10 +18,6 @@ return [
             'url' => '/location',
             'verb' => 'GET'
         ],
-        [
-            'name' => 'menu_api#preflighted_cors', 'url' => '/api/0.1/{path}',
-            'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']
-        ],
         //////////  M E N U S  //////////
         [
             'name' => 'menu#index',
@@ -31,11 +27,6 @@ return [
         [
             'name' => 'menu#indexG',
             'url' => '/menusG',
-            'verb' => 'GET',
-        ],
-        [
-            'name' => 'menu#dashboard',
-            'url' => '/menus/dashboard',
             'verb' => 'GET',
         ],
         [
@@ -64,18 +55,13 @@ return [
         //////////  N E W S  //////////
         [
             'name' => 'news#index',
-            'url' => '/news/{id}',
+            'url' => '/news/{startid}',
             'verb' => 'POST'
         ],
         [
             'name' => 'news#alerts',
             'url' => '/alerts',
             'verb' => 'POST'
-        ],
-        [
-            'name' => 'news#dashboard',
-            'url' => '/news/dashboard',
-            'verb' => 'GET',
         ],
         [
             'name' => 'news#create',
@@ -101,11 +87,6 @@ return [
             'requirements' => ['id' => '\d+']
         ],
         [
-            'name' => 'news#removeNotifications',
-            'url' => '/news/notifications',
-            'verb' => 'GET'
-        ],
-        [
             'name' => 'news#getCategory',
             'url' => '/news/category',
             'verb' => 'GET',
@@ -126,11 +107,6 @@ return [
         [
             'name' => 'apps#indexG',
             'url' => '/appsG',
-            'verb' => 'GET',
-        ],
-        [
-            'name' => 'apps#dashboard',
-            'url' => '/apps/dashboard',
             'verb' => 'GET',
         ],
         [
