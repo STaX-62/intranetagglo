@@ -14,12 +14,6 @@ sudo chown nextcloud-user:nextcloud-user -R nextcloud/apps/intranetagglo
 sudo chown nextcloud-user:nextcloud-user -R nextcloud/apps/intranetagglo/*
 ```
 
-## Développement
+## Documentation
 
-```
-npm install
-```
-
-```
-npm run build
-```
+https://stax-62.github.io/intranetagglo
