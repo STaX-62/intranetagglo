@@ -8,8 +8,6 @@
 .apps-container {
     position: relative;
     display: block;
-    overflow-y: auto;
-    overflow-x: hidden;
     padding: 20px 15px 10px;
     height: calc(100% - 20px);
     width: calc(100% - 20px);
@@ -59,6 +57,11 @@
     box-shadow: var(--color-mode-shadow-1) 0px 3px 1px -2px,
         var(--color-mode-shadow-2) 0px 2px 2px 0px,
         var(--color-mode-shadow-3) 0px 1px 5px 0px;
+    min-height: 50px;
+}
+
+.apps-content-main .mdi {
+    font-size: 25px;
 }
 
 .apps-header {
@@ -150,14 +153,8 @@
     }
 }
 
-@media (max-height:800px) {
-    .apps-icon {
-        margin-top: 0;
-    }
-}
-
 @media (max-height:680px) {
-    .apps-content-main .b-icon {
+    .apps-content-main .i {
         display: none;
     }
 }
