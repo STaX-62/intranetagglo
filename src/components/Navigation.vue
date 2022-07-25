@@ -3,48 +3,23 @@
     <div class="sidenav-logo">
       <img v-bind:src="image" />
     </div>
-    <div
-      class="sidenav-menu"
-      data-intro="Les liens utiles adaptés à vos besoins triés en fonction de votre service"
-      data-title="Menu de Navigation"
-      data-step="1"
-    >
-      <div class="section-block" v-for="(section,index) in MenuToDisplay" :key="'B'+index">
-        <button
-          class="section"
-          @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))"
-        >
+    <div class="sidenav-menu" data-intro="Les liens utiles adaptés à vos besoins triés en fonction de votre service" data-title="Menu de Navigation" data-step="1">
+      <div class="section-block" v-for="(section, index) in MenuToDisplay" :key="'B' + index">
+        <button class="section" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))">
           <div class="section-icon">
-            <b-icon v-bind:icon="section.icon"></b-icon>
+            <i v-bind:class="'mdi mdi-' + section.icon"></i>
+            <!-- <b-icon v-bind:icon="section.icon"></b-icon> -->
           </div>
           <div class="section-title">{{ section.title }}</div>
         </button>
-        <div
-          v-bind:id="'menu-'+index+'-'+subindex"
-          class="menu"
-          v-for="(menu,subindex) in MenuToDisplay[index].childs"
-          :key="'B'+subindex"
-          @click="ExtendSubMenu(index,subindex)"
-        >
-          <div
-            class="submenu-title"
-            @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))"
-          >
+        <div v-bind:id="'menu-' + index + '-' + subindex" class="menu" v-for="(menu, subindex) in MenuToDisplay[index].childs" :key="'B' + subindex" @click="ExtendSubMenu(index, subindex)">
+          <div class="submenu-title" @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))">
             <div class="caret" v-if="!isEmpty(MenuToDisplay[index].childs[subindex].childs)">▷</div>
             {{ menu.title }}
           </div>
-          <div v-bind:id="'container-'+ index + '-'+ subindex" class="menu-container">
-            <a
-              class="nav-link text-truncate"
-              v-for="(submenu,subsubindex) in MenuToDisplay[index].childs[subindex].childs"
-              :key="'B'+subsubindex"
-              v-bind:href="submenu.link"
-            >
-              <span
-                v-b-tooltip.hover.bottom
-                @mouseover="Tooltips($event,submenu.title)"
-                class="submenu d-sm-inline"
-              >{{ submenu.title }}</span>
+          <div v-bind:id="'container-' + index + '-' + subindex" class="menu-container">
+            <a class="nav-link text-truncate" v-for="(submenu, subsubindex) in MenuToDisplay[index].childs[subindex].childs" :key="'B' + subsubindex" v-bind:href="submenu.link">
+              <span v-b-tooltip.hover.bottom @mouseover="Tooltips($event, submenu.title)" class="submenu d-sm-inline">{{ submenu.title }}</span>
             </a>
           </div>
         </div>
@@ -52,13 +27,8 @@
     </div>
     <div class="Raccourcis">
       <menu-admin-overview v-if="isAdmin" />
-      <a
-        class="Files"
-        href="https://cloud.ca2bm.fr/index.php/f/1183804"
-        data-intro="Retrouvez ici le dossier des documents partagés pour tous les services"
-        data-title="Documents Partagés"
-        data-step="2"
-      >
+      <a class="Files" href="https://cloud.ca2bm.fr/index.php/f/1183804" data-intro="Retrouvez ici le dossier des documents partagés pour tous les services" data-title="Documents Partagés"
+        data-step="2">
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
       </a>
@@ -172,6 +142,7 @@ export default {
     "Menu"
     "Buttons";
 }
+
 #App.dark .sidenav {
   box-shadow: 0 -5px 5px hsl(0deg 0% 100% / 5%);
 }
@@ -206,6 +177,7 @@ export default {
 .sidenav-menu::-webkit-scrollbar {
   display: none;
 }
+
 .section:nth-of-type(even) {
   top: 0;
   position: sticky;
@@ -266,10 +238,14 @@ export default {
   width: 200px;
   margin-top: auto;
   margin-bottom: auto;
-  -moz-user-select: none; /* Firefox */
-  -webkit-user-select: none; /* Chrome, Safari, Opéra depuis la version 15 */
-  -ms-user-select: none; /* Internet explorer depuis la version 10 et Edge */
-  user-select: none; /* Propriété standard */
+  -moz-user-select: none;
+  /* Firefox */
+  -webkit-user-select: none;
+  /* Chrome, Safari, Opéra depuis la version 15 */
+  -ms-user-select: none;
+  /* Internet explorer depuis la version 10 et Edge */
+  user-select: none;
+  /* Propriété standard */
 }
 
 .section-title {
@@ -304,10 +280,14 @@ export default {
   font-family: PetitaBold;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -moz-user-select: none; /* Firefox */
-  -webkit-user-select: none; /* Chrome, Safari, Opéra depuis la version 15 */
-  -ms-user-select: none; /* Internet explorer depuis la version 10 et Edge */
-  user-select: none; /* Propriété standard */
+  -moz-user-select: none;
+  /* Firefox */
+  -webkit-user-select: none;
+  /* Chrome, Safari, Opéra depuis la version 15 */
+  -ms-user-select: none;
+  /* Internet explorer depuis la version 10 et Edge */
+  user-select: none;
+  /* Propriété standard */
 }
 
 .submenu-title:hover {
@@ -358,6 +338,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .nav-link span {
   text-overflow: ellipsis;
   width: 100%;

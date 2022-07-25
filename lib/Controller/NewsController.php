@@ -2,7 +2,6 @@
 
 namespace OCA\IntranetAgglo\Controller;
 
-use ArrayObject;
 use OCA\IntranetAgglo\AppInfo\Application;
 
 use OCP\IRequest;
