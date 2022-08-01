@@ -27,7 +27,7 @@
     </div>
     <div class="Raccourcis">
       <menu-admin-overview v-if="isAdmin" />
-      <a class="Files" href="https://cloud.ca2bm.fr/index.php/f/1183804" data-intro="Retrouvez ici le dossier des documents partagés pour tous les services" data-title="Documents Partagés"
+      <a class="Files" :href="intranetfolder" data-intro="Retrouvez ici le dossier des documents partagés pour tous les services" data-title="Documents Partagés"
         data-step="2">
         <b-icon class="doc-icon" icon="folder"></b-icon>
         <div>Documents</div>
@@ -49,7 +49,8 @@ export default {
       image: '/apps/intranetagglo/img/LogoCA2BM.png',
       user: [],
       lastOpenedContainer: null,
-      menuInBDD: [[], [], []]
+      menuInBDD: [[], [], []],
+      intranetfolder: ''
     }
   },
   watch: {
@@ -116,9 +117,13 @@ export default {
 
   },
   mounted() {
-    axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
+    axios.get(generateUrl(`apps/intranetagglo/menusG`))
       .then((response) => {
         this.menuInBDD = response.data
+      })
+    axios.get(generateUrl(`apps/intranetagglo/intranetfolder`))
+      .then((response) => {
+        this.intranetfolder = response.data
       })
   }
 }

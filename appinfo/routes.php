@@ -18,6 +18,11 @@ return [
             'url' => '/location',
             'verb' => 'GET'
         ],
+        [
+            'name' => 'page#DossierIntranet',
+            'url' => '/intranetfolder',
+            'verb' => 'GET'
+        ],
         //////////  M E N U S  //////////
         [
             'name' => 'menu#index',
