@@ -663,11 +663,9 @@ trix-editor.trix-content {
     transition: color 0.2s;
 }
 
-#App:not([isonsite]) .Settings:not(.hidden)+div .news-pagination {
-    width: calc(95% - 270px);
-}
-
-#App:not([isonsite]) .news-header {
+#App:not([isonsite]) .news-header,
+#App:not([isonsite]) .Settings:not(.hidden)+div .news-pagination,
+#App:not([isonsite]) .Settings:not(.hidden)+div .news-wrapper {
     width: calc(95% - 270px);
 }
 
@@ -682,10 +680,6 @@ trix-editor.trix-content {
 
 #App:not([isonsite]) .searchbar {
     flex: 0 0 39% !important;
-}
-
-#App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-wrapper {
-    width: calc(95% - 270px);
 }
 
 #App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-return {
@@ -787,18 +781,19 @@ trix-editor.trix-content {
         grid-area: Alertes;
     }
 
-    .Settings:not(.hidden)+div+#news-frame {
+    .Settings:not(.hidden)+div+#news-frame,
+    .Settings:not(.hidden)+#news-frame {
         margin-top: 260px;
         height: calc(100% - 260px);
     }
 
-    #App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-wrapper {
+    /* #App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-wrapper {
         width: auto;
     }
 
     #App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-return {
         right: 2.5%;
-    }
+    } */
 
 }
 
