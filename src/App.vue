@@ -1,11 +1,5 @@
 <template>
-  <div
-    id="App"
-    :class="darkmode ? 'dark' : ''"
-    :pattern="patterns"
-    :variant="backgroundColor"
-    :isonsite="isOnSite"
-  >
+  <div id="App" :class="darkmode ? 'dark' : ''" :pattern="patterns" :variant="backgroundColor" :isonsite="isOnSite">
     <div id="settings-box" class="settings-box hidden">
       <b-icon id="cog" name="cog" class="cog" icon="gear"></b-icon>
       <label id="cog-label" for="cog" style="position:absolute;">Paramètres</label>
@@ -87,7 +81,9 @@ export default {
 
     document.getElementById('cog').addEventListener("click", () => {
       document.getElementById('Settings').classList.toggle('hidden')
-      document.getElementById('apps-container').classList.toggle('hidden')
+      if (this.isOnSite) {
+        document.getElementById('apps-container').classList.toggle('hidden')
+      }
       document.getElementById('settings-box').classList.toggle('hidden')
     });
   },

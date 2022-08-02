@@ -787,6 +787,10 @@ trix-editor.trix-content {
         height: calc(100% - 260px);
     }
 
+    #App:not([isonsite]) .Settings:not(.hidden)+div .news-wrapper {
+        width: auto;
+    }
+
     /* #App:not([isonsite]) .Settings:not(.hidden)+div+#news-frame .news-wrapper {
         width: auto;
     }
