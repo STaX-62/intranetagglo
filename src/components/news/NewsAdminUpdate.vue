@@ -54,7 +54,7 @@
         </div>
 
         <label for="photo">Image d'illustration / Photo</label>
-        <b-form-file name="photo" size="sm" accept="image/*" placeholder="Choisir le fichier (.jpg/.jpeg/.png)..." drop-placeholder="Placer l'image ici ..." v-model="newimage" @change="onFileChange">
+        <b-form-file name="photo" size="sm" accept="image/*" placeholder="Choisir le fichier (.jpg/.jpeg/.png)..." drop-placeholder="Placer l'image ici ..." v-model="newimage" multiple>
         </b-form-file>
 
         <div for="preview">Nouvelle Selection :</div>
@@ -191,12 +191,12 @@ export default {
       step: 1,
       link: false,
       minDate: today,
-      newimage: null,
+      newimage: [],
       autocomplete: {
         title: "",
         subtitle: "",
         text: "",
-        photo: null,
+        photo: [],
         category: "",
         groups: [],
         link: "",
