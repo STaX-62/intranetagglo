@@ -209,8 +209,8 @@ export default {
     axios.post(generateUrl(url), { 'id': 0, 'limit': this.newsperpage, 'search': this.search, 'categories': '', dateFilter: this.dateFilter }, { type: 'application/json' })
       .then((response) => {
         this.news = response.data[0];
-        console.log(this.news.photo)
-        console.log(this.news.photo.split(';'))
+        console.log(this.news)
+        // console.log(this.news.photo.split(';'))
         this.rows = response.data[1];
         this.minDate = response.data[2].time;
       })
