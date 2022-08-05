@@ -133,6 +133,7 @@ export default {
         for (var x = 0; x < news.photo.length; x++)
           data.append('photo_upd[]', newimage[x], newimage[x].name);
       }
+      data.append('deletedphoto', deletedIMG);
       data.append('photolink', news.photo);
       data.append('category', news.category);
       data.append('groups', news.groups);
@@ -177,6 +178,7 @@ export default {
       return URL.createObjectURL(file)
     },
     deleteExistingIMG(file) {
+      this.deletedIMG.push(this.autocomplete.photo[this.autocomplete.photo.findIndex(f => f == file)])
       this.autocomplete.photo.splice(this.autocomplete.photo.findIndex(f => f == file))
     },
     deleteNewIMG(file) {
@@ -202,7 +204,8 @@ export default {
         link: "",
         expiration: 0
       },
-      localredirection: false
+      localredirection: false,
+      deletedIMG: []
     }
   }
 }
