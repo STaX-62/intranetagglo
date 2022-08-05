@@ -121,7 +121,7 @@ class NewsController extends Controller
                     if (file_exists($_FILES['photo']['tmp_name'][$i])) {
                         if ($_FILES['photo']['error'][$i] == 0) {
                             $fileInfos = pathinfo($_FILES['photo']['name'][$i]);
-                            $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+                            $photo = $this->timeFactory->getTime() . '-' . $i . '.' . $fileInfos['extension'];
 
                             move_uploaded_file($_FILES['photo']['tmp_name'][$i], 'apps/intranetagglo/img/uploads/' . $photo);
                             $photourl[$i] = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
@@ -170,7 +170,7 @@ class NewsController extends Controller
                             if ($_FILES['photo_upd']['error'][$i] == 0) {
 
                                 $fileInfos = pathinfo($_FILES['photo_upd']['name'][$i]);
-                                $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+                                $photo = $this->timeFactory->getTime() . '-' . $i  . '.' . $fileInfos['extension'];
 
                                 move_uploaded_file($_FILES['photo_upd']['tmp_name'][$i], 'apps/intranetagglo/img/uploads/' . $photo);
                                 array_push($photourl, $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo));
