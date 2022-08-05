@@ -50,8 +50,8 @@
         <b-form-file name="photo" size="sm" accept="image/*" placeholder="Choisir le fichier (.jpg/.jpeg/.png)..." drop-placeholder="Placer l'image ici ..." v-model="news.photo" @change="onFileChange"
           multiple></b-form-file>
         <div style="height :80%">
-          <div for="preview">Prévisualisation :</div>
-          <img name="preview" v-if="url" :src="url" style="max-width: 100%; max-height:calc(100% - 24px)" />
+          <div for="preview">Selection :</div>
+          <img name="preview" v-for="p in files" :src="GetURL(p)" :key="p" style="width: 100px;" />
         </div>
       </div>
       <template #modal-footer="{ ok }">
@@ -164,6 +164,9 @@ export default {
     },
     onFileChange(evt) {
       console.log(evt)
+    },
+    GetURL(file) {
+      return URL.createObjectURL(file)
     }
   },
   data: function () {
