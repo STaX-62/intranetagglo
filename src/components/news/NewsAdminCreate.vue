@@ -163,7 +163,7 @@ export default {
       return tpdf.push(null)
     },
     onFileChange(evt) {
-      console.log(evt)
+      this.files = evt.target.files
     },
     GetURL(file) {
       return URL.createObjectURL(file)
@@ -187,7 +187,8 @@ export default {
       step: 1,
       link: false,
       minDate: today,
-      localredirection: false
+      localredirection: false,
+      files: []
     }
   }
 }
