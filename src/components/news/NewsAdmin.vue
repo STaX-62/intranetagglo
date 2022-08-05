@@ -1,59 +1,28 @@
 <template>
   <div class="news news-customcolor" v-bind:style="'--news-color: ' + newscolor">
     <div class="news-textbox">
-      <div
-        v-bind:id="'news-textbox-block' + news.id"
-        class="news-textbox-block"
-        :img="news.photo == '' ? 'no' : 'yes'"
-        @click="OpenNews()"
-      >
+      <div v-bind:id="'news-textbox-block' + news.id" class="news-textbox-block" :img="news.photo == '' ? 'no' : 'yes'" @click="OpenNews()">
         <div class="news-title">{{ news.title }}</div>
-        <div class="news-subtitle" :class="{'active': isActive}">{{ news.subtitle }}</div>
+        <div class="news-subtitle" :class="{ 'active': isActive }">{{ news.subtitle }}</div>
         <div class="news-bar"></div>
-        <img
-          class="news-img-preview"
-          v-bind:src="news.photo"
-          v-if="news.photo != '' && newfocus == ''"
-        />
+        <img class="news-img-preview" v-bind:src="news.photo[0]" v-if="news.photo[0] != '' && newfocus == ''" />
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
-        <img
-          class="news-img"
-          v-bind:src="news.photo"
-          v-if="news.photo != ''"
-          @click="visible = !visible"
-        />
-        <vue-easy-lightbox
-          escDisabled
-          moveDisabled
-          :visible="visible"
-          :imgs="news.photo"
-          index="0"
-          @hide="visible = !visible"
-        ></vue-easy-lightbox>
+        <b-carousel v-model="slide" v-if="photoMultiple && newfocus != ''" :interval="4000" controls indicators background="#ababab" style="text-shadow: 1px 1px 2px #333;">
+          <b-carousel-slide v-for="p in news.photo" :key="p" :img-src="p"></b-carousel-slide>
+        </b-carousel>
+
+        <img class="news-img" v-bind:src="news.photo[0]" v-if="!photoMultiple" @click="visible = !visible" />
+        <vue-easy-lightbox escDisabled moveDisabled :visible="visible" :imgs="news.photo" index="0" @hide="visible = !visible"></vue-easy-lightbox>
       </div>
       <div class="news-tagbox">
         <span class="news-tag" @click="addFilter(news.category)">{{ news.category }}</span>
-        <button
-          type="button"
-          class="news-tagbox-button"
-          @click="SetPinned(news)"
-          v-if="news.visible == 1"
-        >
-          <b-icon
-            class="sidebar-item-icon"
-            variant="dark"
-            :icon="news.pinned == 0 ? 'shift' : 'shift-fill'"
-          />
+        <button type="button" class="news-tagbox-button" @click="SetPinned(news)" v-if="news.visible == 1">
+          <b-icon class="sidebar-item-icon" variant="dark" :icon="news.pinned == 0 ? 'shift' : 'shift-fill'" />
         </button>
         <div class="news-tagbox-button" v-if="news.visible == 0">
-          <b-icon
-            class="sidebar-item-icon"
-            variant="dark"
-            icon="eye-slash"
-            @click="ChangeVisibility(news)"
-          />
+          <b-icon class="sidebar-item-icon" variant="dark" icon="eye-slash" @click="ChangeVisibility(news)" />
         </div>
         <button type="button" class="news-tagbox-button" @click="AdminOptions()">
           <b-icon class="sidebar-item-icon" variant="dark" icon="gear" />
@@ -63,11 +32,7 @@
             <div class="news-tag-date">{{ getFormatedDate }}</div>
             <div class="admin-tagbox">
               <button type="button" class="news-visibility-button" @click="ChangeVisibility(news)">
-                <b-icon
-                  class="sidebar-item-icon"
-                  variant="dark"
-                  :icon="news.visible == 1 ? 'eye' : 'eye-slash'"
-                />
+                <b-icon class="sidebar-item-icon" variant="dark" :icon="news.visible == 1 ? 'eye' : 'eye-slash'" />
               </button>
               <news-admin-update :news="news" />
               <button type="button" class="news-del-button" @click="DeleteVerification(news)">
@@ -127,6 +92,9 @@ export default {
     newfocus() {
       return this.$store.state.newsfocus;
     },
+    photoMultiple() {
+      return this.news.photo.length
+    }
   },
   methods: {
     AdminOptions() {
@@ -250,7 +218,8 @@ export default {
       focus: '',
       timer: undefined,
       adminopt: false,
-      visible: false
+      visible: false,
+      slide: 0,
     }
   }
 }

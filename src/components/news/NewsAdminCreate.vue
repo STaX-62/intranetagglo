@@ -54,7 +54,7 @@
           <div style="display: flex;">
             <div v-for="p in news.photo" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
               <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteIMG(p)"></i>
-              <img name="preview" :src="GetURL(p)" style="width: 100px;margin:auto" />
+              <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
             </div>
           </div>
         </div>
@@ -125,8 +125,9 @@ export default {
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
       data.append('text', news.text);
-      if (news.photo != null) {
-        data.append('photo', news.photo, news.photo.name);
+      if (news.photos.length) {
+        for (var x = 0; x < news.photo.length; x++)
+          data.append('photo[]', news.photo[x], news.photo[x].name);
       }
       data.append('category', news.category);
       data.append('groups', news.groups);
@@ -167,12 +168,6 @@ export default {
     addpdf(tpdf) {
       return tpdf.push(null)
     },
-    // onFileChange(evt) {
-    //   console.log(evt)
-    //   evt.target.files.forEach(element => {
-    //     this.files.push(element)
-    //   });
-    // },
     GetURL(file) {
       return URL.createObjectURL(file)
     },

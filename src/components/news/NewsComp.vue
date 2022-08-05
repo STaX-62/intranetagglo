@@ -1,37 +1,20 @@
 <template>
   <div class="news news-customcolor" v-bind:style="'--news-color: ' + newscolor">
     <div class="news-textbox">
-      <div
-        v-bind:id="'news-textbox-block' + news.id"
-        class="news-textbox-block"
-        :img="news.photo == '' ? 'no' : 'yes'"
-        @click="OpenNews()"
-      >
+      <div v-bind:id="'news-textbox-block' + news.id" class="news-textbox-block" :img="news.photo == '' ? 'no' : 'yes'" @click="OpenNews()">
         <div class="news-title">{{ news.title }}</div>
-        <div class="news-subtitle" :class="{'active': isActive}">{{ news.subtitle }}</div>
+        <div class="news-subtitle" :class="{ 'active': isActive }">{{ news.subtitle }}</div>
         <div class="news-bar"></div>
-        <img
-          class="news-img-preview"
-          v-bind:src="news.photo"
-          v-if="news.photo != '' && newfocus == ''"
-        />
+        <img class="news-img-preview" v-bind:src="news.photo" v-if="news.photo != '' && newfocus == ''" />
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
-        <img
-          class="news-img"
-          v-bind:src="news.photo"
-          v-if="news.photo != ''"
-          @click="visible = !visible"
-        />
-        <vue-easy-lightbox
-          escDisabled
-          moveDisabled
-          :visible="visible"
-          :imgs="news.photo"
-          index="0"
-          @hide="visible = !visible"
-        ></vue-easy-lightbox>
+        <b-carousel v-model="slide" v-if="photoMultiple && newfocus != ''" :interval="4000" controls indicators background="#ababab" style="text-shadow: 1px 1px 2px #333;">
+          <b-carousel-slide v-for="p in news.photo" :key="p" :img-src="p"></b-carousel-slide>
+        </b-carousel>
+
+        <img class="news-img" v-bind:src="news.photo[0]" v-if="!photoMultiple" @click="visible = !visible" />
+        <vue-easy-lightbox escDisabled moveDisabled :visible="visible" :imgs="news.photo" index="0" @hide="visible = !visible"></vue-easy-lightbox>
       </div>
       <div class="news-tagbox">
         <span class="news-tag" @click="addFilter(news.category)">{{ news.category }}</span>
@@ -88,6 +71,9 @@ export default {
     newfocus() {
       return this.$store.state.newsfocus;
     },
+    photoMultiple() {
+      return this.news.photo.length
+    }
   },
   methods: {
     addFilter(category) {
@@ -109,7 +95,8 @@ export default {
       newscolor: '#00B2FF',
       focus: '',
       timer: undefined,
-      visible: false
+      visible: false,
+      slide: 0,
     }
   }
 }
