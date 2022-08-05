@@ -89,7 +89,7 @@ export default {
         axios.post(generateUrl(url), { 'id': (this.currentNewsPage - 1) * this.newsperpage, 'limit': this.newsperpage, 'search': this.search, 'categories': this.categoryfilter.join(';'), dateFilter: this.dateFilter }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
-            this.news.photo = this.news.photo.split(';')
+            // this.news.photo = this.news.photo.split(';')
             this.rows = response.data[1];
             this.minDate = response.data[2].time;
             this.$store.commit('setNewsUpdating', false)
@@ -209,7 +209,8 @@ export default {
     axios.post(generateUrl(url), { 'id': 0, 'limit': this.newsperpage, 'search': this.search, 'categories': '', dateFilter: this.dateFilter }, { type: 'application/json' })
       .then((response) => {
         this.news = response.data[0];
-        this.news.photo = this.news.photo.split(';')
+        console.log(this.news.photo)
+        console.log(this.news.photo.split(';'))
         this.rows = response.data[1];
         this.minDate = response.data[2].time;
       })
