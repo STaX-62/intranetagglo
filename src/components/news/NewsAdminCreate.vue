@@ -51,7 +51,11 @@
           multiple></b-form-file>
         <div style="height :80%">
           <div for="preview">Selection :</div>
-          <img name="preview" v-for="p in files" :src="GetURL(p)" :key="p" style="width: 100px;" />
+          <div style="padding: 10px;border: 1px var(--color-mode-contrast-4) solid;position: absolute;">
+            <i class="mdi mdi-close" style="position: absolute;right: 5px;top:5px;" @click="deleteIMG(p)"></i>
+            <img name="preview" v-for="p in files" :src="GetURL(p)" :key="p" style="width: 100px;" />
+          </div>
+
         </div>
       </div>
       <template #modal-footer="{ ok }">
@@ -163,10 +167,14 @@ export default {
       return tpdf.push(null)
     },
     onFileChange(evt) {
+      console.log(evt)
       this.files = evt.target.files
     },
     GetURL(file) {
       return URL.createObjectURL(file)
+    },
+    deleteIMG(file) {
+      console.log(file)
     }
   },
   data: function () {
