@@ -125,7 +125,7 @@ export default {
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
       data.append('text', news.text);
-      if (news.photos.length) {
+      if (news.photo.length) {
         for (var x = 0; x < news.photo.length; x++)
           data.append('photo[]', news.photo[x], news.photo[x].name);
       }
