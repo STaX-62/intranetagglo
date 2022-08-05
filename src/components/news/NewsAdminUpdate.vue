@@ -134,7 +134,6 @@ export default {
           data.append('photo_upd[]', newimage[x], newimage[x].name);
       }
       data.append('deletedphoto', deletedIMG);
-      data.append('photolink', news.photo);
       data.append('category', news.category);
       data.append('groups', news.groups);
       data.append('link', news.link);
