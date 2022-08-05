@@ -51,11 +51,12 @@
           multiple></b-form-file>
         <div style="height :80%">
           <div for="preview">Selection :</div>
-          <div v-for="p in files" :key="p" style="padding: 10px;margin:5px;border: 1px var(--color-mode-contrast-4) solid;position: absolute;">
-            <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteIMG(p)"></i>
-            <img name="preview" :src="GetURL(p)" style="width: 100px;" />
+          <div style="display: flex;">
+            <div v-for="p in files" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: absolute;">
+              <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteIMG(p)"></i>
+              <img name="preview" :src="GetURL(p)" style="width: 100px;" />
+            </div>
           </div>
-
         </div>
       </div>
       <template #modal-footer="{ ok }">
@@ -174,6 +175,7 @@ export default {
       return URL.createObjectURL(file)
     },
     deleteIMG(file) {
+      console.log(this.files)
       this.files.splice(this.files.findIndex(f => f.name == file.name))
       console.log(news.photo)
     }
