@@ -2,8 +2,7 @@
   <div class="add-news-button" @click="modal = !modal">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
       <path
-        d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"
-      />
+        d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" />
     </svg>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="AddNews">
       <template #modal-title>
@@ -13,31 +12,14 @@
       <label for="titre">Titre</label>
       <b-form-input name="titre" v-model="news.title" required></b-form-input>
       <label for="groups-component-select">Restrictions de Groupes d'utilisateurs</label>
-      <b-form-tags
-        name="groups-component-select"
-        v-model="news.groups"
-        size="lg"
-        class="mb-2"
-        add-on-change
-        no-outer-focus
-      >
+      <b-form-tags name="groups-component-select" v-model="news.groups" size="lg" class="mb-2" add-on-change no-outer-focus>
         <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
           <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
             <li v-for="tag in tags" :key="tag" class="list-inline-item">
-              <b-form-tag
-                @remove="removeTag(tag)"
-                :title="tag"
-                :disabled="disabled"
-                variant="info"
-              >{{ tag }}</b-form-tag>
+              <b-form-tag @remove="removeTag(tag)" :title="tag" :disabled="disabled" variant="info">{{ tag }}</b-form-tag>
             </li>
           </ul>
-          <b-form-select
-            v-bind="inputAttrs"
-            v-on="inputHandlers"
-            :disabled="disabled || availableOptions.length === 0"
-            :options="availableOptions"
-          >
+          <b-form-select v-bind="inputAttrs" v-on="inputHandlers" :disabled="disabled || availableOptions.length === 0" :options="availableOptions">
             <template #first>
               <!-- This is required to prevent bugs with Safari -->
               <option disabled value>Choose a tag...</option>
@@ -46,18 +28,8 @@
         </template>
       </b-form-tags>
       <label for="expidationDatepicker">Date d'expiration de l'alerte:</label>
-      <b-form-datepicker
-        name="expirationDatepicker"
-        v-model="news.expiration"
-        :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-        locale="fr-FR"
-        hide-header="true"
-        :min="minDate"
-        :initial-date="minDate"
-        :state="verification"
-        placeholder="Date d'expiration"
-        value-as-date
-      ></b-form-datepicker>
+      <b-form-datepicker name="expirationDatepicker" v-model="news.expiration" :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }" locale="fr-FR" hide-header="true"
+        :min="minDate" :initial-date="minDate" :state="verification" placeholder="Date d'expiration" value-as-date></b-form-datepicker>
       <b-form-invalid-feedback :state="verification">Veuillez valider une date d'expiration</b-form-invalid-feedback>
       <label for="text">Contenu de l'alerte</label>
       <VueTrix name="text" inputId="editor1" v-model="news.text" placeholder="..." />
@@ -185,6 +157,7 @@ export default {
   position: relative;
   margin-left: 10px;
 }
+
 .add-news-button svg {
   fill: var(--color-mode-contrast-1);
   transition: color 0.2s;

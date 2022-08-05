@@ -100,17 +100,32 @@ class NewsController extends Controller
     {
         $user = $this->session->getUser();
         if ($this->isAdmin()) {
-            $photourl = '';
-            if (isset($_FILES['photo'])) {
+            $photourl = [];
+
+            // Dans le cas d'une seule photo
+            if (isset($_FILES['photo']) && !is_array($_FILES['photo']['name'])) {
                 if (file_exists($_FILES['photo']['tmp_name'])) {
                     if ($_FILES['photo']['error'] == 0) {
                         $fileInfos = pathinfo($_FILES['photo']['name']);
                         $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
                         move_uploaded_file($_FILES['photo']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
-                        $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
-                        if ($link == "local")
-                            $link = $photourl;
+                        $photourl[0] = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                    }
+                }
+            }
+
+            // Dans le cas de plusieurs photos
+            if (isset($_FILES['photo']) && is_array($_FILES['photo']['name'])) {
+                for ($i = 0; $i < count($_FILES['photo']['name']); $i++) {
+                    if (file_exists($_FILES['photo']['tmp_name'][$i])) {
+                        if ($_FILES['photo']['error'][$i] == 0) {
+                            $fileInfos = pathinfo($_FILES['photo']['name'][$i]);
+                            $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+
+                            move_uploaded_file($_FILES['photo']['tmp_name'][$i], 'apps/intranetagglo/img/uploads/' . $photo);
+                            $photourl[$i] = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
+                        }
                     }
                 }
             }
@@ -122,31 +137,49 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function update(int $id, string $title, string $subtitle, string $text,  string $photolink,  string $category,  string $groups, string $link, $expiration)
+    public function update(int $id, string $title, string $subtitle, string $text, array $photos, array $deletedphoto,  string $category,  string $groups, string $link, $expiration)
     {
         if ($this->isAdmin()) {
-            return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photolink, $category, $groups, $link, $expiration) {
-                $photourl = $photolink;
-                if (isset($_FILES['photo_upd'])) {
+            return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photos,  $deletedphoto, $category, $groups, $link, $expiration) {
+
+                if (!empty($deletedphoto)) {
+                    for ($i = 0; $i < count($deletedphoto); $i++) {
+                        unlink(substr($deletedphoto[$i], 11));
+                        array_splice($photos, array_search($deletedphoto[$i], $photos));
+                    }
+                }
+
+                // Dans le cas d'une seule photo
+                if (isset($_FILES['photo_upd']) && !is_array($_FILES['photo_upd']['name'])) {
                     if (file_exists($_FILES['photo_upd']['tmp_name'])) {
                         if ($_FILES['photo_upd']['error'] == 0) {
-                            unlink(substr($photourl, 11));
 
                             $fileInfos = pathinfo($_FILES['photo_upd']['name']);
                             $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
                             move_uploaded_file($_FILES['photo_upd']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
-                            $photourl = $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo);
-                            if ($link == "local")
-                                $link = $photourl;
+                            array_push($photos, $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo));
                         }
                     }
-                } else {
-                    if ($link == "local")
-                        $link = $photolink;
                 }
 
-                return $this->service->update($id, $title, $subtitle, $text, $photourl, $category, $groups, $link, $expiration);
+                // Dans le cas de plusieurs photos
+                if (isset($_FILES['photo_upd']) && is_array($_FILES['photo_upd']['name'])) {
+                    for ($i = 0; $i < count($_FILES['photo_upd']['name']); $i++) {
+                        if (file_exists($_FILES['photo_upd']['tmp_name'][$i])) {
+                            if ($_FILES['photo_upd']['error'][$i] == 0) {
+
+                                $fileInfos = pathinfo($_FILES['photo_upd']['name'][$i]);
+                                $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
+
+                                move_uploaded_file($_FILES['photo_upd']['tmp_name'][$i], 'apps/intranetagglo/img/uploads/' . $photo);
+                                array_push($photourl, $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo));
+                            }
+                        }
+                    }
+                }
+
+                return $this->service->update($id, $title, $subtitle, $text, $photos, $category, $groups, $link, $expiration);
             });
         }
         return 'User is not admin';
@@ -271,7 +304,9 @@ class NewsController extends Controller
         if ($this->isAdmin()) {
             return $this->handleNotFound(function () use ($id) {
                 $rq = $this->service->find($id);
-                unlink(substr($rq->getPhoto(), 11));
+                foreach (explode(';', $rq->getPhoto()) as $p) {
+                    unlink(substr($p, 11));
+                }
                 return $this->service->delete($id);
             });
         }

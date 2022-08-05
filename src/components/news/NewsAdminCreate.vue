@@ -2,8 +2,7 @@
   <div class="add-news-button" @click="modal = !modal">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
       <path
-        d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"
-      />
+        d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" />
     </svg>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="AddNews">
       <template #modal-title>
@@ -18,34 +17,17 @@
         <label for="category">Catégorie</label>
         <b-form-input name="category" list="category-id" v-model="news.category" required></b-form-input>
         <datalist id="category-id">
-          <option v-for="(category,index) in categoryoptions" :key="index">{{ category }}</option>
+          <option v-for="(category, index) in categoryoptions" :key="index">{{ category }}</option>
         </datalist>
         <label for="groups-component-select">Restrictions de Groupes d'utilisateurs</label>
-        <b-form-tags
-          name="groups-component-select"
-          v-model="news.groups"
-          size="lg"
-          class="mb-2"
-          add-on-change
-          no-outer-focus
-        >
+        <b-form-tags name="groups-component-select" v-model="news.groups" size="lg" class="mb-2" add-on-change no-outer-focus>
           <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
             <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
               <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                <b-form-tag
-                  @remove="removeTag(tag)"
-                  :title="tag"
-                  :disabled="disabled"
-                  variant="info"
-                >{{ tag }}</b-form-tag>
+                <b-form-tag @remove="removeTag(tag)" :title="tag" :disabled="disabled" variant="info">{{ tag }}</b-form-tag>
               </li>
             </ul>
-            <b-form-select
-              v-bind="inputAttrs"
-              v-on="inputHandlers"
-              :disabled="disabled || availableOptions.length === 0"
-              :options="availableOptions"
-            >
+            <b-form-select v-bind="inputAttrs" v-on="inputHandlers" :disabled="disabled || availableOptions.length === 0" :options="availableOptions">
               <template #first>
                 <!-- This is required to prevent bugs with Safari -->
                 <option disabled value>Choose a tag...</option>
@@ -56,12 +38,7 @@
       </div>
       <div v-if="step == 2 && !link" style="height:50vh">
         <label for="text">Contenu de l'actualité</label>
-        <VueTrix
-          name="text"
-          inputId="editor1"
-          v-model="news.text"
-          placeholder="Contenu de l'actualité une fois étendue..."
-        />
+        <VueTrix name="text" inputId="editor1" v-model="news.text" placeholder="Contenu de l'actualité une fois étendue..." />
       </div>
       <div v-if="step == 2 && link" style="height:50vh">
         <label for="link">Lien de redirection de L'actualité</label>
@@ -70,34 +47,18 @@
       </div>
       <div v-if="step == 3" style="height:50vh">
         <label for="photo">Image d'illustration / Photo</label>
-        <b-form-file
-          name="photo"
-          size="sm"
-          accept="image/*"
-          placeholder="Choisir le fichier (.jpg/.jpeg/.png)..."
-          drop-placeholder="Placer l'image ici ..."
-          v-model="news.photo"
-          @change="onFileChange"
-        ></b-form-file>
+        <b-form-file name="photo" size="sm" accept="image/*" placeholder="Choisir le fichier (.jpg/.jpeg/.png)..." drop-placeholder="Placer l'image ici ..." v-model="news.photo" @change="onFileChange"
+          multiple></b-form-file>
         <div style="height :80%">
           <div for="preview">Prévisualisation :</div>
-          <img
-            name="preview"
-            v-if="url"
-            :src="url"
-            style="max-width: 100%; max-height:calc(100% - 24px)"
-          />
+          <img name="preview" v-if="url" :src="url" style="max-width: 100%; max-height:calc(100% - 24px)" />
         </div>
       </div>
       <template #modal-footer="{ ok }">
-        <div>Etape {{step}}/3</div>
-        <b-button
-          @click="link = !link"
-          variant="dark"
-          v-if="step == 2"
-        >{{link ? "Remplacer par un Texte" : "Remplacer par un lien"}}</b-button>
+        <div>Etape {{ step }}/3</div>
+        <b-button @click="link = !link" variant="dark" v-if="step == 2">{{ link ? "Remplacer par un Texte" : "Remplacer par un lien" }}</b-button>
         <b-button size="md" variant="secondary" @click="step--" v-if="step > 1">Précédent</b-button>
-        <b-button size="md" variant="secondary" @click="step = step +1" v-if="step < 3">Suivant</b-button>
+        <b-button size="md" variant="secondary" @click="step = step + 1" v-if="step < 3">Suivant</b-button>
         <b-button size="md" variant="success" @click="ok()" v-if="step == 3">Ajouter</b-button>
       </template>
     </b-modal>
@@ -146,7 +107,7 @@ export default {
         title: "",
         subtitle: "",
         text: "",
-        photo: null,
+        photo: [],
         category: "",
         groups: [],
         link: "",
@@ -201,6 +162,9 @@ export default {
     addpdf(tpdf) {
       return tpdf.push(null)
     },
+    onFileChange(evt) {
+      console.log(evt)
+    }
   },
   data: function () {
     const now = new Date()
@@ -232,6 +196,7 @@ export default {
   position: relative !important;
   margin-left: 10px !important;
 }
+
 .add-news-button svg {
   fill: var(--color-mode-contrast-1);
   transition: color 0.2s;

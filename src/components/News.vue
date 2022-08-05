@@ -2,12 +2,7 @@
   <div id="news-frame">
     <div id="news-container" class="news-container">
       <div id="news-row" class="news-row" :focus="newfocus">
-        <div
-          class="news-alerts"
-          data-intro="Ici sont disponibles les informations/alertes temporaires, celles-ci expireront au bout d'une certaine période"
-          data-title="Alertes"
-          data-step="3"
-        >
+        <div class="news-alerts" data-intro="Ici sont disponibles les informations/alertes temporaires, celles-ci expireront au bout d'une certaine période" data-title="Alertes" data-step="3">
           <div class="alert-header">
             <h2 class="alert-header-title" style="border-top: solid 2px var(--color-secondary);">
               Alertes
@@ -15,76 +10,35 @@
             </h2>
           </div>
           <div class="alert-wrapper">
-            <div :id="'alert'+index" v-for="(a,index) in getAlerts" :key="index">
+            <div :id="'alert' + index" v-for="(a, index) in getAlerts" :key="index">
               <alert :alert="alerts[index]" />
             </div>
-            <div class="alert-empty" v-if="Empty_Alerts != ''">{{Empty_Alerts}}</div>
+            <div class="alert-empty" v-if="Empty_Alerts != ''">{{ Empty_Alerts }}</div>
           </div>
         </div>
-        <div
-          class="news-block"
-          v-if="isAdmin"
-          data-intro="Dans cette section vous seront partagé les actualités de la CA2BM, 
-          cliquez simplement sur une actualité pour agrandir ou être redirigé vers le contenu"
-          data-title="Actualités"
-          data-step="4"
-        >
+        <div class="news-block" v-if="isAdmin" data-intro="Dans cette section sont disponibles les actualités de la CA2BM, 
+          cliquez simplement sur une actualité pour agrandir ou être redirigé vers le contenu" data-title="Actualités" data-step="4">
           <div class="news-header">
-            <h2
-              class="news-header-title"
-              style="border-top: 2px solid var(--color-primary-category);"
-            >
+            <h2 class="news-header-title" style="border-top: 2px solid var(--color-primary-category);">
               Actualités
               <news-admin-create />
             </h2>
-            <input
-              type="text"
-              class="searchbar"
-              v-model="search"
-              placeholder="Rechercher.."
-              data-intro="Vous pouvez rechercher des actualités et alertes"
-              data-title="Barre de Recherche"
-              data-step="5"
-            />
-            <button
-              id="news-filtres"
-              data-intro="ainsi que filtrer les actualités par date de parution ou catégorie"
-              data-title="Filtres"
-              data-step="6"
-            >
+            <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." data-intro="Vous pouvez rechercher des actualités et alertes" data-title="Barre de Recherche"
+              data-step="5" />
+            <button id="news-filtres" data-intro="Filtrer les actualités par date de parution ou catégorie" data-title="Filtres" data-step="6">
               <b-icon icon="filter"></b-icon>
             </button>
             <NewsFiltrage :minDate="minDate" />
           </div>
           <div class="news-wrapper">
-            <news-admin
-              :id="'news'+index"
-              v-for="(n,index) in getNews"
-              :key="index"
-              :arrayid="index"
-              :news="news[index]"
-            />
-            <b-icon
-              class="news-return"
-              icon="arrow-return-left"
-              @click="closeNews()"
-              v-if="newfocus != ''"
-            ></b-icon>
+            <news-admin :id="'news' + index" v-for="(n, index) in getNews" :key="index" :arrayid="index" :news="news[index]" />
+            <b-icon class="news-return" icon="arrow-return-left" @click="closeNews()" v-if="newfocus != ''"></b-icon>
           </div>
-          <b-pagination
-            class="news-pagination"
-            v-model="currentNewsPage"
-            pills
-            :total-rows="rows"
-            :per-page="2"
-          ></b-pagination>
+          <b-pagination class="news-pagination" v-model="currentNewsPage" pills :total-rows="rows" :per-page="2"></b-pagination>
         </div>
         <div class="news-block" v-else>
           <div class="news-header">
-            <h2
-              class="news-header-title"
-              style="border-top: 2px solid var(--color-primary-category);"
-            >Actualités</h2>
+            <h2 class="news-header-title" style="border-top: 2px solid var(--color-primary-category);">Actualités</h2>
             <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
             <button id="news-filtres">
               <b-icon icon="filter"></b-icon>
@@ -92,27 +46,10 @@
             <NewsFiltrage :minDate="minDate" />
           </div>
           <div class="news-wrapper">
-            <news-comp
-              :id="'news'+index"
-              v-for="(n,index) in getNews"
-              :key="index"
-              :arrayid="index"
-              :news="news[index]"
-            />
-            <b-icon
-              class="news-return"
-              icon="arrow-return-left"
-              @click="closeNews()"
-              v-if="newfocus != ''"
-            ></b-icon>
+            <news-comp :id="'news' + index" v-for="(n, index) in getNews" :key="index" :arrayid="index" :news="news[index]" />
+            <b-icon class="news-return" icon="arrow-return-left" @click="closeNews()" v-if="newfocus != ''"></b-icon>
           </div>
-          <b-pagination
-            class="news-pagination"
-            v-model="currentNewsPage"
-            pills
-            :total-rows="rows"
-            :per-page="2"
-          ></b-pagination>
+          <b-pagination class="news-pagination" v-model="currentNewsPage" pills :total-rows="rows" :per-page="2"></b-pagination>
         </div>
       </div>
     </div>
@@ -320,6 +257,7 @@ export default {
   background-color: var(--color-secondary-transparency) !important;
   border-radius: 10px;
 }
+
 .alert-wrapper {
   height: calc(100% - 62px);
   overflow-y: auto;
@@ -355,20 +293,25 @@ export default {
     display: none;
     margin: 0 2%;
   }
+
   .news-wrapper {
     margin: 0 2%;
   }
+
   .news-pagination {
     margin: 0 2%;
   }
+
   .searchbar {
     margin-left: 2% !important;
   }
+
   .alert-wrapper {
     height: 100%;
     overflow-y: auto;
   }
 }
+
 @media (max-width: 780px) {
   .searchbar {
     margin-left: 0 !important;
