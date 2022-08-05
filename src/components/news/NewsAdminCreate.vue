@@ -52,9 +52,9 @@
         <div style="height :80%">
           <div for="preview">Selection :</div>
           <div style="display: flex;">
-            <div v-for="p in files" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
+            <div v-for="p in news.photo" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
               <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteIMG(p)"></i>
-              <img name="preview" :src="GetURL(p)" style="width: 100px;" />
+              <img name="preview" :src="GetURL(p)" style="width: 100px;margin:auto" />
             </div>
           </div>
         </div>
@@ -167,19 +167,17 @@ export default {
     addpdf(tpdf) {
       return tpdf.push(null)
     },
-    onFileChange(evt) {
-      console.log(evt)
-      evt.target.files.forEach(element => {
-        this.files.push(element)
-      });
-    },
+    // onFileChange(evt) {
+    //   console.log(evt)
+    //   evt.target.files.forEach(element => {
+    //     this.files.push(element)
+    //   });
+    // },
     GetURL(file) {
       return URL.createObjectURL(file)
     },
     deleteIMG(file) {
-      console.log(this.files)
-      this.files.splice(this.files.findIndex(f => f.name == file.name))
-      console.log(this.news.photo)
+      this.news.photo.splice(this.news.photo.findIndex(f => f.name == file.name))
     }
   },
   data: function () {
@@ -200,8 +198,7 @@ export default {
       step: 1,
       link: false,
       minDate: today,
-      localredirection: false,
-      files: []
+      localredirection: false
     }
   }
 }
