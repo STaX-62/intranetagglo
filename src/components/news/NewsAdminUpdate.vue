@@ -59,7 +59,7 @@
 
         <div for="preview">Nouvelle Selection :</div>
         <div style="display: flex;">
-          <div v-for="p in autocomplete.photo" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
+          <div v-for="p in newimage" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
             <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteNewIMG(p)"></i>
             <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
           </div>
