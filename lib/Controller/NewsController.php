@@ -137,15 +137,15 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function update(int $id, string $title, string $subtitle, string $text, array $photos, $deletedphoto,  string $category,  string $groups, string $link, $expiration)
+    public function update(int $id, string $title, string $subtitle, string $text, string $photos, array $deletedphoto,  string $category,  string $groups, string $link, $expiration)
     {
         if ($this->isAdmin()) {
             return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photos,  $deletedphoto, $category, $groups, $link, $expiration) {
-
+                $photoArr = explode(',', $photos);
                 if (!empty($deletedphoto)) {
                     for ($i = 0; $i < count($deletedphoto); $i++) {
                         unlink(substr($deletedphoto[$i], 11));
-                        array_splice($photos, array_search($deletedphoto[$i], $photos));
+                        array_splice($photoArr, array_search($deletedphoto[$i], $photoArr));
                     }
                 }
 
@@ -158,7 +158,7 @@ class NewsController extends Controller
                             $photo = $this->timeFactory->getTime() . '.' . $fileInfos['extension'];
 
                             move_uploaded_file($_FILES['photo_upd']['tmp_name'], 'apps/intranetagglo/img/uploads/' . $photo);
-                            array_push($photos, $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo));
+                            array_push($photoArr, $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo));
                         }
                     }
                 }
