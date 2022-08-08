@@ -125,6 +125,8 @@ export default {
       this.step = 1
     },
     async updateNews(news, newimage) {
+      console.log(this.autocomplete.photo)
+      console.log(news.photo)
       let data = new FormData();
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
@@ -133,7 +135,7 @@ export default {
         for (var x = 0; x < newimage.length; x++)
           data.append('photo_upd[]', newimage[x], newimage[x].name);
       }
-      data.append('photos', this.news.photo);
+      data.append('photos', news.photo);
       data.append('deletedphoto', this.deletedIMG);
       data.append('category', news.category);
       data.append('groups', news.groups);
@@ -179,6 +181,7 @@ export default {
     },
     deleteExistingIMG(file) {
       console.log(file)
+      console.log(this.autocomplete.photo)
       this.deletedIMG.push(this.autocomplete.photo[this.autocomplete.photo.findIndex(f => f == file)])
       this.autocomplete.photo.splice(this.autocomplete.photo.findIndex(f => f == file))
     },
