@@ -127,6 +127,7 @@ export default {
     async updateNews(news, newimage) {
       console.log(this.autocomplete.photo)
       console.log(news.photo)
+      console.log(this.deletedIMG)
       let data = new FormData();
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
