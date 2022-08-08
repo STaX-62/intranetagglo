@@ -133,6 +133,7 @@ export default {
         for (var x = 0; x < newimage.length; x++)
           data.append('photo_upd[]', newimage[x], newimage[x].name);
       }
+      data.append('photos', this.news.photo);
       data.append('deletedphoto', this.deletedIMG);
       data.append('category', news.category);
       data.append('groups', news.groups);

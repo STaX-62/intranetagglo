@@ -137,7 +137,7 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function update(int $id, string $title, string $subtitle, string $text, array $photos, $deletedphoto,  string $category,  string $groups, string $link, $expiration)
+    public function update(int $id, string $title, string $subtitle, string $text, array $photos, array $deletedphoto,  string $category,  string $groups, string $link, $expiration)
     {
         if ($this->isAdmin()) {
             return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photos,  $deletedphoto, $category, $groups, $link, $expiration) {
