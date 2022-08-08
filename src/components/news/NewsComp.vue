@@ -9,7 +9,7 @@
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
-        <b-carousel class="news-img" v-model="slide" v-if="photoMultiple && newfocus != ''" :interval="8000" controls indicators background="#ababab" style="text-shadow: 1px 1px 2px #333;">
+        <b-carousel class="news-img" v-model="slide" v-if="photoMultiple && newfocus != ''" :interval="8000" controls indicators style="text-shadow: 1px 1px 2px #333;">
           <b-carousel-slide v-for="p in news.photo" :key="p" :img-src="p" @click="visible = !visible"></b-carousel-slide>
         </b-carousel>
 
@@ -72,7 +72,7 @@ export default {
       return this.$store.state.newsfocus;
     },
     photoMultiple() {
-      return this.news.photo.length
+      return this.news.photo.length > 1
     }
   },
   methods: {
