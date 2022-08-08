@@ -17,7 +17,7 @@
           </b-carousel-slide>
         </b-carousel>
 
-        <img class="news-img" v-bind:src="news.photo[0]" v-if="!photoMultiple" @click="visible = !visible" />
+        <img class="news-img" v-bind:src="news.photo[0]" v-if="!photoMultiple" @click="visible = !visible" style="width:auto" />
         <vue-easy-lightbox escDisabled moveDisabled :visible="visible" :imgs="news.photo" index="0" @hide="visible = !visible"></vue-easy-lightbox>
       </div>
       <div class="news-tagbox">
