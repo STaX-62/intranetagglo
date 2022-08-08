@@ -174,13 +174,13 @@ class NewsController extends Controller
                                 $photo = $this->timeFactory->getTime() . '-' . $i  . '.' . $fileInfos['extension'];
 
                                 move_uploaded_file($_FILES['photo_upd']['tmp_name'][$i], 'apps/intranetagglo/img/uploads/' . $photo);
-                                array_push($photourl, $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo));
+                                array_push($photoArr, $this->urlGenerator->imagePath('intranetagglo', 'uploads/' . $photo));
                             }
                         }
                     }
                 }
 
-                return $this->service->update($id, $title, $subtitle, $text, $photos, $category, $groups, $link, $expiration);
+                return $this->service->update($id, $title, $subtitle, $text, $photoArr, $category, $groups, $link, $expiration);
             });
         }
         return 'User is not admin';
