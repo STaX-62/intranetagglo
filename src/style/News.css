@@ -369,10 +369,10 @@ trix-editor.trix-content {
     max-width: 100% !important;
     transition: transform 0.2s ease !important;
     overflow: hidden !important;
-    padding-right: 12px !important;
     margin: auto;
     align-content: center;
     align-items: center;
+    width: -webkit-fill-available;
 }
 
 .news-img-preview {
@@ -437,10 +437,6 @@ trix-editor.trix-content {
 
 .news-row[focus=""] .news-img-container {
     display: none;
-}
-
-.news-textbox * {
-    position: relative;
 }
 
 .news-title {

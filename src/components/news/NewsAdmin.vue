@@ -93,7 +93,7 @@ export default {
       return this.$store.state.newsfocus;
     },
     photoMultiple() {
-      return this.news.photo.length
+      return this.news.photo.length < 2
     }
   },
   methods: {

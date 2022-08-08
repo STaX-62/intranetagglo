@@ -149,6 +149,7 @@ export default {
         clearTimeout(this.timer)
         this.timer = setTimeout(() => {
           this.$store.commit('setNewsUpdating', true)
+          this.$store.commit('updateNewsFocus', 2)
         }, 250)
         this.$store.commit('updateSearch', value)
       }
