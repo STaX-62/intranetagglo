@@ -130,7 +130,7 @@ export default {
       data.append('subtitle', news.subtitle);
       data.append('text', news.text);
       if (newimage.length) {
-        for (var x = 0; x < news.photo.length; x++)
+        for (var x = 0; x < newimage.length; x++)
           data.append('photo_upd[]', newimage[x], newimage[x].name);
       }
       data.append('deletedphoto', deletedIMG);
@@ -177,6 +177,7 @@ export default {
       return URL.createObjectURL(file)
     },
     deleteExistingIMG(file) {
+      console.log(file)
       this.deletedIMG.push(this.autocomplete.photo[this.autocomplete.photo.findIndex(f => f == file)])
       this.autocomplete.photo.splice(this.autocomplete.photo.findIndex(f => f == file))
     },
