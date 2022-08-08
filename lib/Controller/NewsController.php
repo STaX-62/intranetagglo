@@ -143,12 +143,12 @@ class NewsController extends Controller
             return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photos,  $deletedphoto, $category, $groups, $link, $expiration) {
                 $photoArr = explode(',', $photos);
                 $deletedphoto = explode(',', $deletedphoto);
-                if (!empty($deletedphoto)) {
-                    for ($i = 0; $i < count($deletedphoto); $i++) {
-                        unlink(substr($deletedphoto[$i], 11));
-                        array_splice($photoArr, array_search($deletedphoto[$i], $photoArr));
-                    }
-                }
+                // if (!empty($deletedphoto)) {
+                //     for ($i = 0; $i < count($deletedphoto); $i++) {
+                //         unlink(substr($deletedphoto[$i], 11));
+                //         array_splice($photoArr, array_search($deletedphoto[$i], $photoArr));
+                //     }
+                // }
 
                 // Dans le cas d'une seule photo
                 if (isset($_FILES['photo_upd']) && !is_array($_FILES['photo_upd']['name'])) {
