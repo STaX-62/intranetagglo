@@ -137,11 +137,12 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function update(int $id, string $title, string $subtitle, string $text, string $photos, array $deletedphoto,  string $category,  string $groups, string $link, $expiration)
+    public function update(int $id, string $title, string $subtitle, string $text, string $photos, string $deletedphoto,  string $category,  string $groups, string $link, $expiration)
     {
         if ($this->isAdmin()) {
             return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photos,  $deletedphoto, $category, $groups, $link, $expiration) {
                 $photoArr = explode(',', $photos);
+                $deletedphoto = explode(',', $deletedphoto);
                 if (!empty($deletedphoto)) {
                     for ($i = 0; $i < count($deletedphoto); $i++) {
                         unlink(substr($deletedphoto[$i], 11));
