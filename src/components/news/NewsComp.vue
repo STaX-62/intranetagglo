@@ -9,9 +9,12 @@
         <div class="news-description" v-html="news.text"></div>
       </div>
       <div class="news-img-container">
-        <b-carousel class="news-img" v-model="slide" v-if="photoMultiple && newfocus != ''" :interval="8000" no-animation controls indicators style="text-shadow: 1px 1px 2px #333;display:block"
-          @click="visible = !visible">
-          <b-carousel-slide v-for="p in news.photo" :key="p" :img-src="p"></b-carousel-slide>
+        <b-carousel v-model="slide" v-if="photoMultiple && newfocus != ''" :interval="8000" controls indicators no-animation style="text-shadow: 1px 1px 2px #333; width: 100%;">
+          <b-carousel-slide v-for="p in news.photo" :key="p">
+            <template v-slot:img>
+              <img class="news-img" :src="p" style="height: auto;width: fit-content;" @click="visible = !visible">
+            </template>
+          </b-carousel-slide>
         </b-carousel>
 
         <img class="news-img" v-bind:src="news.photo[0]" v-if="!photoMultiple" @click="visible = !visible" />

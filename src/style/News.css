@@ -682,6 +682,15 @@ trix-editor.trix-content {
     right: 0;
 }
 
+.carousel-control-next,
+.carousel-control-prev {
+    width: 5% !important;
+}
+
+.carousel-item.active {
+    display: flex !important;
+}
+
 @media (max-width: 780px) {
     .news-wrapper {
         display: block;
