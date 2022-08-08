@@ -686,6 +686,7 @@ trix-editor.trix-content {
     display: flex !important;
 }
 
+.caroussel-inner,
 .carousel-item {
     height: 100%;
 }
