@@ -50,26 +50,22 @@
             <i class="mdi mdi-keyboard-return"></i>
           </b-button>
         </div>
-        <div style="display: flex;" v-if="autocomplete.photo[0] != ''">
-          <draggable v-model="autocomplete.photo" class="grid-tile" group="oldimg" :move="onMoveCallback">
-            <div v-for="p in autocomplete.photo" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
-              <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteExistingIMG(p)"></i>
-              <img name="preview" :src="p" style="width: 100px; height:100px; margin:auto" />
-            </div>
-          </draggable>
-        </div>
+        <draggable v-model="autocomplete.photo" class="grid-tile" group="oldimg" :move="onMoveCallback" v-if="autocomplete.photo[0] != ''" style="display: flex;">
+          <div v-for="p in autocomplete.photo" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
+            <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteExistingIMG(p)"></i>
+            <img name="preview" :src="p" style="width: 100px; height:100px; margin:auto" />
+          </div>
+        </draggable>
         <label for="photo">Image d'illustration / Photo</label>
         <b-form-file name="photo" size="sm" accept="image/*" placeholder="Choisir le fichier (.jpg/.jpeg/.png)..." drop-placeholder="Placer l'image ici ..." v-model="newimage" multiple>
         </b-form-file>
         <div for="preview">Nouvelle Selection : </div>
-        <div style="display: flex;">
-          <draggable v-model="newimage" class="grid-tile" group="newimg" :move="onMoveCallback">
-            <div v-for="p in newimage" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
-              <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteNewIMG(p)"></i>
-              <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
-            </div>
-          </draggable>
-        </div>
+        <draggable v-model="newimage" class="grid-tile" group="newimg" :move="onMoveCallback" style="display: flex;">
+          <div v-for="p in newimage" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
+            <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteNewIMG(p)"></i>
+            <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
+          </div>
+        </draggable>
       </div>
       <template #modal-footer="{ ok }">
         <div>Etape {{ step }}/3</div>
