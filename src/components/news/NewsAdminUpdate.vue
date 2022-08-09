@@ -182,8 +182,12 @@ export default {
       return URL.createObjectURL(file)
     },
     deleteExistingIMG(file) {
-      this.deletedIMG.push(this.autocomplete.photo[this.autocomplete.photo.findIndex(f => f == file)])
-      this.autocomplete.photo.splice(this.autocomplete.photo.findIndex(f => f == file))
+      console.log(file)
+      console.log(this.autocomplete.photo.findIndex(f => f == file))
+      var photoIndex = this.autocomplete.photo.findIndex(f => f == file)
+      console.log(photoIndex)
+      this.deletedIMG.push(this.autocomplete.photo[photoIndex])
+      this.autocomplete.photo.splice(photoIndex, 1)
     },
     returndeletedIMG() {
       this.autocomplete.photo.push(this.deletedIMG.pop())
