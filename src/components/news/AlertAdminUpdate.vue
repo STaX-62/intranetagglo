@@ -9,31 +9,14 @@
       <label for="titre">Titre</label>
       <b-form-input name="titre" v-model="autocomplete.title" required></b-form-input>
       <label for="groups-component-select">Restrictions de Groupes d'utilisateurs</label>
-      <b-form-tags
-        name="groups-component-select"
-        v-model="getFormatedGroups"
-        size="lg"
-        class="mb-2"
-        add-on-change
-        no-outer-focus
-      >
+      <b-form-tags name="groups-component-select" v-model="getFormatedGroups" size="lg" class="mb-2" add-on-change no-outer-focus>
         <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
           <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
             <li v-for="tag in tags" :key="tag" class="list-inline-item">
-              <b-form-tag
-                @remove="removeTag(tag)"
-                :title="tag"
-                :disabled="disabled"
-                variant="info"
-              >{{ tag }}</b-form-tag>
+              <b-form-tag @remove="removeTag(tag)" :title="tag" :disabled="disabled" variant="info">{{ tag }}</b-form-tag>
             </li>
           </ul>
-          <b-form-select
-            v-bind="inputAttrs"
-            v-on="inputHandlers"
-            :disabled="disabled || availableOptions.length === 0"
-            :options="availableOptions"
-          >
+          <b-form-select v-bind="inputAttrs" v-on="inputHandlers" :disabled="disabled || availableOptions.length === 0" :options="availableOptions">
             <template #first>
               <!-- This is required to prevent bugs with Safari -->
               <option disabled value>Choose a tag...</option>
@@ -42,18 +25,8 @@
         </template>
       </b-form-tags>
       <label for="expidationDatepicker">Date d'expiration de l'alerte:</label>
-      <b-form-datepicker
-        name="expirationDatepicker"
-        v-model="newexpiration"
-        :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-        locale="fr-FR"
-        hide-header="true"
-        :min="minDate"
-        :state="verification"
-        :initial-date="initialDate"
-        placeholder="Date d'expiration"
-        value-as-date
-      ></b-form-datepicker>
+      <b-form-datepicker name="expirationDatepicker" v-model="newexpiration" :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }" locale="fr-FR" hide-header="true"
+        :min="minDate" :state="verification" :initial-date="initialDate" placeholder="Date d'expiration" value-as-date></b-form-datepicker>
       <b-form-invalid-feedback :state="verification">Veuillez re-valider la date d'expiration</b-form-invalid-feedback>
       <label for="text">Contenu de l'alerte</label>
       <VueTrix name="text" inputId="editor1" v-model="autocomplete.text" placeholder="..." />
@@ -162,7 +135,8 @@ export default {
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
       data.append('text', news.text);
-      data.append('photolink', news.photo);
+      data.append('photos', news.photo);
+      data.append('deletedphoto', []);
       data.append('category', news.category);
       data.append('groups', news.groups);
       data.append('link', news.link);
@@ -240,9 +214,11 @@ export default {
   position: relative;
   margin-left: 10px;
 }
+
 .alert-update-button svg {
   fill: var(--color-mode-contrast-1);
 }
+
 .alert-update-button {
   position: relative;
   font-size: 1.25rem !important;
