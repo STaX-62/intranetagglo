@@ -45,34 +45,22 @@
         <b-form-checkbox v-model="localredirection">Rediriger vers la photo de l'actualité</b-form-checkbox>
       </div>
       <div v-if="step == 3" style="height:50vh">
-        <div for="preview">Selection actuelle :</div>
+        <div for="preview">Selection actuelle :<i class="mdi mdi-keyboard-return" @click="returndeletedIMG(p)"></i></div>
         <div style="display: flex;" v-if="autocomplete.photo[0] != ''">
           <div v-for="p in autocomplete.photo" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
-            <div class="flipimg" :adminopt="adminopt">
-              <div class="flipimg-inner">
-                <div class="fipimg">
-                  <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteExistingIMG(p)"></i>
-                  <img name="preview" :src="p" style="width: 100px; height:100px; margin:auto" />
-                </div>
-                <div class="admin-tagbox">
-                  <i class="mdi mdi-trash" @click="deleteExistingIMG(p)"></i>
-                </div>
-              </div>
-            </div>
+            <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteExistingIMG(p)"></i>
+            <img name="preview" :src="p" style="width: 100px; height:100px; margin:auto" />
           </div>
-        </div>
+          <label for="photo">Image d'illustration / Photo</label>
+          <b-form-file name="photo" size="sm" accept="image/*" placeholder="Choisir le fichier (.jpg/.jpeg/.png)..." drop-placeholder="Placer l'image ici ..." v-model="newimage" multiple>
+          </b-form-file>
 
-
-
-        <label for="photo">Image d'illustration / Photo</label>
-        <b-form-file name="photo" size="sm" accept="image/*" placeholder="Choisir le fichier (.jpg/.jpeg/.png)..." drop-placeholder="Placer l'image ici ..." v-model="newimage" multiple>
-        </b-form-file>
-
-        <div for="preview">Nouvelle Selection :</div>
-        <div style="display: flex;">
-          <div v-for="p in newimage" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
-            <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteNewIMG(p)"></i>
-            <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
+          <div for="preview">Nouvelle Selection : </div>
+          <div style="display: flex;">
+            <div v-for="p in newimage" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
+              <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteNewIMG(p)"></i>
+              <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
+            </div>
           </div>
         </div>
       </div>
@@ -96,11 +84,13 @@ import VueTrix from "vue-trix";
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'NewsAdminUpdate',
   components: {
-    VueTrix
+    VueTrix,
+    draggable
   },
   props: {
     news: Object,
@@ -189,14 +179,11 @@ export default {
       return URL.createObjectURL(file)
     },
     deleteExistingIMG(file) {
-      if (this.deleteIMG.find(i => i == file)) {
-        this.deletedIMG.splice(this.deletedIMG.findIndex(f => f == file))
-      }
-      else {
-        this.deletedIMG.push(this.autocomplete.photo[this.autocomplete.photo.findIndex(f => f == file)])
-      }
-
-      // this.autocomplete.photo.splice(this.autocomplete.photo.findIndex(f => f == file))
+      this.deletedIMG.push(this.autocomplete.photo[this.autocomplete.photo.findIndex(f => f == file)])
+      this.autocomplete.photo.splice(this.autocomplete.photo.findIndex(f => f == file))
+    },
+    returndeletedIMG() {
+      this.autocomplete.photo.push(this.deletedIMG.pop())
     },
     deleteNewIMG(file) {
       this.newimage.splice(this.newimage.findIndex(f => f.name == file.name))
@@ -227,31 +214,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.flipimg {
-  display: inline-block;
-  margin-right: 10px;
-  position: absolute;
-  right: 0;
-  background-color: transparent;
-  perspective: 1000px;
-  /* Remove this if you don't want the 3D effect */
-}
-
-.flipimg-inner {
-  user-select: none;
-  position: relative;
-  right: 0;
-  transition: transform 0.8s;
-  border-radius: 10px;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-}
-
-.flipimg[adminopt="true"] .flipimg-inner {
-  transform: rotateX(180deg);
-}
-</style>

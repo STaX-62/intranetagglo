@@ -354,6 +354,11 @@ input[type="checkbox"].checkbox+label::before {
     vertical-align: unset;
 }
 
+.trix-button-group--file-tools,
+.trix-button--icon-code {
+    display: none !important;
+}
+
 @media (max-width: 1350px) {
     .Settings {
         width: 180px;
