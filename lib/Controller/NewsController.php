@@ -141,7 +141,12 @@ class NewsController extends Controller
     {
         if ($this->isAdmin()) {
             return $this->handleNotFound(function () use ($id, $title, $subtitle, $text, $photos,  $deletedphoto, $category, $groups, $link, $expiration) {
-                $photoArr = explode(',', $photos);
+                if ($photos != "") {
+                    $photoArr = explode(',', $photos);
+                } else {
+                    $photoArr = [];
+                }
+                
                 $deletedphoto = explode(',', $deletedphoto);
 
                 if (count($deletedphoto) > 0 && $deletedphoto[0] != '') {

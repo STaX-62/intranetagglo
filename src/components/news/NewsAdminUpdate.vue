@@ -151,6 +151,9 @@ export default {
         }
       }).then(() => {
         this.$store.commit('setNewsUpdating', true)
+        this.autocomplete.photo = []
+        this.deletedIMG = []
+        this.newimage = []
         this.$bvToast.toast(`L'actualité '${news.title.length > 60 ? news.title.substring(0, 60) + '...' : news.title}' a été modifiée`, {
           title: 'Modification de l\'actualité',
           variant: 'success',
