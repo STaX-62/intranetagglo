@@ -147,7 +147,6 @@ class NewsController extends Controller
                 if (count($deletedphoto) > 0 && $deletedphoto[0] != '') {
                     for ($i = 0; $i < count($deletedphoto); $i++) {
                         unlink(substr($deletedphoto[$i], 11));
-                        array_splice($photoArr, array_search($deletedphoto[$i], $photoArr));
                     }
                 }
 

@@ -51,7 +51,7 @@
           </b-button>
         </div>
         <draggable v-model="autocomplete.photo" class="grid-tile" group="oldimg" :move="onMoveCallback" v-if="autocomplete.photo[0] != ''" style="display: flex;">
-          <div v-for="p in autocomplete.photo" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
+          <div v-for="p in autocomplete.photo" :key="p" class="imgtile">
             <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteExistingIMG(p)"></i>
             <img name="preview" :src="p" style="width: 100px; height:100px; margin:auto" />
           </div>
@@ -61,7 +61,7 @@
         </b-form-file>
         <div for="preview">Nouvelle Selection : </div>
         <draggable v-model="newimage" class="grid-tile" group="newimg" :move="onMoveCallback" style="display: flex;">
-          <div v-for="p in newimage" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
+          <div v-for="p in newimage" :key="p" class="imgtile">
             <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteNewIMG(p)"></i>
             <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
           </div>
@@ -193,7 +193,7 @@ export default {
       this.autocomplete.photo.push(this.deletedIMG.pop())
     },
     deleteNewIMG(file) {
-      this.newimage.splice(this.newimage.findIndex(f => f.name == file.name))
+      this.newimage.splice(this.newimage.findIndex(f => f.name == file.name), 1)
     },
     onMoveCallback(event) {
       console.log(event)
@@ -226,5 +226,11 @@ export default {
 </script>
 
 <style scoped>
-.imgtile {}
+.imgtile {
+  padding: 10px;
+  margin: 5px;
+  border: 1px #000 solid;
+  position: relative;
+  border-radius: 5px;
+}
 </style>
