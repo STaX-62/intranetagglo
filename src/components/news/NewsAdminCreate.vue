@@ -42,8 +42,7 @@
       </div>
       <div v-if="step == 2 && link" style="height:50vh">
         <label for="link">Lien de redirection de L'actualité</label>
-        <b-form-input name="link" v-model="news.link" :disabled="localredirection"></b-form-input>
-        <b-form-checkbox v-model="localredirection">Rediriger vers la photo de l'actualité</b-form-checkbox>
+        <b-form-input name="link" v-model="news.link"></b-form-input>
       </div>
       <div v-if="step == 3" style="height:50vh">
         <label for="photo">Image d'illustration / Photo</label>
@@ -103,9 +102,6 @@ export default {
       if (this.link) {
         this.news.text = ""
       }
-      if (this.localredirection) {
-        this.link = "local"
-      }
       this.news.expiration = 0
       this.createNews(this.news)
       this.news = {
@@ -141,6 +137,8 @@ export default {
         }
       }).then(() => {
         this.$store.commit('setNewsUpdating', true)
+        this.news.photo = []
+        this.step = 1
         this.$bvToast.toast(`L'actualité '${news.title.length > 60 ? news.title.substring(0, 60) + '...' : news.title}' a été créée`, {
           title: 'Création de l\'actualité',
           variant: 'success',
@@ -192,8 +190,7 @@ export default {
       },
       step: 1,
       link: false,
-      minDate: today,
-      localredirection: false
+      minDate: today
     }
   }
 }

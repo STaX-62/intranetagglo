@@ -41,8 +41,7 @@
       </div>
       <div v-if="step == 2 && link" style="height:50vh">
         <label for="link">Lien de redirection de L'actualité</label>
-        <b-form-input name="link" v-model="news.link" :disabled="localredirection"></b-form-input>
-        <b-form-checkbox v-model="localredirection">Rediriger vers la photo de l'actualité</b-form-checkbox>
+        <b-form-input name="link" v-model="news.link"></b-form-input>
       </div>
       <div v-if="step == 3" style="height:50vh">
         <div for="preview">Selection actuelle :
@@ -121,9 +120,6 @@ export default {
       if (this.link) {
         this.autocomplete.text = ""
       }
-      if (this.localredirection) {
-        this.link = "local"
-      }
       this.autocomplete.expiration = 0
       this.updateNews(this.autocomplete, this.newimage)
       this.step = 1
@@ -154,6 +150,7 @@ export default {
         this.autocomplete.photo = []
         this.deletedIMG = []
         this.newimage = []
+        this.step = 1
         this.$bvToast.toast(`L'actualité '${news.title.length > 60 ? news.title.substring(0, 60) + '...' : news.title}' a été modifiée`, {
           title: 'Modification de l\'actualité',
           variant: 'success',
@@ -221,7 +218,6 @@ export default {
         link: "",
         expiration: 0
       },
-      localredirection: false,
       deletedIMG: []
     }
   }
