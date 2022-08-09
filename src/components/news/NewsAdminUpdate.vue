@@ -16,34 +16,17 @@
         <label for="category">Catégorie</label>
         <b-form-input name="category" list="category-id" v-model="autocomplete.category" required></b-form-input>
         <datalist id="category-id">
-          <option v-for="(category,index) in categoryoptions" :key="index">{{ category }}</option>
+          <option v-for="(category, index) in categoryoptions" :key="index">{{ category }}</option>
         </datalist>
         <label for="groups-component-select">Restrictions de Groupes d'utilisateurs</label>
-        <b-form-tags
-          name="groups-component-select"
-          v-model="autocomplete.groups"
-          size="lg"
-          class="mb-2"
-          add-on-change
-          no-outer-focus
-        >
+        <b-form-tags name="groups-component-select" v-model="autocomplete.groups" size="lg" class="mb-2" add-on-change no-outer-focus>
           <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
             <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
               <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                <b-form-tag
-                  @remove="removeTag(tag)"
-                  :title="tag"
-                  :disabled="disabled"
-                  variant="info"
-                >{{ tag }}</b-form-tag>
+                <b-form-tag @remove="removeTag(tag)" :title="tag" :disabled="disabled" variant="info">{{ tag }}</b-form-tag>
               </li>
             </ul>
-            <b-form-select
-              v-bind="inputAttrs"
-              v-on="inputHandlers"
-              :disabled="disabled || availableOptions.length === 0"
-              :options="availableOptions"
-            >
+            <b-form-select v-bind="inputAttrs" v-on="inputHandlers" :disabled="disabled || availableOptions.length === 0" :options="availableOptions">
               <template #first>
                 <!-- This is required to prevent bugs with Safari -->
                 <option disabled value>Choose a tag...</option>
@@ -54,48 +37,40 @@
       </div>
       <div v-if="step == 2 && !link" style="height:50vh">
         <label for="text">Contenu de l'actualité</label>
-        <VueTrix
-          name="text"
-          inputId="editor1"
-          v-model="autocomplete.text"
-          placeholder="Contenu de l'actualité une fois étendue..."
-        />
+        <VueTrix name="text" inputId="editor1" v-model="autocomplete.text" placeholder="Contenu de l'actualité une fois étendue..." />
       </div>
       <div v-if="step == 2 && link" style="height:50vh">
         <label for="link">Lien de redirection de L'actualité</label>
-        <b-form-input name="link" v-model="news.link" :disabled="localredirection"></b-form-input>
-        <b-form-checkbox v-model="localredirection">Rediriger vers la photo de l'actualité</b-form-checkbox>
+        <b-form-input name="link" v-model="news.link"></b-form-input>
       </div>
       <div v-if="step == 3" style="height:50vh">
-        <label for="photo">Image d'illustration / Photo</label>
-        <b-form-file
-          name="photo"
-          size="sm"
-          accept="image/*"
-          placeholder="Choisir le fichier (.jpg/.jpeg/.png)..."
-          drop-placeholder="Placer l'image ici ..."
-          v-model="newimage"
-          @change="onFileChange"
-        ></b-form-file>
-        <div style="height :80%">
-          <div for="preview">Prévisualisation :</div>
-          <img
-            name="preview"
-            v-if="autocomplete.photo != ''"
-            :src="autocomplete.photo"
-            style="max-width: 100%; max-height:calc(100% - 24px)"
-          />
+        <div for="preview">Selection actuelle :
+          <b-button @click="returndeletedIMG(p)" v-if="deletedIMG.length">
+            <i class="mdi mdi-keyboard-return"></i>
+          </b-button>
         </div>
+        <draggable v-model="autocomplete.photo" class="grid-tile" group="oldimg" :move="onMoveCallback" v-if="autocomplete.photo[0] != ''" style="display: flex;">
+          <div v-for="p in autocomplete.photo" :key="p" class="imgtile">
+            <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteExistingIMG(p)"></i>
+            <img name="preview" :src="p" style="width: 100px; height:100px; margin:auto" />
+          </div>
+        </draggable>
+        <label for="photo">Image d'illustration / Photo</label>
+        <b-form-file name="photo" size="sm" accept="image/*" placeholder="Choisir le fichier (.jpg/.jpeg/.png)..." drop-placeholder="Placer l'image ici ..." v-model="newimage" multiple>
+        </b-form-file>
+        <div for="preview">Nouvelle Selection : </div>
+        <draggable v-model="newimage" class="grid-tile" group="newimg" :move="onMoveCallback" style="display: flex;">
+          <div v-for="p in newimage" :key="p" class="imgtile">
+            <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteNewIMG(p)"></i>
+            <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
+          </div>
+        </draggable>
       </div>
       <template #modal-footer="{ ok }">
-        <div>Etape {{step}}/3</div>
-        <b-button
-          @click="link = !link"
-          variant="dark"
-          v-if="step == 2"
-        >{{link ? "Remplacer par un Texte" : "Remplacer par un lien"}}</b-button>
+        <div>Etape {{ step }}/3</div>
+        <b-button @click="link = !link" variant="dark" v-if="step == 2">{{ link ? "Remplacer par un Texte" : "Remplacer par un lien" }}</b-button>
         <b-button size="md" variant="secondary" @click="step--" v-if="step > 1">Précédent</b-button>
-        <b-button size="md" variant="secondary" @click="step = step +1" v-if="step < 3">Suivant</b-button>
+        <b-button size="md" variant="secondary" @click="step = step + 1" v-if="step < 3">Suivant</b-button>
         <b-button size="md" variant="success" @click="ok()" v-if="step == 3">Modifier</b-button>
       </template>
     </b-modal>
@@ -111,11 +86,13 @@ import VueTrix from "vue-trix";
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import FormData from 'form-data'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'NewsAdminUpdate',
   components: {
-    VueTrix
+    VueTrix,
+    draggable
   },
   props: {
     news: Object,
@@ -143,9 +120,6 @@ export default {
       if (this.link) {
         this.autocomplete.text = ""
       }
-      if (this.localredirection) {
-        this.link = "local"
-      }
       this.autocomplete.expiration = 0
       this.updateNews(this.autocomplete, this.newimage)
       this.step = 1
@@ -155,10 +129,12 @@ export default {
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
       data.append('text', news.text);
-      if (newimage != null) {
-        data.append('photo_upd', newimage, newimage.name);
+      if (newimage.length) {
+        for (var x = 0; x < newimage.length; x++)
+          data.append('photo_upd[]', newimage[x], newimage[x].name);
       }
-      data.append('photolink', news.photo);
+      data.append('photos', news.photo);
+      data.append('deletedphoto', this.deletedIMG);
       data.append('category', news.category);
       data.append('groups', news.groups);
       data.append('link', news.link);
@@ -171,6 +147,10 @@ export default {
         }
       }).then(() => {
         this.$store.commit('setNewsUpdating', true)
+        this.autocomplete.photo = []
+        this.deletedIMG = []
+        this.newimage = []
+        this.step = 1
         this.$bvToast.toast(`L'actualité '${news.title.length > 60 ? news.title.substring(0, 60) + '...' : news.title}' a été modifiée`, {
           title: 'Modification de l\'actualité',
           variant: 'success',
@@ -198,6 +178,26 @@ export default {
     addpdf(tpdf) {
       return tpdf.push(null)
     },
+    GetURL(file) {
+      return URL.createObjectURL(file)
+    },
+    deleteExistingIMG(file) {
+      console.log(file)
+      console.log(this.autocomplete.photo.findIndex(f => f == file))
+      var photoIndex = this.autocomplete.photo.findIndex(f => f == file)
+      console.log(photoIndex)
+      this.deletedIMG.push(this.autocomplete.photo[photoIndex])
+      this.autocomplete.photo.splice(photoIndex, 1)
+    },
+    returndeletedIMG() {
+      this.autocomplete.photo.push(this.deletedIMG.pop())
+    },
+    deleteNewIMG(file) {
+      this.newimage.splice(this.newimage.findIndex(f => f.name == file.name), 1)
+    },
+    onMoveCallback(event) {
+      console.log(event)
+    }
   },
   data: function () {
     const now = new Date()
@@ -207,19 +207,29 @@ export default {
       step: 1,
       link: false,
       minDate: today,
-      newimage: null,
+      newimage: [],
       autocomplete: {
         title: "",
         subtitle: "",
         text: "",
-        photo: null,
+        photo: [],
         category: "",
         groups: [],
         link: "",
         expiration: 0
       },
-      localredirection: false
+      deletedIMG: []
     }
   }
 }
 </script>
+
+<style scoped>
+.imgtile {
+  padding: 10px;
+  margin: 5px;
+  border: 1px #000 solid;
+  position: relative;
+  border-radius: 5px;
+}
+</style>

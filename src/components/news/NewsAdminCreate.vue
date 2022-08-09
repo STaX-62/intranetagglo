@@ -2,8 +2,7 @@
   <div class="add-news-button" @click="modal = !modal">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
       <path
-        d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"
-      />
+        d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" />
     </svg>
     <b-modal id="newsmodal1" size="xl" v-model="modal" ref="modal" @ok="AddNews">
       <template #modal-title>
@@ -18,34 +17,17 @@
         <label for="category">Catégorie</label>
         <b-form-input name="category" list="category-id" v-model="news.category" required></b-form-input>
         <datalist id="category-id">
-          <option v-for="(category,index) in categoryoptions" :key="index">{{ category }}</option>
+          <option v-for="(category, index) in categoryoptions" :key="index">{{ category }}</option>
         </datalist>
         <label for="groups-component-select">Restrictions de Groupes d'utilisateurs</label>
-        <b-form-tags
-          name="groups-component-select"
-          v-model="news.groups"
-          size="lg"
-          class="mb-2"
-          add-on-change
-          no-outer-focus
-        >
+        <b-form-tags name="groups-component-select" v-model="news.groups" size="lg" class="mb-2" add-on-change no-outer-focus>
           <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
             <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
               <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                <b-form-tag
-                  @remove="removeTag(tag)"
-                  :title="tag"
-                  :disabled="disabled"
-                  variant="info"
-                >{{ tag }}</b-form-tag>
+                <b-form-tag @remove="removeTag(tag)" :title="tag" :disabled="disabled" variant="info">{{ tag }}</b-form-tag>
               </li>
             </ul>
-            <b-form-select
-              v-bind="inputAttrs"
-              v-on="inputHandlers"
-              :disabled="disabled || availableOptions.length === 0"
-              :options="availableOptions"
-            >
+            <b-form-select v-bind="inputAttrs" v-on="inputHandlers" :disabled="disabled || availableOptions.length === 0" :options="availableOptions">
               <template #first>
                 <!-- This is required to prevent bugs with Safari -->
                 <option disabled value>Choose a tag...</option>
@@ -56,48 +38,31 @@
       </div>
       <div v-if="step == 2 && !link" style="height:50vh">
         <label for="text">Contenu de l'actualité</label>
-        <VueTrix
-          name="text"
-          inputId="editor1"
-          v-model="news.text"
-          placeholder="Contenu de l'actualité une fois étendue..."
-        />
+        <VueTrix name="text" inputId="editor1" v-model="news.text" placeholder="Contenu de l'actualité une fois étendue..." />
       </div>
       <div v-if="step == 2 && link" style="height:50vh">
         <label for="link">Lien de redirection de L'actualité</label>
-        <b-form-input name="link" v-model="news.link" :disabled="localredirection"></b-form-input>
-        <b-form-checkbox v-model="localredirection">Rediriger vers la photo de l'actualité</b-form-checkbox>
+        <b-form-input name="link" v-model="news.link"></b-form-input>
       </div>
       <div v-if="step == 3" style="height:50vh">
         <label for="photo">Image d'illustration / Photo</label>
-        <b-form-file
-          name="photo"
-          size="sm"
-          accept="image/*"
-          placeholder="Choisir le fichier (.jpg/.jpeg/.png)..."
-          drop-placeholder="Placer l'image ici ..."
-          v-model="news.photo"
-          @change="onFileChange"
-        ></b-form-file>
+        <b-form-file name="photo" size="sm" accept="image/*" placeholder="Choisir le fichier (.jpg/.jpeg/.png)..." drop-placeholder="Placer l'image ici ..." v-model="news.photo" @change="onFileChange"
+          multiple></b-form-file>
         <div style="height :80%">
-          <div for="preview">Prévisualisation :</div>
-          <img
-            name="preview"
-            v-if="url"
-            :src="url"
-            style="max-width: 100%; max-height:calc(100% - 24px)"
-          />
+          <div for="preview">Selection :</div>
+          <div style="display: flex;">
+            <div v-for="p in news.photo" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
+              <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteIMG(p)"></i>
+              <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
+            </div>
+          </div>
         </div>
       </div>
       <template #modal-footer="{ ok }">
-        <div>Etape {{step}}/3</div>
-        <b-button
-          @click="link = !link"
-          variant="dark"
-          v-if="step == 2"
-        >{{link ? "Remplacer par un Texte" : "Remplacer par un lien"}}</b-button>
+        <div>Etape {{ step }}/3</div>
+        <b-button @click="link = !link" variant="dark" v-if="step == 2">{{ link ? "Remplacer par un Texte" : "Remplacer par un lien" }}</b-button>
         <b-button size="md" variant="secondary" @click="step--" v-if="step > 1">Précédent</b-button>
-        <b-button size="md" variant="secondary" @click="step = step +1" v-if="step < 3">Suivant</b-button>
+        <b-button size="md" variant="secondary" @click="step = step + 1" v-if="step < 3">Suivant</b-button>
         <b-button size="md" variant="success" @click="ok()" v-if="step == 3">Ajouter</b-button>
       </template>
     </b-modal>
@@ -137,16 +102,13 @@ export default {
       if (this.link) {
         this.news.text = ""
       }
-      if (this.localredirection) {
-        this.link = "local"
-      }
       this.news.expiration = 0
       this.createNews(this.news)
       this.news = {
         title: "",
         subtitle: "",
         text: "",
-        photo: null,
+        photo: [],
         category: "",
         groups: [],
         link: "",
@@ -159,8 +121,9 @@ export default {
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
       data.append('text', news.text);
-      if (news.photo != null) {
-        data.append('photo', news.photo, news.photo.name);
+      if (news.photo.length) {
+        for (var x = 0; x < news.photo.length; x++)
+          data.append('photo[]', news.photo[x], news.photo[x].name);
       }
       data.append('category', news.category);
       data.append('groups', news.groups);
@@ -174,6 +137,8 @@ export default {
         }
       }).then(() => {
         this.$store.commit('setNewsUpdating', true)
+        this.news.photo = []
+        this.step = 1
         this.$bvToast.toast(`L'actualité '${news.title.length > 60 ? news.title.substring(0, 60) + '...' : news.title}' a été créée`, {
           title: 'Création de l\'actualité',
           variant: 'success',
@@ -201,6 +166,12 @@ export default {
     addpdf(tpdf) {
       return tpdf.push(null)
     },
+    GetURL(file) {
+      return URL.createObjectURL(file)
+    },
+    deleteIMG(file) {
+      this.news.photo.splice(this.news.photo.findIndex(f => f.name == file.name))
+    }
   },
   data: function () {
     const now = new Date()
@@ -211,7 +182,7 @@ export default {
         title: "",
         subtitle: "",
         text: "",
-        photo: null,
+        photo: [],
         category: "",
         groups: [],
         link: "",
@@ -219,8 +190,7 @@ export default {
       },
       step: 1,
       link: false,
-      minDate: today,
-      localredirection: false
+      minDate: today
     }
   }
 }
@@ -232,6 +202,7 @@ export default {
   position: relative !important;
   margin-left: 10px !important;
 }
+
 .add-news-button svg {
   fill: var(--color-mode-contrast-1);
   transition: color 0.2s;

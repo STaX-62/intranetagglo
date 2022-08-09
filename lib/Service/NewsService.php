@@ -102,7 +102,7 @@ class NewsService
 		$news->setTitle($title);
 		$news->setSubtitle($subtitle);
 		$news->setText($text);
-		$news->setPhoto($photo);
+		$news->setPhoto(implode(';', $photo));
 		$news->setCategory($category);
 		$news->setGroups($groups);
 		$news->setLink($link);
@@ -125,7 +125,7 @@ class NewsService
 			$news->setTitle($title);
 			$news->setSubtitle($subtitle);
 			$news->setText($text);
-			$news->setPhoto($photo);
+			$news->setPhoto(implode(';', $photo));
 			$news->setCategory($category);
 			$news->setGroups($groups);
 			$news->setLink($link);
