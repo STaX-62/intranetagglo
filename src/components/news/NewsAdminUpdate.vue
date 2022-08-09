@@ -110,6 +110,7 @@ export default {
       this.modal = !this.modal;
       this.autocomplete = this.news;
       this.autocomplete.groups = this.news.groups.split(';')
+      console.log(this.autocomplete.photo)
     },
     UpdNews() {
       this.autocomplete.author = this.$store.state.username

@@ -86,6 +86,9 @@ export default {
     updating: function (val) {
       if (val) {
         var url = `apps/intranetagglo/news/${this.currentNewsPage - 1}`
+        console.log(this.newsperpage)
+        console.log((this.currentNewsPage - 1))
+        console.log((this.currentNewsPage - 1) * this.newsperpage)
         axios.post(generateUrl(url), { 'id': (this.currentNewsPage - 1) * this.newsperpage, 'limit': this.newsperpage, 'search': this.search, 'categories': this.categoryfilter.join(';'), dateFilter: this.dateFilter }, { type: 'application/json' })
           .then((response) => {
             this.news = response.data[0];
