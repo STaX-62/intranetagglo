@@ -46,7 +46,7 @@
       </div>
       <div v-if="step == 3" style="height:50vh">
         <div for="preview">Selection actuelle :</div>
-        <div style="display: flex;">
+        <div style="display: flex;" v-if="autocomplete.photo[0] != ''">
           <div v-for="p in autocomplete.photo" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
             <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteExistingIMG(p)"></i>
             <img name="preview" :src="p" style="width: 100px; height:100px; margin:auto" />
@@ -110,7 +110,6 @@ export default {
       this.modal = !this.modal;
       this.autocomplete = this.news;
       this.autocomplete.groups = this.news.groups.split(';')
-      console.log(this.autocomplete.photo)
     },
     UpdNews() {
       this.autocomplete.author = this.$store.state.username
@@ -126,9 +125,6 @@ export default {
       this.step = 1
     },
     async updateNews(news, newimage) {
-      console.log(this.autocomplete.photo)
-      console.log(news.photo)
-      console.log(this.deletedIMG)
       let data = new FormData();
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
@@ -182,8 +178,6 @@ export default {
       return URL.createObjectURL(file)
     },
     deleteExistingIMG(file) {
-      console.log(file)
-      console.log(this.autocomplete.photo)
       this.deletedIMG.push(this.autocomplete.photo[this.autocomplete.photo.findIndex(f => f == file)])
       this.autocomplete.photo.splice(this.autocomplete.photo.findIndex(f => f == file))
     },
