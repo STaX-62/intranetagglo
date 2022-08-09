@@ -52,8 +52,10 @@
         </div>
         <div style="display: flex;" v-if="autocomplete.photo[0] != ''">
           <div v-for="p in autocomplete.photo" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
-            <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteExistingIMG(p)"></i>
-            <img name="preview" :src="p" style="width: 100px; height:100px; margin:auto" />
+            <draggable v-model="autocomplete.photo" class="grid-tile" group="oldimg" :move="onMoveCallback">
+              <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteExistingIMG(p)"></i>
+              <img name="preview" :src="p" style="width: 100px; height:100px; margin:auto" />
+            </draggable>
           </div>
         </div>
         <label for="photo">Image d'illustration / Photo</label>
@@ -62,8 +64,10 @@
         <div for="preview">Nouvelle Selection : </div>
         <div style="display: flex;">
           <div v-for="p in newimage" :key="p" style="padding: 10px;margin:5px;border: 1px #000 solid;position: relative;">
-            <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteNewIMG(p)"></i>
-            <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
+            <draggable v-model="newimage" class="grid-tile" group="newimg" :move="onMoveCallback">
+              <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteNewIMG(p)"></i>
+              <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
+            </draggable>
           </div>
         </div>
       </div>
@@ -194,6 +198,9 @@ export default {
     },
     deleteNewIMG(file) {
       this.newimage.splice(this.newimage.findIndex(f => f.name == file.name))
+    },
+    onMoveCallback(event) {
+      console.log(event)
     }
   },
   data: function () {
@@ -221,3 +228,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.imgtile {}
+</style>
