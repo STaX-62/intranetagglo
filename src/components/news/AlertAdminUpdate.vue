@@ -135,7 +135,7 @@ export default {
       data.append('title', news.title);
       data.append('subtitle', news.subtitle);
       data.append('text', news.text);
-      data.append('photos', news.photo);
+      data.append('photos', "");
       data.append('deletedphoto', []);
       data.append('category', news.category);
       data.append('groups', news.groups);
