@@ -232,7 +232,7 @@ export default {
         'title': 'Nouveau Sous-Menu',
         'icon': '',
         'link': '',
-        'groups': 'admin',
+        'groups': 'intranet-admin',
         'sectionid': Sindex,
         'menuid': Mindex,
         'level': 2
@@ -243,7 +243,7 @@ export default {
         'title': 'Nouveau Menu',
         'icon': '',
         'link': '',
-        'groups': 'admin',
+        'groups': 'intranet-admin',
         'sectionid': Sindex,
         'menuid': 0,
         'level': 1
@@ -254,7 +254,7 @@ export default {
         'title': 'Nouvelle Section',
         'icon': 'exclamation-triangle',
         'link': '',
-        'groups': 'admin',
+        'groups': 'intranet-admin',
         'sectionid': 0,
         'menuid': 0,
         'level': 0
