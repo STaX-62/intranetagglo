@@ -15,7 +15,7 @@ use OCP\IUser;
 
 class PageController extends Controller
 {
-	public const dossierIntranet = "https://cloud.ca2bm.fr/index.php/f/1602490";
+	public const dossierIntranet = "https://cloud.ca2bm.fr/index.php/s/NaSBiTQYY99QoiB";
 
 
 	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session)
