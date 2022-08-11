@@ -1,6 +1,6 @@
 <template>
   <div id="apps">
-    <div id="apps-container" class="apps-container" data-intro="Retrouvez également les applications les plus utiles dans cette section" data-title="Applications" data-step="7">
+    <div id="apps-container" class="apps-container" data-intro="Retrouvez également les applications les plus utiles dans cette section" data-title="Applications" data-step="6">
       <h2 class="apps-header">
         Applications
         <div id="apps-update-btn" v-if="isAdmin">

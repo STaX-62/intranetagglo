@@ -2,7 +2,7 @@
   <div id="news-frame">
     <div id="news-container" class="news-container">
       <div id="news-row" class="news-row" :focus="newfocus">
-        <div class="news-alerts" data-intro="Ici sont disponibles les informations/alertes temporaires, celles-ci expireront au bout d'une certaine période" data-title="Alertes" data-step="3">
+        <div class="news-alerts" data-intro="Ici sont disponibles les informations/alertes temporaires, celles-ci expireront au bout d'une certaine période" data-title="Alertes" data-step="2">
           <div class="alert-header">
             <h2 class="alert-header-title" style="border-top: solid 2px var(--color-secondary);">
               Alertes
@@ -17,15 +17,15 @@
           </div>
         </div>
         <div class="news-block" v-if="isAdmin" data-intro="Dans cette section sont disponibles les actualités de la CA2BM, 
-          cliquez simplement sur une actualité pour agrandir ou être redirigé vers le contenu" data-title="Actualités" data-step="4">
+          cliquez simplement sur une actualité pour agrandir ou être redirigé vers le contenu" data-title="Actualités" data-step="3">
           <div class="news-header">
             <h2 class="news-header-title" style="border-top: 2px solid var(--color-primary-category);">
               Actualités
               <news-admin-create />
             </h2>
             <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." data-intro="Vous pouvez rechercher des actualités et alertes" data-title="Barre de Recherche"
-              data-step="5" />
-            <button id="news-filtres" data-intro="Filtrer les actualités par date de parution ou catégorie" data-title="Filtres" data-step="6">
+              data-step="4" />
+            <button id="news-filtres" data-intro="Filtrer les actualités par date de parution ou catégorie" data-title="Filtres" data-step="5">
               <b-icon icon="filter"></b-icon>
             </button>
             <NewsFiltrage :minDate="minDate" />

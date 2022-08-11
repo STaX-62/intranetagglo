@@ -25,13 +25,8 @@
         </div>
       </div>
     </div>
-    <div class="Raccourcis">
-      <menu-admin-overview v-if="isAdmin" />
-      <a class="Files" :href="intranetfolder" data-intro="Retrouvez ici le dossier des documents partagés pour tous les services" data-title="Documents Partagés"
-        data-step="2">
-        <b-icon class="doc-icon" icon="folder"></b-icon>
-        <div>Documents</div>
-      </a>
+    <div class="Raccourcis" v-if="isAdmin">
+      <menu-admin-overview />
     </div>
   </div>
 </template>
@@ -49,8 +44,7 @@ export default {
       image: '/apps/intranetagglo/img/LogoCA2BM.png',
       user: [],
       lastOpenedContainer: null,
-      menuInBDD: [[], [], []],
-      intranetfolder: ''
+      menuInBDD: [[], [], []]
     }
   },
   watch: {
@@ -120,10 +114,6 @@ export default {
     axios.get(generateUrl(`apps/intranetagglo/menusG`))
       .then((response) => {
         this.menuInBDD = response.data
-      })
-    axios.get(generateUrl(`apps/intranetagglo/intranetfolder`))
-      .then((response) => {
-        this.intranetfolder = response.data
       })
   }
 }
@@ -366,25 +356,5 @@ export default {
   padding-bottom: 10px;
   font-size: 13px;
   grid-area: Buttons;
-}
-
-.Files {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: solid 2px;
-  border-radius: 0.25rem;
-  padding: 0.375rem 0.75rem;
-  text-align: center;
-  color: var(--color-mode-1);
-  background-color: var(--color-primary-intra);
-  border-color: var(--color-primary-intra);
-  font-size: 15px;
-  box-shadow: var(--color-mode-shadow-1) 0px 3px 1px -2px,
-    var(--color-mode-shadow-2) 0px 2px 2px 0px,
-    var(--color-mode-shadow-3) 0px 1px 5px 0px;
-  grid-row: auto / span 2;
-  font-weight: 700;
-  display: block;
 }
 </style>

@@ -15,9 +15,6 @@ use OCP\IUser;
 
 class PageController extends Controller
 {
-	public const dossierIntranet = "https://cloud.ca2bm.fr/index.php/s/NaSBiTQYY99QoiB";
-
-
 	public function __construct(IRequest $request, IGroupManager $groupmanager, IUserSession $session)
 	{
 		parent::__construct(Application::APP_ID, $request);
@@ -78,17 +75,6 @@ class PageController extends Controller
 
 		return str_starts_with($ip, '192.168.') || str_starts_with($ip, '10.');
 	}
-
-
-	/**
-	 * @NoAdminRequired
-	 */
-
-	public function DossierIntranet()
-	{
-		return self::dossierIntranet;
-	}
-
 
 	/**
 	 * @NoAdminRequired
