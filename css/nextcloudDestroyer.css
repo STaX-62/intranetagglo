@@ -153,7 +153,8 @@
 }
 
 /* basic modern patch */
-
-button {
-    all: initial;
+button:not(.button-vue), .button, input[type="button"], input[type="submit"], input[type="reset"] {
+    font-weight: unset;
+    border-radius: unset;
+}
 }
