@@ -154,10 +154,6 @@
 
 /* basic modern patch */
 
-body div {
+button {
     all: initial;
-}
-
-body div * {
-    all: unset
 }
