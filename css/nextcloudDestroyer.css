@@ -154,10 +154,10 @@
 
 /* basic modern patch */
 
-body .app-intranetagglo #app {
+body .app-intranetagglo {
     all: initial;
 }
 
-body .app-intranetagglo #app * {
+body .app-intranetagglo * {
     all: unset
 }
