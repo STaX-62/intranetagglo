@@ -1,5 +1,5 @@
 <?php
-script('intranetagglo', ['intranetagglo','nextcloudDestroyer']);
+script('intranetagglo', ['nextcloudDestroyer', 'intranetagglo']);
 style('intranetagglo', 'intranetagglo');
 ?>
 
