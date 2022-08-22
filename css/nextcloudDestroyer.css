@@ -152,9 +152,9 @@
     all: unset;
 }
 
-/* basic modern patch */
 button:not(.button-vue), .button, input[type="button"], input[type="submit"], input[type="reset"] {
-    font-weight: unset;
-    border-radius: unset;
-}
+    font-weight: 500;
+    border-radius: 4px;
+    outline: 0;
+    border: 0;
 }
