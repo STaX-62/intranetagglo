@@ -1,7 +1,5 @@
 <?php
-script('intranetagglo', 'intranetagglo');
-style('intranetagglo', ['nextcloudDestroyer', 'intranetagglo']);
-?>
+style('intranetagglo', 'intranetagglo');
 
-<div id="app">
-</div>
+
+echo '<iframe id="app" frameborder="0" src="' . script('intranetagglo', 'intranetagglo') . '"></iframe>';
