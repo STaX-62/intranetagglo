@@ -1,3 +1,6 @@
-<?php
-style('intranetagglo', 'intranetagglo');
-
+<iframe id="app">
+    <?php
+    script('intranetagglo', 'intranetagglo');
+    style('intranetagglo', 'intranetagglo');
+    ?>
+</frame>
