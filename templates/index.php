@@ -1,6 +1,6 @@
 <?php
-script('intranetagglo', ['nextcloudDestroyer', 'intranetagglo']);
-style('intranetagglo', 'intranetagglo');
+script('intranetagglo', 'intranetagglo');
+style('intranetagglo', ['nextcloudDestroyer', 'intranetagglo']);
 ?>
 
 <div id="app">
