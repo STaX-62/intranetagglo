@@ -303,8 +303,7 @@ export default {
         //     visible: false,
         //     pinned: false
         // }],
-        archives: [[
-        ]],
+        archives: [],
         newsToUpdate: {
             title: "",
             subtitle: "",
