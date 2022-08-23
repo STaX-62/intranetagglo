@@ -78,7 +78,7 @@
     background-color: transparent;
 }
 
-#app .v-btn.v-btn {
+#app .v-card__actions>.v-btn.v-btn {
     padding: 0 8px;
 }
 
@@ -92,4 +92,10 @@
 
 #app .v-btn--round {
     border-radius: 50%;
+}
+
+#app .v-btn:not(.v-btn--round).v-size--default {
+    height: 36px;
+    min-width: 64px;
+    padding: 0 16px;
 }
