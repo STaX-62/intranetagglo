@@ -183,11 +183,8 @@ export default {
                 categories: categories.join(';'),
                 months: months
             }
-            this.GetNews()
             this.lazyArchivesCounter = 5
-            if (this.totalNewsLength > this.lazyArchivesCounter) {
-                this.GetArchives()
-            }
+            this.GetNews()
             console.log(search)
             console.log(categories)
             console.log(months)
