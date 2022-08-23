@@ -4,7 +4,7 @@
             <v-card-title>
                 <v-card class="pa-2">Actualités</v-card>
                 <Searchbar @searchfilters="Filters"></Searchbar>
-                <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = archives.slice(0, 1); $emit('closealerts', archivesMode)"
+                <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = archives.slice(0, 1); $emit('closealerts', archivesMode); this.lazyArchivesCounter = 5"
                     :color="$vuetify.theme.dark ? 'accent' : ''" large>
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
                     {{ archivesMode ? 'Retour' : 'Archives' }}
@@ -124,15 +124,6 @@ import { generateUrl } from '@nextcloud/router';
 export default {
     components: { adminMenu, newsModify, AdminChange, Searchbar },
     name: "News",
-    watch: {
-        // lazyload: function (val) {
-        //     if (val && this.totalNewsLength > this.lazyArchivesCounter) {
-        //         this.GetArchives()
-        //         console.log(val)
-        //     }
-        //     this.lazyload = false
-        // },
-    },
     computed: {
         newsForwardC: {
             get() {
@@ -194,6 +185,9 @@ export default {
             }
             this.GetNews()
             this.lazyArchivesCounter = 5
+            if (this.totalNewsLength > this.lazyArchivesCounter) {
+                this.GetArchives()
+            }
             console.log(search)
             console.log(categories)
             console.log(months)
