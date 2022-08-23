@@ -16,10 +16,15 @@
     top: 50px !important;
 }
 
-#app h2 {
-    font-weight: initial;
-    font-size: initial;
-    margin-bottom: initial;
+ #app h2 {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
     line-height: initial;
     color: inherit;
+    font-family: "Roboto", sans-serif;
+    line-height: 1.5;
 }
