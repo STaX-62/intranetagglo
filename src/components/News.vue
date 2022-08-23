@@ -177,7 +177,8 @@ export default {
             this.publishDialog = !this.publishDialog
         },
         Filters(search, categories, months) {
-            this.$emit('closealerts', true)
+            this.archivesMode = true
+            this.$emit('closealerts', this.archivesMode)
             this.filters = {
                 search: search,
                 categories: categories.join(';'),
