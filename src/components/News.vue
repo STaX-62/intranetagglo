@@ -126,8 +126,9 @@ export default {
     watch: {
         lazyload: function (val) {
             if (val) {
-                this.lazyArchivesCounter += 5
-                this.GetArchives()
+                // this.lazyArchivesCounter += 5
+                // this.GetArchives()
+                console.log(val)
             }
             this.lazyload = false
         },
