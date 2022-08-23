@@ -81,10 +81,10 @@
                                                 {{ getFormatedDate(a.time) }}
                                             </span>
                                         </v-chip>
-                                        <v-btn small rounded icon class="mr-1" v-if="n.visible == '0'" @click="openDialog = 2, newsToUpdate = a">
+                                        <v-btn small rounded icon class="mr-1" v-if="a.visible == '0'" @click="openDialog = 2, newsToUpdate = a">
                                             <v-icon>mdi-eye-off</v-icon>
                                         </v-btn>
-                                        <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = a" :pin="n.pinned == '1'" :published="n.visible == '1'"></admin-menu>
+                                        <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = a" :pin="a.pinned == '1'" :published="a.visible == '1'"></admin-menu>
                                     </v-card-title>
                                     <v-card-subtitle>{{ a.subtitle }}</v-card-subtitle>
                                     <v-card-text :class="focus == i + '-' + y ? '' : 'text-truncate'" v-html="a.text" style="overflow: hidden;max-width: 100%;"></v-card-text>
