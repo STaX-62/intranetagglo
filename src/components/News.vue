@@ -126,7 +126,6 @@ export default {
     watch: {
         lazyload: function (val) {
             if (val && this.totalNewsLength > (this.lazyArchivesCounter + 5)) {
-
                 this.GetArchives()
                 console.log(val)
             }
@@ -145,14 +144,18 @@ export default {
     },
     methods: {
         GetNews() {
-            axios.post(generateUrl(`apps/intranetagglo/news/0`), { 'limit': 5, 'search': '', 'categories': '', dateFilter: { start: "", end: "" } }, { type: 'application/json' })
+            axios.post(generateUrl(`apps/intranetagglo/news/0`), { 'limit': 5, 'search': this.filters.search, 'categories': this.filters.categories, dateFilter: { start: "", end: "" } }, { type: 'application/json' })
                 .then((response) => {
-                    console.log(response.data)
                     this.news = response.data[0];
+                    this.totalNewsLength = response.data[1]
+
                     this.news.forEach(n => {
                         n.photo = n.photo.split(';')
                         n.groups = n.groups.split(';')
                     })
+                    this.archives = []
+                    this.archives.push(this.news);
+
                 })
         },
         GetArchives() {
@@ -161,13 +164,7 @@ export default {
                     this.lazyArchivesCounter += 5
                     console.log(response.data)
                     this.totalNewsLength = response.data[1]
-                    var array = response.data[0]
-                    array.forEach(a => {
-                        a.photo = a.photo.split(';')
-                        a.groups = a.groups.split(';')
-                    })
 
-                    this.archives.push(array);
                 })
         },
         PinNews() {
@@ -183,9 +180,8 @@ export default {
                 categories: categories.join(';'),
                 months: months
             }
-            this.archives = []
-            this.lazyArchivesCounter = 0
-            this.GetArchives()
+            this.GetNews()
+            this.lazyArchivesCounter = 5
             console.log(search)
             console.log(categories)
             console.log(months)
@@ -232,10 +228,8 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
+                this.lazyArchivesCounter = 5
                 this.GetNews()
-                this.archives = []
-                this.lazyArchivesCounter = 0
-                this.GetArchives()
             })
         },
         async updateNews(news, newimages, deletedIMG) {
@@ -261,44 +255,35 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
+                this.lazyArchivesCounter = 5
                 this.GetNews()
-                this.archives = []
-                this.lazyArchivesCounter = 0
-                this.GetArchives()
             })
         },
         async deleteNews() {
             axios.delete(generateUrl(`apps/intranetagglo/news/${this.newsToUpdate.id}`), {
                 id: this.newsToUpdate.id
             }).then(() => {
+                this.lazyArchivesCounter = 5
                 this.GetNews()
-                this.archives = []
-                this.lazyArchivesCounter = 0
-                this.GetArchives()
             })
         },
         async pinNews() {
             var url = `apps/intranetagglo/news/pin/${this.newsToUpdate.id}`
             await axios.post(generateUrl(url), { 'id': this.newsToUpdate.id }, { type: 'application/json' }).then(() => {
+                this.lazyArchivesCounter = 5
                 this.GetNews()
-                this.archives = []
-                this.lazyArchivesCounter = 0
-                this.GetArchives()
             })
         },
         async publishNews() {
             var url = `apps/intranetagglo/news/pub/${this.newsToUpdate.id}`
             await axios.post(generateUrl(url), { 'id': this.newsToUpdate.id, 'visible': this.newsToUpdate.visible == '1' ? 0 : 1 }, { type: 'application/json' }).then(() => {
+                this.lazyArchivesCounter = 5
                 this.GetNews()
-                this.archives = []
-                this.lazyArchivesCounter = 0
-                this.GetArchives()
             })
         },
     },
     mounted() {
         this.GetNews()
-        this.GetArchives()
     },
     data: () => ({
         openDialog: -1,
