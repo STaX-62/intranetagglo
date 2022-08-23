@@ -185,6 +185,7 @@ export default {
                 months: months
             }
             this.GetNews()
+            this.lazyload = true
             this.lazyArchivesCounter = 5
             console.log(search)
             console.log(categories)
