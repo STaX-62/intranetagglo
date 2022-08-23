@@ -16,7 +16,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <admin-menu menuType="alert" @open="openDialog = $event; alertToUpdate = alert"></admin-menu>
-                        <v-chip>{{ getFormatedDate(alert.expiration) }}</v-chip>
+                        <v-chip>Expire dans {{ getFormatedDate(alert.expiration) }}</v-chip>
                     </v-card-actions>
                 </v-card>
             </v-card-text>

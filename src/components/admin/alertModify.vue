@@ -59,6 +59,7 @@ export default {
     },
     computed: {
         groups() {
+            console.log(this.$groups)
             return this.$groups
         },
         dialog: {

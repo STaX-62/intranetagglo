@@ -8,12 +8,13 @@ import { generateUrl } from '@nextcloud/router';
 import './theme/theme.css'
 Vue.config.productionTip = false
 
-
+Vue.prototype.$groups = []
 axios.get(generateUrl('apps/intranetagglo/api/groups'), {
   params: {
     search: '',
   },
 }).then(res => {
+  console.log(res.data)
   Vue.prototype.$groups = res.data
 })
 
