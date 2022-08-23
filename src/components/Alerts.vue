@@ -4,12 +4,12 @@
             <v-card-title>
                 <v-card class="pa-2">Alertes</v-card>
                 <v-spacer></v-spacer>
-                <v-btn fab small elevation="1" @click="openDialog = 5; alertToUpdate = EmptyNews">
+                <v-btn fab small elevation="1" @click="openDialog = 5; alertToUpdate = alertEmpty">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </v-card-title>
             <v-card-text>
-                <v-card v-for="(alert, index) in alerts" :key="index" class="mx-auto my-2" :color="$vuetify.theme.dark ? '#9ecd4399' : ''" elevation="4">
+                <v-card v-for="(alert, index) in alerts" :key="index" class="mx-auto mb-2" :color="$vuetify.theme.dark ? '#9ecd4399' : ''" elevation="4">
                     <v-card-title>{{ alert.title }}</v-card-title>
                     <v-card-text v-html="alert.text" style="padding-bottom:0">
                     </v-card-text>

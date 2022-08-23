@@ -126,14 +126,8 @@ export default {
     watch: {
         lazyload: function (val) {
             if (val) {
-                var array = []
-                array.push(this.news[0])
-                array.push(this.news[0])
-                array.push(this.news[0])
-                array.push(this.news[0])
-                array.push(this.news[0])
-                this.archives.push(array)
-                console.log(val)
+                this.lazyArchivesCounter += 5
+                this.GetArchives()
             }
             this.lazyload = false
         },
@@ -160,6 +154,19 @@ export default {
                     })
                 })
         },
+        GetArchives() {
+            axios.post(generateUrl(`apps/intranetagglo/news/${this.lazyArchivesCounter}`), { 'limit': 5, 'search': this.filters.search, 'categories': this.filters.categories, dateFilter: { start: "", end: "" } }, { type: 'application/json' })
+                .then((response) => {
+                    console.log(response.data)
+                    var array = response.data[0]
+                    array.forEach(a => {
+                        a.photo = a.photo.split(';')
+                        a.groups = a.groups.split(';')
+                    })
+
+                    this.archives.push(array);
+                })
+        },
         PinNews() {
             this.pinDialog = !this.pinDialog
         },
@@ -167,6 +174,14 @@ export default {
             this.publishDialog = !this.publishDialog
         },
         Filters(search, categories, months) {
+            this.archivesMode = true;
+            this.filters = {
+                search: search,
+                categories: categories.join(';'),
+                months: months
+            }
+            this.archives = []
+            this.GetArchives()
             console.log(search)
             console.log(categories)
             console.log(months)
@@ -245,16 +260,23 @@ export default {
     },
     mounted() {
         this.GetNews()
+        this.GetArchives()
     },
     data: () => ({
         openDialog: -1,
         focus: -1,
         newsForward: 0,
         archivesMode: false,
+        lazyArchivesCounter: 0,
         lazyload: false,
         LightBoxPhotos: [],
         LightBoxDialog: false,
         news: [],
+        filters: {
+            search: '',
+            categories: '',
+            months: []
+        },
         // news: [{
         //     title: "Lorem ipsum dolor sit amet",
         //     subtitle: "Lorem ipsum dolor sit amet azdza d zqd ad zd qzd zqd az d",
@@ -281,19 +303,6 @@ export default {
         //     pinned: false
         // }],
         archives: [[
-            {
-                title: "Lorem ipsum dolor sit amet",
-                subtitle: "Lorem ipsum dolor sit amet azdza d zqd ad zd qzd zqd az d",
-                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque neque felis, ultrices ac volutpat eget, luctus quis augue. Morbi mattis bibendum faucibus. Morbi ultricies, diam id dapibus gravida, lectus neque auctor orci, sed convallis neque nulla ut justo. Maecenas sagittis mauris lectus. Duis eu ullamcorper dui. Nulla et odio nulla. Cras interdum vel libero maximus viverra.",
-                photo: [require("../assets/LogoCA2BM.png"), require("../assets/IMG20211002181858.jpg")],
-                category: "Information",
-                groups: ["intranet-admin"],
-                link: "",
-                time: 1272509157,
-                expiration: 0,
-                visible: false,
-                pinned: false
-            }
         ]],
         newsToUpdate: {
             title: "",

@@ -9,13 +9,13 @@
                 </template>
 
                 <v-card style="max-width: 100%;">
-                    <v-date-picker v-model="months" type="month" multiple color="primary"></v-date-picker>
+                    <v-date-picker v-model="months" type="month" multiple color="primary" @change="onChange"></v-date-picker>
 
                     <v-divider></v-divider>
 
                     <v-list>
                         <v-list-item>
-                            <v-item-group multiple v-model="chips">
+                            <v-item-group multiple v-model="chips" @change="onChange">
                                 <v-item v-for="n in chipsitems" :key="n" v-slot="{ active, toggle }" class="ma-1">
                                     <v-chip active-class="primary--text" :input-value="active" @click="toggle" small>
                                         {{ n }}
