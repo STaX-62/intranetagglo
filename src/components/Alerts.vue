@@ -1,6 +1,6 @@
 <template>
     <v-col md="4" sm="12">
-        <v-card outlined shaped :color="$vuetify.theme.dark ? '' : '#9ecd4399'" style="height:100%" v-for="(alert, i) in alerts" :key="i">
+        <v-card outlined shaped :color="$vuetify.theme.dark ? '' : '#9ecd4399'" style="height:100%">
             <v-card-title>
                 <v-card class="pa-2">Alertes</v-card>
                 <v-spacer></v-spacer>
