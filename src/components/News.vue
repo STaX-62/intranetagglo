@@ -125,7 +125,7 @@ export default {
     name: "News",
     watch: {
         lazyload: function (val) {
-            if (val && this.totalNewsLength > (this.lazyArchivesCounter + 5)) {
+            if (val && this.totalNewsLength > this.lazyArchivesCounter) {
                 this.GetArchives()
                 console.log(val)
             }
