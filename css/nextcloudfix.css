@@ -127,3 +127,44 @@
     width: 32px;
     margin: 0.3rem 10px;
 }
+
+#app .v-btn--icon.v-size--default {
+    height: 36px;
+    width: 36px;
+}
+
+#app .theme--light.v-pagination .v-pagination__item {
+    background: #FFFFFF;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+#app .v-pagination__item {
+    background: transparent;
+    border-radius: 4px;
+    font-size: 1rem;
+    height: 34px;
+    margin: 0.3rem;
+    min-width: 34px;
+    padding: 0 5px;
+    text-decoration: none;
+    transition: 0.3s cubic-bezier(0, 0, 0.2, 1);
+    width: auto;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+
+#app .v-icon.v-icon {
+    align-items: center;
+    display: inline-flex;
+    font-feature-settings: "liga";
+    font-size: 24px;
+    justify-content: center;
+    letter-spacing: normal;
+    line-height: 1;
+    position: relative;
+    text-indent: 0;
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), visibility 0s;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
