@@ -1,5 +1,5 @@
 <template>
-    <v-text-field class="mx-2" label="Recherche..." single-line solo hide-details prepend-inner-icon="mdi-magnify" color="accent">
+    <v-text-field v-model="search" @change="onChange" class="mx-2" label="Recherche..." single-line solo hide-details prepend-inner-icon="mdi-magnify" color="accent">
         <template v-slot:append>
             <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y max-width="290">
                 <template v-slot:activator="{ on, attrs }">
@@ -34,8 +34,14 @@
 <script>
 export default {
     name: "Searchbar",
+    methods: {
+        onChange() {
+            this.$emit('searchfilters', this.search, this.chips, this.months)
+        }
+    },
     data: () => ({
         menu: false,
+        search: '',
         months: [],
         chips: [],
         chipsitems: ['Information', 'test', 'Note de service'],

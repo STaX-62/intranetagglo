@@ -3,7 +3,7 @@
         <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%">
             <v-card-title>
                 <v-card class="pa-2">Actualités</v-card>
-                <Searchbar></Searchbar>
+                <Searchbar @searchfilters="Filters"></Searchbar>
                 <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = archives.slice(0, 1); $emit('closealerts', archivesMode)"
                     :color="$vuetify.theme.dark ? 'accent' : ''" large>
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
@@ -165,6 +165,11 @@ export default {
         },
         PublishNews() {
             this.publishDialog = !this.publishDialog
+        },
+        Filters(search, categories, months) {
+            console.log(search)
+            console.log(categories)
+            console.log(months)
         },
         getFormatedDate(date) {
             return moment((date * 1000)).locale('fr').format('LL')
