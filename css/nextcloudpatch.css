@@ -32,7 +32,7 @@
 #app input {
     margin: 0;
     font-size: inherit;
-    background-color: transparent;
+    background-color: transparent;\n       \.
     border: 0;
     border-radius: 0;
     flex: 1 1 auto;
@@ -19999,7 +19999,7 @@ html.overflow-y-hidden {
 }
 
 #app .v-text-field--outlined .v-input__prepend-outer, #app .v-text-field--outlined .v-input__append-outer {
-    margin-top: 18px;
+    margin-top: 4px;
 }
 
 #app .v-text-field--outlined.v-input--is-focused fieldset, .v-text-field--outlined.v-input--has-state fieldset {

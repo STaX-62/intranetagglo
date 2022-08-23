@@ -27,12 +27,15 @@
 
                     <v-stepper-items>
                         <v-stepper-content step="1">
-                            <v-text-field v-model="modifiedNews.title" :counter="100" :rules="titleRules" label="Titre" required></v-text-field>
-                            <v-text-field v-model="modifiedNews.subtitle" :counter="200" label="Sous-Titre"></v-text-field>
-                            <v-text-field v-model="modifiedNews.category" :counter="20" :rules="categoryRules" label="Catégorie"></v-text-field>
+                            <v-form v-model="valid">
+                                <v-text-field v-model="modifiedNews.title" :counter="100" :rules="titleRules" label="Titre" required>
+                                </v-text-field>
+                                <v-text-field v-model="modifiedNews.subtitle" :counter="200" label="Sous-Titre"></v-text-field>
+                                <v-text-field v-model="modifiedNews.category" :counter="20" :rules="categoryRules" label="Catégorie"></v-text-field>
 
-                            <v-select v-model="modifiedNews.groups" :items="values" :rules="[v => !!v || 'Item is required']" label="Groupes D'utilisateurs" required multiple small-chips></v-select>
-
+                                <v-select v-model="modifiedNews.groups" :items="values" label="Groupes D'utilisateurs" required multiple small-chips>
+                                </v-select>
+                            </v-form>
                         </v-stepper-content>
 
                         <v-stepper-content step="2">
@@ -82,7 +85,7 @@
                     Suivant
                 </v-btn>
                 <v-btn color="green darken-1" text @click="create ? $emit('created', modifiedNews, newimages) : $emit('updated', modifiedNews, newimages, deletedIMG); dialog = false; stepper = 1"
-                    v-if="stepper == 3">
+                    :disabled="!valid" v-if="stepper == 3">
                     {{ create ? 'Ajouter' : 'Modifier' }}
                 </v-btn>
             </v-card-actions>
@@ -144,7 +147,7 @@ export default {
         }
     },
     data: () => ({
-        value: true,
+        valid: false,
         stepper: 1,
         updatedNews: undefined,
         picker: null,
