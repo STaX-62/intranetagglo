@@ -81,7 +81,7 @@
                 <v-btn color="grey" text @click="stepper--" v-if="stepper > 1">
                     Retour
                 </v-btn>
-                <v-btn color="green darken-1" text @click="stepper++" v-if="stepper < 3">
+                <v-btn color="green darken-1" text @click="stepper++" v-if="stepper < 3" :disabled="!valid">
                     Suivant
                 </v-btn>
                 <v-btn color="green darken-1" text @click="create ? $emit('created', modifiedNews, newimages) : $emit('updated', modifiedNews, newimages, deletedIMG); dialog = false; stepper = 1"

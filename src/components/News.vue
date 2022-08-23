@@ -34,9 +34,9 @@
                                             {{ n.category }}
                                         </span>
                                     </v-chip>
-                                    <v-icon class="ml-1" v-if="n.pinned">mdi-pin-outline</v-icon>
+                                    <v-icon class="ml-1" v-if="n.pinned == '1'">mdi-pin-outline</v-icon>
                                     <v-spacer></v-spacer>
-                                    <v-btn small rounded icon class="mr-1" v-if="!n.visible" @click="openDialog = 2; newsToUpdate = n">
+                                    <v-btn small rounded icon class="mr-1" v-if="n.visible == '0'" @click="openDialog = 2; newsToUpdate = n">
                                         <v-icon>mdi-eye-off</v-icon>
                                     </v-btn>
                                     <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = n">
@@ -70,7 +70,7 @@
                                     <v-img height="400" :src="a.photo[0]" v-if="a.photo.length <= 1 && focus == i + '-' + y" @click="LightBoxDialog = true; LightBoxPhotos = a.photo"></v-img>
                                     <v-card-title class="text-truncate">{{ a.title }}
                                         <v-spacer></v-spacer>
-                                        <v-icon class="mr-1" v-if="a.pinned">mdi-pin-outline</v-icon>
+                                        <v-icon class="mr-1" v-if="a.pinned == '1'">mdi-pin-outline</v-icon>
                                         <v-chip label class="text-truncate">
                                             <span class="text-truncate">
                                                 {{ a.category }}
@@ -81,7 +81,7 @@
                                                 {{ getFormatedDate(a.time) }}
                                             </span>
                                         </v-chip>
-                                        <v-btn small rounded icon class="mr-1" v-if="!a.visible" @click="openDialog = 2, newsToUpdate = a">
+                                        <v-btn small rounded icon class="mr-1" v-if="n.visible == '0'" @click="openDialog = 2, newsToUpdate = a">
                                             <v-icon>mdi-eye-off</v-icon>
                                         </v-btn>
                                         <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = a"></admin-menu>
@@ -190,6 +190,12 @@ export default {
         },
         getFormatedDate(date) {
             return moment((date * 1000)).locale('fr').format('LL')
+        },
+        prepare_pin() {
+
+        },
+        prepare_visible() {
+
         },
         prepare_add(news, newimages) {
             news.groups = news.groups.join(';')
