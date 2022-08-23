@@ -277,7 +277,7 @@ export default {
                 this.GetArchives()
             })
         },
-        async changePinned() {
+        async pinNews() {
             var url = `apps/intranetagglo/news/pin/${this.newsToUpdate.id}`
             await axios.post(generateUrl(url), { 'id': this.newsToUpdate.id }, { type: 'application/json' }).then(() => {
                 this.GetNews()
@@ -286,7 +286,7 @@ export default {
                 this.GetArchives()
             })
         },
-        async changeVisNews() {
+        async publishNews() {
             var url = `apps/intranetagglo/news/pub/${this.newsToUpdate.id}`
             await axios.post(generateUrl(url), { 'id': this.newsToUpdate.id, 'visible': this.newsToUpdate.visible == '1' ? 0 : 1 }, { type: 'application/json' }).then(() => {
                 this.GetNews()
