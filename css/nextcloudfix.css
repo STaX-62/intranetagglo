@@ -99,3 +99,13 @@
     min-width: 64px;
     padding: 0 16px;
 }
+
+#app .v-btn--fab.v-size--small {
+    height: 40px;
+    width: 40px;
+}
+
+#app .v-btn--icon.v-size--small {
+    height: 28px;
+    width: 28px;
+}
