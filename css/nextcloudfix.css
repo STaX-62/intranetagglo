@@ -42,3 +42,11 @@
     min-width: 0;
     width: 100%;
 }
+
+#app nav[role='navigation'] {
+    display: block;
+    width: auto;
+    height: auto;
+    margin-left: 0;
+    position: relative;
+}
