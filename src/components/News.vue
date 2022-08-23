@@ -4,7 +4,7 @@
             <v-card-title>
                 <v-card class="pa-2">Actualités</v-card>
                 <Searchbar @searchfilters="Filters"></Searchbar>
-                <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = archives.slice(0, 1); $emit('closealerts', archivesMode); this.lazyArchivesCounter = 5"
+                <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = archives.slice(0, 1); $emit('closealerts', archivesMode); lazyArchivesCounter = 5"
                     :color="$vuetify.theme.dark ? 'accent' : ''" large>
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
                     {{ archivesMode ? 'Retour' : 'Archives' }}
