@@ -81,3 +81,15 @@
 #app .v-btn.v-btn {
     padding: 0 8px;
 }
+
+#app .theme--dark.v-btn.v-btn--has-bg {
+    background-color: #272727;
+}
+
+#app .theme--light.v-btn.v-btn--has-bg {
+    background-color: #f5f5f5;
+}
+
+#app .v-btn--round {
+    border-radius: 50%;
+}
