@@ -191,13 +191,13 @@ export default {
         getFormatedDate(date) {
             return moment((date * 1000)).locale('fr').format('LL')
         },
-        prepare_add(news) {
+        prepare_add(news, newimages) {
             news.groups = news.groups.join(';')
-            this.createNews(news)
+            this.createNews(news, newimages)
             this.newsToUpdate = this.EmptyNews
         },
-        prepare_update(news) {
-            this.updateNews(news)
+        prepare_update(news, newimages, deletedIMG) {
+            this.updateNews(news, newimages, deletedIMG)
             this.newsToUpdate = this.EmptyNews
         },
         prepare_delete() {
