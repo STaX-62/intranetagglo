@@ -162,9 +162,12 @@ export default {
             axios.post(generateUrl(`apps/intranetagglo/news/${this.lazyArchivesCounter}`), { 'limit': 5, 'search': this.filters.search, 'categories': this.filters.categories, dateFilter: { start: "", end: "" } }, { type: 'application/json' })
                 .then((response) => {
                     this.lazyArchivesCounter += 5
-                    console.log(response.data)
-                    this.totalNewsLength = response.data[1]
-
+                    var array = response.data[0]
+                    array.forEach(a => {
+                        a.photo = a.photo.split(';')
+                        a.groups = a.groups.split(';')
+                    })
+                    this.archives.push(array)
                 })
         },
         PinNews() {
@@ -290,7 +293,7 @@ export default {
         focus: -1,
         newsForward: 0,
         archivesMode: false,
-        lazyArchivesCounter: 0,
+        lazyArchivesCounter: 5,
         lazyload: false,
         LightBoxPhotos: [],
         LightBoxDialog: false,
