@@ -21,9 +21,10 @@
                 </v-card>
             </v-card-text>
         </v-card>
-        <alert-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" @created="prepare_add" @updated="prepare_update" :alert="alertToUpdate"></alert-modify>
-        <admin-change :open="openDialog == 1" @close="openDialog = -1" @changed="prepare_delete" :title="'Supprimer cette alerte'" :msg="'Voulez vous vraiment supprimer cette alerte: '" validate="Supprimer"
-            color="red darken-1">
+        <alert-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" @created="prepare_add" @updated="prepare_update" :alert="alertToUpdate">
+        </alert-modify>
+        <admin-change :open="openDialog == 1" @close="openDialog = -1" @changed="prepare_delete" :title="'Supprimer cette alerte'" :msg="'Voulez vous vraiment supprimer cette alerte: '"
+            validate="Supprimer" color="red darken-1">
         </admin-change>
     </v-col>
 </template>
@@ -147,7 +148,7 @@ export default {
             category: "",
             groups: [],
             link: "",
-            expiration: 0
+            expiration: Math.floor(Date.now() / 1000)
         }
     }),
 }
