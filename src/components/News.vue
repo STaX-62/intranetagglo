@@ -96,16 +96,16 @@
             </v-card-text>
         </v-card>
         <vue-easy-lightbox escDisabled moveDisabled :visible="LightBoxDialog" :imgs="LightBoxPhotos" :index="0" @hide="LightBoxDialog = false"></vue-easy-lightbox>
-        <admin-change :open="openDialog == 3" @close="openDialog = -1" @change="PinNews" :title="'Modification de l\'épinglage de l\'actualité'"
+        <admin-change :open="openDialog == 3" @close="openDialog = -1" @changed="prepare_pin" :title="'Modification de l\'épinglage de l\'actualité'"
             :msg="false ? 'Voulez vous vraiment désépingler cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment épingler cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
             :validate="false ? 'Désépingler' : 'Epingler'" :color="false ? 'red darken-1' : 'green darken-1'">
         </admin-change>
-        <admin-change :open="openDialog == 2" @close="openDialog = -1" @change="PublishNews" :title="'Modification de la visibilité de l\'actualité'"
+        <admin-change :open="openDialog == 2" @close="openDialog = -1" @changed="prepare_visible" :title="'Modification de la visibilité de l\'actualité'"
             :msg="false ? 'Voulez vous vraiment mettre en brouillon cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment publier cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
             :validate="false ? 'Mettre en brouillon' : 'Publier'" :color="false ? 'red darken-1' : 'green darken-1'">
         </admin-change>
         <news-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" :news="newsToUpdate" @created="prepare_add" @updated="prepare_update"></news-modify>
-        <admin-change :open="openDialog == 1" @close="openDialog = -1" @change="DeleteNews" :title="'Supprimer cette actualité'"
+        <admin-change :open="openDialog == 1" @close="openDialog = -1" @changed="prepare_delete" :title="'Supprimer cette actualité'"
             :msg="'Voulez vous vraiment supprimer cette actualité: <br/><code>' + newsToUpdate.title + '</code>'" validate="Supprimer" color="red darken-1">
         </admin-change>
     </v-col>
@@ -126,7 +126,7 @@ export default {
     watch: {
         lazyload: function (val) {
             if (val && this.totalNewsLength > (this.lazyArchivesCounter + 5)) {
-                this.lazyArchivesCounter += 5
+
                 this.GetArchives()
                 console.log(val)
             }
@@ -158,6 +158,7 @@ export default {
         GetArchives() {
             axios.post(generateUrl(`apps/intranetagglo/news/${this.lazyArchivesCounter}`), { 'limit': 5, 'search': this.filters.search, 'categories': this.filters.categories, dateFilter: { start: "", end: "" } }, { type: 'application/json' })
                 .then((response) => {
+                    this.lazyArchivesCounter += 5
                     console.log(response.data)
                     this.totalNewsLength = response.data[1]
                     var array = response.data[0]
@@ -183,6 +184,7 @@ export default {
                 months: months
             }
             this.archives = []
+            this.lazyArchivesCounter = 0
             this.GetArchives()
             console.log(search)
             console.log(categories)
@@ -192,10 +194,10 @@ export default {
             return moment((date * 1000)).locale('fr').format('LL')
         },
         prepare_pin() {
-
+            this.pinNews()
         },
         prepare_visible() {
-
+            this.publishNews()
         },
         prepare_add(news, newimages) {
             news.groups = news.groups.join(';')
@@ -231,6 +233,9 @@ export default {
                 }
             }).then(() => {
                 this.GetNews()
+                this.archives = []
+                this.lazyArchivesCounter = 0
+                this.GetArchives()
             })
         },
         async updateNews(news, newimages, deletedIMG) {
@@ -257,6 +262,9 @@ export default {
                 }
             }).then(() => {
                 this.GetNews()
+                this.archives = []
+                this.lazyArchivesCounter = 0
+                this.GetArchives()
             })
         },
         async deleteNews() {
@@ -264,6 +272,27 @@ export default {
                 id: this.newsToUpdate.id
             }).then(() => {
                 this.GetNews()
+                this.archives = []
+                this.lazyArchivesCounter = 0
+                this.GetArchives()
+            })
+        },
+        async changePinned() {
+            var url = `apps/intranetagglo/news/pin/${this.newsToUpdate.id}`
+            await axios.post(generateUrl(url), { 'id': this.newsToUpdate.id }, { type: 'application/json' }).then(() => {
+                this.GetNews()
+                this.archives = []
+                this.lazyArchivesCounter = 0
+                this.GetArchives()
+            })
+        },
+        async changeVisNews() {
+            var url = `apps/intranetagglo/news/pub/${this.newsToUpdate.id}`
+            await axios.post(generateUrl(url), { 'id': this.newsToUpdate.id, 'visible': this.newsToUpdate.visible == '1' ? 0 : 1 }, { type: 'application/json' }).then(() => {
+                this.GetNews()
+                this.archives = []
+                this.lazyArchivesCounter = 0
+                this.GetArchives()
             })
         },
     },
