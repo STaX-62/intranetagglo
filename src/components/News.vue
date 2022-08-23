@@ -56,7 +56,7 @@
             <v-card-text v-if="archivesMode">
                 <v-list color="transparent">
                     <v-list-item v-for="(archive, i) in archives" :key="i">
-                        <v-lazy v-model="lazyload" :options="{
+                        <v-lazy :options="{
                             threshold: .5
                         }" transition=" fade-transition" width="100%">
                             <div>
@@ -93,6 +93,7 @@
                         </v-lazy>
                     </v-list-item>
                 </v-list>
+                <div v-intersect="onIntersect"></div>
             </v-card-text>
         </v-card>
         <vue-easy-lightbox escDisabled moveDisabled :visible="LightBoxDialog" :imgs="LightBoxPhotos" :index="0" @hide="LightBoxDialog = false"></vue-easy-lightbox>
@@ -124,13 +125,13 @@ export default {
     components: { adminMenu, newsModify, AdminChange, Searchbar },
     name: "News",
     watch: {
-        lazyload: function (val) {
-            if (val && this.totalNewsLength > this.lazyArchivesCounter) {
-                this.GetArchives()
-                console.log(val)
-            }
-            this.lazyload = false
-        },
+        // lazyload: function (val) {
+        //     if (val && this.totalNewsLength > this.lazyArchivesCounter) {
+        //         this.GetArchives()
+        //         console.log(val)
+        //     }
+        //     this.lazyload = false
+        // },
     },
     computed: {
         newsForwardC: {
@@ -155,7 +156,7 @@ export default {
                     })
                     this.archives = []
                     this.archives.push(this.news);
-
+                    console.log(this.archives)
                 })
         },
         GetArchives() {
@@ -168,7 +169,14 @@ export default {
                         a.groups = a.groups.split(';')
                     })
                     this.archives.push(array)
+                    console.log(this.archives)
                 })
+        },
+        onIntersect(entries) {
+            if (entries[0].isIntersecting && this.totalNewsLength > this.lazyArchivesCounter) {
+                this.GetArchives()
+            }
+            console.log(entries[0].isIntersecting)
         },
         PinNews() {
             this.pinDialog = !this.pinDialog
@@ -185,7 +193,6 @@ export default {
                 months: months
             }
             this.GetNews()
-            this.lazyload = true
             this.lazyArchivesCounter = 5
             console.log(search)
             console.log(categories)
