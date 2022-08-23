@@ -1,0 +1,11 @@
+#app button {
+    padding: 0x;
+    width: auto;
+    min-height: initial;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin: 0;
+    outline: none;
+    font-weight: 500;
+    border-radius: 4px;
+}
