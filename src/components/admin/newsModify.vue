@@ -36,7 +36,7 @@
                         </v-stepper-content>
 
                         <v-stepper-content step="2">
-                            <vue-editor v-model="modifiedNews.text" :editor-toolbar="customToolbar" style="background-color: #fff; color:#444"></vue-editor>
+                            <vue-editor v-model="modifiedNews.text" :editor-toolbar="customToolbar"></vue-editor>
                         </v-stepper-content>
 
                         <v-stepper-content step="3">

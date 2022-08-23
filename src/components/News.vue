@@ -125,9 +125,9 @@ export default {
     name: "News",
     watch: {
         lazyload: function (val) {
-            if (val) {
-                // this.lazyArchivesCounter += 5
-                // this.GetArchives()
+            if (val && this.totalNewsLength > (this.lazyArchivesCounter + 5)) {
+                this.lazyArchivesCounter += 5
+                this.GetArchives()
                 console.log(val)
             }
             this.lazyload = false
@@ -159,6 +159,7 @@ export default {
             axios.post(generateUrl(`apps/intranetagglo/news/${this.lazyArchivesCounter}`), { 'limit': 5, 'search': this.filters.search, 'categories': this.filters.categories, dateFilter: { start: "", end: "" } }, { type: 'application/json' })
                 .then((response) => {
                     console.log(response.data)
+                    this.totalNewsLength = response.data[1]
                     var array = response.data[0]
                     array.forEach(a => {
                         a.photo = a.photo.split(';')
@@ -191,16 +192,16 @@ export default {
             return moment((date * 1000)).locale('fr').format('LL')
         },
         prepare_add(news) {
-            alert.groups = alert.groups.join(';')
-            this.createAlert(news)
-            this.alertToUpdate = this.alertEmpty
+            news.groups = news.groups.join(';')
+            this.createNews(news)
+            this.newsToUpdate = this.EmptyNews
         },
         prepare_update(news) {
-            this.updateAlert(news)
-            this.alertToUpdate = this.alertEmpty
+            this.updateNews(news)
+            this.newsToUpdate = this.EmptyNews
         },
         prepare_delete() {
-            this.deleteAlert()
+            this.deleteNews()
         },
         async createNews(news, newimages) {
             let data = new FormData();
@@ -252,8 +253,8 @@ export default {
             })
         },
         async deleteNews() {
-            axios.delete(generateUrl(`apps/intranetagglo/news/${this.alertToUpdate.id}`), {
-                id: this.alertToUpdate.id
+            axios.delete(generateUrl(`apps/intranetagglo/news/${this.newsToUpdate.id}`), {
+                id: this.newsToUpdate.id
             }).then(() => {
                 this.GetNews()
             })
@@ -273,6 +274,7 @@ export default {
         LightBoxPhotos: [],
         LightBoxDialog: false,
         news: [],
+        totalNewsLength: 0,
         filters: {
             search: '',
             categories: '',
