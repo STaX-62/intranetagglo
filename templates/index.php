@@ -1,6 +1,6 @@
 <?php
 script('intranetagglo', 'intranetagglo');
-style('intranetagglo', ['intranetagglo','nextcloudfix']);
+style('intranetagglo', ['intranetagglo','nextcloudpatch']);
 ?>
 <iframe id="app">
 
