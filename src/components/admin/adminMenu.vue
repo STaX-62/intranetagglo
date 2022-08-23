@@ -8,7 +8,7 @@
 
         <v-list dense>
             <v-list-item link @click="$emit('open', 3)" v-if="menuType == 'news'">
-                <v-icon class=" mr-2" color="secondary">{{ published ? "mdi-pin-off-outline" : "mdi-pin-outline" }}</v-icon>
+                <v-icon class=" mr-2" color="secondary">{{ pin ? "mdi-pin-off-outline" : "mdi-pin-outline" }}</v-icon>
                 <v-list-item-title>{{ pin ? "Désépingler" : "Epingler" }}</v-list-item-title>
             </v-list-item>
             <v-list-item link @click="$emit('open', 2)" v-if="menuType == 'news'">
