@@ -9,7 +9,7 @@
                 <v-form v-model="valid">
                     <v-text-field v-model="modifiedAlert.title" :counter="100" :rules="titleRules" label="Name" required></v-text-field>
 
-                    <v-select v-model="modifiedAlert.groups" :items="groups" label="Groupes d'utilisateurs" required multiple small-chips></v-select>
+                    <v-select v-model="modifiedAlert.groups" :items="$groups" label="Groupes d'utilisateurs" required multiple small-chips></v-select>
 
                     <v-menu ref="menu" v-model="menu" :close-on-content-click="false" :return-value.sync="dateC" transition="scale-transition" offset-y min-width="auto">
                         <template v-slot:activator="{ on, attrs }">
@@ -58,10 +58,6 @@ export default {
         alert: Object
     },
     computed: {
-        groups() {
-            console.log(this.$groups)
-            return this.$groups
-        },
         dialog: {
             get() {
                 return this.open
