@@ -15,7 +15,7 @@
                     Retour
                 </v-btn>
 
-                <v-btn :color="color" text @click="$emit('changed')">
+                <v-btn :color="color" text @click="$emit('changed'); dialog = false">
                     {{ validate }}
                 </v-btn>
             </v-card-actions>

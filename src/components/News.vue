@@ -104,7 +104,7 @@
             :msg="false ? 'Voulez vous vraiment mettre en brouillon cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment publier cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
             :validate="false ? 'Mettre en brouillon' : 'Publier'" :color="false ? 'red darken-1' : 'green darken-1'">
         </admin-change>
-        <news-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" :news="newsToUpdate" @changed="changedNews"></news-modify>
+        <news-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" :news="newsToUpdate" @created="prepare_add" @updated="prepare_update"></news-modify>
         <admin-change :open="openDialog == 1" @close="openDialog = -1" @change="DeleteNews" :title="'Supprimer cette actualité'"
             :msg="'Voulez vous vraiment supprimer cette actualité: <br/><code>' + newsToUpdate.title + '</code>'" validate="Supprimer" color="red darken-1">
         </admin-change>
@@ -117,6 +117,8 @@ import adminMenu from './admin/adminMenu.vue'
 import newsModify from './admin/newsModify.vue';
 import moment from 'moment'
 import Searchbar from './Searchbar.vue';
+import axios from '@nextcloud/axios';
+import { generateUrl } from '@nextcloud/router';
 
 export default {
     components: { adminMenu, newsModify, AdminChange, Searchbar },
@@ -147,26 +149,97 @@ export default {
         }
     },
     methods: {
+        GetNews() {
+            axios.post(generateUrl(`apps/intranetagglo/news/0`), { 'limit': 5, 'search': '', 'categories': '', dateFilter: { start: "", end: "" } }, { type: 'application/json' })
+                .then((response) => {
+                    console.log(response.data)
+                    this.news = response.data[0];
+                    this.news.forEach(n => {
+                        n.photo = n.photo.split(';')
+                        n.groups = n.groups.split(';')
+                    })
+                })
+        },
         PinNews() {
             this.pinDialog = !this.pinDialog
         },
         PublishNews() {
             this.publishDialog = !this.publishDialog
         },
-        ModifyNews() {
-            this.modifyDialog = !this.modifyDialog
-        },
-        DeleteNews() {
-            this.deleteDialog = !this.deleteDialog
-        },
-        changedNews(value) {
-            console.log("ici")
-            console.log(value)
-            this.newsToUpdate = value
-        },
         getFormatedDate(date) {
             return moment((date * 1000)).locale('fr').format('LL')
         },
+        prepare_add(news) {
+            alert.groups = alert.groups.join(';')
+            this.createAlert(news)
+            this.alertToUpdate = this.alertEmpty
+        },
+        prepare_update(news) {
+            this.updateAlert(news)
+            this.alertToUpdate = this.alertEmpty
+        },
+        prepare_delete() {
+            this.deleteAlert()
+        },
+        async createNews(news, newimages) {
+            let data = new FormData();
+            data.append('title', news.title);
+            data.append('subtitle', news.subtitle);
+            data.append('text', news.text);
+            if (newimages.length) {
+                for (var x = 0; x < newimages.length; x++)
+                    data.append('photo[]', newimages[x], newimages[x].name);
+            }
+            data.append('category', news.category);
+            data.append('groups', news.groups);
+            data.append('link', news.link);
+            data.append('expiration', news.expiration);
+
+            axios.post(generateUrl(`apps/intranetagglo/news`), data, {
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+                }
+            }).then(() => {
+                this.GetNews()
+            })
+        },
+        async updateNews(news, newimages, deletedIMG) {
+
+            let data = new FormData();
+            data.append('title', news.title);
+            data.append('subtitle', news.subtitle);
+            data.append('text', news.text);
+            if (newimages.length) {
+                for (var x = 0; x < newimages.length; x++)
+                    data.append('photo_upd[]', newimages[x], newimages[x].name);
+            }
+            data.append('photos', news.photo);
+            data.append('deletedphoto', deletedIMG);
+            data.append('category', news.category);
+            data.append('groups', news.groups);
+            data.append('link', news.link);
+            data.append('expiration', news.expiration);
+
+            axios.post(generateUrl(`apps/intranetagglo/news/update/${news.id}`), data, {
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+                }
+            }).then(() => {
+                this.GetNews()
+            })
+        },
+        async deleteNews() {
+            axios.delete(generateUrl(`apps/intranetagglo/news/${this.alertToUpdate.id}`), {
+                id: this.alertToUpdate.id
+            }).then(() => {
+                this.GetNews()
+            })
+        },
+    },
+    mounted() {
+        this.GetNews()
     },
     data: () => ({
         openDialog: -1,
@@ -176,31 +249,32 @@ export default {
         lazyload: false,
         LightBoxPhotos: [],
         LightBoxDialog: false,
-        news: [{
-            title: "Lorem ipsum dolor sit amet",
-            subtitle: "Lorem ipsum dolor sit amet azdza d zqd ad zd qzd zqd az d",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque neque felis, ultrices ac volutpat eget, luctus quis augue. Morbi mattis bibendum faucibus. Morbi ultricies, diam id dapibus gravida, lectus neque auctor orci, sed convallis neque nulla ut justo. Maecenas sagittis mauris lectus. Duis eu ullamcorper dui. Nulla et odio nulla. Cras interdum vel libero maximus viverra.",
-            photo: [require("../assets/LogoCA2BM.png"), require("../assets/IMG20211002181858.jpg")],
-            category: "Information",
-            groups: ["intranet-admin"],
-            link: "",
-            time: 1272509157,
-            expiration: 0,
-            visible: false,
-            pinned: true
-        }, {
-            title: "Lorem ipsum dolor sit amet",
-            subtitle: "je suis au chomage",
-            text: "Lorem ipsum dolor sit amet BLABLABLA BLABLABL ABLALBLA BLA BL",
-            photo: [require("../assets/a4page.jpg")],
-            category: "Information",
-            groups: ["intranet-admin"],
-            link: "",
-            expiration: 0,
-            time: 1272509157,
-            visible: false,
-            pinned: false
-        }],
+        news: [],
+        // news: [{
+        //     title: "Lorem ipsum dolor sit amet",
+        //     subtitle: "Lorem ipsum dolor sit amet azdza d zqd ad zd qzd zqd az d",
+        //     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque neque felis, ultrices ac volutpat eget, luctus quis augue. Morbi mattis bibendum faucibus. Morbi ultricies, diam id dapibus gravida, lectus neque auctor orci, sed convallis neque nulla ut justo. Maecenas sagittis mauris lectus. Duis eu ullamcorper dui. Nulla et odio nulla. Cras interdum vel libero maximus viverra.",
+        //     photo: [require("../assets/LogoCA2BM.png"), require("../assets/IMG20211002181858.jpg")],
+        //     category: "Information",
+        //     groups: ["intranet-admin"],
+        //     link: "",
+        //     time: 1272509157,
+        //     expiration: 0,
+        //     visible: false,
+        //     pinned: true
+        // }, {
+        //     title: "Lorem ipsum dolor sit amet",
+        //     subtitle: "je suis au chomage",
+        //     text: "Lorem ipsum dolor sit amet BLABLABLA BLABLABL ABLALBLA BLA BL",
+        //     photo: [require("../assets/a4page.jpg")],
+        //     category: "Information",
+        //     groups: ["intranet-admin"],
+        //     link: "",
+        //     expiration: 0,
+        //     time: 1272509157,
+        //     visible: false,
+        //     pinned: false
+        // }],
         archives: [[
             {
                 title: "Lorem ipsum dolor sit amet",

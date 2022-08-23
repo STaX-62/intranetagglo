@@ -81,7 +81,8 @@
                 <v-btn color="green darken-1" text @click="stepper++" v-if="stepper < 3">
                     Suivant
                 </v-btn>
-                <v-btn color="green darken-1" text @click="$emit('changed', modifiedNews); dialog = false" v-if="stepper == 3">
+                <v-btn color="green darken-1" text @click="create ? $emit('created', modifiedNews, newimages) : $emit('updated', modifiedNews, newimages, deletedIMG); dialog = false; stepper = 1"
+                    v-if="stepper == 3">
                     {{ create ? 'Ajouter' : 'Modifier' }}
                 </v-btn>
             </v-card-actions>
@@ -126,14 +127,14 @@ export default {
         },
         deleteExistingIMG(file) {
             console.log(file)
-            console.log(this.autocomplete.photo.findIndex(f => f == file))
-            var photoIndex = this.autocomplete.photo.findIndex(f => f == file)
+            console.log(this.modifiedNews.photo.findIndex(f => f == file))
+            var photoIndex = this.modifiedNews.photo.findIndex(f => f == file)
             console.log(photoIndex)
-            this.deletedIMG.push(this.autocomplete.photo[photoIndex])
-            this.autocomplete.photo.splice(photoIndex, 1)
+            this.deletedIMG.push(this.modifiedNews.photo[photoIndex])
+            this.modifiedNews.photo.splice(photoIndex, 1)
         },
         returndeletedIMG() {
-            this.autocomplete.photo.push(this.deletedIMG.pop())
+            this.modifiedNews.photo.push(this.deletedIMG.pop())
         },
         deleteNewIMG(file) {
             this.newimages.splice(this.newimages.findIndex(f => f.name == file.name), 1)
