@@ -184,3 +184,24 @@
 #app .theme--light.v-pagination .v-pagination__navigation {
     background: #fff;
 }
+
+#app .v-btn--outlined {
+    border: thin solid currentColor;
+}
+
+#app .v-date-picker-table--date .v-btn {
+    height: 32px;
+    width: 32px;
+}
+
+#app .v-date-picker-table .v-btn {
+    z-index: auto;
+    margin: 0;
+    font-size: 12px;
+}
+
+#app .v-select.v-text-field input {
+    flex: 1 1 !important;
+    min-width: 0;
+    position: relative;
+}
