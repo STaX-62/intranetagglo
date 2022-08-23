@@ -149,9 +149,9 @@ export default {
                 })
         },
         GetArchives() {
-            axios.post(generateUrl(`apps/intranetagglo/news/${this.lazyArchivesCounter}`), { 'limit': 5, 'search': this.filters.search, 'categories': this.filters.categories, dateFilter: { start: "", end: "" } }, { type: 'application/json' })
+            axios.post(generateUrl(`apps/intranetagglo/news/${this.lazyArchivesCounter}`), { 'limit': 7, 'search': this.filters.search, 'categories': this.filters.categories, dateFilter: { start: "", end: "" } }, { type: 'application/json' })
                 .then((response) => {
-                    this.lazyArchivesCounter += 5
+                    this.lazyArchivesCounter += 7
                     var array = response.data[0]
                     array.forEach(a => {
                         a.photo = a.photo.split(';')
