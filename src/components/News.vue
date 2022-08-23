@@ -4,7 +4,7 @@
             <v-card-title>
                 <v-card class="pa-2">Actualités</v-card>
                 <Searchbar @searchfilters="Filters"></Searchbar>
-                <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = archives.slice(0, 1); $emit('closealerts', archivesMode); lazyArchivesCounter = 5"
+                <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0"
                     :color="$vuetify.theme.dark ? 'accent' : ''" large>
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
                     {{ archivesMode ? 'Retour' : 'Archives' }}
@@ -145,8 +145,6 @@ export default {
                         n.photo = n.photo.split(';')
                         n.groups = n.groups.split(';')
                     })
-                    this.archives = []
-                    this.archives.push(this.news);
                     console.log(this.archives)
                 })
         },
@@ -183,7 +181,7 @@ export default {
                 categories: categories.join(';'),
                 months: months
             }
-            this.lazyArchivesCounter = 5
+            this.lazyArchivesCounter = 0
             this.GetNews()
             this.GetArchives()
             console.log(search)
@@ -232,8 +230,9 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
-                this.lazyArchivesCounter = 5
+                this.lazyArchivesCounter = 0
                 this.GetNews()
+                this.GetArchives()
             })
         },
         async updateNews(news, newimages, deletedIMG) {
@@ -259,42 +258,47 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
-                this.lazyArchivesCounter = 5
+                this.lazyArchivesCounter = 0
                 this.GetNews()
+                this.GetArchives()
             })
         },
         async deleteNews() {
             axios.delete(generateUrl(`apps/intranetagglo/news/${this.newsToUpdate.id}`), {
                 id: this.newsToUpdate.id
             }).then(() => {
-                this.lazyArchivesCounter = 5
+                this.lazyArchivesCounter = 0
                 this.GetNews()
+                this.GetArchives()
             })
         },
         async pinNews() {
             var url = `apps/intranetagglo/news/pin/${this.newsToUpdate.id}`
             await axios.post(generateUrl(url), { 'id': this.newsToUpdate.id }, { type: 'application/json' }).then(() => {
-                this.lazyArchivesCounter = 5
+                this.lazyArchivesCounter = 0
                 this.GetNews()
+                this.GetArchives()
             })
         },
         async publishNews() {
             var url = `apps/intranetagglo/news/pub/${this.newsToUpdate.id}`
             await axios.post(generateUrl(url), { 'id': this.newsToUpdate.id, 'visible': this.newsToUpdate.visible == '1' ? 0 : 1 }, { type: 'application/json' }).then(() => {
-                this.lazyArchivesCounter = 5
+                this.lazyArchivesCounter = 0
                 this.GetNews()
+                this.GetArchives()
             })
         },
     },
     mounted() {
         this.GetNews()
+        this.GetArchives()
     },
     data: () => ({
         openDialog: -1,
         focus: -1,
         newsForward: 0,
         archivesMode: false,
-        lazyArchivesCounter: 5,
+        lazyArchivesCounter: 0,
         lazyload: false,
         LightBoxPhotos: [],
         LightBoxDialog: false,
