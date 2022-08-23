@@ -204,6 +204,7 @@ export default {
             this.deleteNews()
         },
         async createNews(news, newimages) {
+            console.log(newimages)
             let data = new FormData();
             data.append('title', news.title);
             data.append('subtitle', news.subtitle);
