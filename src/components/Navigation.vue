@@ -1,360 +1,114 @@
 <template>
-  <div class="sidenav">
-    <div class="sidenav-logo">
-      <img v-bind:src="image" />
-    </div>
-    <div class="sidenav-menu" data-intro="Les liens utiles adaptés à vos besoins triés en fonction de votre service" data-title="Menu de Navigation" data-step="1">
-      <div class="section-block" v-for="(section, index) in MenuToDisplay" :key="'B' + index">
-        <button class="section" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))">
-          <div class="section-icon">
-            <i v-bind:class="'mdi mdi-' + section.icon"></i>
-            <!-- <b-icon v-bind:icon="section.icon"></b-icon> -->
-          </div>
-          <div class="section-title">{{ section.title }}</div>
-        </button>
-        <div v-bind:id="'menu-' + index + '-' + subindex" class="menu" v-for="(menu, subindex) in MenuToDisplay[index].childs" :key="'B' + subindex" @click="ExtendSubMenu(index, subindex)">
-          <div class="submenu-title" @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))">
-            <div class="caret" v-if="!isEmpty(MenuToDisplay[index].childs[subindex].childs)">▷</div>
-            {{ menu.title }}
-          </div>
-          <div v-bind:id="'container-' + index + '-' + subindex" class="menu-container">
-            <a class="nav-link text-truncate" v-for="(submenu, subsubindex) in MenuToDisplay[index].childs[subindex].childs" :key="'B' + subsubindex" v-bind:href="submenu.link">
-              <span v-b-tooltip.hover.bottom @mouseover="Tooltips($event, submenu.title)" class="submenu d-sm-inline">{{ submenu.title }}</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="Raccourcis" v-if="isAdmin">
-      <menu-admin-overview />
-    </div>
-  </div>
-</template>
-<script>
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
-import MenuAdminOverview from './menu/menuAdminOverview.vue'
-export default {
-  name: 'Navigation',
-  components: {
-    MenuAdminOverview
-  },
-  data: function () {
-    return {
-      image: '/apps/intranetagglo/img/LogoCA2BM.png',
-      user: [],
-      lastOpenedContainer: null,
-      menuInBDD: [[], [], []]
-    }
-  },
-  watch: {
-    updating: function (val) {
-      if (val) {
-        axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
-          .then((response) => {
-            this.menuInBDD = response.data
-            this.$store.commit('setMenuUpdating', false)
-          })
-      }
-    },
-  },
-  computed: {
-    updating() {
-      return this.$store.state.menuupdating
-    },
-    isAdmin() {
-      return this.$store.state.isAdmin
-    },
-    MenuToDisplay() {
-      var sectionArray = this.menuInBDD[0]
-      sectionArray.forEach((section) => {
-        var menuArray = this.menuInBDD[1].filter(menu => menu.sectionid == section.sectionid);
-        menuArray.forEach((menu) => {
-          menu.childs = this.menuInBDD[2].filter(submenu => submenu.menuid == menu.menuid && submenu.sectionid == menu.sectionid);
-        })
-        section.childs = menuArray;
-      })
-      return sectionArray
-    },
-  },
-  methods: {
-    Tooltips(e, title) {
-      const element = e.target
-      if (element.offsetWidth < element.scrollWidth && !element.hasAttribute('title'))
-        element.setAttribute('title', title)
-    },
-    isEmpty(array) {
-      if (array.length > 0) {
-        return false
-      }
-      else return true
-    },
-    OpenLink(link, isEmpty) {
-      if (link != '' && isEmpty) {
-        window.open(link, '_blank');
-      }
-    },
-    CategorySet(value) {
-      this.droptext = value
-      this.$store.commit('updateCategories', value)
-    },
-    ExtendSubMenu(index, subindex) {
-      if (this.lastOpenedContainer != null && this.lastOpenedContainer != index + '-' + subindex) {
-        document.getElementById("menu-" + this.lastOpenedContainer).firstChild.classList.toggle("active")
-        document.getElementById("container-" + this.lastOpenedContainer).classList.toggle('active');
-      }
-      document.getElementById("menu-" + index + '-' + subindex).firstChild.classList.toggle("active")
-      document.getElementById("container-" + index + '-' + subindex).classList.toggle('active');
-      if (this.lastOpenedContainer == index + '-' + subindex) this.lastOpenedContainer = null;
-      else this.lastOpenedContainer = index + '-' + subindex;
-    },
+    <v-navigation-drawer app>
+        <v-list-item>
+            <v-list-item-content>
+                <v-img :src="image"></v-img>
+            </v-list-item-content>
+        </v-list-item>
 
-  },
-  mounted() {
-    axios.get(generateUrl(`apps/intranetagglo/menusG`))
-      .then((response) => {
-        this.menuInBDD = response.data
-      })
-  }
+        <v-divider></v-divider>
+        <v-list dense>
+            <v-list-group :value="true" prepend-icon="mdi-account-multiple">
+                <template v-slot:activator style="margin-right: 15px;">
+                    <v-list-item-content>
+                        <v-list-item-title class="text-subtitle-1">Vie des Assemblées</v-list-item-title>
+                    </v-list-item-content>
+                </template>
+
+                <v-list-group sub-group no-action>
+                    <template v-slot:activator>
+                        <v-list-item-content>
+                            <v-list-item-title>Elus</v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+
+                    <v-list-item link>
+                        <v-list-item-title>Bureau Communautaire </v-list-item-title>
+                    </v-list-item>
+                    <v-list-item link>
+                        <v-list-item-title>Conseil d'Agglomération</v-list-item-title>
+                    </v-list-item>
+                </v-list-group>
+                <v-list-group sub-group no-action>
+                    <template v-slot:activator>
+                        <v-list-item-content>
+                            <v-list-item-title>Actes</v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+
+                    <v-list-item link>
+                        <v-list-item-title>Délibération</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item link>
+                        <v-list-item-title>Arrêtés</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item link>
+                        <v-list-item-title>Décisions</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item link>
+                        <v-list-item-title>Arrêtés préfectoraux</v-list-item-title>
+                    </v-list-item>
+                </v-list-group>
+                <v-list-group sub-group no-action>
+                    <template v-slot:activator>
+                        <v-list-item-content>
+                            <v-list-item-title>Conseil D'Agglomération</v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+
+                    <v-list-item link>
+                        <v-list-item-title>Prépa Conseil</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item link>
+                        <v-list-item-title>CR Conseils</v-list-item-title>
+                    </v-list-item>
+                </v-list-group>
+                <v-list-item link style="padding-left:66px;">
+                    <v-list-item-title>Prépa Conseil</v-list-item-title>
+                </v-list-item>
+            </v-list-group>
+
+        </v-list>
+        <template v-slot:append>
+            <div class="d-flex py-3">
+                <v-btn text class="mx-auto" color="primary" @click="openDialog = true">
+                    <v-icon class="mr-2">mdi-cog-outline</v-icon>
+                    Modifer les menus
+                </v-btn>
+                <nav-dialog :open="openDialog" @close="openDialog = false"></nav-dialog>
+            </div>
+            <v-divider></v-divider>
+            <div class="d-flex">
+                <v-switch class="ml-2" v-model="$vuetify.theme.dark" :prepend-icon="$vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny'" />
+                <v-spacer></v-spacer>
+                <v-btn icon class="my-auto mr-2">
+                    <v-icon>mdi-help-circle</v-icon>
+                </v-btn>
+            </div>
+        </template>
+    </v-navigation-drawer>
+</template>
+
+<script>
+import navDialog from './admin/navDialog.vue'
+export default {
+    name: "Navigation",
+    components: { navDialog },
+    data: () => ({
+        openDialog: false,
+        image: '/apps/intranetagglo/img/LogoCA2BM.png'//'/apps/intranetagglo/img/LogoCA2BM.png',
+    }),
 }
 </script>
 
-<style scoped>
-.sidenav {
-  position: relative;
-  height: 100%;
-  width: 250px;
-  z-index: 1;
-  background: var(--color-mode-3);
-  border-right: 2px solid var(--color-mode-4) !important;
-  box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
-    7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%);
-  display: grid;
-  grid-template-columns: 100%;
-  grid-auto-rows: 130px auto max-content;
-  grid-template-areas:
-    "Logo"
-    "Menu"
-    "Buttons";
+<style>
+.v-list-item__icon:first-child {
+    margin-right: 10px !important;
+
 }
 
-#App.dark .sidenav {
-  box-shadow: 0 -5px 5px hsl(0deg 0% 100% / 5%);
-}
-
-/* Some media queries for responsiveness */
-@media screen and (max-height: 450px) {
-  .sidenav {
-    padding-top: 15px;
-  }
-}
-
-.sidenav-logo {
-  width: 200px;
-  margin: auto;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  grid-area: Logo;
-}
-
-.sidenav-logo img {
-  width: 200px;
-  filter: drop-shadow(0px 0px 20px var(--color-mode-contrast-2));
-}
-
-.sidenav-menu {
-  overflow-x: hidden;
-  overflow-y: auto;
-  max-height: 620px;
-  grid-area: Menu;
-}
-
-.sidenav-menu::-webkit-scrollbar {
-  display: none;
-}
-
-.section:nth-of-type(even) {
-  top: 0;
-  position: sticky;
-  background-color: #9fc737 !important;
-}
-
-.section:nth-of-type(odd) {
-  top: 0;
-  position: sticky;
-  background-color: var(--color-secondary) !important;
-}
-
-.section {
-  z-index: 100;
-  padding: 0 8px 0 0 !important;
-  text-decoration: none !important;
-  font-size: 20px !important;
-  display: flex !important;
-  border: none !important;
-  background: none !important;
-  width: 100% !important;
-  text-align: left !important;
-  cursor: pointer !important;
-  outline: none !important;
-  transition: 0.5s !important;
-  border-radius: 0px !important;
-  box-shadow: rgb(0 178 255 / 20%) 1px 1px 0px 1px !important;
-  font-family: PetitaBold;
-  -webkit-font-smoothing: antialiased !important;
-  -moz-osx-font-smoothing: grayscale !important;
-  margin-bottom: 10px !important;
-  border-top-right-radius: 10px !important;
-  border-bottom-right-radius: 10px !important;
-}
-
-.section-block {
-  padding-bottom: 10px;
-}
-
-.section-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--color-mode-1);
-  width: 42px;
-  height: 42px;
-  border-width: 0px;
-  border-style: solid;
-  background-color: var(--color-mode-contrast-2);
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-.menu-title,
-.section-title {
-  color: var(--color-mode-2);
-  padding-left: 10px;
-  width: 200px;
-  margin-top: auto;
-  margin-bottom: auto;
-  -moz-user-select: none;
-  /* Firefox */
-  -webkit-user-select: none;
-  /* Chrome, Safari, Opéra depuis la version 15 */
-  -ms-user-select: none;
-  /* Internet explorer depuis la version 10 et Edge */
-  user-select: none;
-  /* Propriété standard */
-}
-
-.section-title {
-  font-weight: 500;
-}
-
-.menu {
-  padding: 2px 0 2px 0;
-  text-decoration: none;
-  font-size: 15px;
-  display: block;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
-  transition: 0.5s;
-  border-radius: 100px;
-}
-
-.menu:hover {
-  color: var(--color-mode-contrast-1);
-}
-
-.submenu-title {
-  color: var(--color-mode-contrast-4);
-  padding-left: 12px;
-  display: flex;
-  transition: 0.5s !important;
-  letter-spacing: 0.01rem;
-  font-family: PetitaBold;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -moz-user-select: none;
-  /* Firefox */
-  -webkit-user-select: none;
-  /* Chrome, Safari, Opéra depuis la version 15 */
-  -ms-user-select: none;
-  /* Internet explorer depuis la version 10 et Edge */
-  user-select: none;
-  /* Propriété standard */
-}
-
-.submenu-title:hover {
-  color: var(--color-mode-contrast-1);
-}
-
-.submenu-title.active .caret {
-  transform: rotate(90deg);
-}
-
-.submenu-title.active {
-  color: var(--color-mode-contrast-1);
-  transform: translateX(10px);
-  overflow: hidden;
-  text-overflow: fade(10px);
-  white-space: nowrap;
-}
-
-.caret {
-  margin-right: 5px;
-  transition: transform 0.5s;
-}
-
-.menu-container {
-  display: none;
-  background-color: var(--color-mode-1);
-  padding-left: 8px;
-}
-
-.menu-container.active {
-  display: block;
-}
-
-.nav-link {
-  padding: 3px 8px 3px 16px;
-  text-decoration: none;
-  color: var(--color-mode-contrast-4);
-  transition: 0.5s;
-  font-weight: 400;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  border: none;
-  letter-spacing: 0.02rem;
-  font-family: PetitaMedium;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.nav-link span {
-  text-overflow: ellipsis;
-  width: 100%;
-  overflow: hidden;
-}
-
-.Raccourcis {
-  position: relative;
-  width: 100%;
-  height: max-content;
-  display: grid;
-  grid-template-columns: 200px;
-  grid-auto-rows: 40px;
-  grid-auto-flow: dense;
-  grid-template-areas: ".";
-  grid-gap: 10px 15px;
-  justify-content: center;
-  vertical-align: middle;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 13px;
-  grid-area: Buttons;
+.v-list-item__icon {
+    min-width: 24px !important;
+    margin-left: 0 !important;
 }
 </style>

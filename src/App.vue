@@ -1,109 +1,44 @@
 <template>
-  <div id="App" :class="darkmode ? 'dark' : ''" :pattern="patterns" :variant="backgroundColor" :isonsite="isOnSite">
-    <div id="settings-box" class="settings-box hidden">
-      <b-icon id="cog" name="cog" class="cog" icon="gear"></b-icon>
-      <label id="cog-label" for="cog" style="position:absolute;">Paramètres</label>
-      <b-icon class="helpintra" icon="info-circle" @click="Intro()"></b-icon>
-      <input type="checkbox" class="checkbox" id="checkbox" v-model="darkmode" />
-      <label for="checkbox" class="label">
-        <b-icon icon="moon" style="color: #f1c40f;"></b-icon>
-        <b-icon icon="sun" style="color: #f39c12;"></b-icon>
-        <div class="ball"></div>
-      </label>
-    </div>
-    <Settings id="Settings" class="Settings hidden" />
-    <Navigation class="Navbar" v-if="isOnSite" />
-    <News />
-  </div>
+  <v-app fixed dark>
+    <Navigation>
+    </Navigation>
+    <v-main>
+      <v-row style="margin:0; height: 100%;">
+        <Alerts v-if="!alertshidden"></Alerts>
+        <News @closealerts="alertshidden = $event"></News>
+      </v-row>
+    </v-main>
+    <Applications></Applications>
+  </v-app>
 </template>
 
 <script>
-// @ is an alias to /src
-import Navigation from '@/components/Navigation.vue'
-import Settings from '@/components/Settings.vue'
-import News from '@/components/News.vue'
-import { generateUrl } from '@nextcloud/router'
-import moment from '@nextcloud/moment'
+import Navigation from './components/Navigation.vue';
+import Alerts from './components/Alerts.vue';
+import News from './components/News.vue';
+import Applications from './components/Applications.vue';
 
 export default {
   name: 'App',
   components: {
     Navigation,
-    Settings,
-    News
+    Alerts,
+    News,
+    Applications
   },
-  data() {
-    return {
-      darkmode: false,
-      patterns: '6',
-      backgroundColor: '2',
-      isOnSite: false
-    }
-  },
-  computed: {
-    userlastlogin() {
-      return this.$store.state.userlastlogin
-    }
-  },
-  methods: {
-    Intro() {
-      this.$introJs.start()
-    }
-  },
-  watch: {
-    userlastlogin: function (val) {
-      if (val) {
-        var uploaddate = moment("2022-07-18").utc();
-        if (uploaddate > val && !localStorage.getItem('intranetagglo_firsttime'))
-          setTimeout(() => {
-            localStorage.setItem('intranetagglo_firsttime', val);
-            this.$introJs.start()
-          }, 2000)
+  data: () => ({
+    alertshidden: false,
+  }),
+};
+</script>
+<style>
+.maincol {
+  height: 100%;
+}
 
-      }
-    },
-    darkmode: function (val) {
-      if (val) {
-        localStorage.setItem('intranetagglo_color_scheme', 'dark');
-        this.$store.commit('setDarkmode', this.darkmode)
-      }
-      else {
-        localStorage.setItem('intranetagglo_color_scheme', 'light');
-        this.$store.commit('setDarkmode', this.darkmode)
-      }
-    }
-  },
-  mounted: function () {
-    this.$axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => {
-      this.isOnSite = response.data
-      this.$store.commit('setLocation', this.isOnSite)
-    })
-
-    document.getElementById('cog').addEventListener("click", () => {
-      document.getElementById('Settings').classList.toggle('hidden')
-      if (this.isOnSite) {
-        document.getElementById('apps-container').classList.toggle('hidden')
-      }
-      document.getElementById('settings-box').classList.toggle('hidden')
-    });
-  },
-  created: function () {
-    var current_scheme = localStorage.getItem('intranetagglo_color_scheme');
-    var patterns = localStorage.getItem('intranetagglo_patterns');
-    var variant = localStorage.getItem('intranetagglo_variant');
-
-    if (current_scheme) {
-      if (current_scheme === 'dark') {
-        this.darkmode = !this.darkmode;
-        this.$store.commit('setDarkmode', this.darkmode)
-      }
-    }
-    if (patterns) {
-      this.patterns = patterns;
-    }
-    if (variant) {
-      this.backgroundColor = variant;
-    }
+@media (min-width: 600px) {
+  .maincol {
+    height: auto;
   }
 }
-</script>
+</style>

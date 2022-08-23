@@ -1,0 +1,25 @@
+#app button {
+    padding: 0x;
+    width: auto;
+    min-height: initial;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin: 0;
+    outline: none;
+    font-weight: 500;
+    border: 0;
+    border-radius: 4px;
+    background-color: transparent;
+}
+
+.v-navigation-drawer {
+    top: 50px !important;
+}
+
+.h2 {
+    font-weight: initial;
+    font-size: initial;
+    margin-bottom: initial;
+    line-height: initial;
+    color: inherit;
+}

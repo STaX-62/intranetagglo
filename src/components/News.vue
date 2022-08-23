@@ -1,327 +1,259 @@
 <template>
-  <div id="news-frame">
-    <div id="news-container" class="news-container">
-      <div id="news-row" class="news-row" :focus="newfocus">
-        <div class="news-alerts" data-intro="Ici sont disponibles les informations/alertes temporaires, celles-ci expireront au bout d'une certaine période" data-title="Alertes" data-step="2">
-          <div class="alert-header">
-            <h2 class="alert-header-title" style="border-top: solid 2px var(--color-secondary);">
-              Alertes
-              <alert-admin-create v-if="isAdmin" />
-            </h2>
-          </div>
-          <div class="alert-wrapper">
-            <div :id="'alert' + index" v-for="(a, index) in getAlerts" :key="index">
-              <alert :alert="alerts[index]" />
-            </div>
-            <div class="alert-empty" v-if="Empty_Alerts != ''">{{ Empty_Alerts }}</div>
-          </div>
-        </div>
-        <div class="news-block" v-if="isAdmin" data-intro="Dans cette section sont disponibles les actualités de la CA2BM, 
-          cliquez simplement sur une actualité pour agrandir ou être redirigé vers le contenu" data-title="Actualités" data-step="3">
-          <div class="news-header">
-            <h2 class="news-header-title" style="border-top: 2px solid var(--color-primary-category);">
-              Actualités
-              <news-admin-create />
-            </h2>
-            <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." data-intro="Vous pouvez rechercher des actualités et alertes" data-title="Barre de Recherche"
-              data-step="4" />
-            <button id="news-filtres" data-intro="Filtrer les actualités par date de parution ou catégorie" data-title="Filtres" data-step="5">
-              <b-icon icon="filter"></b-icon>
-            </button>
-            <NewsFiltrage :minDate="minDate" />
-          </div>
-          <div class="news-wrapper">
-            <news-admin :id="'news' + index" v-for="(n, index) in getNews" :key="index" :arrayid="index" :news="news[index]" />
-            <b-icon class="news-return" icon="arrow-return-left" @click="closeNews()" v-if="newfocus != ''"></b-icon>
-          </div>
-          <b-pagination class="news-pagination" v-model="currentNewsPage" pills :total-rows="rows" :per-page="2"></b-pagination>
-        </div>
-        <div class="news-block" v-else>
-          <div class="news-header">
-            <h2 class="news-header-title" style="border-top: 2px solid var(--color-primary-category);">Actualités</h2>
-            <input type="text" class="searchbar" v-model="search" placeholder="Rechercher.." />
-            <button id="news-filtres">
-              <b-icon icon="filter"></b-icon>
-            </button>
-            <NewsFiltrage :minDate="minDate" />
-          </div>
-          <div class="news-wrapper">
-            <news-comp :id="'news' + index" v-for="(n, index) in getNews" :key="index" :arrayid="index" :news="news[index]" />
-            <b-icon class="news-return" icon="arrow-return-left" @click="closeNews()" v-if="newfocus != ''"></b-icon>
-          </div>
-          <b-pagination class="news-pagination" v-model="currentNewsPage" pills :total-rows="rows" :per-page="2"></b-pagination>
-        </div>
-      </div>
-    </div>
-    <Apps class="Apps" v-if="location" />
-  </div>
+    <v-col class="maincol" :md="archivesMode ? 12 : 8" sm="12">
+        <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%">
+            <v-card-title>
+                <v-card class="pa-2">Actualités</v-card>
+                <Searchbar></Searchbar>
+                <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = archives.slice(0, 1); $emit('closealerts', archivesMode)"
+                    :color="$vuetify.theme.dark ? 'accent' : ''" large>
+                    <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
+                    {{ archivesMode ? 'Retour' : 'Archives' }}
+                </v-btn>
+                <v-btn fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews">
+                    <v-icon>mdi-plus</v-icon>
+                </v-btn>
+            </v-card-title>
+            <v-card-text class="newscarousel" v-if="!archivesMode">
+                <v-hover v-slot="{ hover }">
+                    <v-carousel :cycle="!hover" :continuous="true" :show-arrows="false" hide-delimiters v-model="newsForward" style="height: 100%;">
+                        <v-carousel-item v-for="(n, x) in news" :key="x">
+                            <v-card class="mx-auto" elevation="4" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''" style="height: 100%; position: relative;">
+                                <v-carousel :continuous="false" :show-arrows="true" hide-delimiter-background delimiter-icon="mdi-minus" height="400" v-if="n.photo.length > 1">
+                                    <v-carousel-item v-for="(photo, i) in n.photo" :key="i" @click="LightBoxDialog = true; LightBoxPhotos = n.photo">
+                                        <v-img height="400" :src="photo"></v-img>
+                                    </v-carousel-item>
+                                </v-carousel>
+                                <v-img height="400" :src="n.photo[0]" v-else @click="LightBoxDialog = true; LightBoxPhotos = n.photo"></v-img>
+                                <v-card-title>{{ n.title }}</v-card-title>
+                                <v-card-subtitle>{{ n.subtitle }}</v-card-subtitle>
+                                <v-card-text v-html="n.text" style="margin-bottom:20px">
+                                </v-card-text>
+                                <v-card-actions style="position:absolute; bottom: 0; width: 100%;">
+                                    <v-chip label class=" text-truncate">
+                                        <span class="text-truncate">
+                                            {{ n.category }}
+                                        </span>
+                                    </v-chip>
+                                    <v-icon class="ml-1" v-if="n.pinned">mdi-pin-outline</v-icon>
+                                    <v-spacer></v-spacer>
+                                    <v-btn small rounded icon class="mr-1" v-if="!n.visible" @click="openDialog = 2; newsToUpdate = n">
+                                        <v-icon>mdi-eye-off</v-icon>
+                                    </v-btn>
+                                    <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = n">
+                                    </admin-menu>
+                                    <v-chip>
+                                        <span class="text-truncate">
+                                            {{ getFormatedDate(n.time) }}
+                                        </span>
+                                    </v-chip>
+                                </v-card-actions>
+                            </v-card>
+                        </v-carousel-item>
+                    </v-carousel>
+                </v-hover>
+                <v-pagination v-model="newsForwardC" :length="news.length" class="mt-2" :color="$vuetify.theme.dark ? 'secondary darken-1' : 'primary '"></v-pagination>
+            </v-card-text>
+            <v-card-text v-if="archivesMode">
+                <v-list color="transparent">
+                    <v-list-item v-for="(archive, i) in archives" :key="i">
+                        <v-lazy v-model="lazyload" :options="{
+                            threshold: .5
+                        }" transition=" fade-transition" width="100%">
+                            <div>
+                                <v-card class="mt-2" v-for="(a, y) in archive" :key="y" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''" @click="focus = i + '-' + y">
+                                    <v-carousel :continuous="false" :show-arrows="true" hide-delimiter-background delimiter-icon="mdi-minus" height="400"
+                                        v-if="a.photo.length > 1 && focus == i + '-' + y">
+                                        <v-carousel-item v-for="(photo, i) in a.photo" :key="i" @click="LightBoxDialog = true; LightBoxPhotos = a.photo">
+                                            <v-img height="400" :src="photo"></v-img>
+                                        </v-carousel-item>
+                                    </v-carousel>
+                                    <v-img height="400" :src="a.photo[0]" v-if="a.photo.length <= 1 && focus == i + '-' + y" @click="LightBoxDialog = true; LightBoxPhotos = a.photo"></v-img>
+                                    <v-card-title class="text-truncate">{{ a.title }}
+                                        <v-spacer></v-spacer>
+                                        <v-icon class="mr-1" v-if="a.pinned">mdi-pin-outline</v-icon>
+                                        <v-chip label class="text-truncate">
+                                            <span class="text-truncate">
+                                                {{ a.category }}
+                                            </span>
+                                        </v-chip>
+                                        <v-chip label class="mx-2">
+                                            <span class="text-truncate">
+                                                {{ getFormatedDate(a.time) }}
+                                            </span>
+                                        </v-chip>
+                                        <v-btn small rounded icon class="mr-1" v-if="!a.visible" @click="openDialog = 2, newsToUpdate = a">
+                                            <v-icon>mdi-eye-off</v-icon>
+                                        </v-btn>
+                                        <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = a"></admin-menu>
+                                    </v-card-title>
+                                    <v-card-subtitle>{{ a.subtitle }}</v-card-subtitle>
+                                    <v-card-text :class="focus == i + '-' + y ? '' : 'text-truncate'" v-html="a.text" style="overflow: hidden;max-width: 100%;"></v-card-text>
+                                </v-card>
+                            </div>
+                        </v-lazy>
+                    </v-list-item>
+                </v-list>
+            </v-card-text>
+        </v-card>
+        <vue-easy-lightbox escDisabled moveDisabled :visible="LightBoxDialog" :imgs="LightBoxPhotos" :index="0" @hide="LightBoxDialog = false"></vue-easy-lightbox>
+        <admin-change :open="openDialog == 3" @close="openDialog = -1" @change="PinNews" :title="'Modification de l\'épinglage de l\'actualité'"
+            :msg="false ? 'Voulez vous vraiment désépingler cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment épingler cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
+            :validate="false ? 'Désépingler' : 'Epingler'" :color="false ? 'red darken-1' : 'green darken-1'">
+        </admin-change>
+        <admin-change :open="openDialog == 2" @close="openDialog = -1" @change="PublishNews" :title="'Modification de la visibilité de l\'actualité'"
+            :msg="false ? 'Voulez vous vraiment mettre en brouillon cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment publier cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
+            :validate="false ? 'Mettre en brouillon' : 'Publier'" :color="false ? 'red darken-1' : 'green darken-1'">
+        </admin-change>
+        <news-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" :news="newsToUpdate" @changed="changedNews"></news-modify>
+        <admin-change :open="openDialog == 1" @close="openDialog = -1" @change="DeleteNews" :title="'Supprimer cette actualité'"
+            :msg="'Voulez vous vraiment supprimer cette actualité: <br/><code>' + newsToUpdate.title + '</code>'" validate="Supprimer" color="red darken-1">
+        </admin-change>
+    </v-col>
 </template>
 
 <script>
-import NewsAdmin from './news/NewsAdmin'
-import NewsComp from './news/NewsComp'
-import Alert from './news/Alert'
-import Apps from './Apps'
-import NewsAdminCreate from './news/NewsAdminCreate'
-import AlertAdminCreate from './news/AlertAdminCreate'
-import NewsFiltrage from './news/NewsFiltrage'
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import AdminChange from './admin/adminChange.vue';
+import adminMenu from './admin/adminMenu.vue'
+import newsModify from './admin/newsModify.vue';
+import moment from 'moment'
+import Searchbar from './Searchbar.vue';
 
 export default {
-  name: 'News',
-  props: {
-    msg: String
-  },
-  components: {
-    NewsAdmin,
-    NewsComp,
-    Alert,
-    Apps,
-    NewsAdminCreate,
-    AlertAdminCreate,
-    NewsFiltrage
-  },
-  watch: {
-    updating: function (val) {
-      if (val) {
-        var url = `apps/intranetagglo/news/${(this.currentNewsPage - 1) * this.newsperpage}`
-        axios.post(generateUrl(url), { 'limit': this.newsperpage, 'search': this.search, 'categories': this.categoryfilter.join(';'), dateFilter: this.dateFilter }, { type: 'application/json' })
-          .then((response) => {
-            this.news = response.data[0];
-            this.news.forEach(n => {
-              n.photo = n.photo.split(';')
-            })
-            this.rows = response.data[1];
-            this.minDate = response.data[2].time;
-            this.$store.commit('setNewsUpdating', false)
-          })
-        url = `apps/intranetagglo/alerts`
-        axios.post(generateUrl(url), { 'search': this.search }, { type: 'application/json' })
-          .then((response) => {
-            this.alerts = response.data;
-          })
-      }
+    components: { adminMenu, newsModify, AdminChange, Searchbar },
+    name: "News",
+    watch: {
+        lazyload: function (val) {
+            if (val) {
+                var array = []
+                array.push(this.news[0])
+                array.push(this.news[0])
+                array.push(this.news[0])
+                array.push(this.news[0])
+                array.push(this.news[0])
+                this.archives.push(array)
+                console.log(val)
+            }
+            this.lazyload = false
+        },
     },
-  },
-  data: function () {
-    return {
-      addNews: false,
-      AddNewsModal: false,
-      news: [],
-      alerts: [],
-      newsPage: 1,
-      alertsPage: 1,
-      newsperpage: 2,
-      rows: 0,
-      focus: "",
-      timer: undefined,
-      minDate: 0
-    }
-  },
-  computed: {
-    newfocus() {
-      return this.$store.state.newsfocus;
-    },
-    updating() {
-      return this.$store.state.newsupdating
-    },
-    getNews() {
-      return this.news
-    },
-    getAlerts() {
-      return this.alerts
-    },
-    Empty_Alerts() {
-      return this.alerts.length > 0 ? "" : "pas de nouvelle alerte"
-    },
-    isAdmin() {
-      return this.$store.state.isAdmin
-    },
-    location() {
-      return this.$store.state.location
-    },
-    search: {
-      get() {
-        return this.$store.state.search
-      },
-      set(value) {
-        clearTimeout(this.timer)
-        this.timer = setTimeout(() => {
-          this.$store.commit('setNewsUpdating', true)
-          this.$store.commit('updateNewsFocus', 2)
-        }, 250)
-        this.$store.commit('updateSearch', value)
-      }
-    },
-    categoryfilter: {
-      get() {
-        return this.$store.state.categoryfilter
-      },
-    },
-    dateFilter: {
-      get() {
-        return this.$store.state.datefilter
-      },
-    },
-    currentNewsPage: {
-      get() {
-        return this.newsPage
-      },
-      set(value) {
-        this.newsPage = value
-        this.$store.commit('setNewsUpdating', true)
-      }
-    }
-  },
-  methods: {
-    handleScroll() {
-      const els = document.querySelectorAll('.news')
-      setInterval(function () {
-      }, 1000)
-      els.forEach((el) => {
-        const elTop = el.getBoundingClientRect().top
-        const elBottom = el.getBoundingClientRect().bottom
-        if (elTop >= 0 || elBottom <= 0) {
-          this.isActive = false
-          el.classList.remove('active')
-        } if (elTop <= 300 && elBottom >= 0) {
-          this.isActive = true
-          el.classList.add('active')
+    computed: {
+        newsForwardC: {
+            get() {
+                return this.newsForward + 1
+            },
+            set(value) {
+                this.newsForward = value - 1
+            }
         }
-      })
     },
-    closeNews() {
-      this.$store.commit('updateNewsFocus', 2)
-    }
-  },
-  mounted() {
-    this.search = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-    axios.get(generateUrl(`apps/intranetagglo/isadmin`))
-      .then(response => {
-        this.$store.commit('setisAdmin', response.data)
-        if (response.data) {
-          this.$store.dispatch("getGroupsOptions");
-        }
-      })
-    this.$store.dispatch("getCategoryOptions", '');
-    axios.get(generateUrl(`apps/intranetagglo/user`)).then(response => {
-      this.$store.commit('setUser', response.data)
-    })
-    var url = `apps/intranetagglo/news/${this.currentNewsPage - 1}`
-    axios.post(generateUrl(url), { 'id': 0, 'limit': this.newsperpage, 'search': this.search, 'categories': '', dateFilter: this.dateFilter }, { type: 'application/json' })
-      .then((response) => {
-        this.news = response.data[0];
-        this.news.forEach(n => {
-          n.photo = n.photo.split(';')
-        })
-        this.rows = response.data[1];
-        this.minDate = response.data[2].time;
-      })
-    url = `apps/intranetagglo/alerts`
-    axios.post(generateUrl(url), { 'search': this.search }, { type: 'application/json' })
-      .then((response) => {
-        this.news = response.data;
-      })
-  },
-  destroyed() {
-    var target = document.getElementById('news-container');
-    target.removeEventListener('scroll', this.handleScroll);
-  }
+    methods: {
+        PinNews() {
+            this.pinDialog = !this.pinDialog
+        },
+        PublishNews() {
+            this.publishDialog = !this.publishDialog
+        },
+        ModifyNews() {
+            this.modifyDialog = !this.modifyDialog
+        },
+        DeleteNews() {
+            this.deleteDialog = !this.deleteDialog
+        },
+        changedNews(value) {
+            console.log("ici")
+            console.log(value)
+            this.newsToUpdate = value
+        },
+        getFormatedDate(date) {
+            return moment((date * 1000)).locale('fr').format('LL')
+        },
+    },
+    data: () => ({
+        openDialog: -1,
+        focus: -1,
+        newsForward: 0,
+        archivesMode: false,
+        lazyload: false,
+        LightBoxPhotos: [],
+        LightBoxDialog: false,
+        news: [{
+            title: "Lorem ipsum dolor sit amet",
+            subtitle: "Lorem ipsum dolor sit amet azdza d zqd ad zd qzd zqd az d",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque neque felis, ultrices ac volutpat eget, luctus quis augue. Morbi mattis bibendum faucibus. Morbi ultricies, diam id dapibus gravida, lectus neque auctor orci, sed convallis neque nulla ut justo. Maecenas sagittis mauris lectus. Duis eu ullamcorper dui. Nulla et odio nulla. Cras interdum vel libero maximus viverra.",
+            photo: [require("../assets/LogoCA2BM.png"), require("../assets/IMG20211002181858.jpg")],
+            category: "Information",
+            groups: ["intranet-admin"],
+            link: "",
+            time: 1272509157,
+            expiration: 0,
+            visible: false,
+            pinned: true
+        }, {
+            title: "Lorem ipsum dolor sit amet",
+            subtitle: "je suis au chomage",
+            text: "Lorem ipsum dolor sit amet BLABLABLA BLABLABL ABLALBLA BLA BL",
+            photo: [require("../assets/a4page.jpg")],
+            category: "Information",
+            groups: ["intranet-admin"],
+            link: "",
+            expiration: 0,
+            time: 1272509157,
+            visible: false,
+            pinned: false
+        }],
+        archives: [[
+            {
+                title: "Lorem ipsum dolor sit amet",
+                subtitle: "Lorem ipsum dolor sit amet azdza d zqd ad zd qzd zqd az d",
+                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque neque felis, ultrices ac volutpat eget, luctus quis augue. Morbi mattis bibendum faucibus. Morbi ultricies, diam id dapibus gravida, lectus neque auctor orci, sed convallis neque nulla ut justo. Maecenas sagittis mauris lectus. Duis eu ullamcorper dui. Nulla et odio nulla. Cras interdum vel libero maximus viverra.",
+                photo: [require("../assets/LogoCA2BM.png"), require("../assets/IMG20211002181858.jpg")],
+                category: "Information",
+                groups: ["intranet-admin"],
+                link: "",
+                time: 1272509157,
+                expiration: 0,
+                visible: false,
+                pinned: false
+            }
+        ]],
+        newsToUpdate: {
+            title: "",
+            subtitle: "",
+            text: "",
+            photo: [],
+            category: "",
+            groups: [],
+            link: "",
+            expiration: 0
+        },
+        EmptyNews: {
+            title: "",
+            subtitle: "",
+            text: "",
+            photo: [],
+            category: "",
+            groups: [],
+            link: "",
+            expiration: 0
+        },
+    }),
 }
 </script>
 
-
-<style scoped>
-.alert-header-title {
-  width: 100%;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  color: var(--color-mode-contrast-1);
-  justify-content: center;
-  text-align: center;
-  background: url("../patterns/brilliant.png"), var(--color-mode-2);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
-    7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%);
+<style>
+.v-card__text .text-truncate * {
+    margin: 0;
+    max-width: 100%;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
-.news-header,
-.alert-header {
-  display: flex;
-  height: 60px;
+.v-carousel__item {
+    height: 100% !important;
 }
 
-.news-alerts {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  z-index: 2;
-  flex: 0 0 32%;
-  margin-right: 1%;
-  background-color: var(--color-secondary-transparency) !important;
-  border-radius: 10px;
-}
-
-.alert-wrapper {
-  height: calc(100% - 62px);
-  overflow-y: auto;
-}
-
-.alert-empty {
-  color: var(--color-light);
-  text-align: center;
-  margin-top: 20px;
-}
-
-.searchbar {
-  flex: 0 0 39%;
-  border-top-left-radius: 10px !important;
-  border-bottom-left-radius: 10px !important;
-  border: 2px solid var(--color-mode-4) !important;
-  box-shadow: 2px 2px 3px rgb(55 84 170 / 15%), 2px 2px 3px rgb(55 84 170 / 15%),
-    7px 7px 15px rgb(55 84 170 / 15%), -7px -7px 20px rgb(0 0 0 / 10%),
-    inset 0px 0px 4px rgb(255 255 255 / 0%),
-    inset 7px 7px 15px rgb(55 84 170 / 15%),
-    inset -7px -7px 20px rgb(255 255 255), 0px 0px 4px rgb(255 255 255 / 20%) !important;
-  background-color: var(--color-mode-2) !important;
-  padding: 5px 15px !important;
-  outline: none !important;
-  color: #535d74 !important;
-  height: 50px !important;
-  margin: 0 !important;
-  font-size: 16px !important;
-}
-
-@media (max-width: 1100px) {
-  .news-alerts {
-    display: none;
-    margin: 0 2%;
-  }
-
-  .news-wrapper {
-    margin: 0 2%;
-  }
-
-  .news-pagination {
-    margin: 0 2%;
-  }
-
-  .searchbar {
-    margin-left: 2% !important;
-  }
-
-  .alert-wrapper {
-    height: 100%;
-    overflow-y: auto;
-  }
-}
-
-@media (max-width: 780px) {
-  .searchbar {
-    margin-left: 0 !important;
-  }
+.newscarousel {
+    height: calc(100% - 125px) !important;
 }
 </style>
