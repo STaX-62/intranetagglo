@@ -78,6 +78,6 @@
     background-color: transparent;
 }
 
-#app .v-card__actions>.v-btn.v-btn {
+#app .v-btn.v-btn {
     padding: 0 8px;
 }
