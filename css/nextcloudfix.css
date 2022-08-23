@@ -9,4 +9,9 @@
     font-weight: 500;
     border: 0;
     border-radius: 4px;
+    background-color: transparent;
+}
+
+.v-navigation-drawer {
+    top: 50px !important;
 }
