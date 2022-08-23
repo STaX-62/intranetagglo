@@ -16,7 +16,7 @@
     top: 50px !important;
 }
 
-.h2 {
+#app h2 {
     font-weight: initial;
     font-size: initial;
     margin-bottom: initial;
