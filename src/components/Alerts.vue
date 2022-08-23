@@ -80,7 +80,9 @@ export default {
             data.append('category', alert.category);
             data.append('groups', alert.groups);
             data.append('link', alert.link);
-            data.append('expiration', alert.expiration.toISOString());
+            if (typeof alert.expiration == 'string')
+                data.append('expiration', new Date(parseInt(alert.expiration) * 1000).toISOString());
+            else data.append('expiration', new Date(alert.expiration * 1000).toISOString());
 
             axios.post(generateUrl(`apps/intranetagglo/news`), data, {
                 headers: {
