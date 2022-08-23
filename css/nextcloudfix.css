@@ -16,15 +16,28 @@
     top: 50px !important;
 }
 
- #app h2 {
+#app h2 {
     font-weight: bold;
     font-size: 1.5em;
     margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
+    margin-bottom: 0;
     line-height: initial;
     color: inherit;
     font-family: "Roboto", sans-serif;
     line-height: 1.5;
+}
+
+#app input {
+    margin: 0;
+    font-size: inherit;
+    background-color: transparent;
+    border-radius: 0;
+    flex: 1 1 auto;
+    line-height: 20px;
+    padding: 8px 0 8px;
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
 }
