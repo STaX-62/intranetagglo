@@ -21,9 +21,9 @@
                 </v-card>
             </v-card-text>
         </v-card>
-        <alert-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" @created="AddAlert" @updated="UpdateAlert" :alert="alertToUpdate"></alert-modify>
-        <admin-change :open="openDialog == 1" @close="openDialog = -1" @changed="deleteAlert" :title="'Supprimer cette alerte'" :msg="'Voulez vous vraiment supprimer cette alerte: '"
-            validate="Supprimer" color="red darken-1">
+        <alert-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" @created="prepare_add" @updated="prepare_update" :alert="alertToUpdate"></alert-modify>
+        <admin-change :open="openDialog == 1" @close="openDialog = -1" @changed="prepare_delete" :title="'Supprimer cette alerte'" :msg="'Voulez vous vraiment supprimer cette alerte: '" validate="Supprimer"
+            color="red darken-1">
         </admin-change>
     </v-col>
 </template>
@@ -59,16 +59,16 @@ export default {
                 return diff + " jour";
             return diff + " jours";
         },
-        AddAlert(alert) {
+        prepare_add(alert) {
             alert.groups = alert.groups.join(';')
             this.createAlert(alert)
             this.alertToUpdate = this.alertEmpty
         },
-        UpdateAlert(alert) {
+        prepare_update(alert) {
             this.updateAlert(alert)
             this.alertToUpdate = this.alertEmpty
         },
-        deleteAlert() {
+        prepare_delete() {
             this.deleteAlert()
         },
         async createAlert(alert) {
@@ -90,7 +90,7 @@ export default {
                 this.GetAlerts()
             })
         },
-        async updateNews(alert) {
+        async updateAlert(alert) {
             let data = new FormData();
             data.append('title', alert.title);
             data.append('subtitle', alert.subtitle);
@@ -113,7 +113,7 @@ export default {
                 this.GetAlerts()
             })
         },
-        async deleteNews() {
+        async deleteAlert() {
             axios.delete(generateUrl(`apps/intranetagglo/news/${this.alertToUpdate.id}`), {
                 id: this.alertToUpdate.id
             }).then(() => {
