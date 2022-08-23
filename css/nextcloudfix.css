@@ -77,3 +77,7 @@
 #app .ql-editor:active {
     background-color: transparent;
 }
+
+#app .v-card__actions>.v-btn.v-btn {
+    padding: 0 8px;
+}
