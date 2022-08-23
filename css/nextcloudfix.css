@@ -68,7 +68,8 @@
     white-space: pre-wrap;
     word-wrap: break-word;
     margin: 0;
-    background-color: transparent;
+    background-color: transparent !important;
+    border: 0 !important;
 }
 
 #app .ql-editor:active {
