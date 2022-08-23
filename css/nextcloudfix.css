@@ -70,6 +70,8 @@
     margin: 0;
     background-color: transparent !important;
     border: 0 !important;
+    color: inherit;
+    width: auto;
 }
 
 #app .ql-editor:active {
