@@ -180,3 +180,7 @@
     width: 32px;
     margin: 0.3rem 10px;
 }
+
+#app .theme--light.v-pagination .v-pagination__navigation {
+    background: #fff;
+}
