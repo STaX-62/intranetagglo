@@ -34,7 +34,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <draggable tag="tbody" :list="apps" handle=".handleapp">
+                        <draggable tag="tbody" :list="apps" handle=".handleapp" :move="setNewPosition" @end="UpdateOrder">
                             <tr v-for="app in apps" :key="app.name">
                                 <td>{{ app.title }}</td>
                                 <td>{{ app.icon }}</td>
