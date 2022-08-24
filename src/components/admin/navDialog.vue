@@ -158,6 +158,13 @@ export default {
         },
     },
     methods: {
+        getAdmMenus() {
+            var url = `apps/intranetagglo${'/menus'}`
+            axios.get(generateUrl(url))
+                .then((response) => {
+                    this.menus = response.data
+                })
+        },
         setNewPosition(event) {
             this.newposition = event;
             this.$forceUpdate()
@@ -247,6 +254,9 @@ export default {
                 this.$forceUpdate()
             })
         },
+    },
+    mounted() {
+        this.getAdmMenus()
     },
     data: () => ({
         newposition: {},
