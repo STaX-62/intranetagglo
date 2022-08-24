@@ -17,7 +17,7 @@
                 <v-hover v-slot="{ hover }">
                     <v-carousel :cycle="!hover" :continuous="true" :show-arrows="false" hide-delimiters v-model="newsForward" style="height: 100%;">
                         <v-carousel-item style="height: 100%; position: relative;" v-if="!news.length">
-                            <v-skeleton-loader class="mx-auto" max-width="300" type="card"></v-skeleton-loader>
+                            <v-skeleton-loader class="mx-auto" type="card"></v-skeleton-loader>
                         </v-carousel-item>
                         <v-carousel-item v-for="(n, x) in news" :key="x">
                             <v-card class="mx-auto" elevation="4" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''" style="height: 100%; position: relative;">

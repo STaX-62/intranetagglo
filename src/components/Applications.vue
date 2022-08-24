@@ -2,12 +2,19 @@
     <v-navigation-drawer app right>
         <h2 class="mt-2 text-center">Applications
         </h2>
-        <v-row class="ma-1 apps-container">
+        <v-row class="ma-1 apps-container" v-if="!apps.length">
+            <v-col v-for="index in 4" :key="index" cols="6">
+                <v-responsive :aspect-ratio="1 / 1">
+                    <v-skeleton-loader class="mx-auto" type="button" style="height: 100%;width:100%;"></v-skeleton-loader>
+                </v-responsive>
+            </v-col>
+        </v-row>
+        <v-row class="ma-1 apps-container" v-if="apps.length">
             <v-col v-for="(app, index) in apps" :key="index" cols="6">
                 <v-responsive :aspect-ratio="1 / 1">
-                    <v-btn class="appbox" style="height: 100%;width:100%;" :href="app.link">
+                    <v-btn class="appbox" style="height: 100%;width:100%;" :href="app.link" target="_blank">
                         <div class="text-center d-flex flex-column align-center justify-center text-wrap" style="height: 100%; letter-spacing: normal; font-size:smaller;">
-                            <v-icon class="pb-1">{{ app.icon }}</v-icon>
+                            <v-icon class="pb-1">mdi-{{ app.icon }}</v-icon>
                             {{ app.title }}
                         </div>
                     </v-btn>
