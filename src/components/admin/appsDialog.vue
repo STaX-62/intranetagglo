@@ -18,6 +18,9 @@
                                     App
                                 </th>
                                 <th class="text-left">
+                                    Icon
+                                </th>
+                                <th class="text-left">
                                     Lien
                                 </th>
                                 <th class="text-left">
@@ -31,6 +34,7 @@
                         <tbody>
                             <tr v-for="app in apps" :key="app.name">
                                 <td>{{ app.title }}</td>
+                                <td>{{ app.icon.slice(app.icon.length - 2) }}</td>
                                 <td class="text-truncate" style="max-width: 500px;">{{ app.link }}</td>
                                 <td>
                                     <v-chip small v-for="group in app.groups" :key="group">{{ group }}</v-chip>
@@ -86,7 +90,13 @@ export default {
     methods: {
         getAdmApps() {
             axios.get(generateUrl(`apps/intranetagglo/apps`))
-                .then(response => (this.apps = response.data))
+                .then((response) => {
+                    var array = response.data
+                    array.forEach(a => {
+                        a.groups = a.groups.split(';')
+                    })
+                    this.apps = array
+                })
         },
         prepare_add(app) {
             app.groups = app.groups.join(';')
