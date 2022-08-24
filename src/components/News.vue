@@ -140,7 +140,9 @@ export default {
                 .then((response) => {
                     this.news = response.data[0];
                     this.totalNewsLength = response.data[1]
-
+                    this.archives = []
+                    this.lazyArchivesCounter = 0
+                    this.GetArchives()
                     this.news.forEach(n => {
                         n.photo = n.photo.split(';')
                         n.groups = n.groups.split(';')
@@ -153,6 +155,7 @@ export default {
                 .then((response) => {
                     this.lazyArchivesCounter += 7
                     var array = response.data[0]
+
                     array.forEach(a => {
                         a.photo = a.photo.split(';')
                         a.groups = a.groups.split(';')
@@ -181,9 +184,7 @@ export default {
                 categories: categories.join(';'),
                 months: months
             }
-            this.lazyArchivesCounter = 0
             this.GetNews()
-            this.GetArchives()
             console.log(search)
             console.log(categories)
             console.log(months)
@@ -230,9 +231,7 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
-                this.lazyArchivesCounter = 0
                 this.GetNews()
-                this.GetArchives()
             })
         },
         async updateNews(news, newimages, deletedIMG) {
@@ -258,40 +257,31 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
-                this.lazyArchivesCounter = 0
                 this.GetNews()
-                this.GetArchives()
             })
         },
         async deleteNews() {
             axios.delete(generateUrl(`apps/intranetagglo/news/${this.newsToUpdate.id}`), {
                 id: this.newsToUpdate.id
             }).then(() => {
-                this.lazyArchivesCounter = 0
                 this.GetNews()
-                this.GetArchives()
             })
         },
         async pinNews() {
             var url = `apps/intranetagglo/news/pin/${this.newsToUpdate.id}`
             await axios.post(generateUrl(url), { 'id': this.newsToUpdate.id }, { type: 'application/json' }).then(() => {
-                this.lazyArchivesCounter = 0
                 this.GetNews()
-                this.GetArchives()
             })
         },
         async publishNews() {
             var url = `apps/intranetagglo/news/pub/${this.newsToUpdate.id}`
             await axios.post(generateUrl(url), { 'id': this.newsToUpdate.id, 'visible': this.newsToUpdate.visible == '1' ? 0 : 1 }, { type: 'application/json' }).then(() => {
-                this.lazyArchivesCounter = 0
                 this.GetNews()
-                this.GetArchives()
             })
         },
     },
     mounted() {
         this.GetNews()
-        this.GetArchives()
     },
     data: () => ({
         openDialog: -1,

@@ -3,12 +3,12 @@
         <h2 class="mt-2 text-center">Applications
         </h2>
         <v-row class="ma-1 apps-container">
-            <v-col v-for="index in 12" :key="index" cols="6">
+            <v-col v-for="(app, index) in apps" :key="index" cols="6">
                 <v-responsive :aspect-ratio="1 / 1">
-                    <v-btn class="appbox" style="height: 100%;width:100%;">
+                    <v-btn class="appbox" style="height: 100%;width:100%;" :href="app.link">
                         <div class="text-center d-flex flex-column align-center justify-center text-wrap" style="height: 100%; letter-spacing: normal; font-size:smaller;">
-                            <v-icon class="pb-1">mdi-phone</v-icon>
-                            App {{ index }}
+                            <v-icon class="pb-1">{{ app.icon }}</v-icon>
+                            {{ app.title }}
                         </div>
                     </v-btn>
                 </v-responsive>
@@ -28,9 +28,22 @@
 
 <script>
 import appsDialog from './admin/appsDialog.vue'
+import axios from '@nextcloud/axios';
+import { generateUrl } from '@nextcloud/router';
 export default {
     components: { appsDialog },
     name: "Navigation",
+    methods: {
+        getNav() {
+            axios.get(generateUrl(`apps/intranetagglo/appsG`))
+                .then((response) => {
+                    this.apps = response.data;
+                })
+        }
+    },
+    mounted() {
+        this.getNav()
+    },
     data: () => ({
         openDialog: false
     }),

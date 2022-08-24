@@ -94,8 +94,10 @@ import navDialog from './admin/navDialog.vue'
 export default {
     name: "Navigation",
     components: { navDialog },
+
     data: () => ({
         openDialog: false,
+        apps: [],
         image: '/apps/intranetagglo/img/LogoCA2BM.png'//'/apps/intranetagglo/img/LogoCA2BM.png',
     }),
 }
