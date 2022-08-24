@@ -59,7 +59,7 @@
             <v-card-text v-if="archivesMode">
                 <v-list color="transparent">
                     <v-list-item v-if="!archives.length">
-                        <v-skeleton-loader type="image" width="100%" height="125px"></v-skeleton-loader>
+                        <v-skeleton-loader class="mt-2" type="image@3" width="100%" height="125px"></v-skeleton-loader>
                     </v-list-item>
                     <v-list-item v-for="(archive, i) in archives" :key="i">
                         <v-lazy :options="{

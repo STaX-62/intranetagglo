@@ -1,5 +1,5 @@
 <template>
-    <v-text-field v-model="search" @keyup="onChange" class="mx-2" label="Recherche..." single-line solo hide-details prepend-inner-icon="mdi-magnify" color="accent" hint="test hint element">
+    <v-text-field v-model="search" @keyup="onChange" class="mx-2" label="Recherche..." single-line solo prepend-inner-icon="mdi-magnify" color="accent" hint="test hint element">
         <template v-slot:append>
             <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y max-width="290">
                 <template v-slot:activator="{ on, attrs }">
