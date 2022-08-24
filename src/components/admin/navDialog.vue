@@ -185,13 +185,22 @@ export default {
             this.$forceUpdate()
         },
         prepare_add(menu) {
-            menu.groups = menu.groups.join(';')
+            console.log(menu)
+            if (menu.groups.length) {
+                menu.groups = menu.groups.join(';')
+            }
+            else menu.groups = ''
             menu.icon = menu.icon.trim()
             this.createMenu(menu)
             this.menuToUpdate = this.EmptyMenu
         },
         prepare_update(menu) {
-            menu.groups = menu.groups.join(';')
+            console.log(menu)
+            if (menu.groups.length) {
+                menu.groups = menu.groups.join(';')
+            }
+            else menu.groups = ''
+
             menu.icon = menu.icon.trim()
             this.updateMenu(menu)
             this.menuToUpdate = this.EmptyMenu
