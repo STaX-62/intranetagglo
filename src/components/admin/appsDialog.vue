@@ -99,22 +99,25 @@ export default {
                         else {
                             a.groups = []
                         }
+                        // a.color = app.icon.slice(app.icon.length - 2)
                     })
                     this.apps = array
                 })
         },
-        prepare_add(app) {
+        prepare_add(app, color) {
             app.groups = app.groups.join(';')
-            this.createApp(app)
+            app.icon = app.icon.trim() + color
+            this.createApps(app)
             this.appToUpdate = this.EmptyApp
         },
-        prepare_update(app) {
+        prepare_update(app, color) {
             app.groups = app.groups.join(';')
-            this.updateNews(app)
+            app.icon = app.icon.trim() + color
+            this.updateApps(app)
             this.appToUpdate = this.EmptyApp
         },
         prepare_delete() {
-            this.deleteNews()
+            this.deleteApps()
         },
         async createApps(app) {
             await axios.post(generateUrl(`apps/intranetagglo/apps`), app, { type: 'application/json' }).then(() => {
