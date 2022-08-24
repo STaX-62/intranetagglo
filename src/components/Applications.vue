@@ -5,7 +5,7 @@
         <v-row class="ma-1 apps-container" v-if="!apps.length">
             <v-col v-for="index in 4" :key="index" cols="6">
                 <v-responsive :aspect-ratio="1 / 1">
-                    <v-skeleton-loader class="mx-auto" type="button" style="height: 100%;width:100%;"></v-skeleton-loader>
+                    <v-skeleton-loader class="mx-auto" type="button" height="100%" width="100%"></v-skeleton-loader>
                 </v-responsive>
             </v-col>
         </v-row>
@@ -52,8 +52,8 @@ export default {
                         else {
                             a.groups = []
                         }
-                        a.color = app.icon.slice(a.icon.length - 2)
-                        a.icon = app.icon.slice(0, a.icon.length - 2)
+                        a.color = a.icon.slice(a.icon.length - 2)
+                        a.icon = a.icon.slice(0, a.icon.length - 2)
                     })
                     this.apps = array
                 })
