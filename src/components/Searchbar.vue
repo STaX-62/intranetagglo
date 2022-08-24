@@ -45,7 +45,6 @@ export default {
                 else {
                     this.$emit('searchfilters', this.search, this.$categories[this.chips], this.months)
                 }
-
             }, 250)
         }
     },

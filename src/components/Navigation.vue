@@ -28,7 +28,7 @@
                             </template>
 
                             <v-list-item v-for="(submenu, subsubindex) in MenuToDisplay[index].childs[subindex].childs" :key="'B' + subsubindex" link :href="submenu.link" target="_blank"
-                                style="padding-left:40px;min-height:30px; font-family: PetitaBold;  letter-spacing: .01rem; -webkit-font-smoothing: antialiased;font-size: 15px;">
+                                style="padding-left:66px;min-height:30px; font-family: PetitaBold;  letter-spacing: .01rem; -webkit-font-smoothing: antialiased;font-size: 15px;">
                                 <v-list-item-title>{{ submenu.title }}</v-list-item-title>
                             </v-list-item>
                         </v-list-group>
