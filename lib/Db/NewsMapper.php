@@ -88,7 +88,7 @@ class NewsMapper extends QBMapper
             ->where("q.expiration = 0")
             ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
-        if ($categories != '') {
+        if ($categories != '' || $categories != null) {
             $qb2->andWhere('q.category IN (:categories)')
                 ->setParameter('categories', $categories);
         }
@@ -116,7 +116,7 @@ class NewsMapper extends QBMapper
             ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
 
-        if ($categories != '') {
+        if ($categories != '' || $categories != null) {
             $qb2->andWhere('q.category = :categories')
                 ->setParameter('categories', $categories);
         }
@@ -209,7 +209,7 @@ class NewsMapper extends QBMapper
             ->where("q.expiration = 0")
             ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
-        if ($categories != '') {
+        if ($categories != '' || $categories != null) {
             $qb2->andWhere('q.category IN (:categories)')
                 ->setParameter('categories', $categories);
         }
@@ -237,7 +237,7 @@ class NewsMapper extends QBMapper
             ->where("q.expiration = 0")
             ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
-        if ($categories != '') {
+        if ($categories != '' || $categories != null) {
             $qb2->andWhere('q.category IN (:categories)')
                 ->setParameter('categories', $categories);
         }

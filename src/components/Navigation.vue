@@ -7,65 +7,28 @@
         </v-list-item>
 
         <v-divider></v-divider>
-        <v-list dense>
-            <v-list-group :value="true" prepend-icon="mdi-account-multiple">
+        <v-list dense data-intro="Les liens utiles adaptés à vos besoins triés en fonction de votre service" data-title="Menu de Navigation" data-step="1">
+            <v-list-group v-for="(section, index) in MenuToDisplay" :key="'B' + index" :value="true" :prepend-icon="'mdi-' + section.icon">
                 <template v-slot:activator style="margin-right: 15px;">
                     <v-list-item-content>
-                        <v-list-item-title class="text-subtitle-1">Vie des Assemblées</v-list-item-title>
+                        <v-list-item-title class="text-subtitle-1" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))">{{ section.title }}</v-list-item-title>
                     </v-list-item-content>
                 </template>
 
-                <v-list-group sub-group no-action>
+                <v-list-group v-for="(menu, subindex) in MenuToDisplay[index].childs" :key="'B' + subindex" :sub-group="menu.childs.length" no-action>
                     <template v-slot:activator>
                         <v-list-item-content>
-                            <v-list-item-title>Elus</v-list-item-title>
+                            <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))">{{ menu.title }}</v-list-item-title>
                         </v-list-item-content>
                     </template>
 
-                    <v-list-item link>
-                        <v-list-item-title>Bureau Communautaire </v-list-item-title>
-                    </v-list-item>
-                    <v-list-item link>
-                        <v-list-item-title>Conseil d'Agglomération</v-list-item-title>
+                    <v-list-item v-for="(submenu, subsubindex) in MenuToDisplay[index].childs[subindex].childs" :key="'B' + subsubindex" link :href="submenu.link" target="_blank">
+                        <v-list-item-title>{{ submenu.title }}</v-list-item-title>
                     </v-list-item>
                 </v-list-group>
-                <v-list-group sub-group no-action>
-                    <template v-slot:activator>
-                        <v-list-item-content>
-                            <v-list-item-title>Actes</v-list-item-title>
-                        </v-list-item-content>
-                    </template>
-
-                    <v-list-item link>
-                        <v-list-item-title>Délibération</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item link>
-                        <v-list-item-title>Arrêtés</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item link>
-                        <v-list-item-title>Décisions</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item link>
-                        <v-list-item-title>Arrêtés préfectoraux</v-list-item-title>
-                    </v-list-item>
-                </v-list-group>
-                <v-list-group sub-group no-action>
-                    <template v-slot:activator>
-                        <v-list-item-content>
-                            <v-list-item-title>Conseil D'Agglomération</v-list-item-title>
-                        </v-list-item-content>
-                    </template>
-
-                    <v-list-item link>
-                        <v-list-item-title>Prépa Conseil</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item link>
-                        <v-list-item-title>CR Conseils</v-list-item-title>
-                    </v-list-item>
-                </v-list-group>
-                <v-list-item link style="padding-left:66px;">
+                <!-- <v-list-item link style="padding-left:66px;">
                     <v-list-item-title>Prépa Conseil</v-list-item-title>
-                </v-list-item>
+                </v-list-item> -->
             </v-list-group>
 
         </v-list>
@@ -91,13 +54,52 @@
 
 <script>
 import navDialog from './admin/navDialog.vue'
+import axios from '@nextcloud/axios';
+import { generateUrl } from '@nextcloud/router';
 export default {
     name: "Navigation",
     components: { navDialog },
+    computed: {
+        isAdmin() {
+            return this.$isAdmin
+        },
+        MenuToDisplay() {
+            var sectionArray = this.menus[0]
+            sectionArray.forEach((section) => {
+                var menuArray = this.menus[1].filter(menu => menu.sectionid == section.sectionid);
+                menuArray.forEach((menu) => {
+                    menu.childs = this.menus[2].filter(submenu => submenu.menuid == menu.menuid && submenu.sectionid == menu.sectionid);
+                })
+                section.childs = menuArray;
+            })
+            return sectionArray
+        },
+    },
+    methods: {
+        getMenus() {
+            axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
+                .then((response) => {
+                    this.menus = response.data
+                })
+        },
+        isEmpty(array) {
+            if (array.length > 0) {
+                return false
+            }
+            else return true
+        },
+        OpenLink(link, isEmpty) {
+            if (link != '' && isEmpty) {
+                window.open(link, '_blank');
+            }
+        },
+    },
+    mounted() {
 
+    },
     data: () => ({
         openDialog: false,
-        apps: [],
+        menus: [],
         image: '/apps/intranetagglo/img/LogoCA2BM.png'//'/apps/intranetagglo/img/LogoCA2BM.png',
     }),
 }

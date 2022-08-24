@@ -82,7 +82,7 @@ class NewsService
 		return $qb;
 	}
 
-	public function findByGroups(int $firstresult, $limit, array $groups, string $search, string $categories, $month, $nextmonth): array
+	public function findByGroups(int $firstresult, $limit, array $groups, string $search, $categories, $month, $nextmonth): array
 	{
 		$search = trim($search, " \n\r\t\v");
 

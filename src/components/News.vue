@@ -196,7 +196,7 @@ export default {
             }
             this.GetNews()
             console.log(search)
-            console.log(this.$categories[categories])
+            console.log(categories === undefined ? '' : this.$categories[categories])
             console.log(moment(months).toISOString())
             console.log(moment(months).endOf('month').toISOString())
         },

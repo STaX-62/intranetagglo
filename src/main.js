@@ -10,13 +10,8 @@ Vue.config.productionTip = false
 
 Vue.prototype.$groups = []
 Vue.prototype.$categories = []
-axios.get(generateUrl('apps/intranetagglo/api/groups'), {
-  params: {
-    search: '',
-  },
-}).then(res => {
-  Vue.prototype.$groups = res.data
-})
+Vue.prototype.$isAdmin = false
+
 axios.get(generateUrl('apps/intranetagglo/news/category'), {
   params: {
     search: '',
@@ -24,6 +19,20 @@ axios.get(generateUrl('apps/intranetagglo/news/category'), {
 }).then(res => {
   Vue.prototype.$categories = res.data
 })
+
+axios.get(generateUrl(`apps/intranetagglo/isadmin`))
+  .then(response => {
+    Vue.prototype.$isAdmin = response.data
+    if (response.data) {
+      axios.get(generateUrl('apps/intranetagglo/api/groups'), {
+        params: {
+          search: '',
+        },
+      }).then(res => {
+        Vue.prototype.$groups = res.data
+      })
+    }
+  })
 
 new Vue({
   vuetify,
