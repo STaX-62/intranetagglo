@@ -17,7 +17,7 @@
                 <v-hover v-slot="{ hover }">
                     <v-carousel :cycle="!hover" :continuous="true" :show-arrows="false" hide-delimiters v-model="newsForward" style="height: 100%;">
                         <v-carousel-item style="height: 100%; position: relative;" v-if="!news.length">
-                            <v-alert color="grey darken-2" dense outlined text type="error" elevation="4">Pas d'alerte trouvée</v-alert>
+                            <v-skeleton-loader class="mx-auto" type="card"></v-skeleton-loader>
                         </v-carousel-item>
                         <v-carousel-item v-for="(n, x) in news" :key="x">
                             <v-card class="mx-auto" elevation="4" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''" style="height: 100%; position: relative;">
@@ -59,7 +59,7 @@
             <v-card-text v-if="archivesMode">
                 <v-list color="transparent">
                     <v-list-item v-if="!archives.length">
-                        <v-skeleton-loader class="mx-auto" type="card, article" style="width:100%" min-height="124"></v-skeleton-loader>
+                        <v-alert color="accent" dense outlined text type="error" elevation="4">Pas d'alerte trouvée</v-alert>
                     </v-list-item>
                     <v-list-item v-for="(archive, i) in archives" :key="i">
                         <v-lazy :options="{
@@ -190,7 +190,7 @@ export default {
             this.$emit('closealerts', this.archivesMode)
             this.filters = {
                 search: search,
-                categories: categories === undefined ? '' :this.$categories[categories],
+                categories: categories === undefined ? '' : this.$categories[categories],
                 month: moment(months).toISOString(),
                 nextmonth: moment(months).endOf('month').toISOString()
             }
