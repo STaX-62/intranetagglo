@@ -188,18 +188,16 @@ export default {
         Filters(search, categories, months) {
             console.log('search :' + search)
             console.log('categories :' + categories)
-            console.log('categories :' + months)
+            console.log('month :' + months + ': ' + typeof months)
             this.archivesMode = true
             this.$emit('closealerts', this.archivesMode)
             this.filters = {
                 search: search,
                 categories: categories == -1 ? '' : categories,
-                month: moment(months).toISOString(),
-                nextmonth: moment(months).endOf('month').toISOString()
+                month: months == '' ? months : moment(months).toISOString(),
+                nextmonth: months == '' ? months : moment(months).endOf('month').toISOString()
             }
             this.GetNews()
-            console.log(search)
-            console.log(categories)
             console.log(moment(months).toISOString())
             console.log(moment(months).endOf('month').toISOString())
         },
