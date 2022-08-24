@@ -23,7 +23,7 @@
                             <tr class="intra-section" v-for="(section, Sindex) in MenuToDisplay" v-bind:key="section.id" v-bind:position="section.sectionid + '-0-0'">
                                 <td>
                                     <v-card class="d-flex align-center" style="height:calc(100% - 4px)" outlined>
-                                        <v-card-subtitle>Test Section {{ item.id }}</v-card-subtitle>
+                                        <v-card-subtitle style="font-size: 15px;">{{ section.title }}</v-card-subtitle>
                                         <v-spacer></v-spacer>
                                         <v-card-actions>
                                             <v-btn icon class="handlesec">
@@ -41,7 +41,7 @@
                                         v-bind:position="menu.sectionid + '-' + menu.menuid + '-0'">
                                         <v-col class="pa-1">
                                             <v-card class="d-flex align-center" style="height:calc(100% - 4px)" outlined>
-                                                <v-card-subtitle>Test Menus</v-card-subtitle>
+                                                <v-card-subtitle style="font-size: 15px;">{{ menu.title }}</v-card-subtitle>
                                                 <v-spacer></v-spacer>
                                                 <v-card-actions>
                                                     <v-btn icon class="handlemen">
@@ -59,7 +59,7 @@
                                                 :move="setNewPosition" @end="UpdateOrder" :sectionid="menu.sectionid" :menuid="menu.menuid">
                                                 <v-card class="d-flex mb-1 intra-submenu" v-for="submenu in MenuToDisplay[Sindex].childs[Mindex].childs" v-bind:key="submenu.id" outlined
                                                     v-bind:position="submenu.sectionid + '-' + submenu.menuid + '-' + submenu.submenuid">
-                                                    <v-card-subtitle>Test SubMenu</v-card-subtitle>
+                                                    <v-card-subtitle style="font-size: 15px;">{{ submenu.title }}</v-card-subtitle>
                                                     <v-spacer></v-spacer>
                                                     <v-card-actions>
                                                         <v-btn icon class="handlesub">
