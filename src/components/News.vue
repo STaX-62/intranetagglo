@@ -3,7 +3,7 @@
         <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%">
             <v-card-title style="align-items: baseline !important; padding-bottom:0;">
                 <v-card class="pa-2" style="height:48px">Actualités</v-card>
-                <Searchbar @searchfilters="Filters" :hintvalue="totalNewsLength"></Searchbar>
+                <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"></Searchbar>
                 <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0"
                     :color="$vuetify.theme.dark ? 'accent' : ''" large style="height:48px">
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
