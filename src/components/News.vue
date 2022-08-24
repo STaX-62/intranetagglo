@@ -16,6 +16,9 @@
             <v-card-text class="newscarousel" v-if="!archivesMode">
                 <v-hover v-slot="{ hover }">
                     <v-carousel :cycle="!hover" :continuous="true" :show-arrows="false" hide-delimiters v-model="newsForward" style="height: 100%;">
+                        <v-carousel-item style="height: 100%; position: relative;" v-if="!news.length">
+                            <v-skeleton-loader class="mx-auto" max-width="300" type="card"></v-skeleton-loader>
+                        </v-carousel-item>
                         <v-carousel-item v-for="(n, x) in news" :key="x">
                             <v-card class="mx-auto" elevation="4" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''" style="height: 100%; position: relative;">
                                 <v-carousel :continuous="false" :show-arrows="true" hide-delimiter-background delimiter-icon="mdi-minus" height="400" v-if="n.photo.length > 1">
@@ -153,6 +156,7 @@ export default {
         GetArchives() {
             axios.post(generateUrl(`apps/intranetagglo/news/${this.lazyArchivesCounter}`), { 'limit': 7, 'search': this.filters.search, 'categories': this.filters.categories, dateFilter: { start: "", end: "" } }, { type: 'application/json' })
                 .then((response) => {
+                    console.log(this.lazyArchivesCounter)
                     this.lazyArchivesCounter += 7
                     var array = response.data[0]
 

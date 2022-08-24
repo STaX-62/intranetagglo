@@ -45,6 +45,7 @@ export default {
         this.getNav()
     },
     data: () => ({
+        apps: [],
         openDialog: false
     }),
 }
