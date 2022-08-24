@@ -34,7 +34,7 @@
                         <tbody>
                             <tr v-for="app in apps" :key="app.name">
                                 <td>{{ app.title }}</td>
-                                <td>{{ app.icon.slice(app.icon.length - 2) }}</td>
+                                <td>{{ app.icon.slice(0, app.icon.length - 2) }}</td>
                                 <td class="text-truncate" style="max-width: 500px;">{{ app.link }}</td>
                                 <td>
                                     <v-chip small v-for="group in app.groups" :key="group">{{ group }}</v-chip>
@@ -93,7 +93,12 @@ export default {
                 .then((response) => {
                     var array = response.data
                     array.forEach(a => {
-                        a.groups = a.groups.split(';')
+                        if (a.groups != '') {
+                            a.groups = a.groups.split(';')
+                        }
+                        else {
+                            a.groups = []
+                        }
                     })
                     this.apps = array
                 })
