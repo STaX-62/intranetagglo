@@ -308,7 +308,8 @@ export default {
         filters: {
             search: '',
             categories: '',
-            months: []
+            month: '',
+            nextmonth: ''
         },
         // news: [{
         //     title: "Lorem ipsum dolor sit amet",
