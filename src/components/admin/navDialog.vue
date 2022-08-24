@@ -163,13 +163,15 @@ export default {
             axios.get(generateUrl(url))
                 .then((response) => {
                     var array = response.data
-                    array.forEach(a => {
-                        if (a.groups != '') {
-                            a.groups = a.groups.split(';')
-                        }
-                        else {
-                            a.groups = []
-                        }
+                    array.forEach(m => {
+                        m.forEach(n => {
+                            if (n.groups != '') {
+                                n.groups = n.groups.split(';')
+                            }
+                            else {
+                                n.groups = []
+                            }
+                        })
                     })
                     this.menus = array
                 })
