@@ -260,7 +260,7 @@ export default {
     },
     data: () => ({
         newposition: {},
-        menus: [],
+        menus: [[], [], []],
         menuToUpdate: {
             id: 0,
             title: '',
