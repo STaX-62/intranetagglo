@@ -10,9 +10,9 @@
             </v-col>
         </v-row>
         <v-row class="ma-1 apps-container" v-if="apps.length">
-            <v-col v-for="(app, index) in apps" :key="index" cols="6" :class="appcolor(app.color)">
+            <v-col v-for="(app, index) in apps" :key="index" cols="6">
                 <v-responsive :aspect-ratio="1 / 1">
-                    <v-btn class="appbox" style="height: 100%;width:100%;" :href="app.link" target="_blank">
+                    <v-btn :class="'appbox ' + appcolor(app.color)" style="height: 100%;width:100%;" :href="app.link" target="_blank">
                         <div class="text-center d-flex flex-column align-center justify-center text-wrap" style="height: 100%; letter-spacing: normal; font-size:smaller;">
                             <v-icon class="pb-1">mdi-{{ app.icon }}</v-icon>
                             {{ app.title }}
@@ -42,7 +42,7 @@ export default {
     name: "Navigation",
     methods: {
         getApps() {
-            axios.get(generateUrl(`apps/intranetagglo/apps`))
+            axios.get(generateUrl(`apps/intranetagglo/appsG`))
                 .then((response) => {
                     var array = response.data
                     array.forEach(a => {
@@ -62,7 +62,7 @@ export default {
             if (color == '#b') {
                 return 'bleu'
             }
-            if (color == '#V') {
+            if (color == '#v') {
                 return 'vert'
             }
         }
@@ -78,11 +78,11 @@ export default {
 </script>
 
 <style scoped>
-.apps-container .vert .appbox {
+.apps-container .vert.appbox {
     background-color: var(--color-primary-category) !important;
 }
 
-.apps-container .bleu .appbox {
+.apps-container .bleu.appbox {
     background-color: var(--color-secondary) !important;
 }
 </style>
