@@ -58,6 +58,9 @@
             </v-card-text>
             <v-card-text v-if="archivesMode">
                 <v-list color="transparent">
+                    <v-list-item v-if="!archives.length">
+                        <v-skeleton-loader class="mx-auto" type="card, article"></v-skeleton-loader>
+                    </v-list-item>
                     <v-list-item v-for="(archive, i) in archives" :key="i">
                         <v-lazy :options="{
                             threshold: .5

@@ -4,7 +4,7 @@
             <v-card-title class="text-h5">
                 Modification des Applications
                 <v-spacer></v-spacer>
-                <v-btn fab small @click="openDialog = 5; appToUpdate = appEmpty">
+                <v-btn fab small @click="openDialog = 5; appToUpdate = EmptyApp">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </v-card-title>
@@ -52,7 +52,7 @@
                 </v-btn>
             </v-card-actions>
         </v-card>
-        <apps-modify :open="openDialog == 0 || openDialog == 5" :app="appToUpdate" :create="openDialog == 5" @close="openDialog = -1"></apps-modify>
+        <apps-modify :open="openDialog == 0 || openDialog == 5" :app="appToUpdate" :create="openDialog == 5" @close="openDialog = -1" @created="prepare_add" @updated="prepare_update"></apps-modify>
         <admin-change :open="openDialog == 1" @close="openDialog = -1" :title="'Supprimer cette Application'"
             :msg="'Voulez vous vraiment supprimer cette application: <br/><code>' + appToUpdate.title + '</code>'" validate="Supprimer" color="red darken-1">
         </admin-change>
@@ -63,6 +63,9 @@
 import adminMenu from './adminMenu.vue'
 import AppsModify from './appsModify.vue';
 import AdminChange from './adminChange.vue';
+import axios from '@nextcloud/axios';
+import { generateUrl } from '@nextcloud/router';
+
 export default {
     components: { adminMenu, AppsModify, AdminChange },
     name: "appsDialog",
@@ -80,22 +83,53 @@ export default {
             }
         }
     },
+    methods: {
+        getAdmApps() {
+            axios.get(generateUrl(`apps/intranetagglo/apps`))
+                .then(response => (this.apps = response.data))
+        },
+        prepare_add(app) {
+            app.groups = app.groups.join(';')
+            this.createApp(app)
+            this.appToUpdate = this.EmptyApp
+        },
+        prepare_update(app) {
+            app.groups = app.groups.join(';')
+            this.updateNews(app)
+            this.appToUpdate = this.EmptyApp
+        },
+        prepare_delete() {
+            this.deleteNews()
+        },
+        async createApps(app) {
+            await axios.post(generateUrl(`apps/intranetagglo/apps`), app, { type: 'application/json' }).then(() => {
+                this.getAdmApps()
+            })
+        },
+        async updateApps(app) {
+            await axios.post(generateUrl(`apps/intranetagglo/apps/${app.id}`), app, { type: 'application/json' }).then(() => {
+                this.getAdmApps()
+            })
+
+        },
+        async deleteApps() {
+            await axios.delete(generateUrl(`apps/intranetagglo/apps/${this.appToUpdate.id}`)).then(() => {
+                this.getAdmApps()
+            })
+        },
+    },
+    mounted() {
+        this.getAdmApps()
+    },
     data: () => ({
-        apps: [{
-            id: 1,
-            title: 'Annuaire',
-            icon: 'mdi-phone',
-            link: 'https://vuetifyjs.com/en/components/simple-tables/',
-            groups: ['intranet-admin', 'admin']
-        }],
+        apps: [],
         appToUpdate: {
-            id: 0,
             title: '',
             icon: '',
             link: '',
             groups: []
         },
-        appEmpty: {
+        EmptyApp: {
             id: 0,
             title: '',
             icon: '',

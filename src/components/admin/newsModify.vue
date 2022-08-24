@@ -33,7 +33,7 @@
                                 <v-text-field v-model="modifiedNews.subtitle" :counter="200" label="Sous-Titre"></v-text-field>
                                 <v-text-field v-model="modifiedNews.category" :counter="20" :rules="categoryRules" label="Catégorie"></v-text-field>
 
-                                <v-select v-model="modifiedNews.groups" :items="values" label="Groupes D'utilisateurs" required multiple small-chips>
+                                <v-select v-model="modifiedNews.groups" :items="$groups" label="Groupes D'utilisateurs" required multiple small-chips>
                                 </v-select>
                             </v-form>
                         </v-stepper-content>
@@ -178,11 +178,6 @@ export default {
             ["link"],
             ["clean"] // remove formatting button
         ],
-        values: [
-            'intranet-admin',
-            'users du domaine',
-            'mdr'
-        ]
     }),
 }
 </script>

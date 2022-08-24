@@ -63,7 +63,7 @@ export default {
     background-color: var(--color-primary-category) !important;
 }
 
-.apps-container div:nth-of-type(1n + 5) .appbox {
+.apps-container a:nth-of-type(1n + 5) .appbox {
     background-color: var(--color-secondary) !important;
 }
 </style>
