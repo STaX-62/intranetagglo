@@ -9,13 +9,20 @@ import './theme/theme.css'
 Vue.config.productionTip = false
 
 Vue.prototype.$groups = []
+Vue.prototype.$categories = []
 axios.get(generateUrl('apps/intranetagglo/api/groups'), {
   params: {
     search: '',
   },
 }).then(res => {
-  console.log(res.data)
   Vue.prototype.$groups = res.data
+})
+axios.get(generateUrl('apps/intranetagglo/news/category'), {
+  params: {
+    search: '',
+  },
+}).then(res => {
+  Vue.prototype.$categories = res.data
 })
 
 new Vue({

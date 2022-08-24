@@ -1,5 +1,5 @@
 <template>
-    <v-text-field v-model="search" @change="onChange" class="mx-2" label="Recherche..." single-line solo hide-details prepend-inner-icon="mdi-magnify" color="accent">
+    <v-text-field v-model="search" @keyup="onChange" class="mx-2" label="Recherche..." single-line solo hide-details prepend-inner-icon="mdi-magnify" color="accent">
         <template v-slot:append>
             <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y max-width="290">
                 <template v-slot:activator="{ on, attrs }">
@@ -16,7 +16,7 @@
                     <v-list>
                         <v-list-item>
                             <v-item-group multiple v-model="chips" @change="onChange">
-                                <v-item v-for="n in chipsitems" :key="n" v-slot="{ active, toggle }" class="ma-1">
+                                <v-item v-for="n in $categories" :key="n" v-slot="{ active, toggle }" class="ma-1">
                                     <v-chip active-class="primary--text" :input-value="active" @click="toggle" small>
                                         {{ n }}
                                     </v-chip>
@@ -36,15 +36,18 @@ export default {
     name: "Searchbar",
     methods: {
         onChange() {
-            this.$emit('searchfilters', this.search, this.chips, this.months)
+            clearTimeout(this.timer)
+            this.timer = setTimeout(() => {
+                this.$emit('searchfilters', this.search, this.chips, this.months)
+            }, 250)
         }
     },
     data: () => ({
+        timer: undefined,
         menu: false,
         search: '',
         months: [],
         chips: [],
-        chipsitems: ['Information', 'test', 'Note de service'],
     }),
 }
 </script>
