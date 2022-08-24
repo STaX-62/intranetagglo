@@ -9,7 +9,7 @@
                 </template>
 
                 <v-card style="max-width: 100%;">
-                    <v-date-picker v-model="months" type="month" multiple color="primary" @change="onChange"></v-date-picker>
+                    <v-date-picker v-model="months" type="month" color="primary" @change="onChange"></v-date-picker>
 
                     <v-divider></v-divider>
 

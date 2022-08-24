@@ -59,7 +59,7 @@
             <v-card-text v-if="archivesMode">
                 <v-list color="transparent">
                     <v-list-item v-if="!archives.length">
-                        <v-skeleton-loader class="mx-auto" type="card, article"></v-skeleton-loader>
+                        <v-skeleton-loader class="mx-auto" type="card, article" style="width:100%" min-height="124"></v-skeleton-loader>
                     </v-list-item>
                     <v-list-item v-for="(archive, i) in archives" :key="i">
                         <v-lazy :options="{
@@ -142,7 +142,7 @@ export default {
     },
     methods: {
         GetNews() {
-            axios.post(generateUrl(`apps/intranetagglo/news/0`), { 'limit': 5, 'search': this.filters.search, 'categories': this.filters.categories, dateFilter: { start: "", end: "" } }, { type: 'application/json' })
+            axios.post(generateUrl(`apps/intranetagglo/news/0`), { 'limit': 5, 'search': this.filters.search, 'categories': this.filters.categories, month: this.filters.month, nextmonth: this.filters.nextmonth }, { type: 'application/json' })
                 .then((response) => {
                     this.news = response.data[0];
                     this.totalNewsLength = response.data[1]
@@ -157,7 +157,7 @@ export default {
                 })
         },
         GetArchives() {
-            axios.post(generateUrl(`apps/intranetagglo/news/${this.lazyArchivesCounter}`), { 'limit': 7, 'search': this.filters.search, 'categories': this.filters.categories, dateFilter: { start: "", end: "" } }, { type: 'application/json' })
+            axios.post(generateUrl(`apps/intranetagglo/news/${this.lazyArchivesCounter}`), { 'limit': 7, 'search': this.filters.search, 'categories': this.filters.categories, month: this.filters.month, nextmonth: this.filters.nextmonth }, { type: 'application/json' })
                 .then((response) => {
                     console.log(this.lazyArchivesCounter)
                     this.lazyArchivesCounter += 7
@@ -167,7 +167,9 @@ export default {
                         a.photo = a.photo.split(';')
                         a.groups = a.groups.split(';')
                     })
-                    this.archives.push(array)
+                    if (array.length) {
+                        this.archives.push(array)
+                    }
                     console.log(this.archives)
                 })
         },
@@ -189,12 +191,14 @@ export default {
             this.filters = {
                 search: search,
                 categories: categories.join(';'),
-                months: months
+                month: moment(months).toISOString(),
+                nextmonth: moment(months).endOf('month').toISOString()
             }
             this.GetNews()
             console.log(search)
             console.log(categories)
-            console.log(months)
+            console.log(moment(months).toISOString())
+            console.log(moment(months).endOf('month').toISOString())
         },
         getFormatedDate(date) {
             return moment((date * 1000)).locale('fr').format('LL')
@@ -357,6 +361,10 @@ export default {
 </script>
 
 <style>
+.v-card__text .text-truncate *:nth-child(1n + 1) {
+    display: none;
+}
+
 .v-card__text .text-truncate * {
     margin: 0;
     max-width: 100%;

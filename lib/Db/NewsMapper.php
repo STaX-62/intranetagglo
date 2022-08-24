@@ -69,7 +69,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAll($firstresult, $limit, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
+    public function findAll($firstresult, $limit, string $search, string $categories, string $searchid, string $month, string $nextmonth): array
     {
         $categoryArray = explode(';', $categories);
 
@@ -94,20 +94,11 @@ class NewsMapper extends QBMapper
             $qb2->andWhere('q.category IN (:categories)')
                 ->setParameter('categories', implode(",", $categoryArray));
         }
-        if ($startDate == "") {
-            $qb2->andWhere('q.time >= :startdate')
-                ->setParameter('startdate', $time['time']);
-        } else {
-            $qb2->andWhere('q.time >= :startdate')
-                ->setParameter('startdate', strtotime($startDate));
-        }
 
-        if ($endDate == "") {
-            $qb2->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', time());
-        } else {
-            $qb2->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', strtotime($endDate) + (60 * 60 * 24));
+        if ($month != "") {
+            $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')
+                ->setParameter('startdate', strtotime($month))
+                ->setParameter('enddate', strtotime($nextmonth));
         }
         if ($searchid != '') {
             $qb2->andWhere('q.id = :searchid')
@@ -130,6 +121,11 @@ class NewsMapper extends QBMapper
         if ($categories != '') {
             $qb3->andWhere('q.category IN (:categories)')
                 ->setParameter('categories', implode(',', $categoryArray));
+        }
+        if ($month != "") {
+            $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')
+                ->setParameter('startdate', strtotime($month))
+                ->setParameter('enddate', strtotime($nextmonth));
         }
 
         if ($searchid != '') {
@@ -191,7 +187,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findByGroups(int $firstresult, $limit, array $groupsArray, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
+    public function findByGroups(int $firstresult, $limit, array $groupsArray, string $search, string $categories, string $searchid, string $month, string $nextmonth): array
     {
         $groups = '';
         foreach ($groupsArray as $group) {
@@ -220,20 +216,10 @@ class NewsMapper extends QBMapper
             $qb2->andWhere('q.category IN (:categories)')
                 ->setParameter('categories', implode(",", $categoryArray));
         }
-        if ($startDate == "") {
-            $qb2->andWhere('q.time >= :startdate')
-                ->setParameter('startdate', $time['time']);
-        } else {
-            $qb2->andWhere('q.time >= :startdate')
-                ->setParameter('startdate', strtotime($startDate));
-        }
-
-        if ($endDate == "") {
-            $qb2->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', time());
-        } else {
-            $qb2->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', strtotime($endDate));
+        if ($month != "") {
+            $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')
+                ->setParameter('startdate', strtotime($month))
+                ->setParameter('enddate', strtotime($nextmonth));
         }
         if ($searchid != '') {
             $qb2->andWhere('q.id = :searchid')
@@ -257,6 +243,11 @@ class NewsMapper extends QBMapper
         if ($categories != '') {
             $qb3->andWhere('q.category IN (:categories)')
                 ->setParameter('categories', implode(",", $categoryArray));
+        }
+        if ($month != "") {
+            $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')
+                ->setParameter('startdate', strtotime($month))
+                ->setParameter('enddate', strtotime($nextmonth));
         }
         if ($searchid != '') {
             $qb3->andWhere('q.id = :searchid')
