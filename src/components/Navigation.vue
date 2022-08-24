@@ -99,7 +99,7 @@ export default {
     },
     data: () => ({
         openDialog: false,
-        menus: [],
+        menus: [[], [], []],
         image: '/apps/intranetagglo/img/LogoCA2BM.png'//'/apps/intranetagglo/img/LogoCA2BM.png',
     }),
 }

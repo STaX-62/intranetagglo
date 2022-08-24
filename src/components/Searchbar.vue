@@ -38,7 +38,13 @@ export default {
         onChange() {
             clearTimeout(this.timer)
             this.timer = setTimeout(() => {
-                this.$emit('searchfilters', this.search, this.chips, this.months)
+                if (this.chips == undefined) {
+                    this.$emit('searchfilters', this.search, -1, this.months)
+                }
+                else {
+                    this.$emit('searchfilters', this.search, this.$categories[this.chips], this.months)
+                }
+
             }, 250)
         }
     },
