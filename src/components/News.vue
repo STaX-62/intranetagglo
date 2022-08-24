@@ -2,14 +2,14 @@
     <v-col class="maincol" :md="archivesMode ? 12 : 8" sm="12">
         <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%">
             <v-card-title style="align-items: baseline !important; padding-bottom:0;">
-                <v-card class="pa-2" style="height:48px">Actualités</v-card>
+                <v-card class="pa-2">Actualités</v-card>
                 <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"></Searchbar>
                 <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0"
-                    :color="$vuetify.theme.dark ? 'accent' : ''" large style="height:48px">
+                    :color="$vuetify.theme.dark ? 'accent' : ''" large>
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
                     {{ archivesMode ? 'Retour' : 'Archives' }}
                 </v-btn>
-                <v-btn fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews" style="margin: 4px 0;">
+                <v-btn fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </v-card-title>

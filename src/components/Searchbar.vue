@@ -1,10 +1,10 @@
 <template>
     <v-text-field v-model="search" @keyup="onChange" class="mx-2" label="Recherche..." single-line solo prepend-inner-icon="mdi-magnify" color="accent" hide-details>
         <template v-slot:append>
-            <v-alert color="orange" dense outlined text type="info" v-if="notfound">Aucun élément trouvé</v-alert>
+            <v-alert color="orange" dense text type="info" v-if="notfound">Aucun élément trouvé</v-alert>
             <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y max-width="290">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="accent" icon v-bind="attrs" v-on="on">
+                    <v-btn class="my-auto ml-3" color="accent" icon v-bind="attrs" v-on="on">
                         <v-icon>mdi-filter-variant</v-icon>
                     </v-btn>
                 </template>
