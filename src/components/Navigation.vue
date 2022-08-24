@@ -11,7 +11,8 @@
             <v-list-group v-for="(section, index) in MenuToDisplay" :key="'B' + index" :value="true" :prepend-icon="'mdi-' + section.icon">
                 <template v-slot:activator style="margin-right: 15px;">
                     <v-list-item-content>
-                        <v-list-item-title class="text-subtitle-1" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))" style=" font-family: PetitaBold;">{{ section.title }}
+                        <v-list-item-title class="text-subtitle-1" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))"
+                            style="font-family: PetitaBold;  letter-spacing: .01rem; -webkit-font-smoothing: antialiased;font-size: 20px;">{{ section.title }}
                         </v-list-item-title>
                     </v-list-item-content>
                 </template>
@@ -21,18 +22,20 @@
                             <template v-slot:activator>
                                 <v-list-item-content>
                                     <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))"
-                                        style="font-family: PetitaBold;font-size: 0.8925rem;letter-spacing: 0.08rem;">{{ menu.title }}
+                                        style="font-family: PetitaBold;  letter-spacing: .01rem; -webkit-font-smoothing: antialiased;font-size: 15px;">{{ menu.title }}
                                     </v-list-item-title>
                                 </v-list-item-content>
                             </template>
 
                             <v-list-item v-for="(submenu, subsubindex) in MenuToDisplay[index].childs[subindex].childs" :key="'B' + subsubindex" link :href="submenu.link" target="_blank"
-                                style="padding-left:40px;min-height:30px; font-family: PetitaBold;">
+                                style="padding-left:40px;min-height:30px; font-family: PetitaBold;  letter-spacing: .01rem; -webkit-font-smoothing: antialiased;font-size: 15px;">
                                 <v-list-item-title>{{ submenu.title }}</v-list-item-title>
                             </v-list-item>
                         </v-list-group>
                         <v-list-item link style="min-height:30px; font-family: PetitaBold;font-size: 0.8925rem;letter-spacing: 0.08rem;" v-else>
-                            <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))" style="font-family: PetitaBold;">{{ menu.title }}</v-list-item-title>
+                            <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))"
+                                style="font-family: PetitaBold; letter-spacing: .01rem; -webkit-font-smoothing: antialiased;font-size: 15px;">{{ menu.title }}
+                            </v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </div>
