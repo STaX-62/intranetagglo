@@ -1,15 +1,15 @@
 <template>
     <v-col class="maincol" :md="archivesMode ? 12 : 8" sm="12">
         <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%">
-            <v-card-title>
-                <v-card class="pa-2">Actualités</v-card>
-                <Searchbar @searchfilters="Filters"></Searchbar>
+            <v-card-title style="align-items: baseline !important; padding-bottom:0;">
+                <v-card class="pa-2" style="height:48px">Actualités</v-card>
+                <Searchbar @searchfilters="Filters" :hintvalue="totalNewsLength"></Searchbar>
                 <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0"
-                    :color="$vuetify.theme.dark ? 'accent' : ''" large>
+                    :color="$vuetify.theme.dark ? 'accent' : ''" large style="height:48px">
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
                     {{ archivesMode ? 'Retour' : 'Archives' }}
                 </v-btn>
-                <v-btn fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews">
+                <v-btn fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews" style="margin: 4px 0;">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </v-card-title>
@@ -59,14 +59,14 @@
             <v-card-text v-if="archivesMode">
                 <v-list color="transparent">
                     <v-list-item v-if="!archives.length">
-                        <v-skeleton-loader class="mt-2" type="image@3" width="100%" height="125px"></v-skeleton-loader>
+                        <v-skeleton-loader class="mb-2" type="image@3" width="100%" height="125px"></v-skeleton-loader>
                     </v-list-item>
                     <v-list-item v-for="(archive, i) in archives" :key="i">
                         <v-lazy :options="{
                             threshold: .5
                         }" transition=" fade-transition" width="100%">
                             <div>
-                                <v-card class="mt-2" v-for="(a, y) in archive" :key="y" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''" @click="focus = i + '-' + y">
+                                <v-card class="mb-2" v-for="(a, y) in archive" :key="y" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''" @click="focus = i + '-' + y">
                                     <v-carousel :continuous="false" :show-arrows="true" hide-delimiter-background delimiter-icon="mdi-minus" height="400"
                                         v-if="a.photo.length > 1 && focus == i + '-' + y">
                                         <v-carousel-item v-for="(photo, i) in a.photo" :key="i" @click="LightBoxDialog = true; LightBoxPhotos = a.photo">
