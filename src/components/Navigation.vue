@@ -11,26 +11,27 @@
             <v-list-group v-for="(section, index) in MenuToDisplay" :key="'B' + index" :value="true" :prepend-icon="'mdi-' + section.icon">
                 <template v-slot:activator style="margin-right: 15px;">
                     <v-list-item-content>
-                        <v-list-item-title class="text-subtitle-1" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))" style="font-weight: 600;">{{ section.title }}
+                        <v-list-item-title class="text-subtitle-1" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))" style="font-weight: 600; font-family: PetitaBold;">{{ section.title }}
                         </v-list-item-title>
                     </v-list-item-content>
                 </template>
                 <div v-for="(menu, subindex) in MenuToDisplay[index].childs" :key="'B' + subindex">
-                    <v-list>
+                    <v-list style="padding:0">
                         <v-list-group :sub-group="menu.childs.length" no-action v-if="menu.childs.length">
                             <template v-slot:activator>
                                 <v-list-item-content>
-                                    <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))">{{ menu.title }}</v-list-item-title>
+                                    <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))" style="font-weight: 600;">{{ menu.title }}
+                                    </v-list-item-title>
                                 </v-list-item-content>
                             </template>
 
                             <v-list-item v-for="(submenu, subsubindex) in MenuToDisplay[index].childs[subindex].childs" :key="'B' + subsubindex" link :href="submenu.link" target="_blank"
-                                style="padding-left:40px;min-height:30px;">
+                                style="padding-left:40px;min-height:30px; font-family: PetitaBold;">
                                 <v-list-item-title>{{ submenu.title }}</v-list-item-title>
                             </v-list-item>
                         </v-list-group>
-                        <v-list-item link style="min-height:30px;" v-else>
-                            <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))">{{ menu.title }}</v-list-item-title>
+                        <v-list-item link style="min-height:30px; font-family: PetitaBold;" v-else>
+                            <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))" style="font-weight: 600;">{{ menu.title }}</v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </div>
@@ -39,7 +40,7 @@
         </v-list>
         <template v-slot:append>
             <div class="d-flex py-3">
-                <v-btn text class="mx-auto" color="primary" @click="openDialog = true">
+                <v-btn text class="mx-auto" color="primary" @click="openDialog = true" style="font-weight: 600">
                     <v-icon class="mr-2">mdi-cog-outline</v-icon>
                     Modifer les menus
                 </v-btn>
