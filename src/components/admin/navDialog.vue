@@ -162,7 +162,16 @@ export default {
             var url = `apps/intranetagglo${'/menus'}`
             axios.get(generateUrl(url))
                 .then((response) => {
-                    this.menus = response.data
+                    var array = response.data
+                    array.forEach(a => {
+                        if (a.groups != '') {
+                            a.groups = a.groups.split(';')
+                        }
+                        else {
+                            a.groups = []
+                        }
+                    })
+                    this.menus = array
                 })
         },
         setNewPosition(event) {
@@ -186,21 +195,14 @@ export default {
         },
         prepare_add(menu) {
             console.log(menu)
-            if (menu.groups.length) {
-                menu.groups = menu.groups.join(';')
-            }
-            else menu.groups = ''
+            menu.groups = menu.groups.join(';')
             menu.icon = menu.icon.trim()
             this.createMenu(menu)
             this.menuToUpdate = this.EmptyMenu
         },
         prepare_update(menu) {
             console.log(menu)
-            if (menu.groups.length) {
-                menu.groups = menu.groups.join(';')
-            }
-            else menu.groups = ''
-
+            menu.groups = menu.groups.join(';')
             menu.icon = menu.icon.trim()
             this.updateMenu(menu)
             this.menuToUpdate = this.EmptyMenu
