@@ -10,7 +10,7 @@
                     <v-text-field v-model="modifiedNav.title" :counter="40" :rules="titleRules" label="Name" required></v-text-field>
                     <v-text-field v-model="modifiedNav.icon" label="Icon" required></v-text-field>
                     <v-text-field v-model="modifiedNav.link" label="Lien" required></v-text-field>
-                    <v-select v-model="modifiedNav.groups" :items="$groups" label="Groupes d'utilisateurs" required multiple smavaluell-chips></v-select>
+                    <v-select v-model="modifiedNav.groups" :items="$groups" label="Groupes d'utilisateurs" multiple small-chips></v-select>
                 </v-form>
             </v-card-text>
 
