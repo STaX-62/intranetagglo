@@ -14,21 +14,24 @@
                         <v-list-item-title class="text-subtitle-1" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))">{{ section.title }}</v-list-item-title>
                     </v-list-item-content>
                 </template>
+                <div v-for="(menu, subindex) in MenuToDisplay[index].childs" :key="'B' + subindex">
+                    <v-list>
+                        <v-list-group :sub-group="menu.childs.length" no-action v-if="menu.childs.length">
+                            <template v-slot:activator>
+                                <v-list-item-content>
+                                    <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))">{{ menu.title }}</v-list-item-title>
+                                </v-list-item-content>
+                            </template>
 
-                <v-list-group v-for="(menu, subindex) in MenuToDisplay[index].childs" :key="'B' + subindex" :sub-group="menu.childs.length" no-action>
-                    <template v-slot:activator>
-                        <v-list-item-content>
+                            <v-list-item v-for="(submenu, subsubindex) in MenuToDisplay[index].childs[subindex].childs" :key="'B' + subsubindex" link :href="submenu.link" target="_blank">
+                                <v-list-item-title>{{ submenu.title }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list-group>
+                        <v-list-item link style="padding-left:66px;" v-else>
                             <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))">{{ menu.title }}</v-list-item-title>
-                        </v-list-item-content>
-                    </template>
-
-                    <v-list-item v-for="(submenu, subsubindex) in MenuToDisplay[index].childs[subindex].childs" :key="'B' + subsubindex" link :href="submenu.link" target="_blank">
-                        <v-list-item-title>{{ submenu.title }}</v-list-item-title>
-                    </v-list-item>
-                </v-list-group>
-                <!-- <v-list-item link style="padding-left:66px;">
-                    <v-list-item-title>Prépa Conseil</v-list-item-title>
-                </v-list-item> -->
+                        </v-list-item>
+                    </v-list>
+                </div>
             </v-list-group>
 
         </v-list>
