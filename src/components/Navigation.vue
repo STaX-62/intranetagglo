@@ -95,7 +95,7 @@ export default {
         },
     },
     mounted() {
-
+        this.getMenus()
     },
     data: () => ({
         openDialog: false,
