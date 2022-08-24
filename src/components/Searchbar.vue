@@ -46,7 +46,7 @@ export default {
         timer: undefined,
         menu: false,
         search: '',
-        months: [],
+        months: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         chips: [],
     }),
 }

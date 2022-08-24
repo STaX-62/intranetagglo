@@ -362,7 +362,7 @@ export default {
 </script>
 
 <style>
-.v-card__text .text-truncate.archivetext :nth-child(1n + 1) {
+.v-card__text .text-truncate.archivetext :nth-child(1n + 2) {
     display: none;
 }
 
