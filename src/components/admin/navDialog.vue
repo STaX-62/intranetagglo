@@ -31,7 +31,7 @@
                                                     mdi-arrow-split-horizontal
                                                 </v-icon>
                                             </v-btn>
-                                            <admin-menu menuType="nav" @open="openDialog = $event; menuToUpdate = menu"></admin-menu>
+                                            <admin-menu menuType="nav" @open="openDialog = $event; menuToUpdate = section"></admin-menu>
                                         </v-card-actions>
                                     </v-card>
                                 </td>
@@ -67,7 +67,7 @@
                                                                 mdi-arrow-split-horizontal
                                                             </v-icon>
                                                         </v-btn>
-                                                        <admin-menu menuType="nav" @open="openDialog = $event; menuToUpdate = menu"></admin-menu>
+                                                        <admin-menu menuType="nav" @open="openDialog = $event; menuToUpdate = submenu"></admin-menu>
                                                     </v-card-actions>
                                                 </v-card>
                                                 <v-card class="d-flex mb-1" outlined>
