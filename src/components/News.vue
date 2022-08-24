@@ -93,7 +93,7 @@
                                         <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = a" :pin="a.pinned == '1'" :published="a.visible == '1'"></admin-menu>
                                     </v-card-title>
                                     <v-card-subtitle>{{ a.subtitle }}</v-card-subtitle>
-                                    <v-card-text :class="focus == i + '-' + y ? '' : 'text-truncate'" v-html="a.text" style="overflow: hidden;max-width: 100%;"></v-card-text>
+                                    <v-card-text :class="focus == i + '-' + y ? '' : 'archivetext text-truncate'" v-html="a.text" style="overflow: hidden;max-width: 100%;"></v-card-text>
                                 </v-card>
                             </div>
                         </v-lazy>
@@ -362,7 +362,7 @@ export default {
 </script>
 
 <style>
-.v-card__text .text-truncate *:nth-child(1n + 1) {
+.v-card__text .text-truncate.archivetext :nth-child(1n + 1) {
     display: none;
 }
 
