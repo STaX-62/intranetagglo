@@ -8,10 +8,11 @@
             <v-card-text>
                 <v-form v-model="valid">
                     <v-text-field v-model="modifiedApp.title" :counter="40" :rules="titleRules" label="Name" required></v-text-field>
+                    <icon-help></icon-help>
                     <v-text-field v-model="modifiedApp.icon" label="Icon" required></v-text-field>
                     <v-text-field v-model="modifiedApp.link" label="Lien" required></v-text-field>
                     <v-select v-model="color" :items="['bleu', 'vert']" label="Couleur" menu-props="auto"></v-select>
-                    <v-select v-model="modifiedApp.groups" :items="$groups" label="Groupes d'utilisateurs" required multiple smavaluell-chips></v-select>
+                    <v-select v-model="modifiedApp.groups" :items="$groups" label="Groupes d'utilisateurs" required multiple small-chips></v-select>
                 </v-form>
             </v-card-text>
 
@@ -23,7 +24,8 @@
                     Retour
                 </v-btn>
 
-                <v-btn color="green darken-1" text @click="create ? $emit('created', modifiedApp, color == 'bleu' ? '#b' : '#v') : $emit('updated', modifiedApp, color == 'bleu' ? '#b' : '#v'); dialog = false" :disabled="!valid">
+                <v-btn color="green darken-1" text
+                    @click="create ? $emit('created', modifiedApp, color == 'bleu' ? '#b' : '#v') : $emit('updated', modifiedApp, color == 'bleu' ? '#b' : '#v'); dialog = false" :disabled="!valid">
                     {{ create ? 'Ajouter' : 'Modifier' }}
                 </v-btn>
             </v-card-actions>
@@ -32,8 +34,10 @@
 </template>
 
 <script>
+import iconHelp from './iconHelp.vue'
 
 export default {
+    components: { iconHelp },
     name: "appsModify",
     props: {
         open: Boolean,

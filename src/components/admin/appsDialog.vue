@@ -34,7 +34,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <draggable tag="tbody" :list="apps" handle=".handleapp">
                             <tr v-for="app in apps" :key="app.name">
                                 <td>{{ app.title }}</td>
                                 <td>{{ app.icon }}</td>
@@ -44,10 +44,15 @@
                                     <v-chip small v-for="group in app.groups" :key="group">{{ group }}</v-chip>
                                 </td>
                                 <td class="text-right">
+                                    <v-btn icon class="handleapp">
+                                        <v-icon>
+                                            mdi-arrow-split-horizontal
+                                        </v-icon>
+                                    </v-btn>
                                     <admin-menu menuType="app" @open="openDialog = $event; appToUpdate = app"></admin-menu>
                                 </td>
                             </tr>
-                        </tbody>
+                        </draggable>
                     </template>
                 </v-simple-table>
             </v-card-text>
@@ -73,9 +78,10 @@ import AppsModify from './appsModify.vue';
 import AdminChange from './adminChange.vue';
 import axios from '@nextcloud/axios';
 import { generateUrl } from '@nextcloud/router';
+import draggable from 'vuedraggable';
 
 export default {
-    components: { adminMenu, AppsModify, AdminChange },
+    components: { adminMenu, AppsModify, AdminChange, draggable },
     name: "appsDialog",
     props: {
         open: Boolean,
@@ -104,10 +110,20 @@ export default {
                             a.groups = []
                         }
                         a.color = a.icon.slice(a.icon.length - 2)
-                        a.icon = a.icon.slice(0, a.icon.length - 2)
+                        a.order = a.icon.slice(a.icon.indexOf('&'))
+                        a.icon = a.icon.slice(0, a.icon.indexOf('&'))
                     })
                     this.apps = array
                 })
+        },
+        setNewPosition(event) {
+            this.newposition = event;
+            this.$forceUpdate()
+        },
+        UpdateOrder() {
+            var event = this.newposition;
+            console.log(event)
+            this.$forceUpdate()
         },
         prepare_add(app, color) {
             app.groups = app.groups.join(';')
@@ -131,6 +147,13 @@ export default {
             })
         },
         async updateApps(app) {
+            await axios.post(generateUrl(`apps/intranetagglo/apps/${app.id}`), app, { type: 'application/json' }).then(() => {
+                this.getAdmApps()
+                this.$emit('changed')
+            })
+
+        },
+        async changeOrder(app,) {
             await axios.post(generateUrl(`apps/intranetagglo/apps/${app.id}`), app, { type: 'application/json' }).then(() => {
                 this.getAdmApps()
                 this.$emit('changed')
@@ -170,6 +193,7 @@ export default {
             link: '',
             groups: []
         },
+        newposition: {},
         openDialog: -1
     }),
 }
