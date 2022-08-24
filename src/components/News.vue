@@ -17,7 +17,7 @@
                 <v-hover v-slot="{ hover }">
                     <v-carousel :cycle="!hover" :continuous="true" :show-arrows="false" hide-delimiters v-model="newsForward" style="height: 100%;">
                         <v-carousel-item style="height: 100%; position: relative;" v-if="!news.length">
-                            <v-skeleton-loader class="mx-auto" type="card"></v-skeleton-loader>
+                            <v-alert color="grey darken-2" dense outlined text type="error" elevation="4">Pas d'alerte trouvée</v-alert>
                         </v-carousel-item>
                         <v-carousel-item v-for="(n, x) in news" :key="x">
                             <v-card class="mx-auto" elevation="4" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''" style="height: 100%; position: relative;">
@@ -188,15 +188,19 @@ export default {
         Filters(search, categories, months) {
             this.archivesMode = true
             this.$emit('closealerts', this.archivesMode)
+            var categorystring = []
+            categories.forEach(element => {
+                categorystring.push(this.$categories[element])
+            });
             this.filters = {
                 search: search,
-                categories: categories.join(';'),
+                categories: categorystring.join(';'),
                 month: moment(months).toISOString(),
                 nextmonth: moment(months).endOf('month').toISOString()
             }
             this.GetNews()
             console.log(search)
-            console.log(categories)
+            console.log(categorystring)
             console.log(moment(months).toISOString())
             console.log(moment(months).endOf('month').toISOString())
         },
