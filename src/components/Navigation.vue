@@ -48,7 +48,7 @@
                     <v-icon class="mr-2">mdi-cog-outline</v-icon>
                     Modifer les menus
                 </v-btn>
-                <nav-dialog :open="openDialog" @close="openDialog = false"></nav-dialog>
+                <nav-dialog :open="openDialog" @close="openDialog = false" @changed="getMenus" ></nav-dialog>
             </div>
             <v-divider></v-divider>
             <div class="d-flex">

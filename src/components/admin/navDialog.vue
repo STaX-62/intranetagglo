@@ -222,9 +222,9 @@ export default {
                     'accept': 'application/json',
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
-            }).then((response) => {
-                this.menus = response.data;
-                this.$forceUpdate()
+            }).then(() => {
+                this.getAdmMenus()
+                this.$emit('changed')
             })
         },
         async updateMenu(menu) {
@@ -239,17 +239,17 @@ export default {
                     'accept': 'application/json',
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
-            }).then((response) => {
-                this.menus = response.data;
-                this.$forceUpdate()
+            }).then(() => {
+                this.getAdmMenus()
+                this.$emit('changed')
             })
         },
         async deleteMenu() {
             var url = `apps/intranetagglo/menus/${this.menuToUpdate.id}`
             var id = this.menuToUpdate.id
-            await axios.delete(generateUrl(url, { id })).then((response) => {
-                this.menus = response.data;
-                this.$forceUpdate()
+            await axios.delete(generateUrl(url, { id })).then(() => {
+                this.getAdmMenus()
+                this.$emit('changed')
             })
         },
         async changeOrder(actualPosition, newPosition, sectionpos, menupos) {
@@ -258,9 +258,9 @@ export default {
             data.append('newPosition', newPosition);
             data.append('sectionpos', sectionpos);
             data.append('menupos', menupos);
-            await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then((response) => {
-                this.menus = response.data;
-                this.$forceUpdate()
+            await axios.post(generateUrl(`apps/intranetagglo/menus/order`), data, { type: 'application/json' }).then(() => {
+                this.getAdmMenus()
+                this.$emit('changed')
             })
         },
     },
