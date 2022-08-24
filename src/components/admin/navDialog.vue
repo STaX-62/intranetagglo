@@ -146,11 +146,11 @@ export default {
             }
         },
         MenuToDisplay() {
-            var sectionArray = this.menuInBDD[0]
+            var sectionArray = this.menus[0]
             sectionArray.forEach((section) => {
-                var menuArray = this.menuInBDD[1].filter(menu => menu.sectionid == section.sectionid);
+                var menuArray = this.menus[1].filter(menu => menu.sectionid == section.sectionid);
                 menuArray.forEach((menu) => {
-                    menu.childs = this.menuInBDD[2].filter(submenu => submenu.menuid == menu.menuid && submenu.sectionid == menu.sectionid);
+                    menu.childs = this.menus[2].filter(submenu => submenu.menuid == menu.menuid && submenu.sectionid == menu.sectionid);
                 })
                 section.childs = menuArray;
             })
