@@ -59,7 +59,7 @@
             <v-card-text v-if="archivesMode">
                 <v-list color="transparent">
                     <v-list-item v-if="!archives.length">
-                        <v-alert color="accent" dense outlined text type="error" elevation="4">Pas d'alerte trouvée</v-alert>
+                        <v-skeleton-loader type="card"></v-skeleton-loader>
                     </v-list-item>
                     <v-list-item v-for="(archive, i) in archives" :key="i">
                         <v-lazy :options="{
