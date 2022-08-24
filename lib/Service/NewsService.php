@@ -53,14 +53,14 @@ class NewsService
 		return $this->mapper->getLastPinned();
 	}
 
-	public function findAll($firstresult, $limit, $search, $categories, $monthFilter): array
+	public function findAll($firstresult, $limit, $search, $categories, $month, $nextmonth): array
 	{
 		$search = trim($search, " \n\r\t\v");
 
 		if (str_starts_with($search, '#') && is_numeric(substr($search, 1))) {
-			$qb = $this->mapper->findAll($firstresult, $limit, '', '', substr($search, 1), $monthFilter);
+			$qb = $this->mapper->findAll($firstresult, $limit, '', '', substr($search, 1), $month, $nextmonth);
 		} else {
-			$qb = $this->mapper->findAll($firstresult, $limit, $search, $categories, '', $monthFilter);
+			$qb = $this->mapper->findAll($firstresult, $limit, $search, $categories, '', $month, $nextmonth);
 		}
 
 		return $qb;
