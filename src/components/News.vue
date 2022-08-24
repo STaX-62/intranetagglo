@@ -190,7 +190,7 @@ export default {
             this.$emit('closealerts', this.archivesMode)
             this.filters = {
                 search: search,
-                categories: this.$categories[categories],
+                categories: categories === undefined ? '' :this.$categories[categories],
                 month: moment(months).toISOString(),
                 nextmonth: moment(months).endOf('month').toISOString()
             }
