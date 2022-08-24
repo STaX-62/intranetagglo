@@ -190,13 +190,13 @@ export default {
             this.$emit('closealerts', this.archivesMode)
             this.filters = {
                 search: search,
-                categories: categories,
+                categories: this.$categories[categories],
                 month: moment(months).toISOString(),
                 nextmonth: moment(months).endOf('month').toISOString()
             }
             this.GetNews()
             console.log(search)
-            console.log(categories)
+            console.log(this.$categories[categories])
             console.log(moment(months).toISOString())
             console.log(moment(months).endOf('month').toISOString())
         },
