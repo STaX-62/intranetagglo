@@ -71,8 +71,6 @@ class NewsMapper extends QBMapper
      */
     public function findAll($firstresult, $limit, string $search, string $categories, string $searchid, string $month, string $nextmonth): array
     {
-        $categoryArray = explode(';', $categories);
-
         $qb = $this->db->getQueryBuilder();
         $qb->select('time')
             ->from($this->getTableName(), 'q')
@@ -92,7 +90,7 @@ class NewsMapper extends QBMapper
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
             $qb2->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', implode(",", $categoryArray));
+                ->setParameter('categories', $categories);
         }
 
         if ($month != "") {
@@ -119,8 +117,8 @@ class NewsMapper extends QBMapper
             ->setParameter('search', '%' . $search . '%');
 
         if ($categories != '') {
-            $qb3->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', implode(',', $categoryArray));
+            $qb2->andWhere('q.category IN (:categories)')
+                ->setParameter('categories', $categories);
         }
         if ($month != "") {
             $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')
@@ -193,7 +191,6 @@ class NewsMapper extends QBMapper
         foreach ($groupsArray as $group) {
             $groups .= ' OR q.groups LIKE "%' . $group . '%" ';
         }
-        $categoryArray = explode(';', $categories);
 
         $qb = $this->db->getQueryBuilder();
         $qb->select('time')
@@ -214,7 +211,7 @@ class NewsMapper extends QBMapper
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
             $qb2->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', implode(",", $categoryArray));
+                ->setParameter('categories', $categories);
         }
         if ($month != "") {
             $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')
@@ -241,8 +238,8 @@ class NewsMapper extends QBMapper
             ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
         if ($categories != '') {
-            $qb3->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', implode(",", $categoryArray));
+            $qb2->andWhere('q.category IN (:categories)')
+                ->setParameter('categories', $categories);
         }
         if ($month != "") {
             $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')

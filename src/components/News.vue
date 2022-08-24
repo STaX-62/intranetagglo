@@ -194,7 +194,7 @@ export default {
             });
             this.filters = {
                 search: search,
-                categories: categorystring.join(';'),
+                categories: categorystring.join(','),
                 month: moment(months).toISOString(),
                 nextmonth: moment(months).endOf('month').toISOString()
             }
