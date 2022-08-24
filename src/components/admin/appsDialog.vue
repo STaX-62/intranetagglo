@@ -37,7 +37,7 @@
                         <tbody>
                             <tr v-for="app in apps" :key="app.name">
                                 <td>{{ app.title }}</td>
-                                <td>{{ app.icon.slice(0, app.icon.length - 2) }}</td>
+                                <td>{{ app.icon }}</td>
                                 <td>{{ appcolor(app.color) }}</td>
                                 <td class="text-truncate" style="max-width: 500px;">{{ app.link }}</td>
                                 <td>
@@ -147,7 +147,7 @@ export default {
             if (color == '#b') {
                 return 'bleu'
             }
-            if (color == '#V') {
+            if (color == '#v') {
                 return 'vert'
             }
         }

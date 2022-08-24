@@ -86,6 +86,7 @@ export default {
     background-color: var(--color-secondary) !important;
 }
 </style>
+
 <style>
 .appbox>span {
     max-width: 100%;
