@@ -18,7 +18,10 @@
                                     App
                                 </th>
                                 <th class="text-left">
-                                    Icon
+                                    Icone
+                                </th>
+                                <th class="text-left">
+                                    Couleur
                                 </th>
                                 <th class="text-left">
                                     Lien
@@ -35,6 +38,7 @@
                             <tr v-for="app in apps" :key="app.name">
                                 <td>{{ app.title }}</td>
                                 <td>{{ app.icon.slice(0, app.icon.length - 2) }}</td>
+                                <td>{{ appcolor(app.color) }}</td>
                                 <td class="text-truncate" style="max-width: 500px;">{{ app.link }}</td>
                                 <td>
                                     <v-chip small v-for="group in app.groups" :key="group">{{ group }}</v-chip>
@@ -99,7 +103,8 @@ export default {
                         else {
                             a.groups = []
                         }
-                        // a.color = app.icon.slice(app.icon.length - 2)
+                        a.color = a.icon.slice(a.icon.length - 2)
+                        a.icon = a.icon.slice(0, a.icon.length - 2)
                     })
                     this.apps = array
                 })
@@ -122,19 +127,30 @@ export default {
         async createApps(app) {
             await axios.post(generateUrl(`apps/intranetagglo/apps`), app, { type: 'application/json' }).then(() => {
                 this.getAdmApps()
+                this.$emit('changed')
             })
         },
         async updateApps(app) {
             await axios.post(generateUrl(`apps/intranetagglo/apps/${app.id}`), app, { type: 'application/json' }).then(() => {
                 this.getAdmApps()
+                this.$emit('changed')
             })
 
         },
         async deleteApps() {
             await axios.delete(generateUrl(`apps/intranetagglo/apps/${this.appToUpdate.id}`)).then(() => {
                 this.getAdmApps()
+                this.$emit('changed')
             })
         },
+        appcolor(color) {
+            if (color == '#b') {
+                return 'bleu'
+            }
+            if (color == '#V') {
+                return 'vert'
+            }
+        }
     },
     mounted() {
         this.getAdmApps()

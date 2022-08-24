@@ -10,7 +10,7 @@
             </v-col>
         </v-row>
         <v-row class="ma-1 apps-container" v-if="apps.length">
-            <v-col v-for="(app, index) in apps" :key="index" cols="6">
+            <v-col v-for="(app, index) in apps" :key="index" cols="6" :class="appcolor(app.color)">
                 <v-responsive :aspect-ratio="1 / 1">
                     <v-btn class="appbox" style="height: 100%;width:100%;" :href="app.link" target="_blank">
                         <div class="text-center d-flex flex-column align-center justify-center text-wrap" style="height: 100%; letter-spacing: normal; font-size:smaller;">
@@ -29,7 +29,7 @@
                 </v-btn>
             </div>
         </template>
-        <apps-dialog :open="openDialog" @close="openDialog = false"></apps-dialog>
+        <apps-dialog :open="openDialog" @close="openDialog = false" @changed="getApps"></apps-dialog>
     </v-navigation-drawer>
 </template>
 
@@ -41,15 +41,34 @@ export default {
     components: { appsDialog },
     name: "Navigation",
     methods: {
-        getNav() {
-            axios.get(generateUrl(`apps/intranetagglo/appsG`))
+        getApps() {
+            axios.get(generateUrl(`apps/intranetagglo/apps`))
                 .then((response) => {
-                    this.apps = response.data;
+                    var array = response.data
+                    array.forEach(a => {
+                        if (a.groups != '') {
+                            a.groups = a.groups.split(';')
+                        }
+                        else {
+                            a.groups = []
+                        }
+                        a.color = app.icon.slice(a.icon.length - 2)
+                        a.icon = app.icon.slice(0, a.icon.length - 2)
+                    })
+                    this.apps = array
                 })
+        },
+        appcolor(color) {
+            if (color == '#b') {
+                return 'bleu'
+            }
+            if (color == '#V') {
+                return 'vert'
+            }
         }
     },
     mounted() {
-        this.getNav()
+        this.getApps()
     },
     data: () => ({
         apps: [],
@@ -59,11 +78,11 @@ export default {
 </script>
 
 <style scoped>
-.appbox {
+.apps-container .vert .appbox {
     background-color: var(--color-primary-category) !important;
 }
 
-.apps-container a:nth-of-type(1n + 5) .appbox {
+.apps-container .bleu .appbox {
     background-color: var(--color-secondary) !important;
 }
 </style>
