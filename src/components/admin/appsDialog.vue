@@ -102,6 +102,7 @@ export default {
             axios.get(generateUrl(`apps/intranetagglo/apps`))
                 .then((response) => {
                     var array = response.data
+                    var counter = 0
                     array.forEach(a => {
                         if (a.groups != '') {
                             a.groups = a.groups.split(';')
@@ -109,10 +110,24 @@ export default {
                         else {
                             a.groups = []
                         }
-                        a.color = a.icon.slice(a.icon.length - 2)
-                        a.order = a.icon.slice(a.icon.indexOf('&'))
-                        a.icon = a.icon.slice(0, a.icon.indexOf('&'))
+                        if (a.icon.indexOf('#') == -1)
+                            a.color = a.icon.slice(a.icon.length - 2)
+                        else
+                            a.color = "#b"
+                        if (a.icon.indexOf('&') == -1) {
+                            a.order = counter
+                        }
+                        else {
+                            a.order = parseInt(a.icon.slice(a.icon.indexOf('&') + 1))
+                            a.icon = a.icon.slice(0, a.icon.indexOf('&'))
+                        }
+                        counter++;
                     })
+                    array.sort(function (a, b) {
+                        if (a.order < b.order) return -1;
+                        if (a.order > b.order) return 1;
+                        return 0;
+                    });
                     this.apps = array
                 })
         },
@@ -122,8 +137,14 @@ export default {
         },
         UpdateOrder() {
             var event = this.newposition;
-            console.log(event)
-            this.$forceUpdate()
+            var appmoved = this.apps.find(x => x.order == event.draggedContext.index)
+            var appswitched = this.apps.find(x => x.order == event.relatedContext.index)
+            appmoved.order = event.draggedContext.index
+            appswitched.order = event.relatedContext.index
+            this.changeOrder(appmoved, appswitched).then(() => {
+                this.getAdmApps()
+                this.$emit('changed')
+            })
         },
         prepare_add(app, color) {
             app.groups = app.groups.join(';')
@@ -153,12 +174,9 @@ export default {
             })
 
         },
-        async changeOrder(app,) {
-            await axios.post(generateUrl(`apps/intranetagglo/apps/${app.id}`), app, { type: 'application/json' }).then(() => {
-                this.getAdmApps()
-                this.$emit('changed')
-            })
-
+        async changeOrder(appmoved, appswitched) {
+            await axios.post(generateUrl(`apps/intranetagglo/apps/${appmoved.id}`), appmoved, { type: 'application/json' })
+            await axios.post(generateUrl(`apps/intranetagglo/apps/${appswitched.id}`), appswitched, { type: 'application/json' })
         },
         async deleteApps() {
             await axios.delete(generateUrl(`apps/intranetagglo/apps/${this.appToUpdate.id}`)).then(() => {
