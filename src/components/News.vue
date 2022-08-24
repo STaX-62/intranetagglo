@@ -1,7 +1,7 @@
 <template>
     <v-col class="maincol" :md="archivesMode ? 12 : 8" sm="12">
         <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%">
-            <v-card-title style="align-items: baseline !important; padding-bottom:0;">
+            <v-card-title>
                 <v-card class="pa-2">Actualités</v-card>
                 <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"></Searchbar>
                 <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0"
