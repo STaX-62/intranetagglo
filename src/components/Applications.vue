@@ -13,7 +13,7 @@
             <v-col v-for="(app, index) in apps" :key="index" cols="6">
                 <v-responsive :aspect-ratio="1 / 1">
                     <v-btn :class="'appbox ' + appcolor(app.color)" style="height: 100%;width:100%;" :href="app.link" target="_blank">
-                        <div class="text-center d-flex flex-column align-center justify-center text-wrap" style="height: 100%; letter-spacing: normal; font-weight: 700;">
+                        <div class="text-center d-flex flex-column align-center justify-center text-wrap" style="height: 100%; letter-spacing: inherit; font-weight: 500; color:#fff;">
                             <v-icon class="pb-1">mdi-{{ app.icon }}</v-icon>
                             {{ app.title }}
                         </div>
@@ -88,12 +88,12 @@ export default {
 </style>
 
 <style>
-#app .theme--light .appbox>div {
+#app .theme--light .appbox>span {
     max-width: 100%;
     color: rgba(0, 0, 0, .87);
 }
 
-#app .theme--dark .appbox>div {
+#app .theme--dark .appbox>span {
     max-width: 100%;
     color: #fff;
 }

@@ -11,7 +11,8 @@
             <v-list-group v-for="(section, index) in MenuToDisplay" :key="'B' + index" :value="true" :prepend-icon="'mdi-' + section.icon">
                 <template v-slot:activator style="margin-right: 15px;">
                     <v-list-item-content>
-                        <v-list-item-title class="text-subtitle-1" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))">{{ section.title }}</v-list-item-title>
+                        <v-list-item-title class="text-subtitle-1" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))" style="font-weight: 600;">{{ section.title }}
+                        </v-list-item-title>
                     </v-list-item-content>
                 </template>
                 <div v-for="(menu, subindex) in MenuToDisplay[index].childs" :key="'B' + subindex">
