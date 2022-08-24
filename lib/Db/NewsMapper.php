@@ -117,7 +117,7 @@ class NewsMapper extends QBMapper
             ->setParameter('search', '%' . $search . '%');
 
         if ($categories != '') {
-            $qb2->andWhere('q.category IN (:categories)')
+            $qb2->andWhere('q.category = :categories')
                 ->setParameter('categories', $categories);
         }
         if ($month != "") {

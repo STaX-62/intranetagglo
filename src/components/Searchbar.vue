@@ -15,7 +15,7 @@
 
                     <v-list>
                         <v-list-item>
-                            <v-item-group multiple v-model="chips" @change="onChange">
+                            <v-item-group v-model="chips" @change="onChange">
                                 <v-item v-for="n in $categories" :key="n" v-slot="{ active, toggle }" class="ma-1">
                                     <v-chip active-class="primary--text" :input-value="active" @click="toggle" small>
                                         {{ n }}
@@ -47,7 +47,7 @@ export default {
         menu: false,
         search: '',
         months: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        chips: [],
+        chips: '',
     }),
 }
 </script>
