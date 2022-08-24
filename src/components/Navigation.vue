@@ -12,7 +12,7 @@
                 <template v-slot:activator style="margin-right: 15px;">
                     <v-list-item-content>
                         <v-list-item-title class="text-subtitle-1" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))"
-                            style="font-family: PetitaBold;  letter-spacing: .01rem; -webkit-font-smoothing: antialiased;font-size: 20px;">{{ section.title }}
+                            style="font-family: PetitaBold !important;  letter-spacing: .01rem; -webkit-font-smoothing: antialiased !important;font-size: 18px !important;">{{ section.title }}
                         </v-list-item-title>
                     </v-list-item-content>
                 </template>

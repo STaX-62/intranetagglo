@@ -62,7 +62,7 @@
         </v-card>
         <apps-modify :open="openDialog == 0 || openDialog == 5" :app="appToUpdate" :create="openDialog == 5" @close="openDialog = -1" @created="prepare_add" @updated="prepare_update"></apps-modify>
         <admin-change :open="openDialog == 1" @close="openDialog = -1" :title="'Supprimer cette Application'"
-            :msg="'Voulez vous vraiment supprimer cette application: <br/><code>' + appToUpdate.title + '</code>'" validate="Supprimer" color="red darken-1">
+            :msg="'Voulez vous vraiment supprimer cette application: <br/><code>' + appToUpdate.title + '</code>'" validate="Supprimer" color="red darken-1" @changed="prepare_delete">
         </admin-change>
     </v-dialog>
 </template>
