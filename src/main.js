@@ -6,11 +6,21 @@ import vueEasyLightbox from './plugins/vueEasyLightbox'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router';
 import './theme/theme.css'
+import introJs from 'intro.js'
+import 'intro.js/introjs.css';
 Vue.config.productionTip = false
 
 Vue.prototype.$groups = []
 Vue.prototype.$categories = []
 Vue.prototype.$isAdmin = false
+Vue.prototype.$introJs = introJs()
+  .setOptions({
+    nextLabel: "Suivant",
+    prevLabel: "Précédent",
+    doneLabel: "Terminer",
+    showBullets: false,
+    showProgress: true,
+  });
 
 axios.get(generateUrl('apps/intranetagglo/news/category'), {
   params: {

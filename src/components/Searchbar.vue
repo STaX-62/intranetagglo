@@ -4,7 +4,7 @@
             <v-alert color="grey" dense text type="info" v-if="notfound" style="margin: 0;">Aucun élément trouvé</v-alert>
             <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y max-width="290">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn class="my-auto ml-3" color="accent" icon v-bind="attrs" v-on="on">
+                    <v-btn class="my-auto ml-3" color="accent" icon v-bind="attrs" v-on="on" data-intro="Filtrer les actualités par date de parution ou catégorie" data-title="Filtres" data-step="5">
                         <v-icon>mdi-filter-variant</v-icon>
                     </v-btn>
                 </template>

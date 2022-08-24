@@ -1,10 +1,11 @@
 <template>
     <v-col md="4" sm="12">
-        <v-card outlined shaped :color="$vuetify.theme.dark ? '' : '#9ecd4399'" style="height:100%">
+        <v-card outlined shaped :color="$vuetify.theme.dark ? '' : '#9ecd4399'" style="height:100%"
+            data-intro="Ici sont disponibles les informations/alertes temporaires, celles-ci expireront au bout d'une certaine période" data-title="Alertes" data-step="2">
             <v-card-title>
                 <v-card class="pa-2">Alertes</v-card>
                 <v-spacer></v-spacer>
-                <v-btn fab small elevation="1" @click="openDialog = 5; alertToUpdate = alertEmpty">
+                <v-btn fab small elevation="1" @click="openDialog = 5; alertToUpdate = alertEmpty" v-if="$isAdmin">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </v-card-title>
@@ -18,16 +19,17 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <admin-menu menuType="alert" @open="openDialog = $event; alertToUpdate = alert"></admin-menu>
+                        <admin-menu menuType="alert" @open="openDialog = $event; alertToUpdate = alert" v-if="$isAdmin"></admin-menu>
                         <v-chip>Expire dans {{ getFormatedDate(alert.expiration) }}</v-chip>
                     </v-card-actions>
                 </v-card>
             </v-card-text>
         </v-card>
-        <alert-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" @created="prepare_add" @updated="prepare_update" :alert="alertToUpdate">
+        <alert-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" @created="prepare_add" @updated="prepare_update" :alert="alertToUpdate"
+            v-if="$isAdmin">
         </alert-modify>
         <admin-change :open="openDialog == 1" @close="openDialog = -1" @changed="prepare_delete" :title="'Supprimer cette alerte'" :msg="'Voulez vous vraiment supprimer cette alerte: '"
-            validate="Supprimer" color="red darken-1">
+            validate="Supprimer" color="red darken-1" v-if="$isAdmin">
         </admin-change>
     </v-col>
 </template>

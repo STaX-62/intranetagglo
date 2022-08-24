@@ -43,7 +43,7 @@
 
         </v-list>
         <template v-slot:append>
-            <div class="d-flex py-3">
+            <div class="d-flex py-3" v-if="$isAdmin">
                 <v-btn text class="mx-auto" color="primary" @click="openDialog = true" style="font-weight: 600">
                     <v-icon class="mr-2">mdi-cog-outline</v-icon>
                     Modifer les menus
@@ -52,9 +52,9 @@
             </div>
             <v-divider></v-divider>
             <div class="d-flex">
-                <v-switch class="ml-2" v-model="$vuetify.theme.dark" :prepend-icon="$vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny'" />
+                <v-switch class="ml-2" v-model="$vuetify.theme.dark" :prepend-icon="$vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny'" @change="SaveDarkmode" />
                 <v-spacer></v-spacer>
-                <v-btn icon class="my-auto mr-2">
+                <v-btn icon class="my-auto mr-2" @click="Intro">
                     <v-icon>mdi-help-circle</v-icon>
                 </v-btn>
             </div>
@@ -86,6 +86,12 @@ export default {
         },
     },
     methods: {
+        Intro() {
+            this.$introJs.start()
+        },
+        SaveDarkmode() {
+            localStorage.setItem('intranetagglo_color_scheme', this.$vuetify.theme.dark ? 'dark' : 'light');
+        },
         getMenus() {
             axios.get(generateUrl(`apps/intranetagglo${'/menusG'}`))
                 .then((response) => {

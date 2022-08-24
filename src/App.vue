@@ -26,6 +26,21 @@ export default {
     News,
     Applications
   },
+  mounted() {
+    var current_scheme = localStorage.getItem('intranetagglo_color_scheme');
+    if (current_scheme === 'dark') {
+      this.$vuetify.theme.dark = true
+    }
+    else {
+      this.$vuetify.theme.dark = false
+    }
+    setTimeout(() => {
+      if (!localStorage.getItem('intranetagglo_firsttime')) {
+        localStorage.setItem('intranetagglo_firsttime', true);
+        this.$introJs.start()
+      }
+    }, 2000)
+  },
   data: () => ({
     alertshidden: false,
   }),

@@ -1,15 +1,17 @@
 <template>
     <v-col class="maincol" :md="archivesMode ? 12 : 8" sm="12">
-        <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%">
+        <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%" data-intro="Dans cette section sont disponibles les actualités de la CA2BM, 
+          cliquez simplement sur une actualité pour agrandir ou être redirigé vers le contenu" data-title="Actualités" data-step="3">
             <v-card-title>
                 <v-card class="pa-2">Actualités</v-card>
-                <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"></Searchbar>
+                <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0" data-intro="Vous pouvez rechercher des actualités et alertes" data-title="Barre de Recherche" data-step="4">
+                </Searchbar>
                 <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0"
                     :color="$vuetify.theme.dark ? 'accent' : ''" large>
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
                     {{ archivesMode ? 'Retour' : 'Archives' }}
                 </v-btn>
-                <v-btn fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews">
+                <v-btn fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews" v-if="$isAdmin">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </v-card-title>
@@ -39,10 +41,10 @@
                                     </v-chip>
                                     <v-icon class="ml-1" v-if="n.pinned == '1'">mdi-pin-outline</v-icon>
                                     <v-spacer></v-spacer>
-                                    <v-btn small rounded icon class="mr-1" v-if="n.visible == '0'" @click="openDialog = 2; newsToUpdate = n">
+                                    <v-btn small rounded icon class="mr-1" v-if="n.visible == '0' && $isAdmin" @click="openDialog = 2; newsToUpdate = n">
                                         <v-icon>mdi-eye-off</v-icon>
                                     </v-btn>
-                                    <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = n" :pin="n.pinned == '1'" :published="n.visible == '1'">
+                                    <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = n" :pin="n.pinned == '1'" :published="n.visible == '1'" v-if="$isAdmin">
                                     </admin-menu>
                                     <v-chip>
                                         <span class="text-truncate">
@@ -59,7 +61,7 @@
             <v-card-text v-if="archivesMode">
                 <v-list color="transparent">
                     <v-list-item v-if="!archives.length">
-                        <v-skeleton-loader class="mb-2" type="image@3" width="100%" height="125px"></v-skeleton-loader>
+                        <v-skeleton-loader class="mb-2" type="image" width="100%" height="125px"></v-skeleton-loader>
                     </v-list-item>
                     <v-list-item v-for="(archive, i) in archives" :key="i">
                         <v-lazy :options="{
@@ -87,10 +89,10 @@
                                                 {{ getFormatedDate(a.time) }}
                                             </span>
                                         </v-chip>
-                                        <v-btn small rounded icon class="mr-1" v-if="a.visible == '0'" @click="openDialog = 2, newsToUpdate = a">
+                                        <v-btn small rounded icon class="mr-1" v-if="a.visible == '0' && $isAdmin" @click="openDialog = 2, newsToUpdate = a">
                                             <v-icon>mdi-eye-off</v-icon>
                                         </v-btn>
-                                        <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = a" :pin="a.pinned == '1'" :published="a.visible == '1'"></admin-menu>
+                                        <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = a" :pin="a.pinned == '1'" :published="a.visible == '1'" v-if="$isAdmin"></admin-menu>
                                     </v-card-title>
                                     <v-card-subtitle>{{ a.subtitle }}</v-card-subtitle>
                                     <v-card-text :class="focus == i + '-' + y ? '' : 'archivetext text-truncate'" v-html="a.text" style="overflow: hidden;max-width: 100%;"></v-card-text>
@@ -105,15 +107,16 @@
         <vue-easy-lightbox escDisabled moveDisabled :visible="LightBoxDialog" :imgs="LightBoxPhotos" :index="0" @hide="LightBoxDialog = false"></vue-easy-lightbox>
         <admin-change :open="openDialog == 3" @close="openDialog = -1" @changed="prepare_pin" :title="'Modification de l\'épinglage de l\'actualité'"
             :msg="false ? 'Voulez vous vraiment désépingler cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment épingler cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
-            :validate="false ? 'Désépingler' : 'Epingler'" :color="false ? 'red darken-1' : 'green darken-1'">
+            :validate="false ? 'Désépingler' : 'Epingler'" :color="false ? 'red darken-1' : 'green darken-1'" v-if="$isAdmin">
         </admin-change>
         <admin-change :open="openDialog == 2" @close="openDialog = -1" @changed="prepare_visible" :title="'Modification de la visibilité de l\'actualité'"
             :msg="false ? 'Voulez vous vraiment mettre en brouillon cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment publier cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
-            :validate="false ? 'Mettre en brouillon' : 'Publier'" :color="false ? 'red darken-1' : 'green darken-1'">
+            :validate="false ? 'Mettre en brouillon' : 'Publier'" :color="false ? 'red darken-1' : 'green darken-1'" v-if="$isAdmin">
         </admin-change>
-        <news-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" :news="newsToUpdate" @created="prepare_add" @updated="prepare_update"></news-modify>
+        <news-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" :news="newsToUpdate" @created="prepare_add" @updated="prepare_update"
+            v-if="$isAdmin"></news-modify>
         <admin-change :open="openDialog == 1" @close="openDialog = -1" @changed="prepare_delete" :title="'Supprimer cette actualité'"
-            :msg="'Voulez vous vraiment supprimer cette actualité: <br/><code>' + newsToUpdate.title + '</code>'" validate="Supprimer" color="red darken-1">
+            :msg="'Voulez vous vraiment supprimer cette actualité: <br/><code>' + newsToUpdate.title + '</code>'" validate="Supprimer" color="red darken-1" v-if="$isAdmin">
         </admin-change>
     </v-col>
 </template>
