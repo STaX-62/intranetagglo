@@ -36,14 +36,12 @@ export default {
     name: "Searchbar",
     methods: {
         onChange() {
-            clearTimeout(this.timer)
             this.timer = setTimeout(() => {
-                console.log(this.chips)
-                if (this.chips == undefined) {
-                    this.$emit('searchfilters', this.search, -1, this.months)
+                if (this.$categories.includes(this.chips)) {
+                    this.$emit('searchfilters', this.search, this.$categories[this.chips], this.months)
                 }
                 else {
-                    this.$emit('searchfilters', this.search, this.$categories[this.chips], this.months)
+                    this.$emit('searchfilters', this.search, -1, this.months)
                 }
             }, 250)
         }
