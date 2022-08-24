@@ -23,11 +23,12 @@
                                 </v-list-item-content>
                             </template>
 
-                            <v-list-item v-for="(submenu, subsubindex) in MenuToDisplay[index].childs[subindex].childs" :key="'B' + subsubindex" link :href="submenu.link" target="_blank" style="padding-left:20px;">
+                            <v-list-item v-for="(submenu, subsubindex) in MenuToDisplay[index].childs[subindex].childs" :key="'B' + subsubindex" link :href="submenu.link" target="_blank"
+                                style="padding-left:40px;min-height:30px;">
                                 <v-list-item-title>{{ submenu.title }}</v-list-item-title>
                             </v-list-item>
                         </v-list-group>
-                        <v-list-item link style="min-height:35px;" v-else>
+                        <v-list-item link style="min-height:30px;" v-else>
                             <v-list-item-title @click="OpenLink(menu.link, isEmpty(MenuToDisplay[index].childs[subindex].childs))">{{ menu.title }}</v-list-item-title>
                         </v-list-item>
                     </v-list>
