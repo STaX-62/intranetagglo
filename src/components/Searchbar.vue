@@ -31,7 +31,7 @@ export default {
     methods: {
         onChange() {
             this.timer = setTimeout(() => {
-                this.$emit('searchfilters', this.search, this.$categories[this.chips], this.months)
+                this.$emit('searchfilters', this.search, this.chip == undefined ? '' : this.$categories[this.chip], this.months)
             }, 250)
         }
     },
@@ -43,7 +43,7 @@ export default {
         menu: false,
         search: '',
         months: '',
-        chip: '',
+        chip: undefined,
     }),
 }
 </script>
