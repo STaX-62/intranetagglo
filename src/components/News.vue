@@ -1,13 +1,16 @@
 <template>
-    <v-col class="maincol" :md="archivesMode ? 12 : 8" sm="12">
-        <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%" data-intro="Dans cette section sont disponibles les actualités de la CA2BM, 
-          cliquez simplement sur une actualité pour agrandir ou être redirigé vers le contenu" data-title="Actualités" data-step="3">
+    <v-col class="maincol" :md="archivesMode || alertEmpty ? 12 : 8" sm="12">
+        <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%" data-intro="Dans cette section sont disponibles les 5 dernières actualités de la CA2BM, 
+          pour agrandir une image ou l'afficher dans son intégralité cliquez simplement sur cette dernière" data-title="Actualités" data-step="3">
             <v-card-title>
                 <v-card class="pa-2">Actualités</v-card>
-                <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0" data-intro="Vous pouvez rechercher des actualités et alertes" data-title="Barre de Recherche" data-step="4">
+                <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"
+                    data-intro="Vous pouvez rechercher des actualités et alertes grâce à cette barre de recherche (qui basculera automatiquement le mode d'affichage en mode archives)"
+                    data-title="Barre de Recherche" data-step="4">
                 </Searchbar>
                 <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0"
-                    :color="$vuetify.theme.dark ? 'accent' : ''" large>
+                    :color="$vuetify.theme.dark ? 'accent' : ''" large
+                    data-intro="Retrouvez toutes les anciennes actualités de la CA2BM dans la section archives ou cherchez simplement via la barre de recherche" data-title="Archives" data-step="3">
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
                     {{ archivesMode ? 'Retour' : 'Archives' }}
                 </v-btn>
@@ -28,7 +31,7 @@
                                         <v-img height="400" :src="photo"></v-img>
                                     </v-carousel-item>
                                 </v-carousel>
-                                <v-img height="400" :src="n.photo[0]" v-else @click="LightBoxDialog = true; LightBoxPhotos = n.photo"></v-img>
+                                <v-img height="400" :src="n.photo[0]" v-else-if="n.photo.length == 1" @click="LightBoxDialog = true; LightBoxPhotos = n.photo"></v-img>
                                 <v-card-title>{{ n.title }}</v-card-title>
                                 <v-card-subtitle>{{ n.subtitle }}</v-card-subtitle>
                                 <v-card-text v-html="n.text" style="margin-bottom:20px">
@@ -75,7 +78,7 @@
                                             <v-img height="400" :src="photo"></v-img>
                                         </v-carousel-item>
                                     </v-carousel>
-                                    <v-img height="400" :src="a.photo[0]" v-if="a.photo.length <= 1 && focus == i + '-' + y" @click="LightBoxDialog = true; LightBoxPhotos = a.photo"></v-img>
+                                    <v-img height="400" :src="a.photo[0]" v-if="a.photo.length == 1 && focus == i + '-' + y" @click="LightBoxDialog = true; LightBoxPhotos = a.photo"></v-img>
                                     <v-card-title class="text-truncate">{{ a.title }}
                                         <v-spacer></v-spacer>
                                         <v-icon class="mr-1" v-if="a.pinned == '1'">mdi-pin-outline</v-icon>
@@ -133,6 +136,9 @@ import { generateUrl } from '@nextcloud/router';
 export default {
     components: { adminMenu, newsModify, AdminChange, Searchbar },
     name: "News",
+    props: {
+        alertEmpty: Boolean
+    },
     computed: {
         newsForwardC: {
             get() {
@@ -305,31 +311,6 @@ export default {
             month: '',
             nextmonth: ''
         },
-        // news: [{
-        //     title: "Lorem ipsum dolor sit amet",
-        //     subtitle: "Lorem ipsum dolor sit amet azdza d zqd ad zd qzd zqd az d",
-        //     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque neque felis, ultrices ac volutpat eget, luctus quis augue. Morbi mattis bibendum faucibus. Morbi ultricies, diam id dapibus gravida, lectus neque auctor orci, sed convallis neque nulla ut justo. Maecenas sagittis mauris lectus. Duis eu ullamcorper dui. Nulla et odio nulla. Cras interdum vel libero maximus viverra.",
-        //     photo: [require("../assets/LogoCA2BM.png"), require("../assets/IMG20211002181858.jpg")],
-        //     category: "Information",
-        //     groups: ["intranet-admin"],
-        //     link: "",
-        //     time: 1272509157,
-        //     expiration: 0,
-        //     visible: false,
-        //     pinned: true
-        // }, {
-        //     title: "Lorem ipsum dolor sit amet",
-        //     subtitle: "je suis au chomage",
-        //     text: "Lorem ipsum dolor sit amet BLABLABLA BLABLABL ABLALBLA BLA BL",
-        //     photo: [require("../assets/a4page.jpg")],
-        //     category: "Information",
-        //     groups: ["intranet-admin"],
-        //     link: "",
-        //     expiration: 0,
-        //     time: 1272509157,
-        //     visible: false,
-        //     pinned: false
-        // }],
         archives: [],
         newsToUpdate: {
             title: "",

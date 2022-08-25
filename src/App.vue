@@ -1,11 +1,11 @@
 <template>
   <v-app fixed dark>
-    <Navigation v-if="isOnSite">
+    <Navigation v-if="isOnSite" @alertempty="alertEmpty = $event">
     </Navigation>
     <v-main>
       <v-row style="margin:0; height: 100%;">
         <Alerts v-if="!alertshidden"></Alerts>
-        <News @closealerts="alertshidden = $event"></News>
+        <News @closealerts="alertshidden = $event" :alertEmpty="alertEmpty"></News>
       </v-row>
     </v-main>
     <Applications v-if="isOnSite"></Applications>
@@ -53,7 +53,8 @@ export default {
   },
   data: () => ({
     alertshidden: false,
-    isOnSite: false
+    isOnSite: false,
+    alertEmpty: false
   }),
 };
 </script>

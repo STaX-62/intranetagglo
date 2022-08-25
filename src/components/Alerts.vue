@@ -10,7 +10,7 @@
                 </v-btn>
             </v-card-title>
             <v-card-text v-if="!alerts.length">
-                <v-skeleton-loader class="mx-auto" type="card"></v-skeleton-loader>
+                <v-skeleton-loader class="mx-auto" type="image"></v-skeleton-loader>
             </v-card-text>
             <v-card-text v-if="alerts.length">
                 <v-card v-for="(alert, index) in alerts" :key="index" class="mx-auto mb-2" :color="$vuetify.theme.dark ? '#9ecd4399' : ''" elevation="4">
@@ -52,6 +52,8 @@ export default {
         GetAlerts() {
             axios.post(generateUrl(`apps/intranetagglo/alerts`), { 'search': '' }, { type: 'application/json' })
                 .then((response) => {
+                    if (!response.data.length)
+                        this.$emit('alertempty', true)
                     this.alerts = response.data;
                     this.alerts.forEach(a => a.groups = a.groups.split(';'))
                 })

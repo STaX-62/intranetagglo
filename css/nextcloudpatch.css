@@ -1,4 +1,95 @@
-#app blockquote {
+#app .news-text h1 {
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+#app .news-text h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+#app .news-text h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+#app .news-text h4 {
+    display: block;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+#app .news-text h5 {
+    display: block;
+    font-size: .83em;
+    margin-top: 1.67em;
+    margin-bottom: 1.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+#app .news-text h6 {
+    display: block;
+    font-size: .67em;
+    margin-top: 2.33em;
+    margin-bottom: 2.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+#app .news-text pre.ql-syntax {
+    background-color: #23241f;
+    color: #f8f8f2;
+    overflow: visible;
+}
+
+#app .news-text ul {
+    margin: 0;
+    padding: 0;
+    counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+    padding-left: 1.5em;
+}
+
+#app .news-text ul>li::before {
+    content: '\2022';
+}
+#app .news-text ol>li, .ql-editor ul>li {
+    list-style-type: none;
+}
+
+#app .news-text ol li:not(.ql-direction-rtl),
+#app .news-text ul li:not(.ql-direction-rtl) {
+    padding-left: 1.5em;
+}
+
+#app .news-text pre {
+    white-space: pre-wrap;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px 10px;
+}
+
+#app .news-text blockquote {
     border-left: 4px solid #ccc;
     margin-bottom: 5px;
     margin-top: 5px;
