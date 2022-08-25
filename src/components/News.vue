@@ -159,8 +159,14 @@ export default {
                     this.lazyArchivesCounter = 0
                     this.GetArchives()
                     this.news.forEach(n => {
-                        n.photo = n.photo.split(';')
-                        n.groups = n.groups.split(';')
+                        if (n.photo != "") {
+                            n.photo = n.photo.split(';')
+                        }
+                        else n.photo = []
+                        if (n.groups != "") {
+                            n.groups = n.groups.split(';')
+                        }
+                        else n.groups = []
                     })
                 })
         },
@@ -171,8 +177,14 @@ export default {
                     var array = response.data[0]
 
                     array.forEach(a => {
-                        a.photo = a.photo.split(';')
-                        a.groups = a.groups.split(';')
+                        if (a.photo != "") {
+                            a.photo = a.photo.split(';')
+                        }
+                        else a.photo = []
+                        if (a.groups != "") {
+                            a.groups = a.groups.split(';')
+                        }
+                        else a.groups = []
                     })
                     if (array.length) {
                         this.archives.push(array)

@@ -52,6 +52,7 @@ export default {
         GetAlerts() {
             axios.post(generateUrl(`apps/intranetagglo/alerts`), { 'search': '' }, { type: 'application/json' })
                 .then((response) => {
+                    console.log(response.data.length)
                     if (!response.data.length)
                         this.$emit('alertempty', true)
                     this.alerts = response.data;
