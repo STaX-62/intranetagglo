@@ -32,7 +32,11 @@
                                 </v-text-field>
                                 <v-text-field v-model="modifiedNews.subtitle" :counter="200" label="Sous-Titre"></v-text-field>
                                 <v-text-field v-model="modifiedNews.category" :counter="20" :rules="categoryRules" label="Catégorie"></v-text-field>
-
+                                <v-chip-group v-model="setCategory" column>
+                                    <v-chip filter outlined small v-for="n in $categories" :key="n">
+                                        {{ n }}
+                                    </v-chip>
+                                </v-chip-group>
                                 <v-select v-model="modifiedNews.groups" :items="$groups" label="Groupes D'utilisateurs" required multiple small-chips>
                                 </v-select>
                             </v-form>
@@ -104,6 +108,14 @@ export default {
         news: Object
     },
     computed: {
+        setCategory: {
+            get() {
+                return this.modifiedNews.category
+            },
+            set(value) {
+                this.modifiedNews.category = this.$categories[value]
+            }
+        },
         dialog: {
             get() {
                 return this.open
