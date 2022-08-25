@@ -1,15 +1,14 @@
 <template>
   <v-app fixed dark>
-    <Navigation v-if="$isOnSite">
+    <Navigation v-if="isOnSite">
     </Navigation>
     <v-main>
-      {{ $isOnSite }}
       <v-row style="margin:0; height: 100%;">
         <Alerts v-if="!alertshidden"></Alerts>
         <News @closealerts="alertshidden = $event"></News>
       </v-row>
     </v-main>
-    <Applications v-if="$isOnSite"></Applications>
+    <Applications v-if="isOnSite"></Applications>
   </v-app>
 </template>
 
@@ -26,6 +25,11 @@ export default {
     Alerts,
     News,
     Applications
+  },
+  computed:{
+    isOnSite(){
+      return this.$isOnSite
+    }
   },
   mounted() {
     var current_scheme = localStorage.getItem('intranetagglo_color_scheme');

@@ -32,7 +32,6 @@ axios.get(generateUrl('apps/intranetagglo/news/category'), {
 })
 
 axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => {
-  console.log(response.data)
   Vue.prototype.$isOnSite = response.data
 })
 
