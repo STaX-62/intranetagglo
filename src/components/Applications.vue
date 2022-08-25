@@ -54,7 +54,7 @@ export default {
                             a.groups = []
                         }
                         if (a.icon.indexOf('#') == -1)
-                            a.color = a.icon.slice(a.icon.length - 2)
+                            a.color = 'bleu'
                         else
                             a.color = a.icon.slice(a.icon.length - 2) == "#b" ? 'bleu' : 'vert'
                         a.icon = a.icon.slice(0, a.icon.length - 2)

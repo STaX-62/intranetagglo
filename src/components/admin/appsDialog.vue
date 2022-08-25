@@ -34,7 +34,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <draggable tag="tbody" :list="apps" handle=".handleapp" :move="setNewPosition" @end="UpdateOrder">
+                        <tbody>
                             <tr v-for="app in apps" :key="app.name">
                                 <td>{{ app.title }}</td>
                                 <td>{{ app.icon }}</td>
@@ -47,7 +47,7 @@
                                     <admin-menu menuType="app" @open="openDialog = $event; appToUpdate = app"></admin-menu>
                                 </td>
                             </tr>
-                        </draggable>
+                        </tbody>
                     </template>
                 </v-simple-table>
             </v-card-text>
@@ -73,10 +73,9 @@ import AppsModify from './appsModify.vue';
 import AdminChange from './adminChange.vue';
 import axios from '@nextcloud/axios';
 import { generateUrl } from '@nextcloud/router';
-import draggable from 'vuedraggable';
 
 export default {
-    components: { adminMenu, AppsModify, AdminChange, draggable },
+    components: { adminMenu, AppsModify, AdminChange },
     name: "appsDialog",
     props: {
         open: Boolean,
