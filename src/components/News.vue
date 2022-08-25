@@ -207,7 +207,7 @@ export default {
             this.$emit('closealerts', this.archivesMode)
             this.filters = {
                 search: search,
-                categories: categories == -1 ? '' : categories,
+                categories: categories,
                 month: months == '' ? months : moment(months).toISOString(),
                 nextmonth: months == '' ? months : moment(months).endOf('month').toISOString()
             }
