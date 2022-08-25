@@ -44,11 +44,6 @@
                                     <v-chip small v-for="group in app.groups" :key="group">{{ group }}</v-chip>
                                 </td>
                                 <td class="text-right">
-                                    <v-btn icon class="handleapp">
-                                        <v-icon>
-                                            mdi-arrow-split-horizontal
-                                        </v-icon>
-                                    </v-btn>
                                     <admin-menu menuType="app" @open="openDialog = $event; appToUpdate = app"></admin-menu>
                                 </td>
                             </tr>

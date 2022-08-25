@@ -12,7 +12,7 @@
         <v-row class="ma-1 apps-container" v-if="apps.length" data-intro="Retrouvez également les applications les plus utiles dans cette section" data-title="Applications" data-step="6">
             <v-col v-for="(app, index) in apps" :key="index" cols="6" style="padding: 5px;">
                 <v-responsive :aspect-ratio="1 / 1">
-                    <v-btn :class="'appbox ' + appcolor(app.color)" style="height: 100%;width:100%;" :href="app.link" target="_blank">
+                    <v-btn :class="'appbox ' + app.color" style="height: 100%;width:100%;" :href="app.link" target="_blank">
                         <div class="text-center d-flex flex-column align-center justify-center text-wrap"
                             style="height: 100%; letter-spacing: initial; font-weight: 500; color:#fff;font-family: petitaBold;">
                             <v-icon class="pb-1">mdi-{{ app.icon }}</v-icon>
@@ -76,14 +76,6 @@ export default {
                     this.apps = array
                 })
         },
-        appcolor(color) {
-            if (color == '#b') {
-                return 'bleu'
-            }
-            if (color == '#v') {
-                return 'vert'
-            }
-        }
     },
     mounted() {
         this.getApps()
