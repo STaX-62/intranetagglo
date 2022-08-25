@@ -7,7 +7,7 @@
         </v-list-item>
 
         <v-divider></v-divider>
-        <v-list class="section-div" dense data-intro="Les liens utiles adaptés à vos besoins triés en fonction de votre service" data-title="Menu de Navigation" data-step="1">
+        <v-list class="section-div" expand dense data-intro="Les liens utiles adaptés à vos besoins triés en fonction de votre service" data-title="Menu de Navigation" data-step="1">
             <v-list-group v-for="(section, index) in MenuToDisplay" :key="'B' + index" :value="true" :prepend-icon="'mdi-' + section.icon">
                 <template v-slot:activator>
                     <v-list-item-content>
@@ -147,6 +147,10 @@ export default {
 }
 
 #app .section-div>div {
+    color: white !important;
+}
+
+#app .section-div>div>div>i {
     color: white !important;
 }
 </style>
