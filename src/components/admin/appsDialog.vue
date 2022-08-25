@@ -113,6 +113,7 @@ export default {
                             a.color = a.icon.slice(a.icon.length - 2)
                         else
                             a.color = a.icon.slice(a.icon.length - 2) == "#b" ? 'bleu' : 'vert'
+                        a.icon = a.icon.slice(a.icon.length - 2)
                     })
                     this.apps = array
                 })

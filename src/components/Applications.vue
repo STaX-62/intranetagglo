@@ -46,7 +46,6 @@ export default {
             axios.get(generateUrl(`apps/intranetagglo/appsG`))
                 .then((response) => {
                     var array = response.data
-                    var counter = 0
                     array.forEach(a => {
                         if (a.groups != '') {
                             a.groups = a.groups.split(';')
@@ -57,21 +56,23 @@ export default {
                         if (a.icon.indexOf('#') == -1)
                             a.color = a.icon.slice(a.icon.length - 2)
                         else
-                            a.color = "#b"
-                        if (a.icon.indexOf('&') == -1) {
-                            a.order = counter
-                        }
-                        else {
-                            a.order = parseInt(a.icon.slice(a.icon.indexOf('&') + 1))
-                            a.icon = a.icon.slice(0, a.icon.indexOf('&'))
-                        }
-                        counter++;
+                            a.color = a.icon.slice(a.icon.length - 2) == "#b" ? 'bleu' : 'vert'
+                        a.icon = a.icon.slice(a.icon.length - 2)
                     })
+
                     array.sort(function (a, b) {
-                        if (a.order < b.order) return -1;
-                        if (a.order > b.order) return 1;
-                        return 0;
+                        const colora = a.color.toUpperCase();
+                        const colorb = b.color.toUpperCase();
+
+                        let comparison = 0;
+                        if (colora > colorb) {
+                            comparison = 1;
+                        } else if (colora < colorb) {
+                            comparison = -1;
+                        }
+                        return comparison;
                     });
+
                     this.apps = array
                 })
         },
