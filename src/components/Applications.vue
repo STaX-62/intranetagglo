@@ -57,7 +57,7 @@ export default {
                             a.color = a.icon.slice(a.icon.length - 2)
                         else
                             a.color = a.icon.slice(a.icon.length - 2) == "#b" ? 'bleu' : 'vert'
-                        a.icon = a.icon.slice(a.icon.length - 2)
+                        a.icon = a.icon.slice(0, a.icon.length - 2)
                     })
 
                     array.sort(function (a, b) {

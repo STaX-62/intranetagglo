@@ -38,7 +38,7 @@
                             <tr v-for="app in apps" :key="app.name">
                                 <td>{{ app.title }}</td>
                                 <td>{{ app.icon }}</td>
-                                <td>{{ appcolor(app.color) }}</td>
+                                <td>{{ app.color }}</td>
                                 <td class="text-truncate" style="max-width: 500px;">{{ app.link }}</td>
                                 <td>
                                     <v-chip small v-for="group in app.groups" :key="group">{{ group }}</v-chip>
@@ -113,7 +113,7 @@ export default {
                             a.color = a.icon.slice(a.icon.length - 2)
                         else
                             a.color = a.icon.slice(a.icon.length - 2) == "#b" ? 'bleu' : 'vert'
-                        a.icon = a.icon.slice(a.icon.length - 2)
+                        a.icon = a.icon.slice(0, a.icon.length - 2)
                     })
                     this.apps = array
                 })
@@ -156,14 +156,6 @@ export default {
                 this.$emit('changed')
             })
         },
-        appcolor(color) {
-            if (color == '#b') {
-                return 'bleu'
-            }
-            if (color == '#v') {
-                return 'vert'
-            }
-        }
     },
     mounted() {
         this.getAdmApps()
