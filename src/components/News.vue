@@ -377,12 +377,12 @@ export default {
 
     .archivesbtn[admin] {
         margin-top: 8px !important;
-        width: calc(100% - 50px)
+        width: calc(100% - 66px) !important;
     }
 
     .archivesbtn:not([admin]) {
         margin-top: 8px !important;
-        width: 100%;
+        width: 100% !important;
     }
 
     .archivesbtn[admin]+button {
