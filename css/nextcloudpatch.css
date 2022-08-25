@@ -7429,14 +7429,6 @@ html.overflow-y-hidden {
     font-family: "Roboto", sans-serif !important;
 }
 
-#app .v-application .text-subtitle-1 {
-    font-size: 1rem !important;
-    font-weight: normal;
-    line-height: 1.75rem;
-    letter-spacing: 0.009375em !important;
-    font-family: "Roboto", sans-serif !important;
-}
-
 #app .v-application .text-subtitle-2 {
     font-size: 0.875rem !important;
     font-weight: 500;
