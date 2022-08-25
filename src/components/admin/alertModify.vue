@@ -7,8 +7,7 @@
 
             <v-card-text>
                 <v-form v-model="valid">
-                    <v-text-field v-model="modifiedAlert.title" :counter="100" :rules="titleRules" label="Name" required></v-text-field>
-
+                    <v-text-field v-model="modifiedAlert.title" :counter="100" :rules="titleRules" label="Titre" required></v-text-field>
                     <v-select v-model="modifiedAlert.groups" :items="$groups" label="Groupes d'utilisateurs" required multiple small-chips></v-select>
 
                     <v-menu ref="menu" v-model="menu" :close-on-content-click="false" :return-value.sync="dateC" transition="scale-transition" offset-y min-width="auto">
