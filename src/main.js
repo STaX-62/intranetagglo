@@ -13,8 +13,8 @@ Vue.config.productionTip = false
 Vue.prototype.$groups = []
 Vue.prototype.$categories = []
 Vue.prototype.$isAdmin = false
-Vue.prototype.$introJs = introJs()
 Vue.prototype.$isOnSite = false
+Vue.prototype.$introJs = introJs()
   .setOptions({
     nextLabel: "Suivant",
     prevLabel: "Précédent",
