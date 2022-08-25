@@ -3,6 +3,7 @@
     <Navigation v-if="$isOnSite">
     </Navigation>
     <v-main>
+      {{ $isOnSite }}
       <v-row style="margin:0; height: 100%;">
         <Alerts v-if="!alertshidden"></Alerts>
         <News @closealerts="alertshidden = $event"></News>
