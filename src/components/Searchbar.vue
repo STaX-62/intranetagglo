@@ -13,7 +13,7 @@
                     <v-date-picker v-model="months" type="month" color="primary" @change="onChange"></v-date-picker>
 
                     <v-divider></v-divider>
-                    <v-chip-group v-model="chip" column>
+                    <v-chip-group v-model="chip" column @change="onChange">
                         <v-chip filter outlined small v-for="n in $categories" :key="n">
                             {{ n }}
                         </v-chip>
