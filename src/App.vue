@@ -1,10 +1,10 @@
 <template>
   <v-app fixed dark>
-    <Navigation v-if="isOnSite" @alertempty="alertEmpty = $event">
+    <Navigation v-if="isOnSite" >
     </Navigation>
     <v-main>
       <v-row style="margin:0; height: 100%;">
-        <Alerts v-if="!alertshidden"></Alerts>
+        <Alerts v-if="!alertshidden" @alertempty="alertEmpty = $event"></Alerts>
         <News @closealerts="alertshidden = $event" :alertEmpty="alertEmpty"></News>
       </v-row>
     </v-main>

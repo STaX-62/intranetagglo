@@ -34,7 +34,7 @@
                                 <v-img height="400" :src="n.photo[0]" v-else-if="n.photo.length == 1" @click="LightBoxDialog = true; LightBoxPhotos = n.photo"></v-img>
                                 <v-card-title>{{ n.title }}</v-card-title>
                                 <v-card-subtitle>{{ n.subtitle }}</v-card-subtitle>
-                                <v-card-text v-html="n.text" style="margin-bottom:20px">
+                                <v-card-text class="news-text" v-html="n.text" style="margin-bottom:20px">
                                 </v-card-text>
                                 <v-card-actions style="position:absolute; bottom: 0; width: 100%;">
                                     <v-chip label class=" text-truncate">
@@ -98,7 +98,7 @@
                                         <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = a" :pin="a.pinned == '1'" :published="a.visible == '1'" v-if="$isAdmin"></admin-menu>
                                     </v-card-title>
                                     <v-card-subtitle>{{ a.subtitle }}</v-card-subtitle>
-                                    <v-card-text :class="focus == i + '-' + y ? '' : 'archivetext text-truncate'" v-html="a.text" style="overflow: hidden;max-width: 100%;"></v-card-text>
+                                    <v-card-text :class="focus == i + '-' + y ? 'news-text' : 'archivetext text-truncate'" v-html="a.text" style="overflow: hidden;max-width: 100%;"></v-card-text>
                                 </v-card>
                             </div>
                         </v-lazy>
