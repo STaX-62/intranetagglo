@@ -13,18 +13,11 @@
                     <v-date-picker v-model="months" type="month" color="primary" @change="onChange"></v-date-picker>
 
                     <v-divider></v-divider>
-
-                    <v-list>
-                        <v-list-item>
-                            <v-item-group v-model="chips" @change="onChange">
-                                <v-item v-for="n in $categories" :key="n" v-slot="{ toggle }" class="ma-1">
-                                    <v-chip active-class="primary--text" :input-value="n" @click="toggle" small>
-                                        {{ n }}
-                                    </v-chip>
-                                </v-item>
-                            </v-item-group>
-                        </v-list-item>
-                    </v-list>
+                    <v-chip-group v-model="chip" column>
+                        <v-chip filter outlined small v-for="n in $categories" :key="n">
+                            {{ n }}
+                        </v-chip>
+                    </v-chip-group>
                 </v-card>
             </v-menu>
         </template>
@@ -38,12 +31,7 @@ export default {
     methods: {
         onChange() {
             this.timer = setTimeout(() => {
-                if (this.$categories.includes(this.chips)) {
-                    this.$emit('searchfilters', this.search, this.$categories[this.chips], this.months)
-                }
-                else {
-                    this.$emit('searchfilters', this.search, -1, this.months)
-                }
+                this.$emit('searchfilters', this.search, this.$categories[this.chips], this.months)
             }, 250)
         }
     },
@@ -55,7 +43,7 @@ export default {
         menu: false,
         search: '',
         months: '',
-        chips: '',
+        chip: '',
     }),
 }
 </script>
