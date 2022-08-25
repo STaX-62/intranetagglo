@@ -3,13 +3,13 @@
         <v-card outlined :color="$vuetify.theme.dark ? '' : '#0eb4eda1'" style="height:100%" data-intro="Dans cette section sont disponibles les 5 dernières actualités de la CA2BM, 
           pour agrandir une image ou l'afficher dans son intégralité cliquez simplement sur cette dernière" data-title="Actualités" data-step="3">
             <v-card-title>
-                <v-card class="pa-2">Actualités</v-card>
+                <v-card class="pa-2 card-intra-title">Actualités</v-card>
                 <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"
                     data-intro="Vous pouvez rechercher des actualités et alertes grâce à cette barre de recherche (qui basculera automatiquement le mode d'affichage en mode archives)"
                     data-title="Barre de Recherche" data-step="4">
                 </Searchbar>
-                <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0"
-                    :color="$vuetify.theme.dark ? 'accent' : ''" large
+                <v-btn :text="$vuetify.theme.dark" class="mr-2 archivesbtn" :admin="$isAdmin"
+                    @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0" :color="$vuetify.theme.dark ? 'accent' : ''" large
                     data-intro="Retrouvez toutes les anciennes actualités de la CA2BM dans la section archives ou cherchez simplement via la barre de recherche" data-title="Archives" data-step="6">
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
                     {{ archivesMode ? 'Retour' : 'Archives' }}
@@ -109,12 +109,12 @@
         </v-card>
         <vue-easy-lightbox escDisabled moveDisabled :visible="LightBoxDialog" :imgs="LightBoxPhotos" :index="0" @hide="LightBoxDialog = false"></vue-easy-lightbox>
         <admin-change :open="openDialog == 3" @close="openDialog = -1" @changed="prepare_pin" :title="'Modification de l\'épinglage de l\'actualité'"
-            :msg="false ? 'Voulez vous vraiment désépingler cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment épingler cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
-            :validate="false ? 'Désépingler' : 'Epingler'" :color="false ? 'red darken-1' : 'green darken-1'" v-if="$isAdmin">
+            :msg="newsToUpdate.pinned == '1' ? 'Voulez vous vraiment désépingler cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment épingler cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
+            :validate="newsToUpdate.pinned == '1' ? 'Désépingler' : 'Epingler'" :color="newsToUpdate.pinned == '1' ? 'red darken-1' : 'green darken-1'" v-if="$isAdmin">
         </admin-change>
         <admin-change :open="openDialog == 2" @close="openDialog = -1" @changed="prepare_visible" :title="'Modification de la visibilité de l\'actualité'"
-            :msg="false ? 'Voulez vous vraiment mettre en brouillon cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment publier cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
-            :validate="false ? 'Mettre en brouillon' : 'Publier'" :color="false ? 'red darken-1' : 'green darken-1'" v-if="$isAdmin">
+            :msg="newsToUpdate.visible == '1' ? 'Voulez vous vraiment mettre en brouillon cette actualité (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + newsToUpdate.title + '</code>' : 'Voulez vous vraiment publier cette actualité : <br/><code>' + newsToUpdate.title + '</code>'"
+            :validate="newsToUpdate.visible == '1' ? 'Mettre en brouillon' : 'Publier'" :color="newsToUpdate.visible == '1' ? 'red darken-1' : 'green darken-1'" v-if="$isAdmin">
         </admin-change>
         <news-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1" :news="newsToUpdate" @created="prepare_add" @updated="prepare_update"
             v-if="$isAdmin"></news-modify>
@@ -367,5 +367,30 @@ export default {
 
 .newscarousel {
     height: calc(100% - 125px) !important;
+}
+
+
+@media (max-width: 694px) {
+    .card-intra-title {
+        display: none;
+    }
+
+    .archivesbtn[admin] {
+        margin-top: 8px !important;
+        width: calc(100% - 50px)
+    }
+
+    .archivesbtn:not([admin]) {
+        margin-top: 8px !important;
+        width: 100%;
+    }
+
+    .archivesbtn[admin]+button {
+        margin-top: 8px !important;
+    }
+
+    .newscarousel {
+        height: calc(100% - 175px) !important;
+    }
 }
 </style>
