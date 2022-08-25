@@ -9,7 +9,7 @@
                 <v-form v-model="valid">
                     <v-text-field v-model="modifiedApp.title" :counter="40" :rules="titleRules" label="Name" required></v-text-field>
                     <icon-help></icon-help>
-                    <v-text-field v-model="modifiedApp.icon" label="Icon" required></v-text-field>
+                    <v-text-field v-model="modifiedApp.icon" label="Icon" :rules="iconRules" required></v-text-field>
                     <v-text-field v-model="modifiedApp.link" label="Lien" required></v-text-field>
                     <v-select v-model="modifiedApp.color" :items="['bleu', 'vert']" label="Couleur" menu-props="auto"></v-select>
                     <v-select v-model="modifiedApp.groups" :items="$groups" label="Groupes d'utilisateurs" required multiple small-chips></v-select>
@@ -25,7 +25,8 @@
                 </v-btn>
 
                 <v-btn color="green darken-1" text
-                    @click="create ? $emit('created', modifiedApp, modifiedApp.color == 'bleu' ? '#b' : '#v') : $emit('updated', modifiedApp, modifiedApp.color == 'bleu' ? '#b' : '#v'); dialog = false" :disabled="!valid">
+                    @click="create ? $emit('created', modifiedApp, modifiedApp.color == 'bleu' ? '#b' : '#v') : $emit('updated', modifiedApp, modifiedApp.color == 'bleu' ? '#b' : '#v'); dialog = false"
+                    :disabled="!valid">
                     {{ create ? 'Ajouter' : 'Modifier' }}
                 </v-btn>
             </v-card-actions>
@@ -71,6 +72,9 @@ export default {
         titleRules: [
             v => !!v || 'Un titre est nécessaire',
             v => (v && v.length <= 100) || 'Un titre trop long risque de poser des problèmes d\'affichage',
+        ],
+        iconRules: [
+            v => !!v || 'Une incone est nécessaire',
         ],
     }),
 }
