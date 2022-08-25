@@ -7,12 +7,14 @@
         </v-list-item>
 
         <v-divider></v-divider>
-        <v-list dense data-intro="Les liens utiles adaptés à vos besoins triés en fonction de votre service" data-title="Menu de Navigation" data-step="1">
+        <v-list class="section-div" expand dense data-intro="Les liens utiles adaptés à vos besoins triés en fonction de votre service" data-title="Menu de Navigation" data-step="1">
             <v-list-group v-for="(section, index) in MenuToDisplay" :key="'B' + index" :value="true" :prepend-icon="'mdi-' + section.icon">
-                <template v-slot:activator style="margin-right: 15px;">
-                    <v-list-item-content class="section">
+                <template v-slot:activator>
+                    <v-list-item-content>
                         <v-list-item-title class="section-title" @click="OpenLink(section.link, isEmpty(MenuToDisplay[index].childs))"
-                            style="font-family: PetitaBold !important;  letter-spacing: .01rem; -webkit-font-smoothing: antialiased !important;font-size: 18px !important;">{{ section.title }}
+                            style="font-family: PetitaBold !important;  letter-spacing: .01rem; -webkit-font-smoothing: antialiased !important;font-size: 18px !important; z-index: 1;color:white;">{{
+                                    section.title
+                            }}
                         </v-list-item-title>
                     </v-list-item-content>
                 </template>
@@ -132,24 +134,23 @@ export default {
     margin-left: 0 !important;
 }
 
-#app .v-application .section-title {
-    font-size: 1rem !important;
-    font-weight: normal;
-    line-height: 1.75rem;
-    letter-spacing: 0.009375em !important;
-    font-family: "Roboto", sans-serif !important;
-    color: white;
-    z-index: 1;
-}
-
-#app .v-list-group__header.v-list-item--active.section:hover:focus:before #app .v-list-group__header.v-list-item--active.section:hover:not(:focus):before,
-#app .v-list-group__header.v-list-item--active.section:not(:hover):focus:before,
-#app .v-list-group__header.v-list-item--active.section:not(:hover):not(:focus):before {
+#app .section-div>div>div:hover:focus:before,
+#app .section-div>div>div:hover:not(:focus):before,
+#app .section-div>div>div:not(:hover):focus:before,
+#app .section-div>div>div:not(:hover):not(:focus):before {
     opacity: 1 !important;
     background-color: #0eb4ff !important;
 }
 
-#app .v-list-group__header.v-list-item--active.section {
+#app .section-div>div>div {
     color: white;
+}
+
+#app .section-div>div {
+    color: white !important;
+}
+
+#app .section-div>div>div>i {
+    color: white !important;
 }
 </style>
