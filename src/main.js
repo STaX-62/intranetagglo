@@ -14,6 +14,7 @@ Vue.prototype.$groups = []
 Vue.prototype.$categories = []
 Vue.prototype.$isAdmin = false
 Vue.prototype.$introJs = introJs()
+Vue.prototype.$isOnSite = false
   .setOptions({
     nextLabel: "Suivant",
     prevLabel: "Précédent",
@@ -31,6 +32,7 @@ axios.get(generateUrl('apps/intranetagglo/news/category'), {
 })
 
 axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => {
+  console.log(response.data)
   Vue.prototype.$isOnSite = response.data
 })
 
