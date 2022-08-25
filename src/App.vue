@@ -36,6 +36,7 @@ export default {
     }
   },
   mounted() {
+    this.getLocation()
     var current_scheme = localStorage.getItem('intranetagglo_color_scheme');
     if (current_scheme === 'dark') {
       this.$vuetify.theme.dark = true
