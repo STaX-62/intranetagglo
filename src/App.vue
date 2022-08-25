@@ -17,6 +17,8 @@ import Navigation from './components/Navigation.vue';
 import Alerts from './components/Alerts.vue';
 import News from './components/News.vue';
 import Applications from './components/Applications.vue';
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router';
 
 export default {
   name: 'App',
@@ -26,9 +28,11 @@ export default {
     News,
     Applications
   },
-  computed:{
-    isOnSite(){
-      return this.$isOnSite
+  methods: {
+    getLocation() {
+      axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => {
+        this.isOnSite = response.data
+      })
     }
   },
   mounted() {
@@ -48,6 +52,7 @@ export default {
   },
   data: () => ({
     alertshidden: false,
+    isOnSite: false
   }),
 };
 </script>

@@ -13,7 +13,6 @@ Vue.config.productionTip = false
 Vue.prototype.$groups = []
 Vue.prototype.$categories = []
 Vue.prototype.$isAdmin = false
-Vue.prototype.$isOnSite = false
 Vue.prototype.$introJs = introJs()
   .setOptions({
     nextLabel: "Suivant",
@@ -29,10 +28,6 @@ axios.get(generateUrl('apps/intranetagglo/news/category'), {
   },
 }).then(res => {
   Vue.prototype.$categories = res.data
-})
-
-axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => {
-  Vue.prototype.$isOnSite = response.data
 })
 
 axios.get(generateUrl(`apps/intranetagglo/isadmin`))
