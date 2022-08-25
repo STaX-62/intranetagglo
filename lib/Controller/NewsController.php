@@ -63,13 +63,13 @@ class NewsController extends Controller
     /**
      * @NoAdminRequired
      */
-    public function index(int $startid, int $limit, string $search, string $categories, array $dateFilter): DataResponse
+    public function index(int $startid, int $limit, string $search, $categories, string $month, string $nextmonth): DataResponse
     {
         $user = $this->session->getUser();
         if ($this->isAdmin()) {
-            return (new DataResponse($this->service->findAll($startid, $limit, $search, $categories, $dateFilter)));
+            return (new DataResponse($this->service->findAll($startid, $limit, $search, $categories, $month, $nextmonth)));
         }
-        return (new DataResponse($this->service->findByGroups($startid, $limit, $this->groupManager->getUserGroupIds($user), $search, $categories, $dateFilter)));
+        return (new DataResponse($this->service->findByGroups($startid, $limit, $this->groupManager->getUserGroupIds($user), $search, $categories, $month, $nextmonth)));
     }
 
     /**
@@ -146,7 +146,7 @@ class NewsController extends Controller
                 } else {
                     $photoArr = [];
                 }
-                
+
                 $deletedphoto = explode(',', $deletedphoto);
 
                 if (count($deletedphoto) > 0 && $deletedphoto[0] != '') {

@@ -1,7 +1,7 @@
 <?php
 script('intranetagglo', 'intranetagglo');
-style('intranetagglo', 'intranetagglo');
+style('intranetagglo', ['intranetagglo','nextcloudpatch']);
 ?>
+<iframe id="app">
 
-<div id="app">
-</div>
+</iframe>

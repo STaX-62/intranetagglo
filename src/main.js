@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import App from './App.vue'
-import store from './store'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import '@mdi/font/css/materialdesignicons.css'
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
-import introJs from 'intro.js'
+import vuetify from './plugins/vuetify'
+import vue2Editor from './plugins/vue2Editor'
+import vueEasyLightbox from './plugins/vueEasyLightbox'
 import axios from '@nextcloud/axios'
-import VueEasyLightbox from 'vue-easy-lightbox'
-Vue.use(VueEasyLightbox)
+import { generateUrl } from '@nextcloud/router';
+import './theme/theme.css'
+import introJs from 'intro.js'
+import 'intro.js/introjs.css';
+Vue.config.productionTip = false
 
+Vue.prototype.$groups = []
+Vue.prototype.$categories = []
+Vue.prototype.$isAdmin = false
 Vue.prototype.$introJs = introJs()
   .setOptions({
     nextLabel: "Suivant",
@@ -19,20 +22,31 @@ Vue.prototype.$introJs = introJs()
     showProgress: true,
   });
 
-Vue.prototype.$axios = axios;
+axios.get(generateUrl('apps/intranetagglo/news/category'), {
+  params: {
+    search: '',
+  },
+}).then(res => {
+  Vue.prototype.$categories = res.data
+})
 
-import 'intro.js/introjs.css';
-
-import './style/Apps.css';
-import './style/General.css';
-import './style/News.css';
-import './theme/theme.css';
-
-Vue.use(BootstrapVue)
-Vue.use(BootstrapVueIcons)
-Vue.config.productionTip = false
+axios.get(generateUrl(`apps/intranetagglo/isadmin`))
+  .then(response => {
+    Vue.prototype.$isAdmin = response.data
+    if (response.data) {
+      axios.get(generateUrl('apps/intranetagglo/api/groups'), {
+        params: {
+          search: '',
+        },
+      }).then(res => {
+        Vue.prototype.$groups = res.data
+      })
+    }
+  })
 
 new Vue({
-  store,
-  render: h => h(App),
+  vuetify,
+  vue2Editor,
+  vueEasyLightbox,
+  render: h => h(App)
 }).$mount('#app')

@@ -69,10 +69,8 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAll($firstresult, $limit, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
+    public function findAll($firstresult, $limit, string $search, string $categories, string $searchid, string $month, string $nextmonth): array
     {
-        $categoryArray = explode(';', $categories);
-
         $qb = $this->db->getQueryBuilder();
         $qb->select('time')
             ->from($this->getTableName(), 'q')
@@ -90,24 +88,15 @@ class NewsMapper extends QBMapper
             ->where("q.expiration = 0")
             ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
-        if ($categories != '') {
+        if ($categories != '' || $categories != null) {
             $qb2->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', implode(",", $categoryArray));
-        }
-        if ($startDate == "") {
-            $qb2->andWhere('q.time >= :startdate')
-                ->setParameter('startdate', $time['time']);
-        } else {
-            $qb2->andWhere('q.time >= :startdate')
-                ->setParameter('startdate', strtotime($startDate));
+                ->setParameter('categories', $categories);
         }
 
-        if ($endDate == "") {
-            $qb2->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', time());
-        } else {
-            $qb2->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', strtotime($endDate) + (60 * 60 * 24));
+        if ($month != "") {
+            $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')
+                ->setParameter('startdate', strtotime($month))
+                ->setParameter('enddate', strtotime($nextmonth));
         }
         if ($searchid != '') {
             $qb2->andWhere('q.id = :searchid')
@@ -127,9 +116,14 @@ class NewsMapper extends QBMapper
             ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
 
-        if ($categories != '') {
-            $qb3->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', implode(',', $categoryArray));
+        if ($categories != '' || $categories != null) {
+            $qb2->andWhere('q.category = :categories')
+                ->setParameter('categories', $categories);
+        }
+        if ($month != "") {
+            $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')
+                ->setParameter('startdate', strtotime($month))
+                ->setParameter('enddate', strtotime($nextmonth));
         }
 
         if ($searchid != '') {
@@ -191,13 +185,12 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findByGroups(int $firstresult, $limit, array $groupsArray, string $search, string $categories, string $searchid, string $startDate, string $endDate): array
+    public function findByGroups(int $firstresult, $limit, array $groupsArray, string $search, string $categories, string $searchid, string $month, string $nextmonth): array
     {
         $groups = '';
         foreach ($groupsArray as $group) {
             $groups .= ' OR q.groups LIKE "%' . $group . '%" ';
         }
-        $categoryArray = explode(';', $categories);
 
         $qb = $this->db->getQueryBuilder();
         $qb->select('time')
@@ -216,24 +209,14 @@ class NewsMapper extends QBMapper
             ->where("q.expiration = 0")
             ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
-        if ($categories != '') {
+        if ($categories != '' || $categories != null) {
             $qb2->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', implode(",", $categoryArray));
+                ->setParameter('categories', $categories);
         }
-        if ($startDate == "") {
-            $qb2->andWhere('q.time >= :startdate')
-                ->setParameter('startdate', $time['time']);
-        } else {
-            $qb2->andWhere('q.time >= :startdate')
-                ->setParameter('startdate', strtotime($startDate));
-        }
-
-        if ($endDate == "") {
-            $qb2->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', time());
-        } else {
-            $qb2->andWhere('q.time <= :enddate')
-                ->setParameter('enddate', strtotime($endDate));
+        if ($month != "") {
+            $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')
+                ->setParameter('startdate', strtotime($month))
+                ->setParameter('enddate', strtotime($nextmonth));
         }
         if ($searchid != '') {
             $qb2->andWhere('q.id = :searchid')
@@ -254,9 +237,14 @@ class NewsMapper extends QBMapper
             ->where("q.expiration = 0")
             ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->setParameter('search', '%' . $search . '%');
-        if ($categories != '') {
-            $qb3->andWhere('q.category IN (:categories)')
-                ->setParameter('categories', implode(",", $categoryArray));
+        if ($categories != '' || $categories != null) {
+            $qb2->andWhere('q.category IN (:categories)')
+                ->setParameter('categories', $categories);
+        }
+        if ($month != "") {
+            $qb2->andWhere('(q.time >= :startdate AND q.time <= :enddate)')
+                ->setParameter('startdate', strtotime($month))
+                ->setParameter('enddate', strtotime($nextmonth));
         }
         if ($searchid != '') {
             $qb3->andWhere('q.id = :searchid')

@@ -1,0 +1,110 @@
+<template>
+    <v-navigation-drawer app right>
+        <h2 class="mt-2 text-center">Applications
+        </h2>
+        <v-row class="ma-1 apps-container" v-if="!apps.length">
+            <v-col v-for="index in 4" :key="index" cols="6">
+                <v-responsive :aspect-ratio="1 / 1">
+                    <v-skeleton-loader class="mx-auto" type="button" height="100%" width="100%"></v-skeleton-loader>
+                </v-responsive>
+            </v-col>
+        </v-row>
+        <v-row class="ma-1 apps-container" v-if="apps.length" data-intro="Retrouvez également les applications les plus utiles dans cette section" data-title="Applications" data-step="7">
+            <v-col v-for="(app, index) in apps" :key="index" cols="6" style="padding: 5px;">
+                <v-responsive :aspect-ratio="1 / 1">
+                    <v-btn :class="'appbox ' + app.color" style="height: 100%;width:100%;" :href="app.link" target="_blank">
+                        <div class="text-center d-flex flex-column align-center justify-center text-wrap"
+                            style="height: 100%; letter-spacing: initial; font-weight: 500; color:#fff;font-family: petitaBold;">
+                            <v-icon class="pb-1">mdi-{{ app.icon }}</v-icon>
+                            {{ app.title }}
+                        </div>
+                    </v-btn>
+                </v-responsive>
+            </v-col>
+        </v-row>
+        <template v-slot:append>
+            <div class="d-flex py-3" v-if="$isAdmin">
+                <v-btn text class="mx-auto" color="primary" @click="openDialog = !openDialog" style="font-weight: 600;">
+                    <v-icon class="mr-2">mdi-cog-outline</v-icon>
+                    Modifer les Apps
+                </v-btn>
+            </div>
+        </template>
+        <apps-dialog :open="openDialog" @close="openDialog = false" @changed="getApps" v-if="$isAdmin"></apps-dialog>
+    </v-navigation-drawer>
+</template>
+
+<script>
+import appsDialog from './admin/appsDialog.vue'
+import axios from '@nextcloud/axios';
+import { generateUrl } from '@nextcloud/router';
+export default {
+    components: { appsDialog },
+    name: "Navigation",
+    methods: {
+        getApps() {
+            axios.get(generateUrl(`apps/intranetagglo/appsG`))
+                .then((response) => {
+                    var array = response.data
+                    array.forEach(a => {
+                        if (a.groups != '') {
+                            a.groups = a.groups.split(';')
+                        }
+                        else {
+                            a.groups = []
+                        }
+                        if (a.icon.indexOf('#') == -1)
+                            a.color = 'bleu'
+                        else
+                            a.color = a.icon.slice(a.icon.length - 2) == "#b" ? 'bleu' : 'vert'
+                        a.icon = a.icon.slice(0, a.icon.length - 2)
+                    })
+
+                    array.sort(function (a, b) {
+                        const colora = a.color.toUpperCase();
+                        const colorb = b.color.toUpperCase();
+
+                        let comparison = 0;
+                        if (colora < colorb) {
+                            comparison = 1;
+                        } else if (colora > colorb) {
+                            comparison = -1;
+                        }
+                        return comparison;
+                    });
+
+                    this.apps = array
+                })
+        },
+    },
+    mounted() {
+        this.getApps()
+    },
+    data: () => ({
+        apps: [],
+        openDialog: false
+    }),
+}
+</script>
+
+<style scoped>
+.apps-container .vert.appbox {
+    background-color: var(--color-primary-category) !important;
+}
+
+.apps-container .bleu.appbox {
+    background-color: var(--color-secondary) !important;
+}
+</style>
+
+<style>
+#app .theme--light .appbox>span {
+    max-width: 100%;
+    color: rgba(0, 0, 0, .87);
+}
+
+#app .theme--dark .appbox>span {
+    max-width: 100%;
+    color: #fff;
+}
+</style>
