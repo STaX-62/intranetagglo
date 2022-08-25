@@ -30,6 +30,10 @@ axios.get(generateUrl('apps/intranetagglo/news/category'), {
   Vue.prototype.$categories = res.data
 })
 
+axios.get(generateUrl(`apps/intranetagglo/location`)).then(response => {
+  Vue.prototype.$isOnSite = response.data
+})
+
 axios.get(generateUrl(`apps/intranetagglo/isadmin`))
   .then(response => {
     Vue.prototype.$isAdmin = response.data

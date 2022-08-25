@@ -65,9 +65,9 @@ export default {
                         const colorb = b.color.toUpperCase();
 
                         let comparison = 0;
-                        if (colora > colorb) {
+                        if (colora < colorb) {
                             comparison = 1;
-                        } else if (colora < colorb) {
+                        } else if (colora > colorb) {
                             comparison = -1;
                         }
                         return comparison;

@@ -49,7 +49,7 @@
                                         <i class="mdi mdi-keyboard-return"></i>
                                     </b-button>
                                 </div>
-                                <draggable v-model="modifiedNews.photo" class="grid-tile" group="oldimg" :move="onMoveCallback" style="display: flex;">
+                                <draggable v-model="modifiedNews.photo" class="grid-tile" group="oldimg" style="display: flex;">
                                     <div v-for="p in modifiedNews.photo" :key="p" class="imgtile">
                                         <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteExistingIMG(p)"></i>
                                         <img name="preview" :src="p" style="width: 100px; height:100px; margin:auto" />
@@ -59,7 +59,7 @@
                             <v-file-input v-model="newimages" multiple accept="image/png, image/jpeg, image/bmp" outlined prepend-icon="mdi-camera"></v-file-input>
                             <div v-if="newimages.length">
                                 <div for="preview">Nouvelle Selection : </div>
-                                <draggable v-model="newimages" class="grid-tile" group="newimg" :move="onMoveCallback" style="display: flex;">
+                                <draggable v-model="newimages" class="grid-tile" group="newimg" style="display: flex;">
                                     <div v-for="p in newimages" :key="p" class="imgtile">
                                         <i class="mdi mdi-close" style="position: absolute;right: 2px;top:2px;" @click="deleteNewIMG(p)"></i>
                                         <img name="preview" :src="GetURL(p)" style="width: 100px; height:100px; margin:auto" />
@@ -129,10 +129,7 @@ export default {
             return URL.createObjectURL(file)
         },
         deleteExistingIMG(file) {
-            console.log(file)
-            console.log(this.modifiedNews.photo.findIndex(f => f == file))
             var photoIndex = this.modifiedNews.photo.findIndex(f => f == file)
-            console.log(photoIndex)
             this.deletedIMG.push(this.modifiedNews.photo[photoIndex])
             this.modifiedNews.photo.splice(photoIndex, 1)
         },
@@ -142,9 +139,6 @@ export default {
         deleteNewIMG(file) {
             this.newimages.splice(this.newimages.findIndex(f => f.name == file.name), 1)
         },
-        onMoveCallback(event) {
-            console.log(event)
-        }
     },
     data: () => ({
         valid: false,

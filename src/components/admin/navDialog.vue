@@ -196,14 +196,12 @@ export default {
             this.$forceUpdate()
         },
         prepare_add(menu) {
-            console.log(menu)
             menu.groups = menu.groups.join(';')
             menu.icon = menu.icon.trim()
             this.createMenu(menu)
             this.menuToUpdate = this.EmptyMenu
         },
         prepare_update(menu) {
-            console.log(menu)
             menu.groups = menu.groups.join(';')
             menu.icon = menu.icon.trim()
             this.updateMenu(menu)

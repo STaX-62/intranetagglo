@@ -68,14 +68,12 @@ export default {
         },
         modifiedAlert: {
             get() {
-                console.log(this.alert.text)
                 if (this.updatedAlert === undefined)
                     return this.alert
                 else
                     return this.updatedAlert
             },
             set(value) {
-                console.log(value.text)
                 this.updatedAlert = value
             }
         },

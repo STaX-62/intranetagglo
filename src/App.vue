@@ -1,6 +1,6 @@
 <template>
   <v-app fixed dark>
-    <Navigation>
+    <Navigation v-if="$isOnSite">
     </Navigation>
     <v-main>
       <v-row style="margin:0; height: 100%;">
@@ -8,7 +8,7 @@
         <News @closealerts="alertshidden = $event"></News>
       </v-row>
     </v-main>
-    <Applications></Applications>
+    <Applications v-if="$isOnSite"></Applications>
   </v-app>
 </template>
 

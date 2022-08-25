@@ -156,13 +156,11 @@ export default {
                         n.photo = n.photo.split(';')
                         n.groups = n.groups.split(';')
                     })
-                    console.log(this.archives)
                 })
         },
         GetArchives() {
             axios.post(generateUrl(`apps/intranetagglo/news/${this.lazyArchivesCounter}`), { 'limit': 7, 'search': this.filters.search, 'categories': this.filters.categories, month: this.filters.month, nextmonth: this.filters.nextmonth }, { type: 'application/json' })
                 .then((response) => {
-                    console.log(this.lazyArchivesCounter)
                     this.lazyArchivesCounter += 7
                     var array = response.data[0]
 
@@ -173,14 +171,12 @@ export default {
                     if (array.length) {
                         this.archives.push(array)
                     }
-                    console.log(this.archives)
                 })
         },
         onIntersect(entries) {
             if (entries[0].isIntersecting && this.totalNewsLength > this.lazyArchivesCounter) {
                 this.GetArchives()
             }
-            console.log(entries[0].isIntersecting)
         },
         PinNews() {
             this.pinDialog = !this.pinDialog
@@ -189,9 +185,6 @@ export default {
             this.publishDialog = !this.publishDialog
         },
         Filters(search, categories, months) {
-            console.log('search :' + search)
-            console.log('categories :' + categories)
-            console.log('month :' + months + ': ' + typeof months)
             this.archivesMode = true
             this.$emit('closealerts', this.archivesMode)
             this.filters = {
@@ -201,8 +194,6 @@ export default {
                 nextmonth: months == '' ? months : moment(months).endOf('month').toISOString()
             }
             this.GetNews()
-            console.log(moment(months).toISOString())
-            console.log(moment(months).endOf('month').toISOString())
         },
         getFormatedDate(date) {
             return moment((date * 1000)).locale('fr').format('LL')
@@ -226,7 +217,6 @@ export default {
             this.deleteNews()
         },
         async createNews(news, newimages) {
-            console.log(newimages)
             let data = new FormData();
             data.append('title', news.title);
             data.append('subtitle', news.subtitle);
