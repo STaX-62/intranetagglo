@@ -9,7 +9,7 @@
                 </v-responsive>
             </v-col>
         </v-row>
-        <v-row class="ma-1 apps-container" v-if="apps.length" data-intro="Retrouvez également les applications les plus utiles dans cette section" data-title="Applications" data-step="6">
+        <v-row class="ma-1 apps-container" v-if="apps.length" data-intro="Retrouvez également les applications les plus utiles dans cette section" data-title="Applications" data-step="7">
             <v-col v-for="(app, index) in apps" :key="index" cols="6" style="padding: 5px;">
                 <v-responsive :aspect-ratio="1 / 1">
                     <v-btn :class="'appbox ' + app.color" style="height: 100%;width:100%;" :href="app.link" target="_blank">

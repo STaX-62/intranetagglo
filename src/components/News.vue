@@ -10,7 +10,7 @@
                 </Searchbar>
                 <v-btn :text="$vuetify.theme.dark" class="mr-2" @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0"
                     :color="$vuetify.theme.dark ? 'accent' : ''" large
-                    data-intro="Retrouvez toutes les anciennes actualités de la CA2BM dans la section archives ou cherchez simplement via la barre de recherche" data-title="Archives" data-step="3">
+                    data-intro="Retrouvez toutes les anciennes actualités de la CA2BM dans la section archives ou cherchez simplement via la barre de recherche" data-title="Archives" data-step="6">
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
                     {{ archivesMode ? 'Retour' : 'Archives' }}
                 </v-btn>
