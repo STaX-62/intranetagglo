@@ -102,7 +102,6 @@ export default {
             axios.get(generateUrl(`apps/intranetagglo/apps`))
                 .then((response) => {
                     var array = response.data
-                    var counter = 0
                     array.forEach(a => {
                         if (a.groups != '') {
                             a.groups = a.groups.split(';')
@@ -113,38 +112,10 @@ export default {
                         if (a.icon.indexOf('#') == -1)
                             a.color = a.icon.slice(a.icon.length - 2)
                         else
-                            a.color = "#b"
-                        if (a.icon.indexOf('&') == -1) {
-                            a.order = counter
-                        }
-                        else {
-                            a.order = parseInt(a.icon.slice(a.icon.indexOf('&') + 1))
-                            a.icon = a.icon.slice(0, a.icon.indexOf('&'))
-                        }
-                        counter++;
+                            a.color = a.icon.slice(a.icon.length - 2) == "#b" ? 'bleu' : 'vert'
                     })
-                    array.sort(function (a, b) {
-                        if (a.order < b.order) return -1;
-                        if (a.order > b.order) return 1;
-                        return 0;
-                    });
                     this.apps = array
                 })
-        },
-        setNewPosition(event) {
-            this.newposition = event;
-            this.$forceUpdate()
-        },
-        UpdateOrder() {
-            var event = this.newposition;
-            var appmoved = this.apps.find(x => x.order == event.draggedContext.index)
-            var appswitched = this.apps.find(x => x.order == event.relatedContext.index)
-            appmoved.order = event.draggedContext.index
-            appswitched.order = event.relatedContext.index
-            this.changeOrder(appmoved, appswitched).then(() => {
-                this.getAdmApps()
-                this.$emit('changed')
-            })
         },
         prepare_add(app, color) {
             app.groups = app.groups.join(';')
