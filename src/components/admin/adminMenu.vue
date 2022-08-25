@@ -11,7 +11,7 @@
                 <v-icon class=" mr-2" color="secondary">{{ pin ? "mdi-pin-off-outline" : "mdi-pin-outline" }}</v-icon>
                 <v-list-item-title>{{ pin ? "Désépingler" : "Epingler" }}</v-list-item-title>
             </v-list-item>
-            <v-list-item link @click="$emit('open', 2)" v-if="menuType == 'news'">
+            <v-list-item link @click="$emit('open', 2)" v-if="menuType == 'news' || menuType == 'alert'">
                 <v-icon class=" mr-2" color="secondary">{{ published ? "mdi-eye-off" : "mdi-eye" }}</v-icon>
                 <v-list-item-title>{{ published ? "Mettre en Brouillon" : "Publier" }}</v-list-item-title>
             </v-list-item>

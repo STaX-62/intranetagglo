@@ -19,6 +19,9 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
+                        <v-btn small rounded icon class="mr-1" v-if="alert.visible == '0' && $isAdmin" @click="openDialog = 2, alertToUpdate = alert">
+                            <v-icon>mdi-eye-off</v-icon>
+                        </v-btn>
                         <admin-menu menuType="alert" @open="openDialog = $event; alertToUpdate = alert" v-if="$isAdmin"></admin-menu>
                         <v-chip>Expire dans {{ getFormatedDate(alert.expiration) }}</v-chip>
                     </v-card-actions>
@@ -30,6 +33,10 @@
         </alert-modify>
         <admin-change :open="openDialog == 1" @close="openDialog = -1" @changed="prepare_delete" :title="'Supprimer cette alerte'" :msg="'Voulez vous vraiment supprimer cette alerte: '"
             validate="Supprimer" color="red darken-1" v-if="$isAdmin">
+        </admin-change>
+        <admin-change :open="openDialog == 2" @close="openDialog = -1" @changed="prepare_visible" :title="'Modification de la visibilité de l\'alerte'"
+            :msg="alertToUpdate.visible == '1' ? 'Voulez vous vraiment mettre en brouillon cette alerte (celle-ci ne sera plus visible pour les utilisateurs): <br/><code>' + alertToUpdate.title + '</code>' : 'Voulez vous vraiment publier cette actualité : <br/><code>' + alertToUpdate.title + '</code>'"
+            :validate="alertToUpdate.visible == '1' ? 'Mettre en brouillon' : 'Publier'" :color="alertToUpdate.visible == '1' ? 'red darken-1' : 'green darken-1'" v-if="$isAdmin">
         </admin-change>
     </v-col>
 </template>
@@ -67,6 +74,9 @@ export default {
             if (diff == 1)
                 return diff + " jour";
             return diff + " jours";
+        },
+        prepare_visible() {
+            this.publishAlert()
         },
         prepare_add(alert) {
             alert.groups = alert.groups.join(';')
@@ -128,6 +138,12 @@ export default {
             axios.delete(generateUrl(`apps/intranetagglo/news/${this.alertToUpdate.id}`), {
                 id: this.alertToUpdate.id
             }).then(() => {
+                this.GetAlerts()
+            })
+        },
+        async publishAlert() {
+            var url = `apps/intranetagglo/news/pub/${this.alertToUpdate.id}`
+            await axios.post(generateUrl(url), { 'id': this.alertToUpdate.id, 'visible': this.alertToUpdate.visible == '1' ? 0 : 1 }, { type: 'application/json' }).then(() => {
                 this.GetAlerts()
             })
         },
