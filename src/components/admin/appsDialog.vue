@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="dialog" max-width="1000">
+    <v-dialog v-model="dialog" max-width="1500">
         <v-card>
             <v-card-title class="text-h5">
                 Modification des Applications
