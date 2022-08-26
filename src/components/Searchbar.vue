@@ -14,7 +14,7 @@
 
                     <v-divider></v-divider>
                     <v-chip-group v-model="chip" column @change="onChange">
-                        <v-chip filter outlined small v-for="n in $categories" :key="n">
+                        <v-chip class="mx-1" filter outlined small v-for="n in $categories" :key="n">
                             {{ n }}
                         </v-chip>
                     </v-chip-group>

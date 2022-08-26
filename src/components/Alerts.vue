@@ -22,7 +22,7 @@
                         <v-btn small rounded icon class="mr-1" v-if="alert.visible == '0' && $isAdmin" @click="openDialog = 2, alertToUpdate = alert">
                             <v-icon>mdi-eye-off</v-icon>
                         </v-btn>
-                        <admin-menu menuType="alert" @open="openDialog = $event; alertToUpdate = alert" v-if="$isAdmin"></admin-menu>
+                        <admin-menu menuType="alert" @open="openDialog = $event; alertToUpdate = alert" v-if="$isAdmin" :published="alert.visible == '1'"></admin-menu>
                         <v-chip>Expire dans {{ getFormatedDate(alert.expiration) }}</v-chip>
                     </v-card-actions>
                 </v-card>
