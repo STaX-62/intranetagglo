@@ -1,6 +1,6 @@
 <template>
   <v-app fixed dark>
-    <Navigation v-if="isOnSite" >
+    <Navigation v-if="isOnSite">
     </Navigation>
     <v-main>
       <v-row style="margin:0; height: 100%;">
@@ -66,6 +66,12 @@ export default {
 @media (min-width: 600px) {
   .maincol {
     height: auto;
+  }
+}
+
+@media (max-width: 694px) {
+  #app .v-main__wrap>.row {
+    height: auto !important;
   }
 }
 </style>

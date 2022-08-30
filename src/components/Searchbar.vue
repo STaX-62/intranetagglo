@@ -1,5 +1,5 @@
 <template>
-    <v-text-field v-model="search" @keyup="onChange" class="mx-2" label="Recherche..." single-line solo prepend-inner-icon="mdi-magnify" color="accent" hide-details>
+    <v-text-field v-model="search" @keyup="onChange" class="Searchbar" label="Recherche..." single-line solo prepend-inner-icon="mdi-magnify" color="accent" hide-details>
         <template v-slot:append>
             <v-alert color="grey" dense text type="info" v-if="notfound" style="margin: 0;">Aucun élément trouvé</v-alert>
             <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y max-width="290">
@@ -15,7 +15,7 @@
                     <v-divider></v-divider>
                     <v-chip-group v-model="chip" column @change="onChange">
                         <v-chip class="mx-1" filter outlined small v-for="n in $categories" :key="n">
-                            {{ n }}
+                            {{  n  }}
                         </v-chip>
                     </v-chip-group>
                 </v-card>
@@ -49,4 +49,15 @@ export default {
 </script>
 
 <style>
+.Searchbar {
+    margin-right: 8px !important;
+    margin-left: 8px !important;
+}
+
+@media (max-width: 694px) {
+    .Searchbar {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+}
 </style>

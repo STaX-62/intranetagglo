@@ -12,9 +12,9 @@
                     @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0" :color="$vuetify.theme.dark ? 'accent' : ''" large
                     data-intro="Retrouvez toutes les anciennes actualités de la CA2BM dans la section archives ou cherchez simplement via la barre de recherche" data-title="Archives" data-step="6">
                     <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
-                    {{ archivesMode ? 'Retour' : 'Archives' }}
+                    {{  archivesMode ? 'Retour' : 'Archives'  }}
                 </v-btn>
-                <v-btn fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews" v-if="$isAdmin">
+                <v-btn class="addbtn" fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews" v-if="$isAdmin">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </v-card-title>
@@ -32,14 +32,14 @@
                                     </v-carousel-item>
                                 </v-carousel>
                                 <v-img height="400" :src="n.photo[0]" v-else-if="n.photo.length == 1" @click="LightBoxDialog = true; LightBoxPhotos = n.photo"></v-img>
-                                <v-card-title>{{ n.title }}</v-card-title>
-                                <v-card-subtitle>{{ n.subtitle }}</v-card-subtitle>
+                                <v-card-title>{{  n.title  }}</v-card-title>
+                                <v-card-subtitle>{{  n.subtitle  }}</v-card-subtitle>
                                 <v-card-text class="news-text" v-html="n.text" style="margin-bottom:20px">
                                 </v-card-text>
                                 <v-card-actions style="position:absolute; bottom: 0; width: 100%;">
                                     <v-chip label class=" text-truncate">
                                         <span class="text-truncate">
-                                            {{ n.category }}
+                                            {{  n.category  }}
                                         </span>
                                     </v-chip>
                                     <v-icon class="ml-1" v-if="n.pinned == '1'">mdi-pin-outline</v-icon>
@@ -51,7 +51,7 @@
                                     </admin-menu>
                                     <v-chip>
                                         <span class="text-truncate">
-                                            {{ getFormatedDate(n.time) }}
+                                            {{  getFormatedDate(n.time)  }}
                                         </span>
                                     </v-chip>
                                 </v-card-actions>
@@ -79,17 +79,17 @@
                                         </v-carousel-item>
                                     </v-carousel>
                                     <v-img height="400" :src="a.photo[0]" v-if="a.photo.length == 1 && focus == i + '-' + y" @click="LightBoxDialog = true; LightBoxPhotos = a.photo"></v-img>
-                                    <v-card-title class="text-truncate">{{ a.title }}
+                                    <v-card-title class="text-truncate">{{  a.title  }}
                                         <v-spacer></v-spacer>
                                         <v-icon class="mr-1" v-if="a.pinned == '1'">mdi-pin-outline</v-icon>
                                         <v-chip label class="text-truncate">
                                             <span class="text-truncate">
-                                                {{ a.category }}
+                                                {{  a.category  }}
                                             </span>
                                         </v-chip>
                                         <v-chip label class="mx-2">
                                             <span class="text-truncate">
-                                                {{ getFormatedDate(a.time) }}
+                                                {{  getFormatedDate(a.time)  }}
                                             </span>
                                         </v-chip>
                                         <v-btn small rounded icon class="mr-1" v-if="a.visible == '0' && $isAdmin" @click="openDialog = 2, newsToUpdate = a">
@@ -97,7 +97,7 @@
                                         </v-btn>
                                         <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = a" :pin="a.pinned == '1'" :published="a.visible == '1'" v-if="$isAdmin"></admin-menu>
                                     </v-card-title>
-                                    <v-card-subtitle>{{ a.subtitle }}</v-card-subtitle>
+                                    <v-card-subtitle>{{  a.subtitle  }}</v-card-subtitle>
                                     <v-card-text :class="focus == i + '-' + y ? 'news-text' : 'archivetext text-truncate'" v-html="a.text" style="overflow: hidden;max-width: 100%;"></v-card-text>
                                 </v-card>
                             </div>
@@ -372,7 +372,7 @@ export default {
 
 @media (max-width: 694px) {
     .card-intra-title {
-        display: none;
+        display: none !important;
     }
 
     .archivesbtn[admin] {
@@ -391,6 +391,11 @@ export default {
 
     .newscarousel {
         height: calc(100% - 175px) !important;
+    }
+
+    .addbtn {
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 }
 </style>
