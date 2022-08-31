@@ -79,9 +79,9 @@ class NewsController extends Controller
     {
         $user = $this->session->getUser();
         if ($this->isAdmin()) {
-            return (new DataResponse($this->service->findAlerts($search)));
+            return (new DataResponse($this->service->findAlerts()));
         }
-        return (new DataResponse($this->service->findAlertsByGroups($search, $this->groupManager->getUserGroupIds($user))));
+        return (new DataResponse($this->service->findAlertsByGroups($this->groupManager->getUserGroupIds($user))));
     }
 
     /**
