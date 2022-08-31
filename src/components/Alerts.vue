@@ -68,9 +68,9 @@ export default {
         },
         getFormatedDate(value) {
             var expiration = moment((value * 1000))
-            var diff = expiration.diff(moment(), 'days');
+            var diff = expiration.diff(moment().startOf('day'), 'days');
             if (diff == 0)
-                return expiration.diff(moment(), 'hours') + " heures";
+                return moment().diff(moment().endOf('day'), 'hours') + " heures";
             if (diff == 1)
                 return diff + " jour";
             return diff + " jours";
