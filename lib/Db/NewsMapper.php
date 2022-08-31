@@ -152,7 +152,7 @@ class NewsMapper extends QBMapper
             ->setParameter('today', strtotime('today'));
 
         $qb->addOrderBy('q.time', 'DESC');
-        return [$this->findEntities($qb) , strtotime('today')];
+        return $this->findEntities($qb);
     }
 
 
