@@ -66,16 +66,18 @@ class NewsService
 		return $qb;
 	}
 
-	public function findAlerts(): array
+	public function findAlerts($search): array
 	{
-		$qb = $this->mapper->findAlerts();
+		$search = trim($search, " \n\r\t\v");
+		$qb = $this->mapper->findAlerts($search);
 
 		return $qb;
 	}
 
-	public function findAlertsByGroups($groups): array
+	public function findAlertsByGroups($search, $groups): array
 	{
-		$qb = $this->mapper->findAlertsByGroup($groups);
+		$search = trim($search, " \n\r\t\v");
+		$qb = $this->mapper->findAlertsByGroup($search, $groups);
 
 		return $qb;
 	}

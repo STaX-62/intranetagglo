@@ -143,12 +143,14 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAlerts(): array
+    public function findAlerts(string $search): array
     {
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')
             ->from($this->getTableName(), 'q')
             ->where("(q.expiration != 0  && q.expiration >= :today)")
+            ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
+            ->setParameter('search', '%' . $search . '%')
             ->setParameter('today', strtotime('today'));
 
         $qb->addOrderBy('q.time', 'DESC');
@@ -159,7 +161,7 @@ class NewsMapper extends QBMapper
     /**
      * @return array
      */
-    public function findAlertsByGroup(array $groupsArray): array
+    public function findAlertsByGroup(string $search, array $groupsArray): array
     {
         $groups = '';
         foreach ($groupsArray as $group) {
@@ -170,8 +172,10 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("q.expiration != 0")
             ->andWhere("q.expiration >= :today")
+            ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
             ->andWhere("(q.groups = ''"  . $groups . ")")
             ->andWhere("q.visible = '1'")
+            ->setParameter('search', '%' . $search . '%')
             ->setParameter('today', strtotime('today'));
 
         $qb->addOrderBy('q.time', 'DESC');
