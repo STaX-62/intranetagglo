@@ -173,6 +173,7 @@ class NewsMapper extends QBMapper
             ->from($this->getTableName(), 'q')
             ->where("(q.expiration != 0 && q.expiration >= :today)")
             ->andWhere('(LOWER(q.title) LIKE LOWER(:search) OR LOWER(q.subtitle) LIKE LOWER(:search) OR LOWER(q.text) LIKE LOWER(:search))')
+            ->andWhere("q.visible = '1'")
             ->andWhere("(q.groups = ''"  . $groups . ")")
             ->setParameter('search', '%' . $search . '%')
             ->setParameter('today', strtotime('today'));
