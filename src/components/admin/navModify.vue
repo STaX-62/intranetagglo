@@ -23,7 +23,7 @@
                     Retour
                 </v-btn>
 
-                <v-btn color="green darken-1" text @click="create ? $emit('created', modifiedNav) : $emit('updated', modifiedNav); dialog = false" :disabled="!valid">
+                <v-btn color="green darken-1" text @click="create ? $emit('created', modifiedNav) : $emit('updated', modifiedNav);updatedNav = undefined; dialog = false; " :disabled="!valid">
                     {{ create ? 'Ajouter' : 'Modifier' }}
                 </v-btn>
             </v-card-actions>
