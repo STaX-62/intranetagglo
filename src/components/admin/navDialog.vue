@@ -73,7 +73,7 @@
                                                 <v-card class="d-flex mb-1" outlined>
                                                     <v-card-actions class="mx-auto">
                                                         <v-btn icon
-                                                            @click="openDialog = 5; menuToUpdate = EmptyMenu; menuToUpdate.sectionid = SIndex; menuToUpdate.menuid = MIndex; menuToUpdate.level = 2;">
+                                                            @click="openDialog = 5; menuToUpdate = EmptyMenu; menuToUpdate.sectionid = Sindex; menuToUpdate.menuid = Mindex; menuToUpdate.level = 2;">
                                                             <v-icon>mdi-plus</v-icon>
                                                         </v-btn>
                                                     </v-card-actions>
@@ -83,7 +83,7 @@
                                     </v-row>
                                     <v-card class="d-flex mb-1 mx-1" outlined style="width:calc(50% - 8px)">
                                         <v-card-actions class="mx-auto">
-                                            <v-btn icon @click="openDialog = 5; menuToUpdate = EmptyMenu; menuToUpdate.sectionid = SIndex; menuToUpdate.menuid = 0; menuToUpdate.level = 1 ">
+                                            <v-btn icon @click="openDialog = 5; menuToUpdate = EmptyMenu; menuToUpdate.sectionid = Sindex; menuToUpdate.menuid = 0; menuToUpdate.level = 1 ">
                                                 <v-icon>mdi-plus</v-icon>
                                             </v-btn>
                                         </v-card-actions>
