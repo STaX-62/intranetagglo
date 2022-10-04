@@ -31,7 +31,7 @@
                                                     mdi-arrow-split-horizontal
                                                 </v-icon>
                                             </v-btn>
-                                            <admin-menu menuType="nav" @open=" menuToUpdate = section; menuToUpdate.childs = section.childs; menuToUpdate.level = 0; openDialog = $event"></admin-menu>
+                                            <admin-menu menuType="nav" @open=" menuToUpdate = section; menuToUpdate.childs = section.childs.length; menuToUpdate.level = 0; openDialog = $event"></admin-menu>
                                         </v-card-actions>
                                     </v-card>
                                 </td>
@@ -49,7 +49,7 @@
                                                             mdi-arrow-split-horizontal
                                                         </v-icon>
                                                     </v-btn>
-                                                    <admin-menu menuType="nav" @open=" menuToUpdate = menu; menuToUpdate.childs = menu.childs; menuToUpdate.level = 1; openDialog = $event"></admin-menu>
+                                                    <admin-menu menuType="nav" @open=" menuToUpdate = menu; menuToUpdate.childs = menu.childs.length; menuToUpdate.level = 1; openDialog = $event"></admin-menu>
                                                 </v-card-actions>
                                             </v-card>
 
@@ -185,7 +185,7 @@ export default {
                 sectionid: 0,
                 menuid: 0,
                 level: 0,
-                childs: []
+                childs: 0
             }
             this.menuToUpdate.sectionid = sectionid
             this.menuToUpdate.menuid = menuid
@@ -249,7 +249,7 @@ export default {
                     sectionid: 0,
                     menuid: 0,
                     level: 0,
-                    childs: []
+                    childs: 0
                 }
                 this.getAdmMenus()
                 this.$emit('changed')
@@ -277,7 +277,7 @@ export default {
                     sectionid: 0,
                     menuid: 0,
                     level: 0,
-                    childs: []
+                    childs: 0
                 }
                 this.getAdmMenus()
                 this.$emit('changed')
