@@ -72,8 +72,7 @@
                                                 </v-card>
                                                 <v-card class="d-flex mb-1" outlined>
                                                     <v-card-actions class="mx-auto">
-                                                        <v-btn icon
-                                                            @click=" menuToUpdate = EmptyMenu; menuToUpdate.sectionid = section.sectionid; menuToUpdate.menuid = menu.menuid; menuToUpdate.level = 2;openDialog = 5">
+                                                        <v-btn icon @click="dialogSetup(section.sectionid,menu.menuid, 2, 5)">
                                                             <v-icon>mdi-plus</v-icon>
                                                         </v-btn>
                                                     </v-card-actions>
@@ -83,8 +82,7 @@
                                     </v-row>
                                     <v-card class="d-flex mb-1 mx-1" outlined style="width:calc(50% - 8px)">
                                         <v-card-actions class="mx-auto">
-                                            <v-btn icon
-                                                @click=" menuToUpdate = EmptyMenu; menuToUpdate.sectionid = section.sectionid; menuToUpdate.menuid = 0; menuToUpdate.level = 1;openDialog = 5">
+                                            <v-btn icon @click="dialogSetup(section.sectionid,0, 1, 5)">
                                                 <v-icon>mdi-plus</v-icon>
                                             </v-btn>
                                         </v-card-actions>
@@ -95,7 +93,7 @@
                                 <td>
                                     <v-card class="d-flex my-1" outlined>
                                         <v-card-actions class="mx-auto">
-                                            <v-btn icon @click=" menuToUpdate = EmptyMenu; menuToUpdate.sectionid = 0; menuToUpdate.menuid = 0; menuToUpdate.level = 0 ;openDialog = 5">
+                                            <v-btn icon @click="dialogSetup(0, 0, 2, 5)">
                                                 <v-icon>mdi-plus</v-icon>
                                             </v-btn>
                                         </v-card-actions>
@@ -176,6 +174,14 @@ export default {
                     })
                     this.menus = array
                 })
+        },
+        dialogSetup(sectionid, menuid, level, dialogCode) {
+            this.menuToUpdate = this.EmptyMenu
+            this.menuToUpdate.sectionid = sectionid
+            this.menuToUpdate.menuid = menuid
+            this.menuToUpdate.level = level
+            this.menuToUpdate.childs = 0
+            this.openDialog = dialogCode
         },
         setNewPosition(event) {
             this.newposition = event;
