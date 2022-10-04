@@ -67,7 +67,7 @@
                                                                 mdi-arrow-split-horizontal
                                                             </v-icon>
                                                         </v-btn>
-                                                        <admin-menu menuType="nav" @open=" menuToUpdate = submenu; menuToUpdate.level = 2; openDialog = $event"></admin-menu>
+                                                        <admin-menu menuType="nav" @open=" menuToUpdate = submenu; menuToUpdate.childs = []; menuToUpdate.level = 2; openDialog = $event"></admin-menu>
                                                     </v-card-actions>
                                                 </v-card>
                                                 <v-card class="d-flex mb-1" outlined>
