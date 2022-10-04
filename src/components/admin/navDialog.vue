@@ -196,17 +196,19 @@ export default {
             }
             this.$forceUpdate()
         },
-        prepare_add(menu) {
-            menu.groups = menu.groups.join(';')
-            menu.icon = menu.icon.trim()
-            this.createMenu(menu)
+        prepare_add() {
+            this.menuToUpdate.groups = this.menuToUpdate.groups.join(';')
+            this.menuToUpdate.icon = this.menuToUpdate.icon.trim()
+            this.createMenu(this.menuToUpdate)
             this.menuToUpdate = this.EmptyMenu
+            console.log(this.menuToUpdate)
         },
-        prepare_update(menu) {
-            menu.groups = menu.groups.join(';')
-            menu.icon = menu.icon.trim()
-            this.updateMenu(menu)
+        prepare_update() {
+            this.menuToUpdate.groups = this.menuToUpdate.groups.join(';')
+            this.menuToUpdate.icon = this.menuToUpdate.icon.trim()
+            this.updateMenu(this.menuToUpdate)
             this.menuToUpdate = this.EmptyMenu
+            console.log(this.menuToUpdate)
         },
         prepare_delete() {
             this.deleteMenu()
