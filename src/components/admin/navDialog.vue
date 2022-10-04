@@ -31,7 +31,7 @@
                                                     mdi-arrow-split-horizontal
                                                 </v-icon>
                                             </v-btn>
-                                            <admin-menu menuType="nav" @open="openDialog = $event; menuToUpdate = section; menuToUpdate.haschild = section.childs"></admin-menu>
+                                            <admin-menu menuType="nav" @open=" menuToUpdate = section; menuToUpdate.childs = section.childs; openDialog = $event"></admin-menu>
                                         </v-card-actions>
                                     </v-card>
                                 </td>
@@ -49,7 +49,7 @@
                                                             mdi-arrow-split-horizontal
                                                         </v-icon>
                                                     </v-btn>
-                                                    <admin-menu menuType="nav" @open="openDialog = $event; menuToUpdate = menu; menuToUpdate.haschild = menu.childs"></admin-menu>
+                                                    <admin-menu menuType="nav" @open=" menuToUpdate = menu; menuToUpdate.childs = menu.childs; openDialog = $event"></admin-menu>
                                                 </v-card-actions>
                                             </v-card>
 
@@ -67,13 +67,13 @@
                                                                 mdi-arrow-split-horizontal
                                                             </v-icon>
                                                         </v-btn>
-                                                        <admin-menu menuType="nav" @open="openDialog = $event; menuToUpdate = submenu; menuToUpdate.haschild = submenu.childs"></admin-menu>
+                                                        <admin-menu menuType="nav" @open=" menuToUpdate = submenu; menuToUpdate.childs = 0;openDialog = $event"></admin-menu>
                                                     </v-card-actions>
                                                 </v-card>
                                                 <v-card class="d-flex mb-1" outlined>
                                                     <v-card-actions class="mx-auto">
                                                         <v-btn icon
-                                                            @click="openDialog = 5; menuToUpdate = EmptyMenu; menuToUpdate.sectionid = section.sectionid; menuToUpdate.menuid = menu.menuid; menuToUpdate.level = 2;">
+                                                            @click=" menuToUpdate = EmptyMenu; menuToUpdate.sectionid = section.sectionid; menuToUpdate.menuid = menu.menuid; menuToUpdate.level = 2;openDialog = 5">
                                                             <v-icon>mdi-plus</v-icon>
                                                         </v-btn>
                                                     </v-card-actions>
@@ -83,7 +83,8 @@
                                     </v-row>
                                     <v-card class="d-flex mb-1 mx-1" outlined style="width:calc(50% - 8px)">
                                         <v-card-actions class="mx-auto">
-                                            <v-btn icon @click="openDialog = 5; menuToUpdate = EmptyMenu; menuToUpdate.sectionid = section.sectionid; menuToUpdate.menuid = 0; menuToUpdate.level = 1 ">
+                                            <v-btn icon
+                                                @click=" menuToUpdate = EmptyMenu; menuToUpdate.sectionid = section.sectionid; menuToUpdate.menuid = 0; menuToUpdate.level = 1;openDialog = 5">
                                                 <v-icon>mdi-plus</v-icon>
                                             </v-btn>
                                         </v-card-actions>
@@ -94,7 +95,7 @@
                                 <td>
                                     <v-card class="d-flex my-1" outlined>
                                         <v-card-actions class="mx-auto">
-                                            <v-btn icon @click="openDialog = 5; menuToUpdate = EmptyMenu; menuToUpdate.sectionid = 0; menuToUpdate.menuid = 0; menuToUpdate.level = 0 ">
+                                            <v-btn icon @click=" menuToUpdate = EmptyMenu; menuToUpdate.sectionid = 0; menuToUpdate.menuid = 0; menuToUpdate.level = 0 ;openDialog = 5">
                                                 <v-icon>mdi-plus</v-icon>
                                             </v-btn>
                                         </v-card-actions>
@@ -280,7 +281,8 @@ export default {
             groups: [],
             sectionid: 0,
             menuid: 0,
-            level: 0
+            level: 0,
+            childs: 0
         },
         EmptyMenu: {
             id: 0,
@@ -290,12 +292,10 @@ export default {
             groups: [],
             sectionid: 0,
             menuid: 0,
-            level: 0
+            level: 0,
+            childs: 0
         },
         openDialog: -1
     }),
 }
 </script>
-
-<style>
-</style>
