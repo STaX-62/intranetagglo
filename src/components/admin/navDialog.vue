@@ -31,7 +31,7 @@
                                                     mdi-arrow-split-horizontal
                                                 </v-icon>
                                             </v-btn>
-                                            <admin-menu menuType="nav" @open=" menuToUpdate = section; menuToUpdate.childs = section.childs; openDialog = $event"></admin-menu>
+                                            <admin-menu menuType="nav" @open=" menuToUpdate = section; menuToUpdate.childs = section.childs; menuToUpdate.level = 0; openDialog = $event"></admin-menu>
                                         </v-card-actions>
                                     </v-card>
                                 </td>
@@ -49,7 +49,7 @@
                                                             mdi-arrow-split-horizontal
                                                         </v-icon>
                                                     </v-btn>
-                                                    <admin-menu menuType="nav" @open=" menuToUpdate = menu; menuToUpdate.childs = menu.childs; openDialog = $event"></admin-menu>
+                                                    <admin-menu menuType="nav" @open=" menuToUpdate = menu; menuToUpdate.childs = menu.childs; menuToUpdate.level = 1; openDialog = $event"></admin-menu>
                                                 </v-card-actions>
                                             </v-card>
 
@@ -67,7 +67,7 @@
                                                                 mdi-arrow-split-horizontal
                                                             </v-icon>
                                                         </v-btn>
-                                                        <admin-menu menuType="nav" @open=" menuToUpdate = submenu; menuToUpdate.childs = 0;openDialog = $event"></admin-menu>
+                                                        <admin-menu menuType="nav" @open=" menuToUpdate = submenu; menuToUpdate.childs = 0; menuToUpdate.level = 2; openDialog = $event"></admin-menu>
                                                     </v-card-actions>
                                                 </v-card>
                                                 <v-card class="d-flex mb-1" outlined>
@@ -93,7 +93,7 @@
                                 <td>
                                     <v-card class="d-flex my-1" outlined>
                                         <v-card-actions class="mx-auto">
-                                            <v-btn icon @click="dialogSetup(0, 0, 2, 5)">
+                                            <v-btn icon @click="dialogSetup(0, 0, 0, 5)">
                                                 <v-icon>mdi-plus</v-icon>
                                             </v-btn>
                                         </v-card-actions>
@@ -185,7 +185,7 @@ export default {
                 sectionid: 0,
                 menuid: 0,
                 level: 0,
-                childs: 0
+                childs: []
             }
             this.menuToUpdate.sectionid = sectionid
             this.menuToUpdate.menuid = menuid
@@ -249,7 +249,7 @@ export default {
                     sectionid: 0,
                     menuid: 0,
                     level: 0,
-                    childs: 0
+                    childs: []
                 }
                 this.getAdmMenus()
                 this.$emit('changed')
@@ -277,7 +277,7 @@ export default {
                     sectionid: 0,
                     menuid: 0,
                     level: 0,
-                    childs: 0
+                    childs: []
                 }
                 this.getAdmMenus()
                 this.$emit('changed')
