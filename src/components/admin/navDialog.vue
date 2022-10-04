@@ -200,15 +200,11 @@ export default {
             this.menuToUpdate.groups = this.menuToUpdate.groups.join(';')
             this.menuToUpdate.icon = this.menuToUpdate.icon.trim()
             this.createMenu(this.menuToUpdate)
-            this.menuToUpdate = this.EmptyMenu
-            console.log(this.menuToUpdate)
         },
         prepare_update() {
             this.menuToUpdate.groups = this.menuToUpdate.groups.join(';')
             this.menuToUpdate.icon = this.menuToUpdate.icon.trim()
             this.updateMenu(this.menuToUpdate)
-            this.menuToUpdate = this.EmptyMenu
-            console.log(this.menuToUpdate)
         },
         prepare_delete() {
             this.deleteMenu()
@@ -228,6 +224,7 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
+                this.menuToUpdate = this.EmptyMenu
                 this.getAdmMenus()
                 this.$emit('changed')
             })
@@ -245,6 +242,10 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
+                console.log(this.menuToUpdate)
+                this.menuToUpdate = this.EmptyMenu
+                console.log(this.EmptyMenu)
+                console.log(this.menuToUpdate)
                 this.getAdmMenus()
                 this.$emit('changed')
             })
