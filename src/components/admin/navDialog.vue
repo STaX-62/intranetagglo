@@ -31,7 +31,7 @@
                                                     mdi-arrow-split-horizontal
                                                 </v-icon>
                                             </v-btn>
-                                            <admin-menu menuType="nav" @open="openDialog = $event; menuToUpdate = section; menuToUpdate.haschild = section.childs"></admin-menu>
+                                            <admin-menu menuType="nav" @open=" menuToUpdate = section; menuToUpdate.level = 0; openDialog = $event"></admin-menu>
                                         </v-card-actions>
                                     </v-card>
                                 </td>
@@ -49,7 +49,7 @@
                                                             mdi-arrow-split-horizontal
                                                         </v-icon>
                                                     </v-btn>
-                                                    <admin-menu menuType="nav" @open="openDialog = $event; menuToUpdate = menu; menuToUpdate.haschild = menu.childs"></admin-menu>
+                                                    <admin-menu menuType="nav" @open=" menuToUpdate = menu; menuToUpdate.level = 1; openDialog = $event"></admin-menu>
                                                 </v-card-actions>
                                             </v-card>
 
@@ -67,13 +67,12 @@
                                                                 mdi-arrow-split-horizontal
                                                             </v-icon>
                                                         </v-btn>
-                                                        <admin-menu menuType="nav" @open="openDialog = $event; menuToUpdate = submenu; menuToUpdate.haschild = submenu.childs"></admin-menu>
+                                                        <admin-menu menuType="nav" @open=" menuToUpdate = submenu; menuToUpdate.childs = []; menuToUpdate.level = 2; openDialog = $event"></admin-menu>
                                                     </v-card-actions>
                                                 </v-card>
                                                 <v-card class="d-flex mb-1" outlined>
                                                     <v-card-actions class="mx-auto">
-                                                        <v-btn icon
-                                                            @click="openDialog = 5; menuToUpdate = EmptyMenu; menuToUpdate.sectionid = SIndex; menuToUpdate.menuid = MIndex; menuToUpdate.level = 2;">
+                                                        <v-btn icon @click="dialogSetup(section.sectionid,menu.menuid, 2, 5)">
                                                             <v-icon>mdi-plus</v-icon>
                                                         </v-btn>
                                                     </v-card-actions>
@@ -83,7 +82,7 @@
                                     </v-row>
                                     <v-card class="d-flex mb-1 mx-1" outlined style="width:calc(50% - 8px)">
                                         <v-card-actions class="mx-auto">
-                                            <v-btn icon @click="openDialog = 5; menuToUpdate = EmptyMenu; menuToUpdate.sectionid = SIndex; menuToUpdate.menuid = 0; menuToUpdate.level = 1 ">
+                                            <v-btn icon @click="dialogSetup(section.sectionid,0, 1, 5)">
                                                 <v-icon>mdi-plus</v-icon>
                                             </v-btn>
                                         </v-card-actions>
@@ -94,7 +93,7 @@
                                 <td>
                                     <v-card class="d-flex my-1" outlined>
                                         <v-card-actions class="mx-auto">
-                                            <v-btn icon @click="openDialog = 5; menuToUpdate = EmptyMenu; menuToUpdate.sectionid = 0; menuToUpdate.menuid = 0; menuToUpdate.level = 0 ">
+                                            <v-btn icon @click="dialogSetup(0, 0, 0, 5)">
                                                 <v-icon>mdi-plus</v-icon>
                                             </v-btn>
                                         </v-card-actions>
@@ -176,6 +175,24 @@ export default {
                     this.menus = array
                 })
         },
+        dialogSetup(sectionid, menuid, level, dialogCode) {
+            this.menuToUpdate = {
+                id: 0,
+                title: '',
+                icon: '',
+                link: '',
+                groups: [],
+                sectionid: 0,
+                menuid: 0,
+                level: 0,
+                childs: []
+            }
+            this.menuToUpdate.sectionid = sectionid
+            this.menuToUpdate.menuid = menuid
+            this.menuToUpdate.level = level
+            this.menuToUpdate.childs = 0
+            this.openDialog = dialogCode
+        },
         setNewPosition(event) {
             this.newposition = event;
             this.$forceUpdate()
@@ -195,17 +212,15 @@ export default {
             }
             this.$forceUpdate()
         },
-        prepare_add(menu) {
-            menu.groups = menu.groups.join(';')
-            menu.icon = menu.icon.trim()
-            this.createMenu(menu)
-            this.menuToUpdate = this.EmptyMenu
+        prepare_add() {
+            this.menuToUpdate.groups = this.menuToUpdate.groups.join(';')
+            this.menuToUpdate.icon = this.menuToUpdate.icon.trim()
+            this.createMenu(this.menuToUpdate)
         },
-        prepare_update(menu) {
-            menu.groups = menu.groups.join(';')
-            menu.icon = menu.icon.trim()
-            this.updateMenu(menu)
-            this.menuToUpdate = this.EmptyMenu
+        prepare_update() {
+            this.menuToUpdate.groups = this.menuToUpdate.groups.join(';')
+            this.menuToUpdate.icon = this.menuToUpdate.icon.trim()
+            this.updateMenu(this.menuToUpdate)
         },
         prepare_delete() {
             this.deleteMenu()
@@ -225,6 +240,17 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
+                this.menuToUpdate = {
+                    id: 0,
+                    title: '',
+                    icon: '',
+                    link: '',
+                    groups: [],
+                    sectionid: 0,
+                    menuid: 0,
+                    level: 0,
+                    childs: []
+                }
                 this.getAdmMenus()
                 this.$emit('changed')
             })
@@ -242,6 +268,17 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
+                this.menuToUpdate = {
+                    id: 0,
+                    title: '',
+                    icon: '',
+                    link: '',
+                    groups: [],
+                    sectionid: 0,
+                    menuid: 0,
+                    level: 0,
+                    childs: []
+                }
                 this.getAdmMenus()
                 this.$emit('changed')
             })
@@ -280,22 +317,10 @@ export default {
             groups: [],
             sectionid: 0,
             menuid: 0,
-            level: 0
-        },
-        EmptyMenu: {
-            id: 0,
-            title: '',
-            icon: '',
-            link: '',
-            groups: [],
-            sectionid: 0,
-            menuid: 0,
-            level: 0
+            level: 0,
+            childs: []
         },
         openDialog: -1
     }),
 }
 </script>
-
-<style>
-</style>

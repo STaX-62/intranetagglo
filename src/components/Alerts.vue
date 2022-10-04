@@ -9,7 +9,7 @@
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </v-card-title>
-            <v-card-text v-if="!alerts.length">
+            <v-card-text v-if="!alerts.length && !$isAdmin">
                 <v-skeleton-loader class="mx-auto" type="image"></v-skeleton-loader>
             </v-card-text>
             <v-card-text v-if="alerts.length">

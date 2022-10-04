@@ -10,7 +10,7 @@
                     <v-text-field v-model="modifiedNav.title" :counter="40" :rules="titleRules" label="Name" required></v-text-field>
                     <icon-help v-if="modifiedNav.level == 0"></icon-help>
                     <v-text-field v-if="modifiedNav.level == 0" v-model="modifiedNav.icon" label="Icon" required></v-text-field>
-                    <v-text-field v-if="!modifiedNav.childs" v-model="modifiedNav.link" label="Lien" required></v-text-field>
+                    <v-text-field v-if="!modifiedNav.childs.length" v-model="modifiedNav.link" label="Lien" required></v-text-field>
                     <v-select v-model="modifiedNav.groups" :items="$groups" label="Groupes d'utilisateurs" multiple small-chips></v-select>
                 </v-form>
             </v-card-text>
@@ -23,7 +23,7 @@
                     Retour
                 </v-btn>
 
-                <v-btn color="green darken-1" text @click="create ? $emit('created', modifiedNav) : $emit('updated', modifiedNav); dialog = false" :disabled="!valid">
+                <v-btn color="green darken-1" text @click="create ? $emit('created') : $emit('updated'); dialog = false; " :disabled="!valid">
                     {{ create ? 'Ajouter' : 'Modifier' }}
                 </v-btn>
             </v-card-actions>
@@ -51,19 +51,11 @@ export default {
             }
         },
         modifiedNav: {
-            get() {
-                if (this.updatedNav === undefined)
-                    return this.nav
-                else
-                    return this.updatedNav
-            },
-            set(value) {
-                this.updatedNav = value
-            }
+            get() { return this.nav },
+            set(value) { this.$emit('update:nav', value) },
         }
     },
     data: () => ({
-        updatedNav: undefined,
         valid: false,
         titleRules: [
             v => !!v || 'Un titre est nécessaire',
