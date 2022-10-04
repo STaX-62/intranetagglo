@@ -8,8 +8,8 @@
             <v-card-text>
                 <v-form v-model="valid">
                     <v-text-field v-model="modifiedNav.title" :counter="40" :rules="titleRules" label="Name" required></v-text-field>
-                    <icon-help v-if="modifiedNav.level == 0"></icon-help>
-                    <v-text-field v-if="modifiedNav.level == 0" v-model="modifiedNav.icon" label="Icon" required></v-text-field>
+                    <icon-help v-if="modifiedNav.menuid == 0"></icon-help>
+                    <v-text-field v-if="modifiedNav.menuid == 0" v-model="modifiedNav.icon" label="Icon" required></v-text-field>
                     <v-text-field v-if="!modifiedNav.childs" v-model="modifiedNav.link" label="Lien" required></v-text-field>
                     <v-select v-model="modifiedNav.groups" :items="$groups" label="Groupes d'utilisateurs" multiple small-chips></v-select>
                 </v-form>
@@ -52,10 +52,15 @@ export default {
         },
         modifiedNav: {
             get() {
-                if (this.updatedNav == undefined)
+                if (this.updatedNav == undefined) {
+                    console.log("debug 1")
                     return this.nav
-                else
+                }
+                else {
+                    console.log("debug 2")
                     return this.updatedNav
+                }
+
             },
             set(value) {
                 this.updatedNav = value
