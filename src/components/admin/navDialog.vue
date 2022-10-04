@@ -176,7 +176,17 @@ export default {
                 })
         },
         dialogSetup(sectionid, menuid, level, dialogCode) {
-            this.menuToUpdate = this.EmptyMenu
+            this.menuToUpdate = {
+                id: 0,
+                title: '',
+                icon: '',
+                link: '',
+                groups: [],
+                sectionid: 0,
+                menuid: 0,
+                level: 0,
+                childs: 0
+            }
             this.menuToUpdate.sectionid = sectionid
             this.menuToUpdate.menuid = menuid
             this.menuToUpdate.level = level
@@ -230,7 +240,17 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
-                this.menuToUpdate = this.EmptyMenu
+                this.menuToUpdate = {
+                    id: 0,
+                    title: '',
+                    icon: '',
+                    link: '',
+                    groups: [],
+                    sectionid: 0,
+                    menuid: 0,
+                    level: 0,
+                    childs: 0
+                }
                 this.getAdmMenus()
                 this.$emit('changed')
             })
@@ -248,10 +268,17 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                 }
             }).then(() => {
-                console.log(this.menuToUpdate)
-                this.menuToUpdate = this.EmptyMenu
-                console.log(this.EmptyMenu)
-                console.log(this.menuToUpdate)
+                this.menuToUpdate = {
+                    id: 0,
+                    title: '',
+                    icon: '',
+                    link: '',
+                    groups: [],
+                    sectionid: 0,
+                    menuid: 0,
+                    level: 0,
+                    childs: 0
+                }
                 this.getAdmMenus()
                 this.$emit('changed')
             })
@@ -283,17 +310,6 @@ export default {
         newposition: {},
         menus: [[], [], []],
         menuToUpdate: {
-            id: 0,
-            title: '',
-            icon: '',
-            link: '',
-            groups: [],
-            sectionid: 0,
-            menuid: 0,
-            level: 0,
-            childs: 0
-        },
-        EmptyMenu: {
             id: 0,
             title: '',
             icon: '',
