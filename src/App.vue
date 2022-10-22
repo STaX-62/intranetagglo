@@ -4,7 +4,7 @@
     </Navigation>
     <v-main>
       <v-card class="mx-2 my-6">
-        <v-app-bar color="primary">
+        <v-app-bar color="#1976d2" style="height: 90px;">
           <v-toolbar-title>Actualités</v-toolbar-title>
           <v-spacer></v-spacer>
           <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"
