@@ -1,14 +1,14 @@
 <template>
     <v-col md="4" sm="12" v-if="alerts.length || $isAdmin">
-        <v-card outlined shaped :color="$vuetify.theme.dark ? '' : '#9ecd4399'" style="height:100%"
+        <v-card outlined shaped elevation="0" style="height:100%"
             data-intro="Ici sont disponibles les informations/alertes temporaires, celles-ci expireront au bout d'une certaine période" data-title="Alertes" data-step="2">
-            <v-card-title>
+            <!-- <v-card-title>
                 <v-card class="pa-2">Alertes</v-card>
                 <v-spacer></v-spacer>
                 <v-btn fab small elevation="1" @click="openDialog = 5; alertToUpdate = alertEmpty" v-if="$isAdmin">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
-            </v-card-title>
+            </v-card-title> -->
             <v-card-text v-if="!alerts.length && !$isAdmin">
                 <v-skeleton-loader class="mx-auto" type="image"></v-skeleton-loader>
             </v-card-text>
