@@ -1,6 +1,6 @@
 <template>
     <v-col class="maincol" :md="archivesMode || (alertEmpty && !$isAdmin) ? 12 : 8" sm="12">
-        <v-card outlined elevation="0" style="height:100%" data-intro="Dans cette section sont disponibles les 5 dernières actualités de la CA2BM, 
+        <v-card elevation="0" style="height:100%" data-intro="Dans cette section sont disponibles les 5 dernières actualités de la CA2BM, 
           pour agrandir une image ou l'afficher dans son intégralité cliquez simplement sur cette dernière"
             data-title="Actualités" data-step="3">
             <!-- <v-card-title>

@@ -1,6 +1,6 @@
 <template>
     <v-col md="4" sm="12" v-if="alerts.length || $isAdmin">
-        <v-card outlined shaped elevation="0" style="height:100%"
+        <v-card elevation="0" style="height:100%"
             data-intro="Ici sont disponibles les informations/alertes temporaires, celles-ci expireront au bout d'une certaine période" data-title="Alertes" data-step="2">
             <!-- <v-card-title>
                 <v-card class="pa-2">Alertes</v-card>
