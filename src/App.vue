@@ -3,25 +3,28 @@
     <Navigation v-if="isOnSite">
     </Navigation>
     <v-main>
-      <v-app-bar elevation="4">
-        <v-toolbar-title>Actualités</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"
-          data-intro="Vous pouvez rechercher des actualités et alertes grâce à cette barre de recherche (qui basculera automatiquement le mode d'affichage en mode archives)"
-          data-title="Barre de Recherche" data-step="4">
-        </Searchbar>
-        <v-btn :text="$vuetify.theme.dark" class="mr-2 archivesbtn" :admin="$isAdmin"
-          @click="archivesMode = !archivesMode; archives = []; $refs.News.lazyArchivesCounter = 0"
-          :color="$vuetify.theme.dark ? 'accent' : ''" large
-          data-intro="Retrouvez toutes les anciennes actualités de la CA2BM dans la section archives ou cherchez simplement via la barre de recherche"
-          data-title="Archives" data-step="6">
-          <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
-          {{ archivesMode ? 'Retour' : 'Archives' }}
-        </v-btn>
-        <v-btn class="addbtn" fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews" v-if="$isAdmin">
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </v-app-bar>
+      <v-card class="mx-2 my-6">
+        <v-app-bar color="primary">
+          <v-toolbar-title>Actualités</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"
+            data-intro="Vous pouvez rechercher des actualités et alertes grâce à cette barre de recherche (qui basculera automatiquement le mode d'affichage en mode archives)"
+            data-title="Barre de Recherche" data-step="4">
+          </Searchbar>
+          <v-btn :text="$vuetify.theme.dark" class="mr-2 archivesbtn" :admin="$isAdmin"
+            @click="archivesMode = !archivesMode; archives = []; $refs.News.lazyArchivesCounter = 0"
+            :color="$vuetify.theme.dark ? 'accent' : ''" large
+            data-intro="Retrouvez toutes les anciennes actualités de la CA2BM dans la section archives ou cherchez simplement via la barre de recherche"
+            data-title="Archives" data-step="6">
+            <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
+            {{ archivesMode ? 'Retour' : 'Archives' }}
+          </v-btn>
+          <v-btn class="addbtn" fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews"
+            v-if="$isAdmin">
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-app-bar>
+      </v-card>
 
       <v-row style="margin:0; height: 80%;">
         <News ref="News" :alertEmpty="alertEmpty"></News>
