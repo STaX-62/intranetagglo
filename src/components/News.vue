@@ -21,7 +21,7 @@
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </v-card-title> -->
-            <v-card-text class="newscarousel elevation-4" v-if="!archivesMode">
+            <div class="newscarousel" v-if="!archivesMode">
                 <v-hover v-slot="{ hover }">
                     <v-carousel :cycle="!hover" :continuous="true" :show-arrows="false" hide-delimiters
                         v-model="newsForward" style="height: 100%;">
@@ -29,7 +29,7 @@
                             <v-skeleton-loader type="card" height="100%" width="100%"></v-skeleton-loader>
                         </v-carousel-item>
                         <v-carousel-item v-for="(n, x) in news" :key="x">
-                            <v-card class="mx-auto" elevation="4" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''"
+                            <v-card class="mx-auto" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''"
                                 style="height: 100%; position: relative;">
                                 <v-carousel :continuous="false" :show-arrows="true" hide-delimiter-background
                                     delimiter-icon="mdi-minus" height="400" v-if="n.photo.length > 1">
@@ -69,7 +69,7 @@
                         </v-carousel-item>
                     </v-carousel>
                 </v-hover>
-            </v-card-text>
+            </div>
             <v-card-actions v-if="!archivesMode">
                 <v-pagination v-model="newsForwardC" :length="news.length"
                     :color="$vuetify.theme.dark ? 'secondary darken-1' : 'primary '">
