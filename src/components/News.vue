@@ -69,9 +69,12 @@
                         </v-carousel-item>
                     </v-carousel>
                 </v-hover>
-                <v-pagination v-model="newsForwardC" :length="news.length" class="mt-8"
-                    :color="$vuetify.theme.dark ? 'secondary darken-1' : 'primary '"></v-pagination>
             </v-card-text>
+            <v-card-actions v-if="!archivesMode">
+                <v-pagination v-model="newsForwardC" :length="news.length"
+                    :color="$vuetify.theme.dark ? 'secondary darken-1' : 'primary '">
+                </v-pagination>
+            </v-card-actions>
             <v-card-text v-if="archivesMode">
                 <v-list color="transparent">
                     <v-list-item v-if="!archives.length">

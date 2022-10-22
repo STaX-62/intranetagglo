@@ -4,8 +4,8 @@
     </Navigation>
     <v-main>
       <v-card class="mx-2 my-6">
-        <v-app-bar color="#1976d2" style="height: 90px;">
-          <v-toolbar-title>Actualités</v-toolbar-title>
+        <v-app-bar color="#1976d2" height="90px">
+          <v-toolbar-title style="font-size:2em;color:#fff">Actualités</v-toolbar-title>
           <v-spacer></v-spacer>
           <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"
             data-intro="Vous pouvez rechercher des actualités et alertes grâce à cette barre de recherche (qui basculera automatiquement le mode d'affichage en mode archives)"
