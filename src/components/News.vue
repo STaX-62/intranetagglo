@@ -1,5 +1,5 @@
 <template>
-    <v-col class="maincol" :md="archivesMode || (alertEmpty && !$isAdmin) ? 12 : 8" sm="12">
+    <v-col class="maincol" :md="archivesMode || alertEmpty ? 12 : 8" sm="12">
         <v-card elevation="0" style="height:100%" data-intro="Dans cette section sont disponibles les 5 dernières actualités de la CA2BM, 
           pour agrandir une image ou l'afficher dans son intégralité cliquez simplement sur cette dernière"
             data-title="Actualités" data-step="3">
@@ -21,7 +21,7 @@
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </v-card-title> -->
-            <div class="newscarousel" v-if="!archivesMode">
+            <div class="newscarousel elevation-4" v-if="!archivesMode" style="height: calc(100% - 59px) !important;">
                 <v-hover v-slot="{ hover }">
                     <v-carousel :cycle="!hover" :continuous="true" :show-arrows="false" hide-delimiters
                         v-model="newsForward" style="height: 100%;">
@@ -71,7 +71,7 @@
                 </v-hover>
             </div>
             <v-card-actions v-if="!archivesMode">
-                <v-pagination v-model="newsForwardC" :length="news.length"
+                <v-pagination v-model="newsForwardC" :length="news.length" class="mx-auto"
                     :color="$vuetify.theme.dark ? 'secondary darken-1' : 'primary '">
                 </v-pagination>
             </v-card-actions>

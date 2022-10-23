@@ -4,7 +4,7 @@
     </Navigation>
     <v-main>
       <v-card class="mx-2 my-6">
-        <v-app-bar color="#1976d2" height="90px">
+        <v-app-bar color="#0eb4ed" height="90px">
           <v-toolbar-title style="font-size:2em;color:#fff">Actualités</v-toolbar-title>
           <v-spacer></v-spacer>
           <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"
@@ -26,7 +26,7 @@
         </v-app-bar>
       </v-card>
 
-      <v-row style="margin:0; height: 80%;">
+      <v-row style="margin:0; height: calc(100% - 138px);">
         <News ref="News" :alertEmpty="alertEmpty"></News>
         <Alerts v-if="!archivesMode && !alertEmpty" @alertempty="alertEmpty = $event"></Alerts>
       </v-row>
