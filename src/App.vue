@@ -3,7 +3,7 @@
     <Navigation v-if="isOnSite">
     </Navigation>
     <v-main>
-      <v-card class="mx-2 my-6">
+      <v-card class="mx-3 mt-4 mb-2">
         <v-app-bar color="#0eb4ed" height="90px">
           <v-toolbar-title style="font-size:2em;color:#fff">Actualités</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -27,7 +27,7 @@
       </v-card>
 
       <v-row style="margin:0; height: calc(100% - 138px);">
-        <News ref="News" :alertEmpty="alertEmpty"></News>
+        <News ref="News" :alertEmpty="alertEmpty" :archivesMode="archivesMode"></News>
         <Alerts v-if="!archivesMode && !alertEmpty" @alertempty="alertEmpty = $event"></Alerts>
       </v-row>
     </v-main>

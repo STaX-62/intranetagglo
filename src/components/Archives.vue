@@ -3,79 +3,7 @@
         <v-card elevation="0" style="height:100%" data-intro="Dans cette section sont disponibles les 5 dernières actualités de la CA2BM, 
           pour agrandir une image ou l'afficher dans son intégralité cliquez simplement sur cette dernière"
             data-title="Actualités" data-step="3">
-            <!-- <v-card-title>
-                <Searchbar @searchfilters="Filters" :notfound="totalNewsLength == 0"
-                    data-intro="Vous pouvez rechercher des actualités et alertes grâce à cette barre de recherche (qui basculera automatiquement le mode d'affichage en mode archives)"
-                    data-title="Barre de Recherche" data-step="4">
-                </Searchbar>
-                <v-btn :text="$vuetify.theme.dark" class="mr-2 archivesbtn" :admin="$isAdmin"
-                    @click="archivesMode = !archivesMode; archives = []; $emit('closealerts', archivesMode); lazyArchivesCounter = 0"
-                    :color="$vuetify.theme.dark ? 'accent' : ''" large
-                    data-intro="Retrouvez toutes les anciennes actualités de la CA2BM dans la section archives ou cherchez simplement via la barre de recherche"
-                    data-title="Archives" data-step="6">
-                    <v-icon class="mr-2" v-if="!archivesMode">mdi-archive</v-icon>
-                    {{ archivesMode ? 'Retour' : 'Archives' }}
-                </v-btn>
-                <v-btn class="addbtn" fab small elevation="1" @click="openDialog = 5; newsToUpdate = EmptyNews"
-                    v-if="$isAdmin">
-                    <v-icon>mdi-plus</v-icon>
-                </v-btn>
-            </v-card-title> -->
-            <div class="newscarousel elevation-4" v-if="!archivesMode" style="height: calc(100% - 59px) !important;">
-                <v-hover v-slot="{ hover }">
-                    <v-carousel :cycle="!hover" :continuous="true" :show-arrows="false" hide-delimiters
-                        v-model="newsForward" style="height: 100%;">
-                        <v-carousel-item style="height: 100%; position: relative;" v-if="!news.length">
-                            <v-skeleton-loader type="card" height="100%" width="100%"></v-skeleton-loader>
-                        </v-carousel-item>
-                        <v-carousel-item v-for="(n, x) in news" :key="x">
-                            <v-card class="mx-auto" :color="$vuetify.theme.dark ? '#0eb4eda1' : ''"
-                                style="height: 100%; position: relative;">
-                                <v-carousel :continuous="false" :show-arrows="true" hide-delimiter-background
-                                    delimiter-icon="mdi-minus" height="400" v-if="n.photo.length > 1">
-                                    <v-carousel-item v-for="(photo, i) in n.photo" :key="i"
-                                        @click="LightBoxDialog = true; LightBoxPhotos = n.photo">
-                                        <v-img height="400" :src="photo"></v-img>
-                                    </v-carousel-item>
-                                </v-carousel>
-                                <v-img height="400" :src="n.photo[0]" v-else-if="n.photo.length == 1"
-                                    @click="LightBoxDialog = true; LightBoxPhotos = n.photo"></v-img>
-                                <v-card-title>{{ n.title }}</v-card-title>
-                                <v-card-subtitle>{{ n.subtitle }}</v-card-subtitle>
-                                <v-card-text class="news-text" v-html="n.text" style="margin-bottom:20px">
-                                </v-card-text>
-                                <v-card-actions style="position:absolute; bottom: 0; width: 100%;">
-                                    <v-chip label class=" text-truncate">
-                                        <span class="text-truncate">
-                                            {{ n.category }}
-                                        </span>
-                                    </v-chip>
-                                    <v-icon class="ml-1" v-if="n.pinned == '1'">mdi-pin-outline</v-icon>
-                                    <v-spacer></v-spacer>
-                                    <v-btn small rounded icon class="mr-1" v-if="n.visible == '0' && $isAdmin"
-                                        @click="openDialog = 2; newsToUpdate = n">
-                                        <v-icon>mdi-eye-off</v-icon>
-                                    </v-btn>
-                                    <admin-menu menuType="news" @open="openDialog = $event; newsToUpdate = n"
-                                        :pin="n.pinned == '1'" :published="n.visible == '1'" v-if="$isAdmin">
-                                    </admin-menu>
-                                    <v-chip>
-                                        <span class="text-truncate">
-                                            {{ getFormatedDate(n.time) }}
-                                        </span>
-                                    </v-chip>
-                                </v-card-actions>
-                            </v-card>
-                        </v-carousel-item>
-                    </v-carousel>
-                </v-hover>
-            </div>
-            <v-card-actions v-if="!archivesMode">
-                <v-pagination v-model="newsForwardC" :length="news.length" class="mx-auto"
-                    color="#0eb4ed">
-                </v-pagination>
-            </v-card-actions>
-            <v-card-text v-if="archivesMode">
+            <v-card-text>
                 <v-list color="transparent">
                     <v-list-item v-if="!archives.length">
                         <v-skeleton-loader class="mb-2" type="image" width="100%" height="125px"></v-skeleton-loader>
@@ -145,8 +73,8 @@
             :validate="newsToUpdate.visible == '1' ? 'Mettre en brouillon' : 'Publier'"
             :color="newsToUpdate.visible == '1' ? 'red darken-1' : 'green darken-1'" v-if="$isAdmin">
         </admin-change>
-        <news-modify :open="openDialog == 0 || openDialog == 5" :create="openDialog == 5" @close="openDialog = -1"
-            :news="newsToUpdate" @created="prepare_add" @updated="prepare_update" v-if="$isAdmin"></news-modify>
+        <news-modify :open="openDialog == 0" :create="false" @close="openDialog = -1"
+            :news="newsToUpdate" @updated="prepare_update" v-if="$isAdmin"></news-modify>
         <admin-change :open="openDialog == 1" @close="openDialog = -1" @changed="prepare_delete"
             :title="'Supprimer cette actualité'"
             :msg="'Voulez vous vraiment supprimer cette actualité: <br/><code>' + newsToUpdate.title + '</code>'"
